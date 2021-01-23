@@ -15,7 +15,7 @@ public class DialogHolder : MonoBehaviour {
     }
 
     void Update() {
-        if (_isInSpace && Input.GetButtonDown("Interact") && !PlayerMovement.IsInDialogue) {
+        if (_isInSpace && Input.GetButtonDown("Interact") && !Player.IsInDialogue) {
             TriggerDialogue();
             if (DespawnAfterUser) {
                 Destroy(gameObject);

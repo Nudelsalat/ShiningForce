@@ -69,8 +69,11 @@
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Dialog\Dialogue.cs" />
     <Compile Include="Assets\Scripts\GameData\GameData.cs" />
+    <Compile Include="Assets\Scripts\GameData\Inventory.cs" />
+    <Compile Include="Assets\Scripts\GameData\PartyMember.cs" />
     <Compile Include="Assets\Scripts\GameData\SaveGame.cs" />
     <Compile Include="Assets\Scripts\GameItems\GameItem.cs" />
+    <Compile Include="Assets\Scripts\GameItems\MemberInventoryUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Fadeout.cs" />
@@ -79,7 +82,7 @@
     <Compile Include="Assets\Scripts\GlobalObjectScripts\SaveLoadUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\StartPoint.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\WarpToScene.cs" />
-    <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

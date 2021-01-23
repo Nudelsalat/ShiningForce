@@ -6,7 +6,7 @@ using UnityEngine;
 public class StartPoint : MonoBehaviour {
     public string sceneFromWhichToCome;
 
-    private PlayerMovement player;
+    private Player player;
     private OverviewCameraMovement overViewCamere;
     private GameObject movePoint;
 
@@ -16,7 +16,7 @@ public class StartPoint : MonoBehaviour {
         if (!sceneFromWhichToCome.ToLower().Equals(lastSceneName)) {
             return;
         }
-        player = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<Player>();
         movePoint = GameObject.FindGameObjectWithTag("MovePoint");
         overViewCamere = FindObjectOfType<OverviewCameraMovement>();
         player.transform.position = movePoint.transform.position = gameObject.transform.position;

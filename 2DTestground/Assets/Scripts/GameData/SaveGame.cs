@@ -11,7 +11,7 @@ public static class SaveGame {
         FileStream file = File.Open(Application.persistentDataPath + "/gameData.dat", FileMode.Create);
         Debug.Log(Application.persistentDataPath);
         var player = GameObject.Find("Player");
-        GameData data = new GameData(player.GetComponent<PlayerMovement>());
+        GameData data = new GameData(player.GetComponent<Player>());
 
         bf.Serialize(file, data);
         file.Close();

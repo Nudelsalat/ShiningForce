@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemHolder : MonoBehaviour {
@@ -10,6 +11,13 @@ public class ItemHolder : MonoBehaviour {
     public bool DespawnAfterUser = false;
 
     private bool _isInSpace = false;
+    private Inventory inventory;
+
+    void Awake() {
+        inventory = Inventory.Instance;
+        var newList = Dialogue.Sentences.Select(x => x.Replace("#ITEMNAME#", gameItem.itemName)).ToList();
+        Dialogue.Sentences = newList;
+    }
 
     // Start is called before the first frame update
     public void TriggerDialogue() {
@@ -18,11 +26,14 @@ public class ItemHolder : MonoBehaviour {
             AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }
 
+        Debug.Log("gameItem.itemName");
         // add into inventory here.
     }
 
     void Update() {
-        if (_isInSpace && Input.GetButtonDown("Interact") && !PlayerMovement.IsInDialogue) {
+        if (_isInSpace && Input.GetButtonDown("Interact") && !Player.IsInDialogue) {
+            var addedToWhom = inventory.AddGameItem(gameItem);
+            Dialogue.Sentences.Add(addedToWhom);
             TriggerDialogue();
             if (DespawnAfterUser) {
                 Destroy(gameObject);

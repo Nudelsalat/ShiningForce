@@ -21,7 +21,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void StartDialogue(Dialogue dialogue) {
-        if (PlayerMovement.IsInDialogue) {
+        if (Player.IsInDialogue) {
             return;
         }
 
@@ -44,7 +44,7 @@ public class DialogManager : MonoBehaviour {
         DialogBox.SetActive(true);
         AnimatorDialogue.SetBool("dialogueBoxIsOpen", true);
         DisplayNextSentence();
-        PlayerMovement.IsInDialogue = true;
+        Player.IsInDialogue = true;
     }
 
     public void DisplayNextSentence() {
@@ -82,7 +82,7 @@ public class DialogManager : MonoBehaviour {
 
         DialogBox.SetActive(false);
         Portrait.SetActive(false);
-        PlayerMovement.IsInDialogue = false;
+        Player.IsInDialogue = false;
         DialogActive = false;
     }
 }
