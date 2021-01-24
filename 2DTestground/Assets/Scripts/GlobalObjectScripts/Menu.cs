@@ -22,6 +22,19 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPause || isInMenu) {
+            if (Input.GetButtonUp("Back")) {
+                if (isInMenu) {
+                    CloseMenu();
+                    isInMenu = false;
+                } else if (isPause) {
+                    Resume();
+                }
+            }
+
+            return;
+        }
+
         if (Input.GetButtonUp("Select")) {
             if (!isPause) {
                 Pause();
@@ -33,14 +46,6 @@ public class Menu : MonoBehaviour
                 OpenMenu();
             }
             isInMenu = true;
-        }
-        if (Input.GetButtonUp("Back")) {
-            if (isInMenu) {
-                CloseMenu();
-                isInMenu = false;
-            } else if (isPause) {
-                Resume();
-            }
         }
 
     }

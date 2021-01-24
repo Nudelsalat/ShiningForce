@@ -27,6 +27,7 @@ public class WarpToScene : MonoBehaviour {
     }
     IEnumerator DoFade() {
         CanvasGroup canvas = GameObject.Find("FadeOutScreen").GetComponent<CanvasGroup>();
+        canvas.alpha = 0;
         while (canvas.alpha < 1) {
             canvas.alpha += Time.deltaTime * 2;
             yield return null;

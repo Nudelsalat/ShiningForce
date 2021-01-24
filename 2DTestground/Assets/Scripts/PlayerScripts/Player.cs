@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void HandleMovement() {
         transform.position = Vector3.MoveTowards(transform.position, MovePoint.position, MoveSpeed * Time.deltaTime);
-        if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.05f)) {
+        if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.005f)) {
             return;
         }
         // order is important:

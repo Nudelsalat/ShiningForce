@@ -8,6 +8,7 @@ public class DialogHolder : MonoBehaviour {
     public bool DespawnAfterUser = false;
 
     private bool _isInSpace = false;
+    private bool _isInDialogue = false;
 
     // Start is called before the first frame update
     public void TriggerDialogue() {
