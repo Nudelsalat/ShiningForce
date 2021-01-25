@@ -32,6 +32,9 @@ public sealed class Inventory {
     
 
     public string AddGameItem(GameItem gameItem) {
+        if (gameItem == null) {
+            return "But nothing is inside.";
+        }
         foreach (var partyMember in ActiveParty) {
             if (TryAddGameItemToPartyMember(partyMember, gameItem)) {
                 return $"{gameItem.itemName} added to {partyMember.name}!";

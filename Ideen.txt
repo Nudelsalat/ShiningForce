@@ -1,0 +1,11 @@
+Character der ein healing item refilled, be jedem kampfstart.
+und nur exp durch healing items bekommt, weil er sonst nichts kann.
+
+
+Highground sintuationen, oder burgmauern, mit magier bzw fernkämpfer. -> strategie
+
+
+Mid/late-game -> Character stirbt.
+Bekommt die möglichkeit ALLES aufzugeben, um diese person zu retten
+-> if yes: delete all save files. (save progression somewhere hidden), give a text that character A is back alive, but you seize to exist. back to title screen -> No save files....
+-> new game, would NOT show the protagonists portrait. During Charakter-creation, if name equals Name of character A who was brought back to life -> continue from hidden save-file, without Protagonist, but Character A being the new Lead.

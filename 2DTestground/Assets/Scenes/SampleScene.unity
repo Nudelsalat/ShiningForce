@@ -167,7 +167,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.044665426, y: -0.18015018}
@@ -1330,6 +1330,8 @@ Transform:
   m_LocalPosition: {x: -1.2749041, y: 1.5572995, z: -640.69104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 709218604}
+  - {fileID: 1034414407}
   - {fileID: 1876598594}
   - {fileID: 1381374758}
   - {fileID: 1120362916}
@@ -1368,6 +1370,84 @@ Transform:
   m_Father: {fileID: 1906697290}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &709218603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 709218604}
+  - component: {fileID: 709218605}
+  - component: {fileID: 709218606}
+  m_Layer: 0
+  m_Name: EmptyVase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &709218604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709218603}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.784, y: -3.051, z: 639.267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 644446572}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &709218605
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709218603}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &709218606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709218603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2a138d4c22ee94ea8a28aee7ea4f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue:
+    Name: emptyVase
+    Portrait: {fileID: 0}
+    Sentences:
+    - You investigate the vase.
+  audioClip: {fileID: 0}
+  gameItem: {fileID: 0}
+  DespawnAfterUser: 0
 --- !u!1 &854320305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,6 +1687,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33256033194f97f44a4fcdff4816eaf2, type: 3}
+--- !u!1 &1034414406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1034414407}
+  - component: {fileID: 1034414408}
+  - component: {fileID: 1034414409}
+  m_Layer: 0
+  m_Name: Sign
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1034414407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034414406}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.774904, y: -5.0602994, z: 639.267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 644446572}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1034414408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034414406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd8e924cf9f8b44bbc4f2aac0d6c600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue:
+    Name: Sign
+    Portrait: {fileID: 0}
+    Sentences:
+    - Wow, those are some nice swords!
+    - ...oh wait, those are fake...
+  DespawnAfterUser: 0
+--- !u!61 &1034414409
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034414406}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1074724388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,10 +1774,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1074724389}
   - component: {fileID: 1074724394}
-  - component: {fileID: 1074724393}
   - component: {fileID: 1074724392}
-  - component: {fileID: 1074724391}
   - component: {fileID: 1074724390}
+  - component: {fileID: 1074724391}
   m_Layer: 14
   m_Name: merchant2
   m_TagString: Untagged
@@ -1659,29 +1815,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6edce80cb3f8d1e44afb0c8209129798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Dialogue:
+    Name: Merchant_two
+    Portrait: {fileID: 0}
+    Sentences: []
+  DespawnAfterUser: 0
   moveEveryXSeconds: 1
-  moveSpeed: 5
+  moveSpeed: 2
   _path: {fileID: 99684744}
---- !u!114 &1074724391
-MonoBehaviour:
+--- !u!95 &1074724391
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074724388}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd8e924cf9f8b44bbc4f2aac0d6c600, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue:
-    Name: Merchant_one
-    Portrait: {fileID: 8313927174392220450, guid: d28881cd07bd79b45b3f387ce8915aa5,
-      type: 3}
-    Sentences:
-    - Hey pal! Nice to meet you!
-    - ??? hmm... the silent typ, aye?
-  DespawnAfterUser: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd05af4c8da8dd2499c4f73a62f166bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &1074724392
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1708,25 +1868,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64788204, y: 0.47269678}
   m_EdgeRadius: 0
---- !u!95 &1074724393
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1074724388}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bd05af4c8da8dd2499c4f73a62f166bf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &1074724394
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1809,7 +1950,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 644446572}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1120362917
 MonoBehaviour:
@@ -1972,7 +2113,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 644446572}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1381374759
 BoxCollider2D:
@@ -2205,6 +2346,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+  - first: {x: 9, y: -4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
   - first: {x: 7, y: -3, z: 0}
     second:
       serializedVersion: 2
@@ -2249,8 +2399,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 00b5168612ab0884ba27d4b34786fbc4, type: 2}
   - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: 9024a548644f90f49a4e71e2c9505a4e, type: 2}
   - m_RefCount: 1
@@ -2268,8 +2418,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 5237800735186017121, guid: 979f2bf3f11de3445952135d0e1115ad,
+      type: 3}
   - m_RefCount: 5
     m_Data: {fileID: 9054819879978056695, guid: 979f2bf3f11de3445952135d0e1115ad,
       type: 3}
@@ -2285,7 +2436,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 814976496003989864, guid: eaa1be116e738d84e84b189f65f16ed3, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 9
+  - m_RefCount: 10
     m_Data:
       e00: 1
       e01: 0
@@ -2304,7 +2455,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 9
+  - m_RefCount: 10
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -5800,7 +5951,6 @@ GameObject:
   - component: {fileID: 1700877666}
   - component: {fileID: 1700877665}
   - component: {fileID: 1700877663}
-  - component: {fileID: 1700877664}
   - component: {fileID: 1700877667}
   - component: {fileID: 1700877668}
   m_Layer: 14
@@ -5855,26 +6005,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64788204, y: 0.47269678}
   m_EdgeRadius: 0
---- !u!114 &1700877664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700877661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd8e924cf9f8b44bbc4f2aac0d6c600, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue:
-    Name: Merchant_one
-    Portrait: {fileID: 8313927174392220450, guid: d28881cd07bd79b45b3f387ce8915aa5,
-      type: 3}
-    Sentences:
-    - Hey pal! Nice to meet you!
-    - ??? hmm... the silent typ, aye?
-  DespawnAfterUser: 0
 --- !u!95 &1700877665
 Animator:
   serializedVersion: 3
@@ -5957,8 +6087,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6edce80cb3f8d1e44afb0c8209129798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Dialogue:
+    Name: Merchant_one
+    Portrait: {fileID: 1051506275367356307, guid: d28881cd07bd79b45b3f387ce8915aa5,
+      type: 3}
+    Sentences:
+    - Hey pal! Nice to meet you!
+    - ??? hmm... the silent typ, aye?
+  DespawnAfterUser: 0
   moveEveryXSeconds: 1
-  moveSpeed: 5
+  moveSpeed: 2
   _path: {fileID: 854320305}
 --- !u!50 &1700877668
 Rigidbody2D:
@@ -6012,7 +6150,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 644446572}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1876598595
 BoxCollider2D:

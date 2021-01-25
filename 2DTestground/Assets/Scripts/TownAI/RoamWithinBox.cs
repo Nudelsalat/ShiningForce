@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RoamWithinBox : MonoBehaviour {
+public class RoamWithinBox : DialogHolder {
     public float moveEveryXSeconds = 1;
     public float moveSpeed = 2f;
     public GameObject _path;
@@ -21,7 +21,9 @@ public class RoamWithinBox : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    public override void Update() {
+        base.Update();
+
         if (Player.IsInDialogue) {
             return;
         }
@@ -44,9 +46,9 @@ public class RoamWithinBox : MonoBehaviour {
     }
 
     void HandleMovement() {
-        var currentPos = _nextPoint;
-        var moveDirection = 2;
+        Vector3 currentPos;
         var cycleCount = 0;
+        int moveDirection;
         do {
             currentPos = _nextPoint;
             moveDirection = Random.Range(0, 4); // 0 = up; 1 = left; 2 = down; 3 = right MAX -> Excludes...
@@ -76,5 +78,35 @@ public class RoamWithinBox : MonoBehaviour {
 
         _animator.SetInteger("moveDirection", moveDirection);
         _nextPoint = currentPos;
+    }
+
+    public override void TriggerDialogue() {
+        FindPlayerDirection();
+        FindObjectOfType<DialogManager>().StartDialogue(Dialogue);
+    }
+
+    private void FindPlayerDirection() {
+        var currentPos = transform.position;
+        for (var direction = 0; direction < 4; direction++) {
+            var lookingForPlayer = currentPos;
+            switch (direction) {
+                case 0:
+                    lookingForPlayer.y += 1;
+                    break;
+                case 1:
+                    lookingForPlayer.x -= 1;
+                    break;
+                case 2:
+                    lookingForPlayer.y -= 1;
+                    break;
+                case 3:
+                    lookingForPlayer.x += 1;
+                    break;
+            }
+            if (Physics2D.OverlapCircle(lookingForPlayer, .2f, _playerCollision)) {
+                _animator.SetInteger("moveDirection", direction);
+                return;
+            }
+        }
     }
 }
