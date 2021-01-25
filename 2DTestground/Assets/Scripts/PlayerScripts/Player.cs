@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     public LayerMask Collider;
     public LayerMask StairCollider;
     public static bool IsInDialogue = false;
-    public static bool IsInMenu = false;
+    public static bool InputDisabled = false;
+    public static bool InputDisabledInDialogue = false;
     public GameObject _interactionSelector;
     
     private Vector2 _movement;
@@ -39,14 +40,15 @@ public class Player : MonoBehaviour
     }
 
     private void HandleInput() {
-        if (IsInDialogue) {
+        if (InputDisabled || InputDisabledInDialogue) {
+            _movement.x = _movement.y = 0;
+            return;
+        } else if (IsInDialogue) {
+            _movement.x = _movement.y = 0;
             HandleDialogue();
             return;
-        } 
-        if (IsInMenu) {
-            //HandleMenu();
-            return;
-        }
+        }   
+
         _movement.x = Input.GetAxisRaw("Horizontal");
         _movement.y = Input.GetAxisRaw("Vertical");
     }
@@ -56,12 +58,15 @@ public class Player : MonoBehaviour
         if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.005f)) {
             return;
         }
+
+        _animator.speed = 1;
+
         // order is important:
         // still moves player towards movePoint, but does not modify movePoint
         if (IsInDialogue) {
             return;
         }
-        _animator.speed = 1;
+
         if (Math.Abs(Mathf.Abs(_movement.x) - 1f) < 0.01f) {
             if (_movement.x > 0) {
                 _interactionSelector.transform.position = new Vector3(transform.position.x + 0.75f,

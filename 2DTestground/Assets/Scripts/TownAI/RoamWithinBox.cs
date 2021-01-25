@@ -24,7 +24,7 @@ public class RoamWithinBox : DialogHolder {
     public override void Update() {
         base.Update();
 
-        if (Player.IsInDialogue) {
+        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabled) {
             return;
         }
 

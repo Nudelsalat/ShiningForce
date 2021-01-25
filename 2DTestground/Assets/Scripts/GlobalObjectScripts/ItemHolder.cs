@@ -22,7 +22,7 @@ public class ItemHolder : MonoBehaviour {
     }
 
     void Update() {
-        if (_isInSpace && Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
+        if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabled) {
             var addedToWhom = inventory.AddGameItem(gameItem);
             Dialogue.Sentences.Add(addedToWhom);
             TriggerDialogue();

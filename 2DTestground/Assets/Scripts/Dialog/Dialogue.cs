@@ -9,5 +9,6 @@ public class Dialogue {
     public Sprite Portrait;
     [TextArea(3,10)]
     public List<string> Sentences;
+    public MonoBehaviour FollowUpEvent;
 }
 

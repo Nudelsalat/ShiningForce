@@ -1,7 +1,259 @@
 fileFormatVersion: 2
 guid: d9d78d12ab239b54196497c0f272a3d0
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5857522365759234926
+    second: sfblockfont_0
+  - first:
+      213: -1357046525876946081
+    second: sfblockfont_1
+  - first:
+      213: 679365388863061144
+    second: sfblockfont_2
+  - first:
+      213: 8789595749640701105
+    second: sfblockfont_3
+  - first:
+      213: -3146474215703213510
+    second: sfblockfont_4
+  - first:
+      213: 6036292274798093519
+    second: sfblockfont_5
+  - first:
+      213: -9116919177096240070
+    second: sfblockfont_6
+  - first:
+      213: 6799925618583634531
+    second: sfblockfont_7
+  - first:
+      213: 349563237987019194
+    second: sfblockfont_8
+  - first:
+      213: -8073479110185388899
+    second: sfblockfont_9
+  - first:
+      213: -3547078376101703274
+    second: sfblockfont_10
+  - first:
+      213: -4810163940752103232
+    second: sfblockfont_11
+  - first:
+      213: -5973197643127943226
+    second: sfblockfont_12
+  - first:
+      213: -7885694551784127307
+    second: sfblockfont_13
+  - first:
+      213: -844527834664834419
+    second: sfblockfont_14
+  - first:
+      213: 7863234483883081017
+    second: sfblockfont_15
+  - first:
+      213: 6384481878326339552
+    second: sfblockfont_16
+  - first:
+      213: -7932646531457092679
+    second: sfblockfont_17
+  - first:
+      213: -3174064836246640745
+    second: sfblockfont_18
+  - first:
+      213: -4108940384553516615
+    second: sfblockfont_19
+  - first:
+      213: -2459670810685401531
+    second: sfblockfont_20
+  - first:
+      213: 6192366232435412662
+    second: sfblockfont_21
+  - first:
+      213: 273452960901878904
+    second: sfblockfont_22
+  - first:
+      213: 4146053870045518177
+    second: sfblockfont_23
+  - first:
+      213: 5192661553656877680
+    second: sfblockfont_24
+  - first:
+      213: 2047614148454702033
+    second: sfblockfont_25
+  - first:
+      213: 7579855663478116770
+    second: sfblockfont_26
+  - first:
+      213: -5983264169520049520
+    second: sfblockfont_27
+  - first:
+      213: 7783024669749891177
+    second: sfblockfont_28
+  - first:
+      213: 8433521265593035203
+    second: sfblockfont_29
+  - first:
+      213: 7204323988042684503
+    second: sfblockfont_30
+  - first:
+      213: -8365217418220296407
+    second: sfblockfont_31
+  - first:
+      213: 1882226422796018041
+    second: sfblockfont_32
+  - first:
+      213: -2392782557935795721
+    second: sfblockfont_33
+  - first:
+      213: 3994732691274409160
+    second: sfblockfont_34
+  - first:
+      213: -63490549257163881
+    second: sfblockfont_35
+  - first:
+      213: 2628445682144650625
+    second: sfblockfont_36
+  - first:
+      213: -4072654140241119060
+    second: sfblockfont_37
+  - first:
+      213: -5807791485909994346
+    second: sfblockfont_38
+  - first:
+      213: -2373986466532309601
+    second: sfblockfont_39
+  - first:
+      213: -7458727972606871690
+    second: sfblockfont_40
+  - first:
+      213: 7618353283947026195
+    second: sfblockfont_41
+  - first:
+      213: -6476398651426851248
+    second: sfblockfont_42
+  - first:
+      213: -950410264663578238
+    second: sfblockfont_43
+  - first:
+      213: -7768755486664680149
+    second: sfblockfont_44
+  - first:
+      213: -5728061527984237370
+    second: sfblockfont_45
+  - first:
+      213: 5458354208583436401
+    second: sfblockfont_46
+  - first:
+      213: 7789602229172395242
+    second: sfblockfont_47
+  - first:
+      213: 3302675053069526605
+    second: sfblockfont_48
+  - first:
+      213: -2672609309815557973
+    second: sfblockfont_49
+  - first:
+      213: 3888837156166830097
+    second: sfblockfont_50
+  - first:
+      213: 1153643704038651202
+    second: sfblockfont_51
+  - first:
+      213: -8414484232113540001
+    second: sfblockfont_52
+  - first:
+      213: 8491365690102955769
+    second: sfblockfont_53
+  - first:
+      213: -2972021659133460222
+    second: sfblockfont_54
+  - first:
+      213: 863248197106567951
+    second: sfblockfont_55
+  - first:
+      213: 1656185859043910756
+    second: sfblockfont_56
+  - first:
+      213: 4132613796093974889
+    second: sfblockfont_57
+  - first:
+      213: -6658299537498685774
+    second: sfblockfont_58
+  - first:
+      213: 8383308032298825782
+    second: sfblockfont_59
+  - first:
+      213: -1018788760942087255
+    second: sfblockfont_60
+  - first:
+      213: -7306453738249039796
+    second: sfblockfont_61
+  - first:
+      213: 7740204885875647934
+    second: sfblockfont_62
+  - first:
+      213: -1690809422226354610
+    second: sfblockfont_63
+  - first:
+      213: -4084170060608065701
+    second: sfblockfont_64
+  - first:
+      213: 1496457851614781680
+    second: sfblockfont_65
+  - first:
+      213: -6282758814212393244
+    second: sfblockfont_66
+  - first:
+      213: 8677346086755362340
+    second: sfblockfont_67
+  - first:
+      213: 3788642143171588866
+    second: sfblockfont_68
+  - first:
+      213: 776578427918003218
+    second: sfblockfont_69
+  - first:
+      213: 2968947658560777413
+    second: sfblockfont_70
+  - first:
+      213: -1670029655883177711
+    second: sfblockfont_71
+  - first:
+      213: -6911981906035120441
+    second: sfblockfont_72
+  - first:
+      213: 5453252720856682356
+    second: sfblockfont_73
+  - first:
+      213: 490653525931660159
+    second: sfblockfont_74
+  - first:
+      213: 3957412237098483791
+    second: sfblockfont_75
+  - first:
+      213: -5460589817944692705
+    second: sfblockfont_76
+  - first:
+      213: 7656045253680028916
+    second: sfblockfont_77
+  - first:
+      213: -2686814093730069244
+    second: sfblockfont_78
+  - first:
+      213: 3704833328403096426
+    second: sfblockfont_79
+  - first:
+      213: -4122438297456457446
+    second: sfblockfont_80
+  - first:
+      213: -8918464161385266101
+    second: sfblockfont_81
+  - first:
+      213: -2150162861910313060
+    second: sfblockfont_82
+  - first:
+      213: 7422208361854715644
+    second: sfblockfont_83
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -31,7 +283,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +292,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -61,10 +313,22 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -73,7 +337,1771 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sfblockfont_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e632cf2ae891a4150800000000000000
+      internalID: 5857522365759234926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5b3d69ef5dca2de0800000000000000
+      internalID: -1357046525876946081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_2
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89cb0e3c8379d6900800000000000000
+      internalID: 679365388863061144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_3
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b40e98d3caeaf970800000000000000
+      internalID: 8789595749640701105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_4
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3a851e1f5a7554d0800000000000000
+      internalID: -3146474215703213510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_5
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc466cf97d735c350800000000000000
+      internalID: 6036292274798093519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_6
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a346b3bdf423a7180800000000000000
+      internalID: -9116919177096240070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_7
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36281c292503e5e50800000000000000
+      internalID: 6799925618583634531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_8
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab960c2b9e5e9d400800000000000000
+      internalID: 349563237987019194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_9
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d94fcdf368d35ff80800000000000000
+      internalID: -8073479110185388899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_10
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6911df9920f36cec0800000000000000
+      internalID: -3547078376101703274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_11
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c8e318916dde3db0800000000000000
+      internalID: -4810163940752103232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_12
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cf88241460fa1da0800000000000000
+      internalID: -5973197643127943226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_13
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b48ca9d592609290800000000000000
+      internalID: -7885694551784127307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_14
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8a6fdba862a744f0800000000000000
+      internalID: -844527834664834419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_15
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93df3751a12df1d60800000000000000
+      internalID: 7863234483883081017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_16
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e76f80217c3a9850800000000000000
+      internalID: 6384481878326339552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_17
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b3f3c3320499e190800000000000000
+      internalID: -7932646531457092679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_18
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 797e57d29d473f3d0800000000000000
+      internalID: -3174064836246640745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_19
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b14e678d7c1af6c0800000000000000
+      internalID: -4108940384553516615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_20
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54613b8fd6e7dddd0800000000000000
+      internalID: -2459670810685401531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_21
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6becf63a744bfe550800000000000000
+      internalID: 6192366232435412662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_22
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 874d555e4008bc300800000000000000
+      internalID: 273452960901878904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_23
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16952bf270eb98930800000000000000
+      internalID: 4146053870045518177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_24
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 072db80db2a001840800000000000000
+      internalID: 5192661553656877680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_25
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dbd4b328369a6c10800000000000000
+      internalID: 2047614148454702033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_26
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a1985ee09e013960800000000000000
+      internalID: 7579855663478116770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_27
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 47
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0925f6240fc27fca0800000000000000
+      internalID: -5983264169520049520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_28
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9605b8e63bbd20c60800000000000000
+      internalID: 7783024669749891177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_29
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c9206988e2e90570800000000000000
+      internalID: 8433521265593035203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_30
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7581c1a3f76eaf360800000000000000
+      internalID: 7204323988042684503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_31
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 927a1163417c8eb80800000000000000
+      internalID: -8365217418220296407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_32
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9716c9585f20f1a10800000000000000
+      internalID: 1882226422796018041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_33
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f18c79e0f02bced0800000000000000
+      internalID: -2392782557935795721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_34
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c42d0cb734207730800000000000000
+      internalID: 3994732691274409160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_35
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79baeec8eaf6e1ff0800000000000000
+      internalID: -63490549257163881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_36
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18524abfb6d1a7420800000000000000
+      internalID: 2628445682144650625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_37
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca877e523a60b77c0800000000000000
+      internalID: -4072654140241119060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_38
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 694fbc02a64966fa0800000000000000
+      internalID: -5807791485909994346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_39
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f95c1c8f2e7ed0fd0800000000000000
+      internalID: -2373986466532309601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_40
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6777f7c4d664d7890800000000000000
+      internalID: -7458727972606871690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_41
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 317d71fa2f3d9b960800000000000000
+      internalID: 7618353283947026195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_42
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05632ed6db53f16a0800000000000000
+      internalID: -6476398651426851248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_43
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 289a7d756e67fc2f0800000000000000
+      internalID: -950410264663578238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_44
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2d1c76ab06df2490800000000000000
+      internalID: -7768755486664680149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_45
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c41bec8366d180b0800000000000000
+      internalID: -5728061527984237370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_46
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 178cfdcab38ffbb40800000000000000
+      internalID: 5458354208583436401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_47
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aec5963d4f93a1c60800000000000000
+      internalID: 7789602229172395242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_48
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d46e0c2667575dd20800000000000000
+      internalID: 3302675053069526605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_49
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba0ba092efbf8ead0800000000000000
+      internalID: -2672609309815557973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_50
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1180aa22acce7f530800000000000000
+      internalID: 3888837156166830097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_51
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245f69826d0920010800000000000000
+      internalID: 1153643704038651202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_52
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f543fb83c2fb93b80800000000000000
+      internalID: -8414484232113540001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_53
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9feb6802b1467d570800000000000000
+      internalID: 8491365690102955769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_54
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20145962c0241c6d0800000000000000
+      internalID: -2972021659133460222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_55
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 30
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0b888d59afdafb00800000000000000
+      internalID: 863248197106567951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_56
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46466529344fbf610800000000000000
+      internalID: 1656185859043910756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_57
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9695f0e1a5ef95930800000000000000
+      internalID: 4132613796093974889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_58
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2be3e3b09d7f893a0800000000000000
+      internalID: -6658299537498685774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_59
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 638b9db1d3e775470800000000000000
+      internalID: 8383308032298825782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_60
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a3f2ea05098cd1f0800000000000000
+      internalID: -1018788760942087255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_61
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4057db49034a9a90800000000000000
+      internalID: -7306453738249039796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_62
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb56c57955bba6b60800000000000000
+      internalID: 7740204885875647934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_63
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4e805de9c90988e0800000000000000
+      internalID: -1690809422226354610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_64
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5fab2ff7fc1257c0800000000000000
+      internalID: -4084170060608065701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_65
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f0e7dacc7c74c410800000000000000
+      internalID: 1496457851614781680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_66
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e67a6d55282fc8a0800000000000000
+      internalID: -6282758814212393244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_67
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 426ed269a402c6870800000000000000
+      internalID: 8677346086755362340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_68
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20331d4c4f5f39430800000000000000
+      internalID: 3788642143171588866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_69
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21ca84837f5f6ca00800000000000000
+      internalID: 776578427918003218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_70
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cc2e315a22d33920800000000000000
+      internalID: 2968947658560777413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_71
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11127bc40ecd2d8e0800000000000000
+      internalID: -1670029655883177711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_72
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c669d4e315b310a0800000000000000
+      internalID: -6911981906035120441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_73
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47f48110578ddab40800000000000000
+      internalID: 5453252720856682356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_74
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7313f048c62fc600800000000000000
+      internalID: 490653525931660159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_75
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f400a0e567d8be630800000000000000
+      internalID: 3957412237098483791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_76
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f18aa45fd761834b0800000000000000
+      internalID: -5460589817944692705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_77
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fcd9e1489cbf3a60800000000000000
+      internalID: 7656045253680028916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_78
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 405c4bd21d486bad0800000000000000
+      internalID: -2686814093730069244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_79
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a63ae7b78463a6330800000000000000
+      internalID: 3704833328403096426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_80
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1944a7c5382ac6c0800000000000000
+      internalID: -4122438297456457446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_81
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b444496e8104b3480800000000000000
+      internalID: -8918464161385266101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_82
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c973996e4461922e0800000000000000
+      internalID: -2150162861910313060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfblockfont_83
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 13
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf6c8493e2bf00760800000000000000
+      internalID: 7422208361854715644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -46,11 +46,11 @@ public sealed class Inventory {
         return $"{gameItem.itemName} added to Backpack!";
     }
 
-    public void AddPartyMember(PartyMember partyMember) {
+    public bool AddPartyMember(PartyMember partyMember) {
         var alreadyExists = Party.Any(member => member.id == partyMember.id);
         if (alreadyExists) {
             Debug.LogError("PartyMember with ID " + partyMember.id + "already exists!\n Oider, you fucked up...");
-            return;
+            return false;
         }
 
         Party.Add(partyMember);
@@ -58,6 +58,8 @@ public sealed class Inventory {
         if (Party.Count() <= 12) {
             ActiveParty.Add(partyMember);
         }
+
+        return true;
     }
     public bool TryAddGameItemToPartyMember(PartyMember partyMember, GameItem item) {
         for(int i = 0; i < 4; i++) {
@@ -71,6 +73,10 @@ public sealed class Inventory {
 
     public PartyMember GetPartyMemberById(int id) {
         return Party.First(x => x.id == id);
+    }
+
+    public List<PartyMember> GetActiveParty() {
+        return ActiveParty;
     }
 
 }

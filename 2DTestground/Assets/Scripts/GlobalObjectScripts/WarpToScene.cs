@@ -19,7 +19,7 @@ public class WarpToScene : MonoBehaviour {
             if (audioClip != null) {
                 AudioSource.PlayClipAtPoint(audioClip, transform.position);
             }
-            Player.IsInDialogue = true;
+            Player.InputDisabledInDialogue = true;
             LevelManager.setLastLevelInt(SceneManager.GetActiveScene().buildIndex);
             LevelManager.setLastLevelString(SceneManager.GetActiveScene().name);
             StartCoroutine(DoFade());
@@ -32,7 +32,7 @@ public class WarpToScene : MonoBehaviour {
             canvas.alpha += Time.deltaTime * 2;
             yield return null;
         }
-        Player.IsInDialogue = false;
+        Player.InputDisabledInDialogue = false;
         SceneManager.LoadScene(sceneToWarpTo, LoadSceneMode.Single);
     }
 }

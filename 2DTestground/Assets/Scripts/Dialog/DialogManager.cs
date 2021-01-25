@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour {
     public GameObject DialogBox;
     public GameObject Portrait;
+    public GameObject DialogueTriangle;
     public Animator AnimatorDialogue;
     public Animator AnimatorPortrait;
     public Text DialogText;
@@ -14,16 +16,19 @@ public class DialogManager : MonoBehaviour {
 
     private Queue<string> Sentences;
     private bool _hasPortrait = false;
+    private Dialogue _dialogue;
 
     // Start is called before the first frame update
     void Start() {
         Sentences = new Queue<string>();
+        DialogueTriangle.SetActive(false);
     }
 
     public void StartDialogue(Dialogue dialogue) {
         if (Player.IsInDialogue) {
             return;
         }
+        _dialogue = dialogue;
 
         Debug.Log("Starting dialogue with: " + dialogue.Name);
         Sentences.Clear();
@@ -34,7 +39,7 @@ public class DialogManager : MonoBehaviour {
 
         if (dialogue.Portrait != null) {
             _hasPortrait = true;
-            Debug.Log("Portrait not nulll.");
+            Debug.Log("Portrait not null.");
             var image = Portrait.transform.GetChild(0).GetComponent<Image>();
             image.sprite = dialogue.Portrait;
             Portrait.SetActive(true);
@@ -48,6 +53,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
+        DialogueTriangle.SetActive(false);
         if (Sentences.Count == 0) {
             Debug.Log("EndDialogue");
             EndDialogue();
@@ -63,10 +69,13 @@ public class DialogManager : MonoBehaviour {
 
     IEnumerator TypeSentence(string sentence) {
         DialogText.text = "";
+        Player.InputDisabledInDialogue = true;
         foreach (char letter in sentence.ToCharArray()) {
             DialogText.text += letter;
             yield return null;
         }
+        DialogueTriangle.SetActive(true);
+        Player.InputDisabledInDialogue = false;
     }
 
     public void EndDialogue() {
@@ -84,5 +93,8 @@ public class DialogManager : MonoBehaviour {
         Portrait.SetActive(false);
         Player.IsInDialogue = false;
         DialogActive = false;
+        if (_dialogue.FollowUpEvent != null) {
+            _dialogue.FollowUpEvent.Invoke("EventTrigger",0);
+        }
     }
 }
