@@ -42,7 +42,139 @@ public sealed class Inventory {
                 movement = 6
             }
         };
+        var sarah = new PartyMember() {
+            id = 2,
+            name = "Sarah",
+            partyMemberInventory = new GameItem[4],
+            portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/sarah"),
+            partyLeader = false,
+            activeParty = true,
+            classType = ClassType.PRST,
+            charStats = new CharacterStatistics() {
+                level = 1,
+                exp = 0,
+                maxHp = 12,
+                currentHp = 12,
+                maxMp = 8,
+                currentMp = 8,
+                attack = 6,
+                defense = 4,
+                agility = 4,
+                movement = 6
+            }
+        };
+        var jaha = new PartyMember() {
+            id = 3,
+            name = "JAHA",
+            partyMemberInventory = new GameItem[4],
+            portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/jaha"),
+            partyLeader = false,
+            activeParty = true,
+            classType = ClassType.KNTE,
+            charStats = new CharacterStatistics() {
+                level = 1,
+                exp = 0,
+                maxHp = 122,
+                currentHp = 122,
+                maxMp = 18,
+                currentMp = 18,
+                attack = 16,
+                defense = 14,
+                agility = 14,
+                movement = 6
+            }
+        };
+        var seppPartyMember = new PartyMember() {
+            id = 4,
+            name = "sepp",
+            partyMemberInventory = new GameItem[4],
+            portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/gerhalt"),
+            partyLeader = false,
+            activeParty = true,
+            classType = ClassType.WARR,
+            charStats = new CharacterStatistics() {
+                level = 2,
+                exp = 0,
+                maxHp = 22,
+                currentHp = 22,
+                maxMp = 18,
+                currentMp = 8,
+                attack = 6,
+                defense = 4,
+                agility = 4,
+                movement = 6
+            }
+        };
+        var karl = new PartyMember() {
+            id = 5,
+            name = "KAZIN",
+            partyMemberInventory = new GameItem[4],
+            portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/kazin"),
+            partyLeader = false,
+            activeParty = true,
+            classType = ClassType.SDMN,
+            charStats = new CharacterStatistics() {
+                level = 2,
+                exp = 0,
+                maxHp = 242,
+                currentHp = 22,
+                maxMp = 18,
+                currentMp = 8,
+                attack = 6,
+                defense = 14,
+                agility = 4,
+                movement = 16
+            }
+        };
+        var luke = new PartyMember() {
+            id = 6,
+            name = "lUkE",
+            partyMemberInventory = new GameItem[4],
+            portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/luke"),
+            partyLeader = false,
+            activeParty = true,
+            classType = ClassType.SDMN,
+            charStats = new CharacterStatistics() {
+                level = 2,
+                exp = 0,
+                maxHp = 242,
+                currentHp = 22,
+                maxMp = 18,
+                currentMp = 8,
+                attack = 6,
+                defense = 14,
+                agility = 4,
+                movement = 16
+            }
+        };
+        var may = new PartyMember() {
+            id = 7,
+            name = "May",
+            partyMemberInventory = new GameItem[4],
+            portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/may"),
+            partyLeader = false,
+            activeParty = true,
+            classType = ClassType.SDMN,
+            charStats = new CharacterStatistics() {
+                level = 2,
+                exp = 0,
+                maxHp = 242,
+                currentHp = 22,
+                maxMp = 18,
+                currentMp = 8,
+                attack = 6,
+                defense = 14,
+                agility = 4,
+                movement = 16
+            }
+        };
         AddPartyMember(bowie);
+        AddPartyMember(sarah);
+        AddPartyMember(jaha);
+        AddPartyMember(seppPartyMember);
+        AddPartyMember(karl);
+        AddPartyMember(luke);
+        AddPartyMember(may);
     }
     
 

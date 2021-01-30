@@ -32,10 +32,12 @@ public class Menu : MonoBehaviour
     private Animator _currentlyAnimatedButton;
 
     private Inventory _gameInventory;
-
+    private ListCreator _listCreator;
+    private int _currentItemSelected;
+    private List<PartyMember> _party;
 
     void Awake() {
-
+        _listCreator = characterSelector.GetComponent<ListCreator>();
         _gameInventory = Inventory.Instance;
         _animatorMemberButton = mainMenu.transform.Find("Buttons/Member").GetComponent<Animator>();
         _animatorMagicButton = mainMenu.transform.Find("Buttons/Magic").GetComponent<Animator>();
@@ -99,14 +101,21 @@ public class Menu : MonoBehaviour
 
 
     void HandleObjectMenu() {
-        if (Input.GetAxisRaw("Vertical") < -0.05f) {
-            var activeParty = _gameInventory.GetParty().Single(x => x.id == 1);
-            if (activeParty != null) {
-                LoadInventory(activeParty);
+        var previousSelected = _currentItemSelected;
+        if (Input.GetKeyUp(KeyCode.DownArrow) && _currentItemSelected != _party.Count-1) {
+            _currentItemSelected++;
+            var selectedMember = _party[_currentItemSelected];
+            if (selectedMember != null) {
+                LoadInventory(selectedMember);
+                _listCreator.SetScrollbar(previousSelected, _currentItemSelected, _party.Count);
             }
-        } else if (Input.GetAxisRaw("Vertical") > 0.05f) {
-            var activeParty = _gameInventory.GetParty();
-            LoadInventory(activeParty.Single(x => x.id == 0));
+        } else if (Input.GetKeyUp(KeyCode.UpArrow) && _currentItemSelected != 0) {
+            _currentItemSelected--;
+            var selectedMember = _party[_currentItemSelected];
+            if (selectedMember != null) {
+                LoadInventory(selectedMember);
+                _listCreator.SetScrollbar(previousSelected, _currentItemSelected, _party.Count);
+            }
         }
     }
 
@@ -166,17 +175,23 @@ public class Menu : MonoBehaviour
     }
 
     void OpenObjectMenu() {
-        var party = _gameInventory.GetParty();
+        _party = _gameInventory.GetParty();
         isInObjectMenu = true;
         portrait.SetActive(true);
         objectMenu.SetActive(true);
-        characterSelector.SetActive(true);
-        characterSelector.GetComponent<ListCreator>().LoadCharacterList(party);
 
-        LoadInventory(party.FirstOrDefault());
+        OpenCharacterSelectMenu();
 
         animatorPortrait.SetBool("portraitIsOpen", true);
         animatorInventory.SetBool("inventoryIsOpen", true);
+    }
+
+    void OpenCharacterSelectMenu() {
+        characterSelector.SetActive(true);
+        _currentItemSelected = 0;
+        _listCreator.LoadCharacterList(_party);
+        _listCreator.DrawBoundary(_currentItemSelected, _currentItemSelected);
+        LoadInventory(_party.FirstOrDefault());
         animatorCharacterSelector.SetBool("characterSelectorIsOpen", true);
     }
 
@@ -184,7 +199,7 @@ public class Menu : MonoBehaviour
         animatorPortrait.SetBool("portraitIsOpen", false);
         animatorInventory.SetBool("inventoryIsOpen", false);
         animatorCharacterSelector.SetBool("characterSelectorIsOpen", false);
-        characterSelector.GetComponent<ListCreator>().WhipeCharacterList();
+        _listCreator.WhipeCharacterList();
         StartCoroutine(WaitCloseSetActiveFalse(new List<GameObject>() {
             objectMenu,
             portrait,

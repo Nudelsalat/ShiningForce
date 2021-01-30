@@ -713,6 +713,7 @@ MonoBehaviour:
   SpawnPoint: {fileID: 2951832236761851660}
   item: {fileID: 1630693447302775543, guid: efffbbd7934ad094180a333e31f3bd5c, type: 3}
   content: {fileID: 7262158038676917576}
+  scrollbar: {fileID: 4166969732787154691}
 --- !u!1 &2188938330998826222
 GameObject:
   m_ObjectHideFlags: 0
