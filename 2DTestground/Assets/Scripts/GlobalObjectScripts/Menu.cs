@@ -17,10 +17,12 @@ public class Menu : MonoBehaviour
     public GameObject pauseUI;
     public GameObject objectMenu;
     public GameObject mainMenu;
+    public GameObject characterSelector;
     public GameObject portrait;
     
     public Animator animatorInventory;
     public Animator animatorMainMenuButtons;
+    public Animator animatorCharacterSelector;
     public Animator animatorPortrait;
 
     private Animator _animatorMemberButton;
@@ -98,12 +100,12 @@ public class Menu : MonoBehaviour
 
     void HandleObjectMenu() {
         if (Input.GetAxisRaw("Vertical") < -0.05f) {
-            var activeParty = _gameInventory.GetActiveParty().Single(x => x.id == 1);
+            var activeParty = _gameInventory.GetParty().Single(x => x.id == 1);
             if (activeParty != null) {
                 LoadInventory(activeParty);
             }
         } else if (Input.GetAxisRaw("Vertical") > 0.05f) {
-            var activeParty = _gameInventory.GetActiveParty();
+            var activeParty = _gameInventory.GetParty();
             LoadInventory(activeParty.Single(x => x.id == 0));
         }
     }
@@ -164,22 +166,29 @@ public class Menu : MonoBehaviour
     }
 
     void OpenObjectMenu() {
+        var party = _gameInventory.GetParty();
         isInObjectMenu = true;
         portrait.SetActive(true);
         objectMenu.SetActive(true);
+        characterSelector.SetActive(true);
+        characterSelector.GetComponent<ListCreator>().LoadCharacterList(party);
 
-        LoadInventory(_gameInventory.GetActiveParty().FirstOrDefault());
+        LoadInventory(party.FirstOrDefault());
 
         animatorPortrait.SetBool("portraitIsOpen", true);
         animatorInventory.SetBool("inventoryIsOpen", true);
+        animatorCharacterSelector.SetBool("characterSelectorIsOpen", true);
     }
 
     void CloseObjectMenu() {
         animatorPortrait.SetBool("portraitIsOpen", false);
         animatorInventory.SetBool("inventoryIsOpen", false);
+        animatorCharacterSelector.SetBool("characterSelectorIsOpen", false);
+        characterSelector.GetComponent<ListCreator>().WhipeCharacterList();
         StartCoroutine(WaitCloseSetActiveFalse(new List<GameObject>() {
             objectMenu,
-            portrait
+            portrait,
+            characterSelector
         }));
         OpenMainMenu();
     }

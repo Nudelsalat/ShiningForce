@@ -17,11 +17,18 @@ public class DialogManager : MonoBehaviour {
     private Queue<string> Sentences;
     private bool _hasPortrait = false;
     private Dialogue _dialogue;
+    private Inventory _inventory;
+
+
+    void Awake() {
+        Sentences = new Queue<string>();
+        DialogueTriangle.SetActive(false);
+        _inventory = Inventory.Instance;
+    }
 
     // Start is called before the first frame update
     void Start() {
-        Sentences = new Queue<string>();
-        DialogueTriangle.SetActive(false);
+        
     }
 
     public void StartDialogue(Dialogue dialogue) {
@@ -34,7 +41,8 @@ public class DialogManager : MonoBehaviour {
         Sentences.Clear();
 
         foreach (string sentence in dialogue.Sentences) {
-            Sentences.Enqueue(sentence);
+            var replacedSentence = ReplaceNameVariables(sentence);
+            Sentences.Enqueue(replacedSentence);
         }
 
         if (dialogue.Portrait != null) {
@@ -50,6 +58,13 @@ public class DialogManager : MonoBehaviour {
         AnimatorDialogue.SetBool("dialogueBoxIsOpen", true);
         DisplayNextSentence();
         Player.IsInDialogue = true;
+    }
+
+    public string ReplaceNameVariables(string sentence) {
+        var partyLeaderName = _inventory.GetPartyLeaderName();
+        sentence = sentence.Replace("#LEADERNAME#", partyLeaderName);
+        sentence = sentence.Replace("#CHESTER#", _inventory.GetPartyMemberNameByEnum(CharacterType.chester));
+        return sentence.Replace("#SARAH#", _inventory.GetPartyMemberNameByEnum(CharacterType.sarah));
     }
 
     public void DisplayNextSentence() {

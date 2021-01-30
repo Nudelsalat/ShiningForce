@@ -19,11 +19,11 @@ class SaveLoadUI :MonoBehaviour {
     }
 
     public void SavePlayerPosition() {
-        SaveGame.Save();
+        SaveLoadGame.Save();
     }
 
     public void LoadPlayerPosition() {
-        GameData data = SaveGame.Load();
+        GameData data = SaveLoadGame.Load();
 
         Vector3 position = new Vector3(data.position[0], data.position[1], data.position[2]);
         var player = GameObject.Find("Player");

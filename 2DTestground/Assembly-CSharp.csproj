@@ -68,16 +68,20 @@
     <Compile Include="Assets\Scripts\Dialog\DialogHolder.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Dialog\Dialogue.cs" />
+    <Compile Include="Assets\Scripts\GameData\CharacterStatistics.cs" />
+    <Compile Include="Assets\Scripts\GameData\ClassType.cs" />
     <Compile Include="Assets\Scripts\GameData\GameData.cs" />
     <Compile Include="Assets\Scripts\GameData\Inventory.cs" />
     <Compile Include="Assets\Scripts\GameData\PartyMember.cs" />
-    <Compile Include="Assets\Scripts\GameData\SaveGame.cs" />
+    <Compile Include="Assets\Scripts\GameData\SaveLoadGame.cs" />
     <Compile Include="Assets\Scripts\GameItems\GameItem.cs" />
     <Compile Include="Assets\Scripts\GameItems\MemberInventoryUI.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Fadeout.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ItemHolder.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\ListCreator.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Menu.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\SaveLoadUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\StartPoint.cs" />
@@ -86,6 +90,8 @@
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />
     <Compile Include="Assets\Scripts\TownAI\AddToPartyEvent.cs" />
     <Compile Include="Assets\Scripts\TownAI\RoamWithinBox.cs" />
+    <None Include="Assets\Fonts\license.txt" />
+    <None Include="Assets\Fonts\readme.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

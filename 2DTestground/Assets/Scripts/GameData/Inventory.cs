@@ -26,6 +26,21 @@ public sealed class Inventory {
             name = "Bowie",
             partyMemberInventory = new GameItem[4],
             portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/bowie"),
+            partyLeader = true,
+            activeParty = true,
+            classType = ClassType.SDMN,
+            charStats = new CharacterStatistics() {
+                level = 1,
+                exp = 0,
+                maxHp = 12,
+                currentHp = 12,
+                maxMp = 8,
+                currentMp = 8,
+                attack = 6,
+                defense = 4,
+                agility = 4,
+                movement = 6
+            }
         };
         AddPartyMember(bowie);
     }
@@ -78,6 +93,22 @@ public sealed class Inventory {
     public List<PartyMember> GetActiveParty() {
         return ActiveParty;
     }
+    public List<PartyMember> GetParty() {
+        return Party;
+    }
 
+    public string GetPartyLeaderName() {
+        return ActiveParty.First(x => x.partyLeader == true).name;
+    }
+    public string GetPartyMemberNameByEnum(CharacterType characterType) {
+        var partyMember = ActiveParty.FirstOrDefault(x => x.characterType == characterType);
+        if (partyMember == null) {
+            return "PartyMemberDoesNotExist";
+        }
+        else {
+            return partyMember.name;
+        }
+
+    }
 }
 
