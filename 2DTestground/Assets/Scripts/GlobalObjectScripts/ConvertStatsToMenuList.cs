@@ -11,13 +11,16 @@ class ConvertStatsToMenuList : MonoBehaviour {
     private Sprite _isActiveImage;
 
     void Awake() {
-        _isActiveImage = Resources.Load<Sprite>("ShiningForce/images/icon/inPartyIcon");
+        
     }
 
     public void DoConvert(PartyMember member) {
+        var image = gameObject.transform.Find("Image").GetComponent<Image>();
         if (member.activeParty) {
-            var image = gameObject.transform.GetChild(0).GetComponent<Image>();
-            image.sprite = _isActiveImage;
+            image.color = new Color(1, 1, 1, 1);
+        }
+        else {
+            image.color = new Color(1,1,1,0);
         }
 
         gameObject.transform.Find("Name").GetComponent<Text>().text = member.name;

@@ -23,12 +23,11 @@ public class DialogManager : MonoBehaviour {
     void Awake() {
         Sentences = new Queue<string>();
         DialogueTriangle.SetActive(false);
-        _inventory = Inventory.Instance;
     }
 
     // Start is called before the first frame update
     void Start() {
-        
+        _inventory = Inventory.Instance;
     }
 
     public void StartDialogue(Dialogue dialogue) {

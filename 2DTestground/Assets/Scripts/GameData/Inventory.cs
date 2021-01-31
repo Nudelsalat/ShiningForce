@@ -12,7 +12,6 @@ public sealed class Inventory {
     
     private List<GameItem> Backpack = new List<GameItem>();
     private List<PartyMember> Party = new List<PartyMember>();
-    private List<PartyMember> ActiveParty = new List<PartyMember>();
 
     private static readonly Lazy<Inventory> lazy = new Lazy<Inventory>(() => new Inventory());
     public static Inventory Instance {
@@ -29,6 +28,7 @@ public sealed class Inventory {
             partyLeader = true,
             activeParty = true,
             classType = ClassType.SDMN,
+            characterType = CharacterType.bowie,
             charStats = new CharacterStatistics() {
                 level = 1,
                 exp = 0,
@@ -50,6 +50,7 @@ public sealed class Inventory {
             partyLeader = false,
             activeParty = true,
             classType = ClassType.PRST,
+            characterType = CharacterType.sarah,
             charStats = new CharacterStatistics() {
                 level = 1,
                 exp = 0,
@@ -71,6 +72,7 @@ public sealed class Inventory {
             partyLeader = false,
             activeParty = true,
             classType = ClassType.KNTE,
+            characterType = CharacterType.jaha,
             charStats = new CharacterStatistics() {
                 level = 1,
                 exp = 0,
@@ -90,8 +92,9 @@ public sealed class Inventory {
             partyMemberInventory = new GameItem[4],
             portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/gerhalt"),
             partyLeader = false,
-            activeParty = true,
+            activeParty = false,
             classType = ClassType.WARR,
+            characterType = CharacterType.jaha,
             charStats = new CharacterStatistics() {
                 level = 2,
                 exp = 0,
@@ -111,8 +114,9 @@ public sealed class Inventory {
             partyMemberInventory = new GameItem[4],
             portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/kazin"),
             partyLeader = false,
-            activeParty = true,
+            activeParty = false,
             classType = ClassType.SDMN,
+            characterType = CharacterType.bowie,
             charStats = new CharacterStatistics() {
                 level = 2,
                 exp = 0,
@@ -134,6 +138,7 @@ public sealed class Inventory {
             partyLeader = false,
             activeParty = true,
             classType = ClassType.SDMN,
+            characterType = CharacterType.sarah,
             charStats = new CharacterStatistics() {
                 level = 2,
                 exp = 0,
@@ -155,6 +160,7 @@ public sealed class Inventory {
             partyLeader = false,
             activeParty = true,
             classType = ClassType.SDMN,
+            characterType = CharacterType.jaha,
             charStats = new CharacterStatistics() {
                 level = 2,
                 exp = 0,
@@ -182,7 +188,7 @@ public sealed class Inventory {
         if (gameItem == null) {
             return "But nothing is inside.";
         }
-        foreach (var partyMember in ActiveParty) {
+        foreach (var partyMember in Party) {
             if (TryAddGameItemToPartyMember(partyMember, gameItem)) {
                 return $"{gameItem.itemName} added to {partyMember.name}!";
             }
@@ -196,16 +202,14 @@ public sealed class Inventory {
     public bool AddPartyMember(PartyMember partyMember) {
         var alreadyExists = Party.Any(member => member.id == partyMember.id);
         if (alreadyExists) {
-            Debug.LogError("PartyMember with ID " + partyMember.id + "already exists!\n Oider, you fucked up...");
+            Debug.LogError("PartyMember with ID " + partyMember.id + " already exists!\n Oider, you fucked up...");
             return false;
         }
+        // active party full?
+        partyMember.activeParty = Party.Select(x => x.activeParty).Count() < 6;
 
         Party.Add(partyMember);
-
-        if (Party.Count() <= 12) {
-            ActiveParty.Add(partyMember);
-        }
-
+        
         return true;
     }
     public bool TryAddGameItemToPartyMember(PartyMember partyMember, GameItem item) {
@@ -222,18 +226,15 @@ public sealed class Inventory {
         return Party.First(x => x.id == id);
     }
 
-    public List<PartyMember> GetActiveParty() {
-        return ActiveParty;
-    }
     public List<PartyMember> GetParty() {
         return Party;
     }
 
     public string GetPartyLeaderName() {
-        return ActiveParty.First(x => x.partyLeader == true).name;
+        return Party.First(x => x.partyLeader == true).name;
     }
     public string GetPartyMemberNameByEnum(CharacterType characterType) {
-        var partyMember = ActiveParty.FirstOrDefault(x => x.characterType == characterType);
+        var partyMember = Party.FirstOrDefault(x => x.characterType == characterType);
         if (partyMember == null) {
             return "PartyMemberDoesNotExist";
         }

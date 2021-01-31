@@ -14,11 +14,14 @@ public class ItemHolder : MonoBehaviour {
     private Inventory inventory;
 
     void Awake() {
-        inventory = Inventory.Instance;
         if (gameItem != null) {
             var newList = Dialogue.Sentences.Select(x => x.Replace("#ITEMNAME#", gameItem.itemName)).ToList();
             Dialogue.Sentences = newList;
         }
+    }
+
+    void Start() {
+        inventory = Inventory.Instance;
     }
 
     void Update() {

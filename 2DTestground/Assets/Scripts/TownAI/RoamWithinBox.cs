@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.GlobalObjectScripts;
+using UnityEngine;
 
 public class RoamWithinBox : DialogHolder {
     public float moveEveryXSeconds = 1;
@@ -48,21 +49,21 @@ public class RoamWithinBox : DialogHolder {
     void HandleMovement() {
         Vector3 currentPos;
         var cycleCount = 0;
-        int moveDirection;
+        DirectionType moveDirection;
         do {
             currentPos = _nextPoint;
-            moveDirection = Random.Range(0, 4); // 0 = up; 1 = left; 2 = down; 3 = right MAX -> Excludes...
+            moveDirection = (DirectionType)Random.Range(0, 4); // 0 = up; 1 = left; 2 = down; 3 = right MAX -> Excludes...
             switch (moveDirection) {
-                case 0:
+                case DirectionType.up:
                     currentPos.y += 1;
                     break;
-                case 1:
+                case DirectionType.left:
                     currentPos.x -= 1;
                     break;
-                case 2:
+                case DirectionType.down:
                     currentPos.y -= 1;
                     break;
-                case 3:
+                case DirectionType.right:
                     currentPos.x += 1;
                     break;
             }

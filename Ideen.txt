@@ -22,3 +22,12 @@ Turn order -> agility *Rand(0.875, 1.125)
 
 UI shizzle:
 https://forum.unity.com/threads/scroll-rect-and-scroll-bar-arrow-keys-control.339661/
+
+
+Damager Calculation:
+Max = (AT - DF) * (1-(LandEffect/100);
+Min = Max * 0.8;
+Damage = Round(Rand(Max, Min), MidpointRounding.AwayFromZero);
+
+
+Spell damage & spell heal --> after promotion +25%
