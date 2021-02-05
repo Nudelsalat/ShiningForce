@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Assets.Scripts.GlobalObjectScripts;
@@ -11,19 +12,33 @@ public class MemberInventoryUI : MonoBehaviour {
     public GameObject RightItem;
     public GameObject BottomItem;
 
-    private static Text _titleText;
-    private static Sprite _blankSprite;
-    private static GameObject[] _itemList;
+    private Text _titleText;
+    private Sprite _blankSprite;
+    private GameObject[] _itemList;
+    private GameObject _currentSelectedItem;
 
+    private Color _redisch = new Color(1f, 0.6f, 0.6f);
+
+    public static MemberInventoryUI Instance;
+    
     void Awake() {
+        if (Instance != null) {
+            Debug.LogWarning("More than once Instance of MemberInventoryUI found.");
+        } else {
+            Instance = this;
+        }
+
         _itemList = new GameObject[] {
             TopItem, LeftItem, BottomItem, RightItem
         };
+        _currentSelectedItem = TopItem;
+
         _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
         _titleText = transform.Find("Title").GetComponent<Text>();
+
     }
 
-    public static void LoadMemberInventory(GameItem[] gameItems) {
+    public void LoadMemberInventory(GameItem[] gameItems) {
         _titleText.text = "- ITEMS -";
         for (int i = 0; i < gameItems.Length; i++) {
             var itemSprite = gameItems[i]?.ItemSprite;
@@ -35,6 +50,7 @@ public class MemberInventoryUI : MonoBehaviour {
             }
 
             _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i]?.itemName;
+            _itemList[i].transform.GetComponent<GameItem>().SetGameItem(gameItems[i], (DirectionType)i); 
         }
     }
 
@@ -53,7 +69,39 @@ public class MemberInventoryUI : MonoBehaviour {
     }
 
     public void SelectObject(DirectionType direction) {
-        //TODO
+        switch (direction) {
+            case DirectionType.up:
+                SetCurrentSelectedItem(TopItem);
+                break;
+            case DirectionType.left:
+                SetCurrentSelectedItem(LeftItem);
+                break;
+            case DirectionType.down:
+                SetCurrentSelectedItem(BottomItem);
+                break;
+            case DirectionType.right:
+                SetCurrentSelectedItem(RightItem);
+                break;
+        }
+    }
+
+    public void UnselectObject() {
+        _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
+        _currentSelectedItem.transform.GetChild(0).GetComponent<Text>().color = Color.white;
+    }
+
+    public GameItem GetSelectedGameItem() {
+        return _currentSelectedItem.GetComponent<GameItem>();
+    }
+
+    private void SetCurrentSelectedItem(GameObject selectedGameObject) {
+        if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
+            _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
+            _currentSelectedItem.transform.GetChild(0).GetComponent<Text>().color = Color.white;
+        }
+        selectedGameObject.transform.GetComponent<Image>().color = _redisch;
+        selectedGameObject.transform.GetChild(0).GetComponent<Text>().color = _redisch;
+        _currentSelectedItem = selectedGameObject;
     }
 }
 

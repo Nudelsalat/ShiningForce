@@ -5,6 +5,9 @@ und nur exp durch healing items bekommt, weil er sonst nichts kann.
 Highground sintuationen, oder burgmauern, mit magier bzw fernkämpfer. -> strategie
 
 
+Jaha, when he grows up he wants to be a hero... noone told him he's a dwarf though.
+
+
 Mid/late-game -> Character stirbt.
 Bekommt die möglichkeit ALLES aufzugeben, um diese person zu retten
 -> if yes: delete all save files. (save progression somewhere hidden), give a text that character A is back alive, but you seize to exist. back to title screen -> No save files....
@@ -12,11 +15,23 @@ Bekommt die möglichkeit ALLES aufzugeben, um diese person zu retten
 
 
 
+Battle indem klar ist wer der "Boss" ist, und eine Flugeinheit die meint "ich könnte den im alleingang erledigen..."
+
+
+
+
+On the ‘SEGA’ logo, quickly press
+
+U, D, U, D, L, R, L, R, U, R, D, L, U, B
+
+on the joypad. Then hold ‘start’ (you need to hold this until you have selected the game which you want to continue). You should hear a sort of fanfare to let you know that it’s worked. When you choose the game you want to continue, you must select it with the C button, and then you can release ‘start‘. The witch will give you the following  options:
+
+
 
 Gameplay_
 
 turnorder:
-Turn order -> agility *Rand(0.875, 1.125)
+Turn order -> (agility * Rand(0.875, 1.125)) + Rand(-1,0,1); //-1, 0 ODER 1
 
 
 
@@ -30,4 +45,56 @@ Min = Max * 0.8;
 Damage = Round(Rand(Max, Min), MidpointRounding.AwayFromZero);
 
 
+
+
+
 Spell damage & spell heal --> after promotion +25%
+
+
+
+##################### CODE #######################
+
+
+/// https://sf2.shiningforcecentral.com/guide/land-effect-guide/
+// http://kenhilfportfolio.blogspot.com
+// https://www.youtube.com/watch?v=ziyxyXuT7Fo&feature=emb_logo
+
+// https://forums.shiningforcecentral.com/viewtopic.php?t=17212 crits doubles dodge...
+
+// https://forums.shiningforcecentral.com/viewtopic.php?t=17667 Damage calculation
+
+// Images  https://github.com/kenhilf/SFPC/tree/master/game/data/images
+
+// a* finding algorith für enemy path!
+
+// Turn order -> agility *Rand(0.875, 1.125)
+
+
+private var _movementMap = currentMovementMap // which is an array array.
+
+4,4,3
+private MovementGrid MoveFunction(x, y, movement){
+	var movementGrid = new Pos(x,y)
+
+	var restMovement = movement - _movementMap[x-1][y];
+	if(restMovement >= 0){
+		movementGrid.Add(MoveFunction(x-1,y, restMovement));
+	}
+	
+	restMovement = movement - _movementMap[x][y-1];
+	if(restMovement >= 0){
+		movementGrid.Add(MoveFunction(x,y-1, restMovement));
+	}
+	
+	restMovement = movement - _movementMap[x+1][y];
+	if(restMovement >= 0){
+		movementGrid.Add(MoveFunction(x+1,y, restMovement));
+	}
+
+	restMovement = movement - _movementMap[x][y+1];
+	if(restMovement >= 0){
+		movementGrid.Add(MoveFunction(x,y+1, restMovement));
+	}
+
+	return movementGrid;
+}

@@ -98,13 +98,15 @@ public class DialogManager : MonoBehaviour {
             AnimatorPortrait.SetBool("portraitIsOpen", false);
         }
         StartCoroutine(WaitForQuaterSec());
-        _hasPortrait = false;
     }
     IEnumerator WaitForQuaterSec() {
         yield return new WaitForSeconds(0.25f);
 
         DialogBox.SetActive(false);
-        Portrait.SetActive(false);
+        if (_hasPortrait) {
+            Portrait.SetActive(false);
+            _hasPortrait = false;
+        }
         Player.IsInDialogue = false;
         DialogActive = false;
         if (_dialogue.FollowUpEvent != null) {

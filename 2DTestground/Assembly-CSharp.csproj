@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\GameData\PartyMember.cs" />
     <Compile Include="Assets\Scripts\GameData\SaveLoadGame.cs" />
     <Compile Include="Assets\Scripts\GameItems\GameItem.cs" />
+    <Compile Include="Assets\Scripts\GameItems\ItemType.cs" />
     <Compile Include="Assets\Scripts\GameItems\MemberInventoryUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />

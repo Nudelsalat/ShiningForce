@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEditor;
 using UnityEditor.VersionControl;
 using UnityEditorInternal;
@@ -38,24 +39,59 @@ public class Menu : MonoBehaviour
     private Text _textMainButtonMenu;
     private Text _textObjectButtonMenu;
 
+    private MemberInventoryUI _memberInventoryUI;
+    private Inventory  _inventory;
+
     private Animator _currentlyAnimatedButton;
 
-    private Dialogue _dialogue;
+    private DialogManager _dialogManager;
+    private Dialogue _dialogueSearchButton;
+    private Dialogue _tempDialogue = new Dialogue {
+        Name = "Itemtext",
+        Sentences = new List<string>() {
+            "SENTENCE NOT REPLACED!"
+        },
+    };
+    private string _itemDialogue = "Give #ITEMNAME# to whom?";
 
-    private Inventory _gameInventory;
     private ListCreator _listCreator;
-    private int _currentItemSelected = 0;
+
     private List<PartyMember> _party;
+    private int _currentItemSelected = 0;
+    private PartyMember _firstSelectedPartyMember;
+    private PartyMember _secondSelectedPartyMember;
+
+    private static Sprite _blankSprite;
+
+    private GameObject _itemsToTrade;
+    private Image _itemsToTradeOne;
+    private Image _itemsToTradeTwo;
+
     private CurrentMenu _currentMenuType = CurrentMenu.none;
 
     private bool _isInMainButtonMenu = false;
     private bool _isInObjectButtonMenu = false;
     private bool _inInventoryMenu = false;
     private bool _isPause = false;
+    private DirectionType _inputDirection;
+    private GameItem _firstSelectedItem;
+    private GameItem _secondSelectedItem;
 
 
     void Awake() {
+        _memberInventoryUI = MemberInventoryUI.Instance;
+        _inventory = Inventory.Instance;
+
+        _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
+
+        _dialogManager = FindObjectOfType<DialogManager>();
+
         _listCreator = characterSelector.GetComponent<ListCreator>();
+
+        _itemsToTrade = objectMenu.transform.Find("ItemsToTrade").gameObject;
+        _itemsToTradeOne = _itemsToTrade.transform.GetChild(0).GetComponent<Image>();
+        _itemsToTradeTwo = _itemsToTrade.transform.GetChild(1).GetComponent<Image>();
+        _itemsToTrade.SetActive(false);
 
         _animatorPortrait = portrait.GetComponent<Animator>();
         _animatorCharacterSelector = characterSelector.GetComponent<Animator>();
@@ -78,7 +114,7 @@ public class Menu : MonoBehaviour
 
         _textObjectButtonMenu = objectMenu.transform.Find("ObjectButtons/Label/LabelText").GetComponent<Text>();
 
-        _dialogue = new Dialogue {
+        _dialogueSearchButton = new Dialogue {
             Name = "SearchText",
             Sentences = new List<string>() {
                 "This Button Function will be replaced with the 'Interact' Key. It's easier that way...",
@@ -88,13 +124,13 @@ public class Menu : MonoBehaviour
     }
 
     void Start() {
-        _gameInventory = Inventory.Instance;
     }
 
     #region OverAllInput
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        GetInputDirection();
+
         if (Input.GetButtonUp("Select")) {
             if (!_isPause) {
                 Pause();
@@ -107,7 +143,10 @@ public class Menu : MonoBehaviour
             return;
         }
 
-        if (Player.IsInDialogue) {
+        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
+            if (Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
+                _dialogManager.DisplayNextSentence();
+            }
             return;
         }
         
@@ -120,22 +159,12 @@ public class Menu : MonoBehaviour
                 HandleCharacterSelectionMenu();
                 return;
             }
+
             if (_isInObjectButtonMenu) {
-                if (Input.GetButtonUp("Back")) {
-                    CloseObjectButtonMenu();
-                    _isInObjectButtonMenu = false;
-                    OpenMainButtonMenu();
-                }
                 HandleObjectButtonMenu();
                 return;
             }
-
-            if (Input.GetButtonUp("Back")) {
-                if (_isInMainButtonMenu) {
-                    CloseMainMenuForGood();
-                } 
-            }
-
+            
             HandleMainMenu();
             return;
         }
@@ -174,36 +203,142 @@ public class Menu : MonoBehaviour
                 case CurrentMenu.drop:
                 case CurrentMenu.give:
                 case CurrentMenu.equip:
-                    CloseObjectMenu();
-                    _currentMenuType = CurrentMenu.none;
-                    OpenObjectButtonMenu();
+                    if (_firstSelectedPartyMember != null) {
+                        _firstSelectedPartyMember = null;
+                        if (_firstSelectedItem != null) {
+                            Destroy(_firstSelectedItem.gameObject);
+                        }
+
+                        _itemsToTradeOne.sprite = _blankSprite;
+                        //TODD: soundeffekt
+                    }
+                    else {
+                        CloseObjectMenu();
+                        _currentMenuType = CurrentMenu.none;
+                        _itemsToTrade.SetActive(false);
+                        OpenObjectButtonMenu();
+                    }
                     break;
                 case CurrentMenu.member:
                 case CurrentMenu.magic:
-                    _currentMenuType = CurrentMenu.none;
-                    OpenMainButtonMenu();
+                    if (_firstSelectedPartyMember != null) {
+                        _firstSelectedPartyMember = null;
+                        //TODD: soundeffekt
+                    } else {
+                        _currentMenuType = CurrentMenu.none;
+                        OpenMainButtonMenu();
+                    }
                     break;
             }
+
         } else if (Input.GetButtonUp("Interact")) {
-            _inInventoryMenu = true;
+            switch (_currentMenuType) {
+                case CurrentMenu.use:
+                case CurrentMenu.drop:
+                case CurrentMenu.give:
+                case CurrentMenu.equip:
+                    _itemsToTrade.SetActive(true);
+                    _inInventoryMenu = true;
+                    _memberInventoryUI.SelectObject(DirectionType.up);
+                    break;
+                case CurrentMenu.member:
+                case CurrentMenu.magic:
+                    //TODO
+                    break;
+            }
+
+            if (_firstSelectedPartyMember == null) {
+                _firstSelectedPartyMember = _party[_currentItemSelected];
+            }
+            else {
+                _secondSelectedPartyMember = _party[_currentItemSelected];
+            }
         }
     }
 
     private void HandleInventoryMenu() {
+        _memberInventoryUI.SelectObject(_inputDirection);
+        if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
+            //TODO clean up
+            var selectedItem = _memberInventoryUI.GetSelectedGameItem();
+            if (_firstSelectedItem == null && !selectedItem.IsSet()) {
+                _tempDialogue.Sentences.Clear();
+                _tempDialogue.Sentences.Add("Select an item first...");
+                _dialogManager.StartDialogue(_tempDialogue);
+                return;
+            }
+            if (_firstSelectedItem == null) {
+                _itemsToTradeOne.sprite = selectedItem.ItemSprite;
+                _firstSelectedItem = Instantiate(selectedItem);
+                _tempDialogue.Sentences.Clear();
+                _tempDialogue.Sentences.Add(_itemDialogue.Replace("#ITEMNAME#", selectedItem.itemName));
+                _dialogManager.StartDialogue(_tempDialogue);
+                _inInventoryMenu = false;
+                _memberInventoryUI.UnselectObject();
+            } else {
+                _tempDialogue.Sentences.Clear();
+
+                if (!selectedItem.IsSet()) {
+                    _tempDialogue.Sentences.Add(
+                        $"Gave {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
+                        $"to {_secondSelectedPartyMember.name}");
+                } else {
+                    _tempDialogue.Sentences.Add(
+                        $"Swapped {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
+                        $"with {_secondSelectedPartyMember.name}'s {_secondSelectedItem.itemName}");
+                }
+
+                _secondSelectedItem = Instantiate(selectedItem);
+                _itemsToTradeTwo.sprite = selectedItem.ItemSprite;
+                _inventory.SwapItems(_firstSelectedPartyMember, _secondSelectedPartyMember, 
+                    _firstSelectedItem, _secondSelectedItem );
+                
+                _dialogManager.StartDialogue(_tempDialogue);
+                LoadInventory(_secondSelectedPartyMember);
+                ClearAllSelection();
+                _inInventoryMenu = false;
+                _memberInventoryUI.UnselectObject();
+            }
+        }
+
+        if (Input.GetButtonUp("Back")) {
+            if (_secondSelectedItem != null) {
+                _secondSelectedItem = null;
+                _itemsToTradeTwo.sprite = _blankSprite;
+            } 
+
+            _inInventoryMenu = false;
+            _memberInventoryUI.UnselectObject();
+        }
         
+    }
+
+    private void ClearAllSelection() {
+        _firstSelectedPartyMember = null;
+        _secondSelectedPartyMember = null;
+        Debug.Log(_firstSelectedItem);
+        Destroy(_firstSelectedItem.gameObject);
+        Destroy(_secondSelectedItem.gameObject);
+        _itemsToTradeOne.sprite = _blankSprite;
+        _itemsToTradeTwo.sprite = _blankSprite;
     }
 
     #endregion
 
     private void HandleMainMenu() {
-        if (Input.GetAxisRaw("Horizontal") > 0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorItemButton, _textMainButtonMenu);
-        } else if (Input.GetAxisRaw("Horizontal") < -0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorMagicButton, _textMainButtonMenu);
-        } else if (Input.GetAxisRaw("Vertical") > 0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorMemberButton, _textMainButtonMenu);
-        } else if (Input.GetAxisRaw("Vertical") < -0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorSearchButton, _textMainButtonMenu);
+        switch (_inputDirection) {
+            case DirectionType.up:
+                SetButtonActiveAndDeactivateLastButton(_animatorMemberButton, _textObjectButtonMenu);
+                break;
+            case DirectionType.left:
+                SetButtonActiveAndDeactivateLastButton(_animatorMagicButton, _textObjectButtonMenu);
+                break;
+            case DirectionType.down:
+                SetButtonActiveAndDeactivateLastButton(_animatorSearchButton, _textObjectButtonMenu);
+                break;
+            case DirectionType.right:
+                SetButtonActiveAndDeactivateLastButton(_animatorItemButton, _textObjectButtonMenu);
+                break;
         }
 
         if (Input.GetButtonUp("Interact")) {
@@ -214,7 +349,7 @@ public class Menu : MonoBehaviour
                     break;
                 case "Search":
                     CloseMainMenuForGood();
-                    FindObjectOfType<DialogManager>().StartDialogue(_dialogue);
+                    FindObjectOfType<DialogManager>().StartDialogue(_dialogueSearchButton);
                     break;
                 case "Item":
                     CloseMainButtonMenu();
@@ -222,18 +357,30 @@ public class Menu : MonoBehaviour
                     break;
             }
         }
+
+        if (Input.GetButtonUp("Back")) {
+            if (_isInMainButtonMenu) {
+                CloseMainMenuForGood();
+            }
+        }
     }
 
     private void HandleObjectButtonMenu() {
-        if (Input.GetAxisRaw("Horizontal") > 0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorEquipButton, _textObjectButtonMenu);
-        } else if (Input.GetAxisRaw("Horizontal") < -0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorGiveButton, _textObjectButtonMenu);
-        } else if (Input.GetAxisRaw("Vertical") > 0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorUseButton, _textObjectButtonMenu);
-        } else if (Input.GetAxisRaw("Vertical") < -0.05f) {
-            SetButtonActiveAndDeactivateLastButton(_animatorDropButton, _textObjectButtonMenu);
+        switch (_inputDirection) {
+            case DirectionType.up:
+                SetButtonActiveAndDeactivateLastButton(_animatorUseButton, _textObjectButtonMenu);
+                break;
+            case DirectionType.left:
+                SetButtonActiveAndDeactivateLastButton(_animatorGiveButton, _textObjectButtonMenu);
+                break;
+            case DirectionType.down:
+                SetButtonActiveAndDeactivateLastButton(_animatorDropButton, _textObjectButtonMenu);
+                break;
+            case DirectionType.right:
+                SetButtonActiveAndDeactivateLastButton(_animatorEquipButton, _textObjectButtonMenu);
+                break;
         }
+
 
         if (Input.GetButtonUp("Interact")) {
             switch (_currentlyAnimatedButton.name) {
@@ -258,6 +405,12 @@ public class Menu : MonoBehaviour
                     CloseObjectButtonMenu();
                     break;
             }
+        }
+
+        if (Input.GetButtonUp("Back")) {
+            CloseObjectButtonMenu();
+            _isInObjectButtonMenu = false;
+            OpenMainButtonMenu();
         }
     }
 
@@ -289,7 +442,7 @@ public class Menu : MonoBehaviour
     }
 
     private void OpenObjectMenu() {
-        _party = _gameInventory.GetParty();
+        _party = _inventory.GetParty();
 
         OpenCharacterSelectMenu();
 
@@ -309,7 +462,7 @@ public class Menu : MonoBehaviour
         _animatorPortrait.SetBool("portraitIsOpen", false);
         _animatorInventory.SetBool("inventoryIsOpen", false);
         _animatorCharacterSelector.SetBool("characterSelectorIsOpen", false);
-        _listCreator.WhipeCharacterList();
+        _listCreator.ClearCharacterList();
     }
 
     private void CloseMainMenuForGood() {
@@ -345,7 +498,7 @@ public class Menu : MonoBehaviour
 
     private void LoadInventory(PartyMember partyMember) {
         var gameItem = partyMember.partyMemberInventory;
-        MemberInventoryUI.LoadMemberInventory(gameItem);
+        _memberInventoryUI.LoadMemberInventory(gameItem);
         LoadPortraitOfMember(partyMember);
     }
 
@@ -363,6 +516,20 @@ public class Menu : MonoBehaviour
         label.text = animator.name;
         animator.SetBool("selected", true);
         _currentlyAnimatedButton = animator;
+    }
+
+    private void GetInputDirection() {
+        if (Input.GetAxisRaw("Vertical") > 0.05f) {
+            _inputDirection = DirectionType.up;
+        } else if (Input.GetAxisRaw("Horizontal") < -0.05f) {
+            _inputDirection = DirectionType.left;
+        } else if (Input.GetAxisRaw("Vertical") < -0.05f) {
+            _inputDirection = DirectionType.down;
+        } else if (Input.GetAxisRaw("Horizontal") > 0.05f) {
+            _inputDirection = DirectionType.right;
+        } else {
+            _inputDirection = DirectionType.none;
+        }
     }
 
     #region Coroutines

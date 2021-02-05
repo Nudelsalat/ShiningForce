@@ -26,7 +26,7 @@ public class ItemHolder : MonoBehaviour {
 
     void Update() {
         if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabled) {
-            var addedToWhom = inventory.AddGameItem(gameItem);
+            var addedToWhom = inventory.AddGameItem(Instantiate(gameItem));
             Dialogue.Sentences.Add(addedToWhom);
             TriggerDialogue();
             if (DespawnAfterUser) {

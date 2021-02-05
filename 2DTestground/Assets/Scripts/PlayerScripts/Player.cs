@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public static bool IsInDialogue = false;
     public static bool InputDisabled = false;
     public static bool InputDisabledInDialogue = false;
+    public static bool InputDisabledInEvent = false;
     public GameObject _interactionSelector;
     
     private Vector2 _movement;
@@ -33,19 +34,12 @@ public class Player : MonoBehaviour
         HandleMovement();
     }
 
-    private void HandleDialogue() {
-        if (Input.GetButtonDown("Interact")) {
-            FindObjectOfType<DialogManager>().DisplayNextSentence();
-        }
-    }
-
     private void HandleInput() {
-        if (InputDisabled || InputDisabledInDialogue) {
+        if (InputDisabled || InputDisabledInDialogue || InputDisabledInEvent) {
             _movement.x = _movement.y = 0;
             return;
         } else if (IsInDialogue) {
             _movement.x = _movement.y = 0;
-            HandleDialogue();
             return;
         }   
 

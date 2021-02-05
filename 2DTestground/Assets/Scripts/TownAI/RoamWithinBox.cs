@@ -77,7 +77,7 @@ public class RoamWithinBox : DialogHolder {
         } while ((!_path.GetComponent<Collider2D>().OverlapPoint(currentPos) ||
                  Physics2D.OverlapCircle(currentPos, .2f, _playerCollision)));
 
-        _animator.SetInteger("moveDirection", moveDirection);
+        _animator.SetInteger("moveDirection", (int)moveDirection);
         _nextPoint = currentPos;
     }
 

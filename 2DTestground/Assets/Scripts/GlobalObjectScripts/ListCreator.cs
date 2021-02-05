@@ -19,17 +19,17 @@ public class ListCreator : MonoBehaviour
         int count = 0;
         foreach (var partyMember in party) {
 
-            float spawnY = count * 32;
-            Vector3 pos = new Vector3(0, -spawnY, SpawnPoint.position.z);
-            GameObject SpawnedItem = Instantiate(item, pos, SpawnPoint.rotation);
-            SpawnedItem.transform.SetParent(SpawnPoint, false);
-            ConvertStatsToMenuList itemDetails = SpawnedItem.GetComponent<ConvertStatsToMenuList>();
+            var spawnY = count * 32;
+            var pos = new Vector3(0, -spawnY, SpawnPoint.position.z);
+            var spawnedItem = Instantiate(item, pos, SpawnPoint.rotation);
+            spawnedItem.transform.SetParent(SpawnPoint, false);
+            var itemDetails = spawnedItem.GetComponent<ConvertStatsToMenuList>();
             itemDetails.DoConvert(partyMember);
             count++;
         }
     }
 
-    public void WhipeCharacterList() {
+    public void ClearCharacterList() {
         foreach (Transform child in SpawnPoint) {
             GameObject.Destroy(child.gameObject);
         }
