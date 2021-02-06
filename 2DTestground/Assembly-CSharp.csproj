@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\GameItems\GameItem.cs" />
     <Compile Include="Assets\Scripts\GameItems\ItemType.cs" />
     <Compile Include="Assets\Scripts\GameItems\MemberInventoryUI.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\Constants.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DirectionType.cs" />

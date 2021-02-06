@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
-public class GameItem : MonoBehaviour {
+[CreateAssetMenu(fileName="GameItem", menuName = "Inventory/GameItem")]
+public class GameItem : ScriptableObject {
     public string itemName;
     public Sprite ItemSprite;
     public int buyValue;

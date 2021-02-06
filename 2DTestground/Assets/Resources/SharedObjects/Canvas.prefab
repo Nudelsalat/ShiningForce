@@ -898,7 +898,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00004076879}
+  m_AnchoredPosition: {x: 0, y: 0.0000011885752}
   m_SizeDelta: {x: 840, y: 160}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2260665477235948565
@@ -2436,7 +2436,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6629348498073339424}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99967784
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2756,7 +2756,6 @@ GameObject:
   - component: {fileID: 7080477950235674873}
   - component: {fileID: 7080477950235674875}
   - component: {fileID: 7080477950235674874}
-  - component: {fileID: 4158368040190498637}
   m_Layer: 5
   m_Name: ObjectLeft
   m_TagString: Untagged
@@ -2822,24 +2821,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4158368040190498637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080477950235674872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c5cbe6f3a8d394fb90b701d4d02ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: 
-  ItemSprite: {fileID: 0}
-  buyValue: 0
-  sellValue: 0
-  healValue: 0
-  itemType: 0
 --- !u!1 &7080477950266733415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3774,7 +3755,6 @@ GameObject:
   - component: {fileID: 7080477951570531362}
   - component: {fileID: 7080477951570531372}
   - component: {fileID: 7080477951570531363}
-  - component: {fileID: 7928033120806299468}
   m_Layer: 5
   m_Name: ObjectRight
   m_TagString: Untagged
@@ -3840,24 +3820,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7928033120806299468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080477951570531361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c5cbe6f3a8d394fb90b701d4d02ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: 
-  ItemSprite: {fileID: 0}
-  buyValue: 0
-  sellValue: 0
-  healValue: 0
-  itemType: 0
 --- !u!1 &7080477951874054715
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,7 +3831,6 @@ GameObject:
   - component: {fileID: 7080477951874054692}
   - component: {fileID: 7080477951874054694}
   - component: {fileID: 7080477951874054693}
-  - component: {fileID: 1445184834216663454}
   m_Layer: 5
   m_Name: ObjectButtom
   m_TagString: Untagged
@@ -3935,24 +3896,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1445184834216663454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080477951874054715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c5cbe6f3a8d394fb90b701d4d02ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: 
-  ItemSprite: {fileID: 0}
-  buyValue: 0
-  sellValue: 0
-  healValue: 0
-  itemType: 0
 --- !u!1 &7080477951918292634
 GameObject:
   m_ObjectHideFlags: 0
@@ -4120,7 +4063,6 @@ GameObject:
   - component: {fileID: 7080477951984067950}
   - component: {fileID: 7080477951984067944}
   - component: {fileID: 7080477951984067951}
-  - component: {fileID: 2595436507269836687}
   m_Layer: 5
   m_Name: ObjectTop
   m_TagString: Untagged
@@ -4186,24 +4128,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2595436507269836687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080477951984067949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c5cbe6f3a8d394fb90b701d4d02ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: 
-  ItemSprite: {fileID: 0}
-  buyValue: 0
-  sellValue: 0
-  healValue: 0
-  itemType: 0
 --- !u!1 &7080477952079376533
 GameObject:
   m_ObjectHideFlags: 0

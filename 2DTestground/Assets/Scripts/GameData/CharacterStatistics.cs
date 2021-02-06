@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class CharacterStatistics {
     public int defense = 0;
     public int agility = 0;
     public int movement = 0;
+   
 
     public CharacterStatistics() {
         level = 1;

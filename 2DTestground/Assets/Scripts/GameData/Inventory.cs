@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.GlobalObjectScripts;
+using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
@@ -68,12 +69,17 @@ public sealed class Inventory {
         var jaha = new PartyMember() {
             id = 3,
             name = "JAHA",
-            partyMemberInventory = new GameItem[4],
+            partyMemberInventory = new GameItem[] {
+                Object.Instantiate(Resources.Load<GameItem>(Constants.PathMedicalHerb)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.PathHealingSeed)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.PathAntidote)),
+            },
             portraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/jaha"),
             partyLeader = false,
             activeParty = true,
             classType = ClassType.KNTE,
             characterType = CharacterType.jaha,
+            statusEffects = StatusEffect.poisoned,
             charStats = new CharacterStatistics() {
                 level = 1,
                 exp = 0,
@@ -87,8 +93,6 @@ public sealed class Inventory {
                 movement = 6
             }
         };
-        jaha.partyMemberInventory[0] = Object.Instantiate(Resources.Load<GameItem>("SharedObjects/Items/Consumables/ItemHealingSeed"));
-        jaha.partyMemberInventory[1] = Object.Instantiate(Resources.Load<GameItem>("SharedObjects/Items/Consumables/ItemAntidote"));
         var seppPartyMember = new PartyMember() {
             id = 4,
             name = "sepp",
@@ -220,7 +224,7 @@ public sealed class Inventory {
         for(int i = 0; i < 4; i++) {
             if (!partyMember.partyMemberInventory[i].IsSet()) {
                 item.positionInInventory = (DirectionType) i;
-                partyMember.partyMemberInventory[i].SetGameItem(item, (DirectionType)i);
+                partyMember.partyMemberInventory[i] = item;
                 return true;
             }
         }
@@ -253,17 +257,16 @@ public sealed class Inventory {
         firstItem.positionInInventory = secondItem.positionInInventory;
         secondItem.positionInInventory = tempDirection;
 
-        secondMember.partyMemberInventory[(int) firstItem.positionInInventory]
-            .SetGameItem(firstItem, firstItem.positionInInventory);
-        firstMember.partyMemberInventory[(int) secondItem.positionInInventory]
-            .SetGameItem(secondItem, secondItem.positionInInventory);
+        secondMember.partyMemberInventory[(int) firstItem.positionInInventory] = firstItem;
+        firstMember.partyMemberInventory[(int) secondItem.positionInInventory] = secondItem;
         
     }
 
     private void InitializeInventory(PartyMember member) {
         for (int i = 0; i < member.partyMemberInventory.Length; i++) {
             if (member.partyMemberInventory[i] == null) {
-                member.partyMemberInventory[i] = Object.Instantiate(Resources.Load<GameItem>("SharedObjects/Items/Consumables/ItemEmpty"));
+                var gameItem = Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem));
+                member.partyMemberInventory[i] = gameItem;
             }
         }
     }

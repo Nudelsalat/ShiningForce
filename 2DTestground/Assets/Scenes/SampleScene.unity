@@ -297,10 +297,10 @@ MonoBehaviour:
     portraitSprite: {fileID: 1051506275367356307, guid: d28881cd07bd79b45b3f387ce8915aa5,
       type: 3}
     partyMemberInventory:
-    - {fileID: 4384847220380701524, guid: e3acd1e696820f1408d64cf07ccaeed8, type: 3}
-    - {fileID: 7741951219853639250, guid: 66d9a7675da8c15438a265b1dbc08ed7, type: 3}
-    - {fileID: 4384847220380701524, guid: e3acd1e696820f1408d64cf07ccaeed8, type: 3}
-    - {fileID: 7741951219853639250, guid: 66d9a7675da8c15438a265b1dbc08ed7, type: 3}
+    - {fileID: 11400000, guid: da6332bdf3dffcf4d8d07036837cb2bc, type: 2}
+    - {fileID: 11400000, guid: 1d0aaef122b2fa04bbe86c74f6bc1cbb, type: 2}
+    - {fileID: 11400000, guid: db812b4374fea0345a7547801c182d65, type: 2}
+    - {fileID: 11400000, guid: da6332bdf3dffcf4d8d07036837cb2bc, type: 2}
     classType: 0
     characterType: 0
     charStats:
@@ -2259,8 +2259,7 @@ MonoBehaviour:
     - You found a #ITEMNAME# in these shrubs.
     FollowUpEvent: {fileID: 0}
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
-  gameItem: {fileID: 6726749248748277040, guid: 969fc0d58e7429b4189934dc68bbf6d6,
-    type: 3}
+  gameItem: {fileID: 11400000, guid: e118b7d917038e245870effbbc8b2b8a, type: 2}
   DespawnAfterUser: 1
 --- !u!212 &1381374762
 SpriteRenderer:
@@ -2598,7 +2597,7 @@ PrefabInstance:
     - target: {fileID: 7262158038676917576, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00088102656
+      value: 0.00022087483
       objectReference: {fileID: 0}
     - target: {fileID: 7796548239905566924, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
@@ -6645,8 +6644,7 @@ MonoBehaviour:
     - You found a #ITEMNAME#!
     FollowUpEvent: {fileID: 0}
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
-  gameItem: {fileID: 7741634554057201309, guid: 9bb564f38da77e248bcb5b7a4da56bd1,
-    type: 3}
+  gameItem: {fileID: 11400000, guid: 1d0aaef122b2fa04bbe86c74f6bc1cbb, type: 2}
   DespawnAfterUser: 1
 --- !u!212 &1876598598
 SpriteRenderer:

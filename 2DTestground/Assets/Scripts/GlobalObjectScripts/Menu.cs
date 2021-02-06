@@ -197,43 +197,22 @@ public class Menu : MonoBehaviour
                 LoadInventory(selectedMember);
                 _listCreator.SetScrollbar(previousSelected, _currentItemSelected, _party.Count);
             }
-        } else if (Input.GetButtonUp("Back")) {
-            switch (_currentMenuType ) {
-                case CurrentMenu.use:
-                case CurrentMenu.drop:
-                case CurrentMenu.give:
-                case CurrentMenu.equip:
-                    if (_firstSelectedPartyMember != null) {
-                        _firstSelectedPartyMember = null;
-                        if (_firstSelectedItem != null) {
-                            Destroy(_firstSelectedItem.gameObject);
-                        }
-
-                        _itemsToTradeOne.sprite = _blankSprite;
-                        //TODD: soundeffekt
-                    }
-                    else {
-                        CloseObjectMenu();
-                        _currentMenuType = CurrentMenu.none;
-                        _itemsToTrade.SetActive(false);
-                        OpenObjectButtonMenu();
-                    }
-                    break;
-                case CurrentMenu.member:
-                case CurrentMenu.magic:
-                    if (_firstSelectedPartyMember != null) {
-                        _firstSelectedPartyMember = null;
-                        //TODD: soundeffekt
-                    } else {
-                        _currentMenuType = CurrentMenu.none;
-                        OpenMainButtonMenu();
-                    }
-                    break;
-            }
-
         } else if (Input.GetButtonUp("Interact")) {
             switch (_currentMenuType) {
                 case CurrentMenu.use:
+                    if (_firstSelectedItem == null) {
+                        _itemsToTrade.SetActive(true);
+                        _inInventoryMenu = true;
+                        _memberInventoryUI.SelectObject(DirectionType.up);
+                    } else {
+                        if (TryUseItemOnCharacter(_party[_currentItemSelected])) {
+                            //TODO remove item
+                            _firstSelectedPartyMember.RemoveItem(_firstSelectedItem);
+                            LoadInventory(_party[_currentItemSelected]);
+                            ClearAllSelection();
+                        }
+                    }
+                    break;
                 case CurrentMenu.drop:
                 case CurrentMenu.give:
                 case CurrentMenu.equip:
@@ -249,9 +228,43 @@ public class Menu : MonoBehaviour
 
             if (_firstSelectedPartyMember == null) {
                 _firstSelectedPartyMember = _party[_currentItemSelected];
-            }
-            else {
+            } else {
                 _secondSelectedPartyMember = _party[_currentItemSelected];
+            }
+        
+        } else if (Input.GetButtonUp("Back")) {
+            switch (_currentMenuType) {
+                case CurrentMenu.use:
+                case CurrentMenu.drop:
+                case CurrentMenu.give:
+                case CurrentMenu.equip:
+                    if (_firstSelectedItem != null) {
+                        _firstSelectedItem = null;
+                        _firstSelectedPartyMember = null;
+
+                        _itemsToTradeOne.sprite = _blankSprite;
+                        //TODD: soundeffekt
+                    }
+                    else {
+                        CloseObjectMenu();
+                        _currentMenuType = CurrentMenu.none;
+                        _itemsToTrade.SetActive(false);
+                        OpenObjectButtonMenu();
+                    }
+
+                    break;
+                case CurrentMenu.member:
+                case CurrentMenu.magic:
+                    if (_firstSelectedPartyMember != null) {
+                        _firstSelectedPartyMember = null;
+                        //TODD: soundeffekt
+                    }
+                    else {
+                        _currentMenuType = CurrentMenu.none;
+                        OpenMainButtonMenu();
+                    }
+
+                    break;
             }
         }
     }
@@ -259,45 +272,24 @@ public class Menu : MonoBehaviour
     private void HandleInventoryMenu() {
         _memberInventoryUI.SelectObject(_inputDirection);
         if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
-            //TODO clean up
             var selectedItem = _memberInventoryUI.GetSelectedGameItem();
             if (_firstSelectedItem == null && !selectedItem.IsSet()) {
-                _tempDialogue.Sentences.Clear();
-                _tempDialogue.Sentences.Add("Select an item first...");
-                _dialogManager.StartDialogue(_tempDialogue);
+                EvokeSingleSentenceDialogue("Select an Item first ...");
                 return;
             }
-            if (_firstSelectedItem == null) {
-                _itemsToTradeOne.sprite = selectedItem.ItemSprite;
-                _firstSelectedItem = Instantiate(selectedItem);
-                _tempDialogue.Sentences.Clear();
-                _tempDialogue.Sentences.Add(_itemDialogue.Replace("#ITEMNAME#", selectedItem.itemName));
-                _dialogManager.StartDialogue(_tempDialogue);
-                _inInventoryMenu = false;
-                _memberInventoryUI.UnselectObject();
-            } else {
-                _tempDialogue.Sentences.Clear();
-
-                if (!selectedItem.IsSet()) {
-                    _tempDialogue.Sentences.Add(
-                        $"Gave {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
-                        $"to {_secondSelectedPartyMember.name}");
-                } else {
-                    _tempDialogue.Sentences.Add(
-                        $"Swapped {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
-                        $"with {_secondSelectedPartyMember.name}'s {_secondSelectedItem.itemName}");
-                }
-
-                _secondSelectedItem = Instantiate(selectedItem);
-                _itemsToTradeTwo.sprite = selectedItem.ItemSprite;
-                _inventory.SwapItems(_firstSelectedPartyMember, _secondSelectedPartyMember, 
-                    _firstSelectedItem, _secondSelectedItem );
-                
-                _dialogManager.StartDialogue(_tempDialogue);
-                LoadInventory(_secondSelectedPartyMember);
-                ClearAllSelection();
-                _inInventoryMenu = false;
-                _memberInventoryUI.UnselectObject();
+            switch (_currentMenuType) {
+                case CurrentMenu.use:
+                    HandleUseMenu(selectedItem);
+                    break;
+                case CurrentMenu.give:
+                    HandleGiveMenu(selectedItem);
+                    break;
+                case CurrentMenu.drop:
+                    //HandelDropMenu(selectedItem);
+                    break;
+                case CurrentMenu.equip:
+                    //HandelEquipMenu(selectedItem);
+                    break;
             }
         }
 
@@ -305,7 +297,9 @@ public class Menu : MonoBehaviour
             if (_secondSelectedItem != null) {
                 _secondSelectedItem = null;
                 _itemsToTradeTwo.sprite = _blankSprite;
-            } 
+            } else if (_firstSelectedItem == null) {
+                _firstSelectedPartyMember = null;
+            }
 
             _inInventoryMenu = false;
             _memberInventoryUI.UnselectObject();
@@ -313,12 +307,102 @@ public class Menu : MonoBehaviour
         
     }
 
+    private void HandleUseMenu(GameItem selectedItem) {
+        switch (selectedItem.itemType) {
+            case ItemType.none:
+                EvokeSingleSentenceDialogue("Select an Item first ...");
+                break;
+            case ItemType.equipment:
+                EvokeSingleSentenceDialogue("This is an equipment.\nEquipment cannot be 'used', only equipped.");
+                break;
+            case ItemType.consumable:
+                if (_firstSelectedItem == null) {
+                    _itemsToTradeOne.sprite = selectedItem.ItemSprite;
+                    _firstSelectedItem = selectedItem;
+                    EvokeSingleSentenceDialogue($"Use {selectedItem.itemName} with whom?");
+                    _inInventoryMenu = false;
+                    _memberInventoryUI.UnselectObject();
+                }
+                break;
+            case ItemType.forgeable:
+                EvokeSingleSentenceDialogue("This item can be used for forging.\nYou need a forge to combine this item with another item.");
+                break;
+            case ItemType.promotion:
+                EvokeSingleSentenceDialogue("This is a promotion Item.\nOnce a character can be promoted you might be able to use this.");
+                break;
+        }
+    }
+
+    private bool TryUseItemOnCharacter(PartyMember selectedPartyMember) {
+        if (_firstSelectedItem.healValue > 0) {
+            //TODO introduce to battle menu
+            var toHeal = selectedPartyMember.charStats.maxHp - selectedPartyMember.charStats.currentHp;
+            if (toHeal == 0) {
+                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} does not need any healing!");
+                return false;
+            }
+            toHeal = toHeal >= _firstSelectedItem.healValue ? _firstSelectedItem.healValue : toHeal;
+            selectedPartyMember.charStats.currentHp += toHeal;
+            EvokeSingleSentenceDialogue($"{selectedPartyMember.name} was healed for {toHeal} points!");
+            return true;
+        } else if (_firstSelectedItem.itemName.Equals("ANTIDOTE")) {
+            if (selectedPartyMember.statusEffects.HasFlag(StatusEffect.poisoned)) {
+                selectedPartyMember.statusEffects.Remove(StatusEffect.poisoned);
+                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is no longer poisoned!");
+                return true;
+            } else {
+                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is not poisoned!");
+                return false;
+            }
+        } else if (_firstSelectedItem.itemName.Equals("PHOENIX FEATHER")) {
+            if (selectedPartyMember.statusEffects.HasFlag(StatusEffect.dead)) {
+                selectedPartyMember.statusEffects.Remove(StatusEffect.dead);
+                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is no longer dead!");
+                return true;
+            } else {
+                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is not dead!");
+                return false;
+            }
+        }
+        return false;
+    }
+    private void HandleGiveMenu(GameItem selectedItem) {
+        if (_firstSelectedItem == null) {
+            _itemsToTradeOne.sprite = selectedItem.ItemSprite;
+            _firstSelectedItem = selectedItem;
+            EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.itemName));
+            _inInventoryMenu = false;
+            _memberInventoryUI.UnselectObject();
+        } else {
+            _secondSelectedItem = selectedItem;
+
+            var sentence = "";
+            if (!selectedItem.IsSet()) {
+                sentence = $"Gave {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
+                           $"to {_secondSelectedPartyMember.name}";
+            } else {
+                sentence = $"Swapped {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
+                           $"with {_secondSelectedPartyMember.name}'s {_secondSelectedItem.itemName}";
+            }
+            EvokeSingleSentenceDialogue(sentence);
+
+            _itemsToTradeTwo.sprite = selectedItem.ItemSprite;
+            _inventory.SwapItems(_firstSelectedPartyMember, _secondSelectedPartyMember,
+                _firstSelectedItem, _secondSelectedItem);
+
+            LoadInventory(_secondSelectedPartyMember);
+            ClearAllSelection();
+            _inInventoryMenu = false;
+            _memberInventoryUI.UnselectObject();
+        }
+    }
+
     private void ClearAllSelection() {
         _firstSelectedPartyMember = null;
         _secondSelectedPartyMember = null;
         Debug.Log(_firstSelectedItem);
-        Destroy(_firstSelectedItem.gameObject);
-        Destroy(_secondSelectedItem.gameObject);
+        _firstSelectedItem = null;
+        _secondSelectedItem = null;
         _itemsToTradeOne.sprite = _blankSprite;
         _itemsToTradeTwo.sprite = _blankSprite;
     }
@@ -328,16 +412,16 @@ public class Menu : MonoBehaviour
     private void HandleMainMenu() {
         switch (_inputDirection) {
             case DirectionType.up:
-                SetButtonActiveAndDeactivateLastButton(_animatorMemberButton, _textObjectButtonMenu);
+                SetButtonActiveAndDeactivateLastButton(_animatorMemberButton, _textMainButtonMenu);
                 break;
             case DirectionType.left:
-                SetButtonActiveAndDeactivateLastButton(_animatorMagicButton, _textObjectButtonMenu);
+                SetButtonActiveAndDeactivateLastButton(_animatorMagicButton, _textMainButtonMenu);
                 break;
             case DirectionType.down:
-                SetButtonActiveAndDeactivateLastButton(_animatorSearchButton, _textObjectButtonMenu);
+                SetButtonActiveAndDeactivateLastButton(_animatorSearchButton, _textMainButtonMenu);
                 break;
             case DirectionType.right:
-                SetButtonActiveAndDeactivateLastButton(_animatorItemButton, _textObjectButtonMenu);
+                SetButtonActiveAndDeactivateLastButton(_animatorItemButton, _textMainButtonMenu);
                 break;
         }
 
@@ -530,6 +614,12 @@ public class Menu : MonoBehaviour
         } else {
             _inputDirection = DirectionType.none;
         }
+    }
+
+    private void EvokeSingleSentenceDialogue(string sentence) {
+        _tempDialogue.Sentences.Clear();
+        _tempDialogue.Sentences.Add(sentence);
+        _dialogManager.StartDialogue(_tempDialogue);
     }
 
     #region Coroutines
