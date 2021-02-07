@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b28155a072e9540bcd7d6ff7705a07, type: 3}
+  m_Name: WoodenSword
+  m_EditorClassIdentifier: 
+  itemName: WOODEN SWORD
+  ItemSprite: {fileID: -1172904248880273551, guid: 0e3d7f9811d80574693048be27c1a0b9,
+    type: 3}
+  buyValue: 140
+  positionInInventory: -1
+  itemType: 1
+  AttackModifier: 3
+  DefenseModifier: 0
+  AgilityModifier: 0
+  MovementModifier: 0
+  EquipableByClasses: 0000000003000000

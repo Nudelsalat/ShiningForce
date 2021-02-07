@@ -6,10 +6,10 @@ using UnityEngine;
 public class AddToPartyEvent : MonoBehaviour {
     public PartyMember partyMemberToAdd;
     void EventTrigger() {
-        var inventory = partyMemberToAdd.partyMemberInventory;
+        var inventory = partyMemberToAdd.PartyMemberInventory;
         for (int i = 0; i < inventory.Length; i++) {
             if (inventory[i] != null) {
-                partyMemberToAdd.partyMemberInventory[i] = Instantiate(inventory[i]);
+                partyMemberToAdd.PartyMemberInventory[i] = Instantiate(inventory[i]);
             }
         }
         var partyMemberAdded = Inventory.Instance.AddPartyMember(partyMemberToAdd);
@@ -20,7 +20,7 @@ public class AddToPartyEvent : MonoBehaviour {
         Player.InputDisabledInEvent = true;
         FindObjectOfType<DialogManager>().StartDialogue(new Dialogue() {
             Name = "Event",
-            Sentences = new List<string>() { partyMemberToAdd.name + " joined the Shining Force!" }
+            Sentences = new List<string>() { partyMemberToAdd.Name + " joined the Shining Force!" }
         });
         AudioClip audio = Resources.Load<AudioClip>("ShiningForce/sounds/victory");
         AudioSource.PlayClipAtPoint(audio, transform.position);

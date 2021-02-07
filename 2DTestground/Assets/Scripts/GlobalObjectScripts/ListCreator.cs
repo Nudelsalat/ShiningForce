@@ -12,7 +12,7 @@ public class ListCreator : MonoBehaviour
     public Scrollbar scrollbar = null;
 
     // Use this for initialization
-    public void LoadCharacterList(List<PartyMember> party) {
+    public void LoadCharacterList(List<PartyMember> party, CharacterListType listeType) {
 
         //setContent Holder Height;
         content.sizeDelta = new Vector2(0, party.Count * 32);
@@ -49,4 +49,9 @@ public class ListCreator : MonoBehaviour
         
     }
 
+}
+
+public enum CharacterListType{
+    stats,
+    equipment,
 }

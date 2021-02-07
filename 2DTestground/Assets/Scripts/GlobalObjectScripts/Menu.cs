@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEditor;
 using UnityEditor.VersionControl;
@@ -334,38 +335,10 @@ public class Menu : MonoBehaviour
     }
 
     private bool TryUseItemOnCharacter(PartyMember selectedPartyMember) {
-        if (_firstSelectedItem.healValue > 0) {
-            //TODO introduce to battle menu
-            var toHeal = selectedPartyMember.charStats.maxHp - selectedPartyMember.charStats.currentHp;
-            if (toHeal == 0) {
-                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} does not need any healing!");
-                return false;
-            }
-            toHeal = toHeal >= _firstSelectedItem.healValue ? _firstSelectedItem.healValue : toHeal;
-            selectedPartyMember.charStats.currentHp += toHeal;
-            EvokeSingleSentenceDialogue($"{selectedPartyMember.name} was healed for {toHeal} points!");
-            return true;
-        } else if (_firstSelectedItem.itemName.Equals("ANTIDOTE")) {
-            if (selectedPartyMember.statusEffects.HasFlag(StatusEffect.poisoned)) {
-                selectedPartyMember.statusEffects.Remove(StatusEffect.poisoned);
-                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is no longer poisoned!");
-                return true;
-            } else {
-                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is not poisoned!");
-                return false;
-            }
-        } else if (_firstSelectedItem.itemName.Equals("PHOENIX FEATHER")) {
-            if (selectedPartyMember.statusEffects.HasFlag(StatusEffect.dead)) {
-                selectedPartyMember.statusEffects.Remove(StatusEffect.dead);
-                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is no longer dead!");
-                return true;
-            } else {
-                EvokeSingleSentenceDialogue($"{selectedPartyMember.name} is not dead!");
-                return false;
-            }
-        }
-        return false;
+        var itemToUse = (Consumable) _firstSelectedItem;
+        return itemToUse.TryUseItem(selectedPartyMember);
     }
+
     private void HandleGiveMenu(GameItem selectedItem) {
         if (_firstSelectedItem == null) {
             _itemsToTradeOne.sprite = selectedItem.ItemSprite;
@@ -378,11 +351,11 @@ public class Menu : MonoBehaviour
 
             var sentence = "";
             if (!selectedItem.IsSet()) {
-                sentence = $"Gave {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
-                           $"to {_secondSelectedPartyMember.name}";
+                sentence = $"Gave {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.itemName} " +
+                           $"to {_secondSelectedPartyMember.Name}";
             } else {
-                sentence = $"Swapped {_firstSelectedPartyMember.name}'s {_firstSelectedItem.itemName} " +
-                           $"with {_secondSelectedPartyMember.name}'s {_secondSelectedItem.itemName}";
+                sentence = $"Swapped {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.itemName} " +
+                           $"with {_secondSelectedPartyMember.Name}'s {_secondSelectedItem.itemName}";
             }
             EvokeSingleSentenceDialogue(sentence);
 
@@ -536,7 +509,7 @@ public class Menu : MonoBehaviour
 
     private void OpenCharacterSelectMenu() {
         characterSelector.SetActive(true);
-        _listCreator.LoadCharacterList(_party);
+        _listCreator.LoadCharacterList(_party, CharacterListType.stats);
         _listCreator.DrawBoundary(_currentItemSelected, _currentItemSelected);
         LoadInventory(_party[_currentItemSelected]);
         _animatorCharacterSelector.SetBool("characterSelectorIsOpen", true);
@@ -581,14 +554,14 @@ public class Menu : MonoBehaviour
 
 
     private void LoadInventory(PartyMember partyMember) {
-        var gameItem = partyMember.partyMemberInventory;
+        var gameItem = partyMember.PartyMemberInventory;
         _memberInventoryUI.LoadMemberInventory(gameItem);
         LoadPortraitOfMember(partyMember);
     }
 
     private void LoadPortraitOfMember(PartyMember partyMember) {
         var image = portrait.transform.GetChild(0).GetComponent<Image>();
-        var sprite = partyMember.portraitSprite;
+        var sprite = partyMember.PortraitSprite;
         image.sprite = sprite;
     }
 

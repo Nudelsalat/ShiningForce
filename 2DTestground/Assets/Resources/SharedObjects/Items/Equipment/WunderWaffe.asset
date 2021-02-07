@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b28155a072e9540bcd7d6ff7705a07, type: 3}
+  m_Name: WunderWaffe
+  m_EditorClassIdentifier: 
+  itemName: WUNDER WAFFE
+  ItemSprite: {fileID: -9150330332852655256, guid: 0e3d7f9811d80574693048be27c1a0b9,
+    type: 3}
+  buyValue: 5000
+  positionInInventory: -1
+  itemType: 1
+  AttackModifier: 20
+  DefenseModifier: 20
+  AgilityModifier: 10
+  MovementModifier: 2
+  EquipableByClasses: 00000000010000000200000003000000

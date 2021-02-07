@@ -1,3 +1,12 @@
+TODOs:
+virtual void use() <- was pro object überschrieben werden kann, je nachdem was es macht
+virtual bool usable()
+
+
+TODO:
+draw poison, stunned, curesed ect. implement on view
+
+
 Character der ein healing item refilled, be jedem kampfstart.
 und nur exp durch healing items bekommt, weil er sonst nichts kann.
 

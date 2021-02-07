@@ -62,8 +62,8 @@ public class DialogManager : MonoBehaviour {
     public string ReplaceNameVariables(string sentence) {
         var partyLeaderName = _inventory.GetPartyLeaderName();
         sentence = sentence.Replace("#LEADERNAME#", partyLeaderName);
-        sentence = sentence.Replace("#CHESTER#", _inventory.GetPartyMemberNameByEnum(CharacterType.chester));
-        return sentence.Replace("#SARAH#", _inventory.GetPartyMemberNameByEnum(CharacterType.sarah));
+        sentence = sentence.Replace("#CHESTER#", _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester));
+        return sentence.Replace("#SARAH#", _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah));
     }
 
     public void DisplayNextSentence() {
