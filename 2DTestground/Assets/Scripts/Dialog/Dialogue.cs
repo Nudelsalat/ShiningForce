@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Dialogue {
-
     public string Name;
     public Sprite Portrait;
     [TextArea(3,10)]

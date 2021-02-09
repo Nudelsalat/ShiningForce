@@ -313,15 +313,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 339681980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd8e924cf9f8b44bbc4f2aac0d6c600, type: 3}
+  m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DespawnAfterUser: 0
   Dialogue:
-    Name: Statue1
+    Name: Statue
     Portrait: {fileID: 0}
     Sentences:
-    - "It's a statue. \nThe armor is not meant for use."
-  DespawnAfterUser: 0
+    - 'A nice piece of armor.
+
+      Only for decoration though.'
+    FollowUpEvent: {fileID: 0}
 --- !u!61 &339681983
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -415,19 +418,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 362540836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd8e924cf9f8b44bbc4f2aac0d6c600, type: 3}
+  m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DespawnAfterUser: 0
   Dialogue:
-    Name: Statue2
+    Name: 
     Portrait: {fileID: 0}
     Sentences:
-    - 'A Bookshelf full of books.
-
-      You open one.'
+    - Several books. You pick one.
     - MEDICAL HERBS CAN BE USED TO HEAL UP TO 10 HP.
-    - unfortunately, the glossary does not explain what HP means.
-  DespawnAfterUser: 0
+    - Unforntunatelly the book does not explain what HP stands for...
+    FollowUpEvent: {fileID: 0}
 --- !u!1 &382262985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,15 +1250,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1187069881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd8e924cf9f8b44bbc4f2aac0d6c600, type: 3}
+  m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DespawnAfterUser: 0
   Dialogue:
-    Name: Statue2
+    Name: 
     Portrait: {fileID: 0}
     Sentences:
-    - "It's a statue. \nHowever the armor pieces look worn."
-  DespawnAfterUser: 0
+    - NIce piece of armor...
+    - The helmet looks worn.
+    FollowUpEvent: {fileID: 0}
 --- !u!1 &1264314208
 GameObject:
   m_ObjectHideFlags: 0

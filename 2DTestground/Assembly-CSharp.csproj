@@ -65,9 +65,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraScripts\OverviewCameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Dialog\AbstractDialogHolder.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogHolder.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Dialog\Dialogue.cs" />
+    <Compile Include="Assets\Scripts\Dialog\Question.cs" />
+    <Compile Include="Assets\Scripts\Dialog\QuestionCallBackHolder.cs" />
+    <Compile Include="Assets\Scripts\Dialog\QuestionCallback.cs" />
+    <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEvent.cs" />
+    <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEventHolder.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\CharacterStatistics.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\EnumCharacterType.cs" />

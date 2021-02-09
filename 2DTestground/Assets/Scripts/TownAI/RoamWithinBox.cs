@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
-public class RoamWithinBox : DialogHolder {
+public class RoamWithinBox : AbstractDialogHolder {
+    public MonoBehaviour FollowUpEvent;
+
     public float moveEveryXSeconds = 1;
     public float moveSpeed = 2f;
     public GameObject _path;
@@ -83,7 +85,7 @@ public class RoamWithinBox : DialogHolder {
 
     public override void TriggerDialogue() {
         FindPlayerDirection();
-        FindObjectOfType<DialogManager>().StartDialogue(Dialogue);
+        FollowUpEvent.Invoke("EventTrigger", 0);
     }
 
     private void FindPlayerDirection() {

@@ -80,9 +80,6 @@ public class Menu : MonoBehaviour
 
 
     void Awake() {
-        _memberInventoryUI = MemberInventoryUI.Instance;
-        _inventory = Inventory.Instance;
-
         _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
 
         _dialogManager = FindObjectOfType<DialogManager>();
@@ -125,6 +122,8 @@ public class Menu : MonoBehaviour
     }
 
     void Start() {
+        _memberInventoryUI = MemberInventoryUI.Instance;
+        _inventory = Inventory.Instance;
     }
 
     #region OverAllInput
@@ -207,9 +206,7 @@ public class Menu : MonoBehaviour
                         _memberInventoryUI.SelectObject(DirectionType.up);
                     } else {
                         if (TryUseItemOnCharacter(_party[_currentItemSelected])) {
-                            //TODO remove item
-                            _firstSelectedPartyMember.RemoveItem(_firstSelectedItem);
-                            LoadInventory(_party[_currentItemSelected]);
+                            RemoveCurrentItem();
                             ClearAllSelection();
                         }
                     }
@@ -270,6 +267,11 @@ public class Menu : MonoBehaviour
         }
     }
 
+    private void RemoveCurrentItem() {
+        _firstSelectedPartyMember.RemoveItem(_firstSelectedItem);
+        LoadInventory(_party[_currentItemSelected]);
+    }
+
     private void HandleInventoryMenu() {
         _memberInventoryUI.SelectObject(_inputDirection);
         if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
@@ -286,7 +288,7 @@ public class Menu : MonoBehaviour
                     HandleGiveMenu(selectedItem);
                     break;
                 case CurrentMenu.drop:
-                    //HandelDropMenu(selectedItem);
+                    HandelDropMenu(selectedItem);
                     break;
                 case CurrentMenu.equip:
                     //HandelEquipMenu(selectedItem);
@@ -367,6 +369,25 @@ public class Menu : MonoBehaviour
             ClearAllSelection();
             _inInventoryMenu = false;
             _memberInventoryUI.UnselectObject();
+        }
+    }
+
+    private void HandelDropMenu(GameItem itemToDrop) {
+        _firstSelectedItem = itemToDrop;
+        var dropItemCallback = new QuestionCallback {
+            Name = "DropText",
+            Sentences = new List<string>() {
+                $"Do you want really to drop {itemToDrop.itemName}"
+            },
+            DefaultSelectionForQuestion = YesNo.No,
+            OnAnswerAction = DropItemAnswer,
+        };
+        _dialogManager.StartDialogue(dropItemCallback);
+    }
+
+    private void DropItemAnswer(bool answer) {
+        if (answer) {
+            RemoveCurrentItem();
         }
     }
 
