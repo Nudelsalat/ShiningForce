@@ -45,15 +45,18 @@ public class MemberInventoryUI : MonoBehaviour {
         _gameItemList = gameItems;
         _titleText.text = "- ITEMS -";
         for (int i = 0; i < gameItems.Length; i++) {
+            var itemSprite = gameItems[i].ItemSprite;
+            _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite != null ? itemSprite : _blankSprite;
+
             _gameItemList[i].positionInInventory = (DirectionType) i;
-            var itemSprite = gameItems[i]?.ItemSprite;
-            if (itemSprite != null) {
-                _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite;
+
+            _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i].itemName;
+
+            if (gameItems[i] is Equipment equipment && equipment.IsEquipped) {
+                _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Visible;
+            } else {
+                _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
             }
-            else {
-                _itemList[i].gameObject.GetComponent<Image>().sprite = _blankSprite;
-            }
-            _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i]?.itemName;
         }
     }
 
@@ -90,7 +93,7 @@ public class MemberInventoryUI : MonoBehaviour {
 
     public void UnselectObject() {
         _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
-        _currentSelectedItem.transform.GetChild(0).GetComponent<Text>().color = Color.white;
+        _currentSelectedItem.transform.Find("ItemName").GetComponent<Text>().color = Color.white;
     }
 
     public GameItem GetSelectedGameItem() {
@@ -100,11 +103,11 @@ public class MemberInventoryUI : MonoBehaviour {
     private void SetCurrentSelectedItem(GameObject selectedGameObject, GameItem selectedItem) {
         if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
             _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
-            _currentSelectedItem.transform.GetChild(0).GetComponent<Text>().color = Color.white;
+            _currentSelectedItem.transform.Find("ItemName").GetComponent<Text>().color = Color.white;
         }
         _currentSelectedItem = selectedGameObject;
         selectedGameObject.transform.GetComponent<Image>().color = _redisch;
-        selectedGameObject.transform.GetChild(0).GetComponent<Text>().color = _redisch;
+        selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _redisch;
         _currentSelectedGameItem = selectedItem;
     }
 }

@@ -19,7 +19,7 @@ class Consumable : GameItem {
     };
 
     public Consumable() {
-        itemType = ItemType.consumable;
+        EnumItemType = EnumItemType.consumable;
     }
 
     public bool TryUseItem(Character character) {

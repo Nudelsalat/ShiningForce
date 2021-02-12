@@ -16,12 +16,7 @@ class ConvertStatsToMenuList : MonoBehaviour {
 
     public void DoConvert(PartyMember member) {
         var image = gameObject.transform.Find("Image").GetComponent<Image>();
-        if (member.activeParty) {
-            image.color = new Color(1, 1, 1, 1);
-        }
-        else {
-            image.color = new Color(1,1,1,0);
-        }
+        image.color = member.activeParty ? Constants.Visible : Constants.Invisible;
 
         gameObject.transform.Find("Name").GetComponent<Text>().text = member.Name;
         gameObject.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), member.ClassType);

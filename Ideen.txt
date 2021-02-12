@@ -6,7 +6,12 @@ virtual bool usable()
 TODO:
 draw poison, stunned, curesed ect. implement on view
 
-Unity Awake -> on every Scene load?
+
+Singelton<T> von Dominik klauen
+
+
+CHECK:
+Unity Awake -> on every Scene load? even if not destoryed
 
 
 Character der ein healing item refilled, be jedem kampfstart.

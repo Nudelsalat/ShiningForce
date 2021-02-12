@@ -24,7 +24,7 @@ public class AddToPartyEvent : MonoBehaviour {
         });
         AudioClip audio = Resources.Load<AudioClip>("ShiningForce/sounds/victory");
         AudioSource.PlayClipAtPoint(audio, transform.position);
-        yield return new WaitForSecondsRealtime(audio.length-3);
+        yield return new WaitForSecondsRealtime(audio.length-5);
         Player.InputDisabledInEvent = false;
     }
 }

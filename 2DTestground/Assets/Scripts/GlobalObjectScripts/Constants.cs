@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class Constants {
     public static string PathMedicalHerb = "SharedObjects/Items/Consumables/MedicalHerb";
@@ -16,5 +17,7 @@ public class Constants {
     public static string PathWoodenSword = "SharedObjects/Items/Equipment/WoodenSword";
     public static string PathWunderWaffe = "SharedObjects/Items/Equipment/WunderWaffe";
 
+    public static Color Visible = new Color(1, 1, 1, 1);
+    public static Color Invisible = new Color(1, 1, 1, 0);
 
 }

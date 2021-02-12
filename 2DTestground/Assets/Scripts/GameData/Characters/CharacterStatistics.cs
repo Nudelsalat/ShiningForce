@@ -41,4 +41,26 @@ public class CharacterStatistics {
         Exp = exp;
     }
 
+    public void Equip(Equipment equipment) {
+        if (equipment == null) {
+            return;
+        }
+        equipment.IsEquipped = true;
+        Attack.AddModifiert(equipment.AttackModifier);
+        Defense.AddModifiert(equipment.DefenseModifier);
+        Agility.AddModifiert(equipment.AgilityModifier);
+        Movement.AddModifiert(equipment.MovementModifier);
+    }
+
+    public void UnEquip(Equipment equipment) {
+        if (equipment == null) {
+            return;
+        }
+        equipment.IsEquipped = false;
+        Attack.RemoveModifier(equipment.AttackModifier);
+        Defense.RemoveModifier(equipment.DefenseModifier);
+        Agility.RemoveModifier(equipment.AgilityModifier);
+        Movement.RemoveModifier(equipment.MovementModifier);
+    }
+
 }

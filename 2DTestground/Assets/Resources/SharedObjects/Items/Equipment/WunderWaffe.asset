@@ -17,9 +17,11 @@ MonoBehaviour:
     type: 3}
   buyValue: 5000
   positionInInventory: -1
-  itemType: 1
+  EnumItemType: 1
   AttackModifier: 20
   DefenseModifier: 20
   AgilityModifier: 10
   MovementModifier: 2
-  EquipableByClasses: 00000000010000000200000003000000
+  EquipmentForClass: 000000000100000002000000
+  EquipmentType: 0
+  IsEquipped: 0

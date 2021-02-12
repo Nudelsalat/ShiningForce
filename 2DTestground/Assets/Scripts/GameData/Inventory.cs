@@ -27,7 +27,7 @@ public sealed class Inventory {
             Name = "Bowie",
             PartyMemberInventory = new GameItem[] {
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathWunderWaffe)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathWoodenSword)),
+                Object.Instantiate(Resources.Load<Equipment>(Constants.PathWoodenSword)),
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem)),
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem)),
             },
@@ -49,6 +49,9 @@ public sealed class Inventory {
                 Movement = new Stat(6)
             }
         };
+        var wunderWaffe = (Equipment) bowie.PartyMemberInventory[1];
+        bowie.CharStats.Equip(wunderWaffe);
+
         var sarah = new PartyMember() {
             Id = 2,
             Name = "Sarah",
@@ -259,6 +262,13 @@ public sealed class Inventory {
     }
 
     public void SwapItems(PartyMember firstMember, PartyMember secondMember, GameItem firstItem, GameItem secondItem) {
+        if (firstItem is Equipment firstEquipment) {
+            firstMember.CharStats.UnEquip(firstEquipment);
+        }
+        if (secondItem is Equipment secondEquipment) {
+            secondMember.CharStats.UnEquip(secondEquipment);
+        }
+
         var tempDirection = firstItem.positionInInventory;
         firstItem.positionInInventory = secondItem.positionInInventory;
         secondItem.positionInInventory = tempDirection;

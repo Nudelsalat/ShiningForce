@@ -41,7 +41,7 @@ public class Menu : MonoBehaviour
     private Text _textObjectButtonMenu;
 
     private MemberInventoryUI _memberInventoryUI;
-    private Inventory  _inventory;
+    private Inventory _inventory;
 
     private Animator _currentlyAnimatedButton;
 
@@ -68,12 +68,13 @@ public class Menu : MonoBehaviour
     private Image _itemsToTradeOne;
     private Image _itemsToTradeTwo;
 
-    private CurrentMenu _currentMenuType = CurrentMenu.none;
+    private EnumCurrentMenu _enumCurrentMenuType = EnumCurrentMenu.none;
 
     private bool _isInMainButtonMenu = false;
     private bool _isInObjectButtonMenu = false;
     private bool _inInventoryMenu = false;
     private bool _isPause = false;
+    private bool _currentlyShowingEquipmentList = false;
     private DirectionType _inputDirection;
     private GameItem _firstSelectedItem;
     private GameItem _secondSelectedItem;
@@ -87,8 +88,8 @@ public class Menu : MonoBehaviour
         _listCreator = characterSelector.GetComponent<ListCreator>();
 
         _itemsToTrade = objectMenu.transform.Find("ItemsToTrade").gameObject;
-        _itemsToTradeOne = _itemsToTrade.transform.GetChild(0).GetComponent<Image>();
-        _itemsToTradeTwo = _itemsToTrade.transform.GetChild(1).GetComponent<Image>();
+        _itemsToTradeOne = _itemsToTrade.transform.Find("ItemToTradeOne").GetComponent<Image>();
+        _itemsToTradeTwo = _itemsToTrade.transform.Find("ItemToTradeTwo").GetComponent<Image>();
         _itemsToTrade.SetActive(false);
 
         _animatorPortrait = portrait.GetComponent<Animator>();
@@ -151,7 +152,7 @@ public class Menu : MonoBehaviour
         }
         
         if (_isInMainButtonMenu) {
-            if (_currentMenuType != CurrentMenu.none) {
+            if (_enumCurrentMenuType != EnumCurrentMenu.none) {
                 if (_inInventoryMenu) {
                     HandleInventoryMenu();
                     return;
@@ -198,8 +199,8 @@ public class Menu : MonoBehaviour
                 _listCreator.SetScrollbar(previousSelected, _currentItemSelected, _party.Count);
             }
         } else if (Input.GetButtonUp("Interact")) {
-            switch (_currentMenuType) {
-                case CurrentMenu.use:
+            switch (_enumCurrentMenuType) {
+                case EnumCurrentMenu.use:
                     if (_firstSelectedItem == null) {
                         _itemsToTrade.SetActive(true);
                         _inInventoryMenu = true;
@@ -211,15 +212,15 @@ public class Menu : MonoBehaviour
                         }
                     }
                     break;
-                case CurrentMenu.drop:
-                case CurrentMenu.give:
-                case CurrentMenu.equip:
+                case EnumCurrentMenu.drop:
+                case EnumCurrentMenu.give:
+                case EnumCurrentMenu.equip:
                     _itemsToTrade.SetActive(true);
                     _inInventoryMenu = true;
                     _memberInventoryUI.SelectObject(DirectionType.up);
                     break;
-                case CurrentMenu.member:
-                case CurrentMenu.magic:
+                case EnumCurrentMenu.member:
+                case EnumCurrentMenu.magic:
                     //TODO
                     break;
             }
@@ -231,34 +232,40 @@ public class Menu : MonoBehaviour
             }
         
         } else if (Input.GetButtonUp("Back")) {
-            switch (_currentMenuType) {
-                case CurrentMenu.use:
-                case CurrentMenu.drop:
-                case CurrentMenu.give:
-                case CurrentMenu.equip:
+            switch (_enumCurrentMenuType) {
+                case EnumCurrentMenu.use:
+                case EnumCurrentMenu.drop:
+                case EnumCurrentMenu.give:
+                case EnumCurrentMenu.equip:
                     if (_firstSelectedItem != null) {
                         _firstSelectedItem = null;
                         _firstSelectedPartyMember = null;
+
+                        if (_currentlyShowingEquipmentList) {
+                            _currentlyShowingEquipmentList = false;
+                            _listCreator.LoadCharacterList(_party, null);
+                            _listCreator.DrawBoundary(_currentItemSelected, _currentItemSelected);
+                        }
 
                         _itemsToTradeOne.sprite = _blankSprite;
                         //TODD: soundeffekt
                     }
                     else {
                         CloseObjectMenu();
-                        _currentMenuType = CurrentMenu.none;
+                        _enumCurrentMenuType = EnumCurrentMenu.none;
                         _itemsToTrade.SetActive(false);
                         OpenObjectButtonMenu();
                     }
 
                     break;
-                case CurrentMenu.member:
-                case CurrentMenu.magic:
+                case EnumCurrentMenu.member:
+                case EnumCurrentMenu.magic:
                     if (_firstSelectedPartyMember != null) {
                         _firstSelectedPartyMember = null;
                         //TODD: soundeffekt
                     }
                     else {
-                        _currentMenuType = CurrentMenu.none;
+                        _enumCurrentMenuType = EnumCurrentMenu.none;
                         OpenMainButtonMenu();
                     }
 
@@ -280,18 +287,18 @@ public class Menu : MonoBehaviour
                 EvokeSingleSentenceDialogue("Select an Item first ...");
                 return;
             }
-            switch (_currentMenuType) {
-                case CurrentMenu.use:
+            switch (_enumCurrentMenuType) {
+                case EnumCurrentMenu.use:
                     HandleUseMenu(selectedItem);
                     break;
-                case CurrentMenu.give:
+                case EnumCurrentMenu.give:
                     HandleGiveMenu(selectedItem);
                     break;
-                case CurrentMenu.drop:
+                case EnumCurrentMenu.drop:
                     HandelDropMenu(selectedItem);
                     break;
-                case CurrentMenu.equip:
-                    //HandelEquipMenu(selectedItem);
+                case EnumCurrentMenu.equip:
+                    HandelEquipMenu(selectedItem);
                     break;
             }
         }
@@ -311,14 +318,14 @@ public class Menu : MonoBehaviour
     }
 
     private void HandleUseMenu(GameItem selectedItem) {
-        switch (selectedItem.itemType) {
-            case ItemType.none:
+        switch (selectedItem.EnumItemType) {
+            case EnumItemType.none:
                 EvokeSingleSentenceDialogue("Select an Item first ...");
                 break;
-            case ItemType.equipment:
+            case EnumItemType.equipment:
                 EvokeSingleSentenceDialogue("This is an equipment.\nEquipment cannot be 'used', only equipped.");
                 break;
-            case ItemType.consumable:
+            case EnumItemType.consumable:
                 if (_firstSelectedItem == null) {
                     _itemsToTradeOne.sprite = selectedItem.ItemSprite;
                     _firstSelectedItem = selectedItem;
@@ -327,10 +334,10 @@ public class Menu : MonoBehaviour
                     _memberInventoryUI.UnselectObject();
                 }
                 break;
-            case ItemType.forgeable:
+            case EnumItemType.forgeable:
                 EvokeSingleSentenceDialogue("This item can be used for forging.\nYou need a forge to combine this item with another item.");
                 break;
-            case ItemType.promotion:
+            case EnumItemType.promotion:
                 EvokeSingleSentenceDialogue("This is a promotion Item.\nOnce a character can be promoted you might be able to use this.");
                 break;
         }
@@ -346,6 +353,11 @@ public class Menu : MonoBehaviour
             _itemsToTradeOne.sprite = selectedItem.ItemSprite;
             _firstSelectedItem = selectedItem;
             EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.itemName));
+            if (selectedItem.EnumItemType == EnumItemType.equipment) {
+                _currentlyShowingEquipmentList = true;
+                _listCreator.LoadCharacterList(_party, (Equipment) selectedItem);
+                _listCreator.DrawBoundary(_currentItemSelected, _currentItemSelected);
+            }
             _inInventoryMenu = false;
             _memberInventoryUI.UnselectObject();
         } else {
@@ -364,6 +376,12 @@ public class Menu : MonoBehaviour
             _itemsToTradeTwo.sprite = selectedItem.ItemSprite;
             _inventory.SwapItems(_firstSelectedPartyMember, _secondSelectedPartyMember,
                 _firstSelectedItem, _secondSelectedItem);
+
+            if (_currentlyShowingEquipmentList) {
+                _currentlyShowingEquipmentList = false;
+                _listCreator.LoadCharacterList(_party, null);
+                _listCreator.DrawBoundary(_currentItemSelected, _currentItemSelected);
+            }
 
             LoadInventory(_secondSelectedPartyMember);
             ClearAllSelection();
@@ -388,6 +406,35 @@ public class Menu : MonoBehaviour
     private void DropItemAnswer(bool answer) {
         if (answer) {
             RemoveCurrentItem();
+        }
+    }
+
+    private void HandelEquipMenu(GameItem itemToEquip) {
+        //TODO: equipment menu.
+
+        if (itemToEquip is Equipment equipment) {
+            if (equipment.EquipmentForClass.Any(x => x == _firstSelectedPartyMember.ClassType)) {
+                var oldEquipment = (Equipment) _firstSelectedPartyMember.PartyMemberInventory.FirstOrDefault(
+                    x => x.EnumItemType == EnumItemType.equipment 
+                         && ((Equipment)x).EquipmentType == equipment.EquipmentType
+                         && ((Equipment)x).IsEquipped);
+
+                _firstSelectedPartyMember.CharStats.Equip(equipment);
+                _firstSelectedPartyMember.CharStats.UnEquip(oldEquipment);
+                LoadInventory(_firstSelectedPartyMember);
+                _listCreator.LoadCharacterList(_party, null);
+
+                if (equipment == oldEquipment) {
+                    EvokeSingleSentenceDialogue($"{itemToEquip.itemName} successfully unequipped.");
+                }
+
+                EvokeSingleSentenceDialogue($"{itemToEquip.itemName} successfully equipped.");
+            }
+
+            EvokeSingleSentenceDialogue($"{_firstSelectedPartyMember.Name} cannot equip {itemToEquip.itemName}");
+        }
+        else {
+            EvokeSingleSentenceDialogue($"{itemToEquip.itemName} is not an Equipment");
         }
     }
 
@@ -463,26 +510,20 @@ public class Menu : MonoBehaviour
         if (Input.GetButtonUp("Interact")) {
             switch (_currentlyAnimatedButton.name) {
                 case "Use":
-                    OpenObjectMenu();
-                    _currentMenuType = CurrentMenu.use;
-                    CloseObjectButtonMenu();
+                    _enumCurrentMenuType = EnumCurrentMenu.use;
                     break;
                 case "Give":
-                    OpenObjectMenu();
-                    _currentMenuType = CurrentMenu.give;
-                    CloseObjectButtonMenu();
+                    _enumCurrentMenuType = EnumCurrentMenu.give;
                     break;
                 case "Drop":
-                    OpenObjectMenu();
-                    _currentMenuType = CurrentMenu.drop;
-                    CloseObjectButtonMenu();
+                    _enumCurrentMenuType = EnumCurrentMenu.drop;
                     break;
                 case "Equip":
-                    OpenObjectMenu();
-                    _currentMenuType = CurrentMenu.equip;
-                    CloseObjectButtonMenu();
+                    _enumCurrentMenuType = EnumCurrentMenu.equip;
                     break;
             }
+            OpenObjectMenu();
+            CloseObjectButtonMenu();
         }
 
         if (Input.GetButtonUp("Back")) {
@@ -530,8 +571,8 @@ public class Menu : MonoBehaviour
 
     private void OpenCharacterSelectMenu() {
         characterSelector.SetActive(true);
-        _listCreator.LoadCharacterList(_party, CharacterListType.stats);
-        _listCreator.DrawBoundary(_currentItemSelected, _currentItemSelected);
+        _listCreator.LoadCharacterList(_party, null);
+        _listCreator.DrawBoundary(0, 0);
         LoadInventory(_party[_currentItemSelected]);
         _animatorCharacterSelector.SetBool("characterSelectorIsOpen", true);
     }
@@ -581,7 +622,7 @@ public class Menu : MonoBehaviour
     }
 
     private void LoadPortraitOfMember(PartyMember partyMember) {
-        var image = portrait.transform.GetChild(0).GetComponent<Image>();
+        var image = portrait.transform.Find("PortraitPicture").GetComponent<Image>();
         var sprite = partyMember.PortraitSprite;
         image.sprite = sprite;
     }
@@ -619,7 +660,7 @@ public class Menu : MonoBehaviour
     #region Coroutines
 
     IEnumerator WaitCloseSetActiveFalseAndStartNextCoroutine(List<GameObject> gameObjects, IEnumerator coroutine) {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
         foreach (var thisGameObject in gameObjects) {
             thisGameObject.SetActive(false);
         }
@@ -628,7 +669,7 @@ public class Menu : MonoBehaviour
     }
 
     IEnumerator WaitForQuaterSecCloseMainMenu() {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
         mainMenu.SetActive(false);
         objectMenu.SetActive(false);
         portrait.SetActive(false);
@@ -637,14 +678,5 @@ public class Menu : MonoBehaviour
     }
 
     #endregion
-
-    private enum CurrentMenu {
-        none,
-        magic,
-        member,
-        use,
-        give,
-        drop,
-        equip
-    }
+    
 }

@@ -89,7 +89,7 @@ public class DialogManager : MonoBehaviour {
         if (dialogue.Portrait != null) {
             _hasPortrait = true;
             Debug.Log("Portrait not null.");
-            var image = Portrait.transform.GetChild(0).GetComponent<Image>();
+            var image = Portrait.transform.Find("PortraitPicture").GetComponent<Image>();
             image.sprite = dialogue.Portrait;
             Portrait.SetActive(true);
             AnimatorPortrait.SetBool("portraitIsOpen", true);
@@ -175,7 +175,7 @@ public class DialogManager : MonoBehaviour {
         if (_dialogue is QuestionCallback callback) {
             callback.OnAnswerAction(result);
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         DialogBox.SetActive(false);
         if (_hasPortrait) {
@@ -196,7 +196,7 @@ public class DialogManager : MonoBehaviour {
     }
     IEnumerator WaitForQuaterSec() {
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         DialogBox.SetActive(false);
         if (_hasPortrait) {

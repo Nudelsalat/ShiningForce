@@ -9,9 +9,9 @@ public class GameItem : ScriptableObject {
     public Sprite ItemSprite;
     public int buyValue;
     public DirectionType positionInInventory = DirectionType.none;
-    public ItemType itemType = ItemType.none;
+    public EnumItemType EnumItemType = EnumItemType.none;
 
     public bool IsSet() {
-        return itemType != ItemType.none;
+        return EnumItemType != EnumItemType.none;
     }
 }
