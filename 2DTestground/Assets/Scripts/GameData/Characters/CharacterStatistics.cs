@@ -63,4 +63,41 @@ public class CharacterStatistics {
         Movement.RemoveModifier(equipment.MovementModifier);
     }
 
+    public int CalculateNewAttack(Equipment newEquipment, Equipment oldEquipment) {
+        if (newEquipment == null) {
+            return Attack.GetModifiedValue();
+        }
+        if (oldEquipment != null) {
+            return Attack.GetModifiedValue() + newEquipment.AttackModifier - oldEquipment.AttackModifier;
+        }
+        return Attack.GetModifiedValue() + newEquipment.AttackModifier;
+    }
+    public int CalculateNewDefense(Equipment newEquipment, Equipment oldEquipment) {
+        if (newEquipment == null) {
+            return Defense.GetModifiedValue();
+        }
+        if (oldEquipment != null) {
+            return Defense.GetModifiedValue() + newEquipment.DefenseModifier - oldEquipment.DefenseModifier;
+        }
+        return Defense.GetModifiedValue() + newEquipment.DefenseModifier;
+    }
+    public int CalculateNewAgility(Equipment newEquipment, Equipment oldEquipment) {
+        if (newEquipment == null) {
+            return Agility.GetModifiedValue();
+        }
+        if (oldEquipment != null) {
+            return Agility.GetModifiedValue() + newEquipment.AgilityModifier - oldEquipment.AgilityModifier;
+        }
+        return Agility.GetModifiedValue() + newEquipment.AgilityModifier;
+    }
+    public int CalculateNewMovement(Equipment newEquipment, Equipment oldEquipment) {
+        if (newEquipment == null) {
+            return Movement.GetModifiedValue();
+        }
+        if (oldEquipment != null) {
+            return Movement.GetModifiedValue() + newEquipment.MovementModifier - oldEquipment.MovementModifier;
+        }
+        return Movement.GetModifiedValue() + newEquipment.MovementModifier;
+    }
+
 }

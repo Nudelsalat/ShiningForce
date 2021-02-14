@@ -17,7 +17,14 @@ public class Constants {
     public static string PathWoodenSword = "SharedObjects/Items/Equipment/WoodenSword";
     public static string PathWunderWaffe = "SharedObjects/Items/Equipment/WunderWaffe";
 
+
+    public static string PathQuickRing = "SharedObjects/Items/Equipment/Rings/QuickRing";
+    public static string PathPowerRings = "SharedObjects/Items/Equipment/Rings/PowerRing";
+
+
+
     public static Color Visible = new Color(1, 1, 1, 1);
     public static Color Invisible = new Color(1, 1, 1, 0);
+    public static Color Redish = new Color(1f, 0.6f, 0.6f);
 
 }

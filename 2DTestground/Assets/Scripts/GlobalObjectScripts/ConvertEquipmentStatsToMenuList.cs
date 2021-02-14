@@ -28,56 +28,28 @@ class ConvertEquipmentStatsToMenuList : MonoBehaviour {
             gameObject.transform.Find("Unequippable").GetComponent<Text>().text = "not possible to equip";
 
         } else {
-            var oldEquipment = (Equipment)
-                member.PartyMemberInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment
-                                                                && ((Equipment)x).EquipmentType == equipment.EquipmentType
-                                                                && ((Equipment)x).IsEquipped);
+            var oldEquipment = member.GetCurrentEquipment(equipment.EquipmentType);
 
             gameObject.transform.Find("Unequippable/Attack").GetComponent<Text>().text = 
                 member.CharStats.Attack.GetModifiedValue().ToString().PadLeft(3) 
                 + "→"
-                + CalculateNewAttack(member,equipment, oldEquipment).ToString().PadLeft(3);
+                + member.CharStats.CalculateNewAttack(equipment, oldEquipment).ToString().PadLeft(3);
 
             gameObject.transform.Find("Unequippable/Defense").GetComponent<Text>().text = 
                 member.CharStats.Defense.GetModifiedValue().ToString().PadLeft(3)
                 + "→"
-                + CalculateNewDefense(member, equipment, oldEquipment).ToString().PadLeft(3);
+                + member.CharStats.CalculateNewDefense(equipment, oldEquipment).ToString().PadLeft(3);
 
             gameObject.transform.Find("Unequippable/Agility").GetComponent<Text>().text = 
                 member.CharStats.Agility.GetModifiedValue().ToString().PadLeft(3)
                 + "→"
-                + CalculateNewAgility(member, equipment, oldEquipment).ToString().PadLeft(3);
+                + member.CharStats.CalculateNewAgility(equipment, oldEquipment).ToString().PadLeft(3);
 
             gameObject.transform.Find("Unequippable/Move").GetComponent<Text>().text = 
                 member.CharStats.Movement.GetModifiedValue().ToString().PadLeft(3)
                 + "→"
-                + CalculateNewMovement(member, equipment, oldEquipment).ToString().PadLeft(3);
+                + member.CharStats.CalculateNewMovement(equipment, oldEquipment).ToString().PadLeft(3);
 
         }
-    }
-
-    private int CalculateNewAttack(PartyMember member, Equipment newEquipment, Equipment oldEquipment) {
-        if (oldEquipment != null) {
-            return member.CharStats.Attack.GetModifiedValue() + newEquipment.AttackModifier - oldEquipment.AttackModifier;
-        }
-        return member.CharStats.Attack.GetModifiedValue() + newEquipment.AttackModifier;
-    }
-    private int CalculateNewDefense(PartyMember member, Equipment newEquipment, Equipment oldEquipment) {
-        if (oldEquipment != null) {
-            return member.CharStats.Defense.GetModifiedValue() + newEquipment.DefenseModifier - oldEquipment.DefenseModifier;
-        }
-        return member.CharStats.Defense.GetModifiedValue() + newEquipment.DefenseModifier;
-    }
-    private int CalculateNewAgility(PartyMember member, Equipment newEquipment, Equipment oldEquipment) {
-        if (oldEquipment != null) {
-            return member.CharStats.Agility.GetModifiedValue() + newEquipment.AgilityModifier - oldEquipment.AgilityModifier;
-        }
-        return member.CharStats.Agility.GetModifiedValue() + newEquipment.AgilityModifier;
-    }
-    private int CalculateNewMovement(PartyMember member, Equipment newEquipment, Equipment oldEquipment) {
-        if (oldEquipment != null) {
-            return member.CharStats.Movement.GetModifiedValue() + newEquipment.MovementModifier - oldEquipment.MovementModifier;
-        }
-        return member.CharStats.Movement.GetModifiedValue() + newEquipment.MovementModifier;
     }
 }

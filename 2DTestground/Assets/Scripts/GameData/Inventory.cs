@@ -28,8 +28,8 @@ public sealed class Inventory {
             PartyMemberInventory = new GameItem[] {
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathWunderWaffe)),
                 Object.Instantiate(Resources.Load<Equipment>(Constants.PathWoodenSword)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.PathPowerRings)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.PathQuickRing)),
             },
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/bowie"),
             partyLeader = true,

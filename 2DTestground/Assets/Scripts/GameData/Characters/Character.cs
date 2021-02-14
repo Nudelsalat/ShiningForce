@@ -22,6 +22,11 @@ public class Character {
     public void RemoveItem(GameItem item) {
         PartyMemberInventory[(int)item.positionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem));
     }
+    public Equipment GetCurrentEquipment(EnumEquipmentType equipmentType) {
+        return (Equipment) PartyMemberInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment
+                                                        && ((Equipment)x).EquipmentType == equipmentType
+                                                        && ((Equipment)x).IsEquipped);
+    }
 }
 
 

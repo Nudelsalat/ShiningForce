@@ -13,7 +13,7 @@ public class ListCreator : MonoBehaviour
     public Scrollbar scrollbar = null;
     
     // Use this for initialization
-    public void LoadCharacterList(List<PartyMember> party, Equipment equipmentItem) {
+    public void LoadCharacterList(List<PartyMember> party, Equipment equipmentItem, int currentlySelectedListItem) {
         ClearCharacterList();
         GameObject item;
         GameObject header;
@@ -53,6 +53,7 @@ public class ListCreator : MonoBehaviour
             }
             count++;
         }
+        DrawBoundary(currentlySelectedListItem, currentlySelectedListItem);
     }
 
     public void ClearCharacterList() {
