@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
@@ -15,6 +16,8 @@ public sealed class Inventory {
     private List<GameItem> Backpack = new List<GameItem>();
     private List<PartyMember> Party = new List<PartyMember>();
 
+    private int _gold;
+
     private static readonly Lazy<Inventory> lazy = new Lazy<Inventory>(() => new Inventory());
     public static Inventory Instance {
         get {
@@ -22,10 +25,13 @@ public sealed class Inventory {
         }
     }
     private Inventory() {
+        var chesterAnimator = Resources.Load<AnimatorController>(Constants.AnimationsFieldChester);
+        var bowieAnimator = Resources.Load<AnimatorController>(Constants.AnimationsFieldBowie);
+        var merchantAnimator = Resources.Load<AnimatorController>(Constants.AnimationsFieldMerchant);
         var bowie = new PartyMember() {
             Id = 0,
             Name = "Bowie",
-            PartyMemberInventory = new GameItem[] {
+            CharacterInventory = new GameItem[] {
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathWunderWaffe)),
                 Object.Instantiate(Resources.Load<Equipment>(Constants.PathWoodenSword)),
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathPowerRings)),
@@ -34,6 +40,7 @@ public sealed class Inventory {
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/bowie"),
             partyLeader = true,
             activeParty = true,
+            AnimatorSprite = bowieAnimator,
             ClassType = EnumClassType.SDMN,
             CharacterType = EnumCharacterType.bowie,
             CharStats = new CharacterStatistics() {
@@ -49,16 +56,17 @@ public sealed class Inventory {
                 Movement = new Stat(6)
             }
         };
-        var wunderWaffe = (Equipment) bowie.PartyMemberInventory[1];
+        var wunderWaffe = (Equipment) bowie.CharacterInventory[1];
         bowie.CharStats.Equip(wunderWaffe);
 
         var sarah = new PartyMember() {
             Id = 2,
             Name = "Sarah",
-            PartyMemberInventory = new GameItem[4],
+            CharacterInventory = new GameItem[4],
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/sarah"),
             partyLeader = false,
             activeParty = true,
+            AnimatorSprite = chesterAnimator,
             ClassType = EnumClassType.PRST,
             CharacterType = EnumCharacterType.sarah,
             CharStats = new CharacterStatistics() {
@@ -77,7 +85,7 @@ public sealed class Inventory {
         var jaha = new PartyMember() {
             Id = 3,
             Name = "JAHA",
-            PartyMemberInventory = new GameItem[] {
+            CharacterInventory = new GameItem[] {
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathMedicalHerb)),
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathHealingSeed)),
                 Object.Instantiate(Resources.Load<GameItem>(Constants.PathAntidote)),
@@ -86,6 +94,7 @@ public sealed class Inventory {
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/jaha"),
             partyLeader = false,
             activeParty = true,
+            AnimatorSprite = merchantAnimator,
             ClassType = EnumClassType.KNTE,
             CharacterType = EnumCharacterType.jaha,
             StatusEffects = EnumStatusEffect.poisoned,
@@ -105,10 +114,11 @@ public sealed class Inventory {
         var seppPartyMember = new PartyMember() {
             Id = 4,
             Name = "sepp",
-            PartyMemberInventory = new GameItem[4],
+            CharacterInventory = new GameItem[4],
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/gerhalt"),
             partyLeader = false,
             activeParty = false,
+            AnimatorSprite = chesterAnimator,
             ClassType = EnumClassType.WARR,
             CharacterType = EnumCharacterType.jaha,
             CharStats = new CharacterStatistics() {
@@ -127,11 +137,12 @@ public sealed class Inventory {
         var karl = new PartyMember() {
             Id = 5,
             Name = "KAZIN",
-            PartyMemberInventory = new GameItem[4],
+            CharacterInventory = new GameItem[4],
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/kazin"),
             partyLeader = false,
             activeParty = false,
             ClassType = EnumClassType.SDMN,
+            AnimatorSprite = bowieAnimator,
             CharacterType = EnumCharacterType.bowie,
             CharStats = new CharacterStatistics() {
                 Level = 2,
@@ -149,10 +160,11 @@ public sealed class Inventory {
         var luke = new PartyMember() {
             Id = 6,
             Name = "lUkE",
-            PartyMemberInventory = new GameItem[4],
+            CharacterInventory = new GameItem[4],
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/luke"),
             partyLeader = false,
             activeParty = true,
+            AnimatorSprite = merchantAnimator,
             ClassType = EnumClassType.SDMN,
             CharacterType = EnumCharacterType.sarah,
             CharStats = new CharacterStatistics() {
@@ -171,10 +183,11 @@ public sealed class Inventory {
         var may = new PartyMember() {
             Id = 7,
             Name = "May",
-            PartyMemberInventory = new GameItem[4],
+            CharacterInventory = new GameItem[4],
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/may"),
             partyLeader = false,
             activeParty = true,
+            AnimatorSprite = bowieAnimator,
             ClassType = EnumClassType.SDMN,
             CharacterType = EnumCharacterType.jaha,
             CharStats = new CharacterStatistics() {
@@ -198,7 +211,16 @@ public sealed class Inventory {
         AddPartyMember(luke);
         AddPartyMember(may);
     }
-    
+
+    public void AddGold(int addGold) {
+        _gold += addGold;
+    }
+    public void RemoveGold(int lostGold) {
+        _gold -= lostGold;
+    }
+    public int GetGold() {
+        return _gold;
+    }
 
     public string AddGameItem(GameItem gameItem) {
         if (gameItem == null) {
@@ -206,7 +228,7 @@ public sealed class Inventory {
         }
         foreach (var partyMember in Party) {
             if (TryAddGameItemToPartyMember(partyMember, gameItem)) {
-                return $"{gameItem.itemName} added to {partyMember.Name}!";
+                return $"{gameItem.itemName.AddColor(Color.green)} added to {partyMember.Name.AddColor(Constants.Redish)}!";
             }
         }
 
@@ -231,9 +253,9 @@ public sealed class Inventory {
     }
     public bool TryAddGameItemToPartyMember(PartyMember partyMember, GameItem item) {
         for(int i = 0; i < 4; i++) {
-            if (!partyMember.PartyMemberInventory[i].IsSet()) {
+            if (!partyMember.CharacterInventory[i].IsSet()) {
                 item.positionInInventory = (DirectionType) i;
-                partyMember.PartyMemberInventory[i] = item;
+                partyMember.CharacterInventory[i] = item;
                 return true;
             }
         }
@@ -273,16 +295,16 @@ public sealed class Inventory {
         firstItem.positionInInventory = secondItem.positionInInventory;
         secondItem.positionInInventory = tempDirection;
 
-        secondMember.PartyMemberInventory[(int) firstItem.positionInInventory] = firstItem;
-        firstMember.PartyMemberInventory[(int) secondItem.positionInInventory] = secondItem;
+        secondMember.CharacterInventory[(int) firstItem.positionInInventory] = firstItem;
+        firstMember.CharacterInventory[(int) secondItem.positionInInventory] = secondItem;
         
     }
 
     private void InitializeInventory(PartyMember member) {
-        for (int i = 0; i < member.PartyMemberInventory.Length; i++) {
-            if (member.PartyMemberInventory[i] == null) {
+        for (int i = 0; i < member.CharacterInventory.Length; i++) {
+            if (member.CharacterInventory[i] == null) {
                 var gameItem = Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem));
-                member.PartyMemberInventory[i] = gameItem;
+                member.CharacterInventory[i] = gameItem;
             }
         }
     }

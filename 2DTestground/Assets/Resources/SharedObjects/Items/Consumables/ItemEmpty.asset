@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: ItemEmpty
   m_EditorClassIdentifier: 
   itemName: empty
-  ItemSprite: {fileID: 0}
-  buyValue: 0
-  sellValue: 0
-  healValue: 0
+  ItemSprite: {fileID: 8807543358907615835, guid: 0e3d7f9811d80574693048be27c1a0b9,
+    type: 3}
   positionInInventory: -1
-  itemType: 4
+  EnumItemType: 4

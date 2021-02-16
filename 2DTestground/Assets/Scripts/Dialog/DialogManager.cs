@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,9 +18,11 @@ public class DialogManager : MonoBehaviour {
     public Animator AnimatorNo;
 
 
+    //public Text DialogText;
     public Text DialogText;
     public bool DialogActive;
     
+    //private Queue<string> _sentences;
     private Queue<string> _sentences;
     private bool _hasPortrait;
     private Dialogue _dialogue;
@@ -110,7 +114,7 @@ public class DialogManager : MonoBehaviour {
         }
 
         DialogActive = true;
-        string sentence = _sentences.Dequeue();
+        var sentence = _sentences.Dequeue();
 
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
@@ -118,9 +122,12 @@ public class DialogManager : MonoBehaviour {
     
     private string ReplaceNameVariables(string sentence) {
         var partyLeaderName = _inventory.GetPartyLeaderName();
-        sentence = sentence.Replace("#LEADERNAME#", partyLeaderName);
-        sentence = sentence.Replace("#CHESTER#", _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester));
-        return sentence.Replace("#SARAH#", _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah));
+        sentence = sentence.Replace("#LEADERNAME#", partyLeaderName.AddColor(Constants.Redish));
+        sentence = sentence.Replace("#CHESTER#", 
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester).AddColor(Constants.Redish));
+        sentence = sentence.Replace("#SARAH#",
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah).AddColor(Constants.Redish));
+        return sentence;
     }
 
     private void QuestionResult(bool result) {
@@ -156,9 +163,30 @@ public class DialogManager : MonoBehaviour {
     IEnumerator TypeSentence(string sentence) {
         DialogText.text = "";
         Player.InputDisabledInDialogue = true;
-        foreach (char letter in sentence) {
-            DialogText.text += letter;
-            yield return null;
+        var stringBuilder = new StringBuilder();
+        var styleTagEncountered = false;
+        var closingBraketCount = 0;
+        foreach (var letter in sentence) {
+            if (letter == '<') {
+                styleTagEncountered = true;
+            }
+            if (styleTagEncountered) {
+                stringBuilder.Append(letter);
+                if (letter == '>') {
+                    closingBraketCount++;
+                }
+
+                if (closingBraketCount == 2) {
+                    DialogText.text += stringBuilder;
+                    closingBraketCount = 0;
+                    styleTagEncountered = false;
+                    stringBuilder.Clear();
+                    yield return null;
+                }
+            } else {
+                DialogText.text += letter;
+                yield return null;
+            }
         }
 
         DialogueTriangle.SetActive(true);
@@ -210,4 +238,9 @@ public class DialogManager : MonoBehaviour {
             _dialogue.FollowUpEvent.Invoke("EventTrigger", 0);
         }
     }
+}
+
+public static class StringExtensions {
+    public static string AddColor(this string text, Color col) => $"<color={ColorHexFromUnityColor(col)}>{text}</color>";
+    public static string ColorHexFromUnityColor(this Color unityColor) => $"#{ColorUtility.ToHtmlStringRGBA(unityColor)}";
 }

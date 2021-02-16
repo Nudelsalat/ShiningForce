@@ -65,12 +65,12 @@ public class Player : MonoBehaviour
             if (_movement.x > 0) {
                 _interactionSelector.transform.position = new Vector3(transform.position.x + 0.75f,
                     transform.position.y - 0.25f, transform.position.z);
-                _animator.Play("swordsMan_right_move");
+                _animator.SetInteger("moveDirection", 3);
             } else if (_movement.x < 0) {
 
                 _interactionSelector.transform.position = new Vector3(transform.position.x - 0.75f,
                     transform.position.y - 0.25f, transform.position.z);
-                _animator.Play("swordsMan_left_move");
+                _animator.SetInteger("moveDirection", 1);
             }
 
             if (Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, 0f, 0f), .2f,
@@ -90,11 +90,11 @@ public class Player : MonoBehaviour
             if (_movement.y > 0) {
                 _interactionSelector.transform.position = new Vector3(transform.position.x,
                     transform.position.y + 0.5f, transform.position.z);
-                _animator.Play("swordsMan_back_move");
+                _animator.SetInteger("moveDirection", 0);
             } else if (_movement.y < 0) {
                 _interactionSelector.transform.position = new Vector3(transform.position.x,
                     transform.position.y - 1f, transform.position.z);
-                _animator.Play("swordsMan_front_move");
+                _animator.SetInteger("moveDirection", 2);
             }
 
             if (Physics2D.OverlapCircle(MovePoint.position + new Vector3(0f, _movement.y, 0f), .2f,

@@ -1,3 +1,6 @@
+TODOS:
+ //TODO THIS CANOT WORK, because i need images!
+
 TODOs:
 virtual void use() <- was pro object überschrieben werden kann, je nachdem was es macht
 virtual bool usable()
@@ -6,7 +9,7 @@ virtual bool usable()
 TODO:
 draw poison, stunned, curesed ect. implement on view
 
-
+TODO:
 Singelton<T> von Dominik klauen
 
 
