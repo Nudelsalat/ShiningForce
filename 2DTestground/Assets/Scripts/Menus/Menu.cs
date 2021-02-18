@@ -342,31 +342,6 @@ public class Menu : MonoBehaviour
     }
 
     private void HandleInventoryMenu() {
-        if (_enumCurrentMenuType != EnumCurrentMenu.member) {
-            _memberInventoryUI.SelectObject(_inputDirection);
-        }
-
-        if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
-            var selectedItem = _memberInventoryUI.GetSelectedGameItem();
-            if (_firstSelectedItem == null && !selectedItem.IsSet()) {
-                EvokeSingleSentenceDialogue("Select an Item first ...");
-                return;
-            }
-            switch (_enumCurrentMenuType) {
-                case EnumCurrentMenu.use:
-                    HandleUseMenu(selectedItem);
-                    break;
-                case EnumCurrentMenu.give:
-                    HandleGiveMenu(selectedItem);
-                    break;
-                case EnumCurrentMenu.drop:
-                    HandelDropMenu(selectedItem);
-                    break;
-                case EnumCurrentMenu.equip:
-                    HandleEquipMenu(selectedItem);
-                    break;
-            }
-        }
 
         if (Input.GetButtonUp("Back")) {
             if (_secondSelectedItem != null) {
@@ -389,7 +364,33 @@ public class Menu : MonoBehaviour
 
             _memberInventoryUI.UnselectObject();
         }
-        
+
+        if (_enumCurrentMenuType == EnumCurrentMenu.member || _enumCurrentMenuType == EnumCurrentMenu.magic) {
+            return;
+        }
+
+        _memberInventoryUI.SelectObject(_inputDirection);
+        if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
+            var selectedItem = _memberInventoryUI.GetSelectedGameItem();
+            if (_firstSelectedItem == null && !selectedItem.IsSet()) {
+                EvokeSingleSentenceDialogue("Select an Item first ...");
+                return;
+            }
+            switch (_enumCurrentMenuType) {
+                case EnumCurrentMenu.use:
+                    HandleUseMenu(selectedItem);
+                    break;
+                case EnumCurrentMenu.give:
+                    HandleGiveMenu(selectedItem);
+                    break;
+                case EnumCurrentMenu.drop:
+                    HandelDropMenu(selectedItem);
+                    break;
+                case EnumCurrentMenu.equip:
+                    HandleEquipMenu(selectedItem);
+                    break;
+            }
+        }
     }
 
     private void HandleUseMenu(GameItem selectedItem) {

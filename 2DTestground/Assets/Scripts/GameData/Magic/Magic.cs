@@ -12,9 +12,11 @@ public class Magic : ScriptableObject {
     public Sprite SpellSprite;
     public int CurrentLevel = 1;
     public DirectionType PositionInInventory;
-    [SerializeField]
-    private int _maxLevel = 4;
+    public int MaxLevel = 4; 
 
+    public bool IsEmpty() {
+        return SpellName.Equals("empty");
+    }
     // TODO: how to deal with different levels? -> Enable flag?
     // MP cost? 
 }

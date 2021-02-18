@@ -103,8 +103,6 @@ public class CharacterDetailUI : MonoBehaviour {
             foreach (var magic in _magicList) {
                 magic.gameObject.GetComponent<Image>().sprite = _blankSprite;
                 magic.transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
-                //TODO
-                //magic.transform.Find("SpellLevel").gameObject.GetComponent<Text>().text = "";
             }
             firstTextMagic.text = "Nothing";
             firstTextMagic.color = Constants.Redish;
@@ -112,13 +110,29 @@ public class CharacterDetailUI : MonoBehaviour {
             firstTextMagic.color = Color.white;
             for (int i = 0; i < charMagic.Length; i++) {
                 if (charMagic[i] != null) {
-                    var spellSprite = charMagic[i].SpellSprite;
+                    var currentMagic = charMagic[i];
+                    var spellSprite = currentMagic.SpellSprite;
                     _magicList[i].gameObject.GetComponent<Image>().sprite =
-                        (spellSprite != null && charMagic[i].CurrentLevel != 0) ? spellSprite : _blankSprite;
+                        (spellSprite != null && currentMagic.CurrentLevel != 0) ? spellSprite : _blankSprite;
                     _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text =
-                        charMagic[i].SpellName;
-                    _magicList[i].transform.Find("SpellLevel").gameObject.GetComponent<Text>().text = 
-                        "Level " + charMagic[i].CurrentLevel;
+                        currentMagic.SpellName;
+
+                    for (int j = 1; j <= 4; j++) {
+                        var spawnPoint = _magicList[i].transform.Find("SpellLevel/" + j.ToString());
+
+                        if (currentMagic.CurrentLevel >= j) {
+                            var item = Resources.Load(Constants.HealthBar) as GameObject;
+                            var pos = new Vector3(0, 0, spawnPoint.transform.position.z);
+                            var spawnedItem = Instantiate(item, pos, spawnPoint.transform.rotation);
+                            spawnedItem.transform.SetParent(spawnPoint.transform, false);
+                        }
+                        else {
+                            foreach (Transform child in spawnPoint.transform) {
+                                Destroy(child.gameObject);
+                            }
+                        }
+                    }
+
                 } else {
                     _magicList[i].GetComponent<Image>().sprite = _blankSprite;
                     _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";

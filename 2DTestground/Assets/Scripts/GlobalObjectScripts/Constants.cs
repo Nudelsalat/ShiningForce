@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public class Constants {
+    public static string HealthBar = "SharedObjects/HealthBar";
+
     public static string ItemMedicalHerb = "SharedObjects/Items/Consumables/MedicalHerb";
     public static string ItemAntidote = "SharedObjects/Items/Consumables/Antidote";
     public static string ItemHealingSeed = "SharedObjects/Items/Consumables/HealingSeed";
     public static string ItemEmptyItem = "SharedObjects/Items/Consumables/ItemEmpty";
     public static string ItemFairyTear = "SharedObjects/Items/Consumables/FairyTear";
+
 
     public static string SpriteEmptyItem = "ShiningForce/images/icon/sfitems";
     

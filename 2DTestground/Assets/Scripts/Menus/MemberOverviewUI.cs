@@ -48,7 +48,7 @@ public class MemberOverviewUI : MonoBehaviour {
         var firstTextItem = _itemList[0].transform.Find("ItemName").gameObject.GetComponent<Text>();
         var firstTextMagic = _magicList[0].transform.Find("SpellName").gameObject.GetComponent<Text>();
 
-        if (charInventory == null) {
+        if (charInventory == null || charInventory.All(x => x.EnumItemType == EnumItemType.none)) {
             foreach (var item in _itemList) {
                 item.gameObject.GetComponent<Image>().sprite = _blankSprite;
                 item.transform.Find("ItemName").gameObject.GetComponent<Text>().text = "";
@@ -72,7 +72,7 @@ public class MemberOverviewUI : MonoBehaviour {
             }
         }
 
-        if (charMagic == null || charMagic.All(x => x == null)) {
+        if (charMagic == null || charMagic.All(x => x.IsEmpty())) {
             foreach (var magic in _magicList) {
                 magic.gameObject.GetComponent<Image>().sprite = _blankSprite;
                 magic.transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
@@ -83,7 +83,7 @@ public class MemberOverviewUI : MonoBehaviour {
         } else {
             firstTextMagic.color = Color.white;
             for (int i = 0; i < charMagic.Length; i++) {
-                if (charMagic[i] != null) {
+                if (!charMagic[i].IsEmpty()) {
                     var spellSprite = charMagic[i].SpellSprite;
                     _magicList[i].gameObject.GetComponent<Image>().sprite =
                         (spellSprite != null && charMagic[i].CurrentLevel != 0) ? spellSprite : _blankSprite;

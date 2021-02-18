@@ -39,7 +39,7 @@ public sealed class Inventory {
             },
             Magic = new Magic[] {
                 Object.Instantiate(Resources.Load<Magic>(Constants.MagicEgress)),
-                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicBlaze)),
                 Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
                 Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
             },
@@ -64,6 +64,7 @@ public sealed class Inventory {
         };
         var wunderWaffe = (Equipment) bowie.CharacterInventory[1];
         bowie.CharStats.Equip(wunderWaffe);
+        bowie.Magic[1].CurrentLevel = 3;
 
         var sarah = new PartyMember() {
             Id = 2,
