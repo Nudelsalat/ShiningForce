@@ -85,6 +85,7 @@ public class Menu : MonoBehaviour
     private bool _isInMainButtonMenu = false;
     private bool _isInObjectButtonMenu = false;
     private bool _inInventoryMenu = false;
+    private bool _inMagicMenu = false;
     private bool _isPause = false;
     private bool _currentlyShowingEquipmentList = false;
     private DirectionType _inputDirection;
@@ -182,6 +183,8 @@ public class Menu : MonoBehaviour
                 if (_inInventoryMenu) {
                     HandleInventoryMenu();
                     return;
+                } else if (_inMagicMenu) {
+                    HandleInventoryMenu();
                 }
                 HandleCharacterSelectionMenu();
                 return;
@@ -238,7 +241,10 @@ public class Menu : MonoBehaviour
                     }
                     break;
                 case EnumCurrentMenu.magic:
-                    //TODO
+                    if (selectedMember != null) {
+                        LoadMagic(selectedMember);
+                        _listCreator.SetScrollbar(previousSelected, _currentListItemSelected, _party.Count);
+                    }
                     break;
             }
         }
@@ -276,7 +282,9 @@ public class Menu : MonoBehaviour
                     OpenCharacterDetail(_party[_currentListItemSelected]);
                     break;
                 case EnumCurrentMenu.magic:
-                    //TODO
+                    _itemsToTrade.SetActive(true);
+                    _inMagicMenu = true;
+                    _memberInventoryUI.SelectObject(DirectionType.up);
                     break;
             }
 
@@ -320,9 +328,9 @@ public class Menu : MonoBehaviour
                     else {
                         _enumCurrentMenuType = EnumCurrentMenu.none;
                         CloseMemberMenu();
+                        CloseMagicMenu();
                         OpenMainButtonMenu();
                     }
-
                     break;
             }
         }
@@ -544,6 +552,9 @@ public class Menu : MonoBehaviour
                     OpenMemberMenu();
                     break;
                 case "Magic":
+                    _enumCurrentMenuType = EnumCurrentMenu.magic;
+                    CloseMainButtonMenu();
+                    OpenMagicMenu();
                     break;
                 case "Search":
                     CloseMainMenuForGood();
@@ -651,6 +662,24 @@ public class Menu : MonoBehaviour
         _listCreator.ClearCharacterList();
     }
 
+
+    private void OpenMagicMenu() {
+        _party = _inventory.GetParty();
+
+        OpenCharacterSelectMenu();
+        LoadMagic(_party[_currentListItemSelected]);
+
+        _animatorPortrait.SetBool("portraitIsOpen", true);
+        _animatorInventory.SetBool("inventoryIsOpen", true);
+    }
+
+    private void CloseMagicMenu() {
+        _animatorPortrait.SetBool("portraitIsOpen", false);
+        _animatorInventory.SetBool("inventoryIsOpen", false);
+        _animatorCharacterSelector.SetBool("characterSelectorIsOpen", false);
+        _listCreator.ClearCharacterList();
+    }
+
     private void OpenMemberMenu() {
         _party = _inventory.GetParty();
 
@@ -713,6 +742,12 @@ public class Menu : MonoBehaviour
     private void LoadInventory(PartyMember partyMember) {
         var gameItem = partyMember.CharacterInventory;
         _memberInventoryUI.LoadMemberInventory(gameItem);
+        LoadPortraitOfMember(partyMember);
+    }
+
+    private void LoadMagic(PartyMember partyMember) {
+        var gameItem = partyMember.Magic;
+        _memberInventoryUI.LoadMemberMagic(gameItem);
         LoadPortraitOfMember(partyMember);
     }
 

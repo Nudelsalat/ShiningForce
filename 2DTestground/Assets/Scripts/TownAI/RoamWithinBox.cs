@@ -4,8 +4,8 @@ using UnityEngine;
 public class RoamWithinBox : AbstractDialogHolder {
     public MonoBehaviour FollowUpEvent;
 
-    public float moveEveryXSeconds = 1;
-    public float moveSpeed = 2f;
+    public float moveEveryXSeconds = 2;
+    public float moveSpeed = 1f;
     public GameObject _path;
 
 
@@ -13,6 +13,8 @@ public class RoamWithinBox : AbstractDialogHolder {
     private bool _moveing = false;
     private float _moveEveryXSeconds;
     private Vector3 _nextPoint;
+    private DirectionType _moveDirection = DirectionType.down;
+    private DirectionType _playerDirection;
     private Animator _animator;
 
     // Start is called before the first frame update
@@ -30,9 +32,9 @@ public class RoamWithinBox : AbstractDialogHolder {
         if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabled) {
             return;
         }
-
         if (!(Vector3.Distance(transform.position, _nextPoint) <= 0.005f)) {
             transform.position = Vector3.MoveTowards(transform.position, _nextPoint, moveSpeed * Time.deltaTime);
+            _animator.SetInteger("moveDirection", (int)_moveDirection);
         }
 
         if (_moveing) {
@@ -40,6 +42,31 @@ public class RoamWithinBox : AbstractDialogHolder {
             _moveing = false;
         }
         else {
+            _moveEveryXSeconds -= Time.deltaTime;
+            if (_moveEveryXSeconds <= 0) {
+                _moveEveryXSeconds = Random.Range(moveEveryXSeconds * 0.75f, moveEveryXSeconds * 1.25f);
+                _moveing = true;
+            }
+        }
+    }
+
+    void FixedUpdate() {
+        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabled) {
+            if (_playerDirection != DirectionType.none) {
+                _animator.SetInteger("moveDirection", (int)_playerDirection);
+            }
+            return;
+        }
+        if (!(Vector3.Distance(transform.position, _nextPoint) <= 0.005f)) {
+            transform.position = Vector3.MoveTowards(transform.position, _nextPoint, moveSpeed * Time.deltaTime);
+            _playerDirection = DirectionType.none;
+            _animator.SetInteger("moveDirection", (int)_moveDirection);
+        }
+
+        if (_moveing) {
+            HandleMovement();
+            _moveing = false;
+        } else {
             _moveEveryXSeconds -= Time.deltaTime;
             if (_moveEveryXSeconds <= 0) {
                 _moveEveryXSeconds = Random.Range(moveEveryXSeconds * 0.75f, moveEveryXSeconds * 1.25f);
@@ -79,7 +106,8 @@ public class RoamWithinBox : AbstractDialogHolder {
         } while ((!_path.GetComponent<Collider2D>().OverlapPoint(currentPos) ||
                  Physics2D.OverlapCircle(currentPos, .2f, _playerCollision)));
 
-        _animator.SetInteger("moveDirection", (int)moveDirection);
+        _moveDirection = moveDirection;
+        _animator.SetInteger("moveDirection", (int)_moveDirection);
         _nextPoint = currentPos;
     }
 
@@ -108,6 +136,7 @@ public class RoamWithinBox : AbstractDialogHolder {
             }
             if (Physics2D.OverlapCircle(lookingForPlayer, .2f, _playerCollision)) {
                 _animator.SetInteger("moveDirection", direction);
+                _playerDirection = (DirectionType)direction;
                 return;
             }
         }

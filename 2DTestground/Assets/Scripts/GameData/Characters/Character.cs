@@ -12,8 +12,8 @@ public class Character {
     public int Id;
     public string Name;
     public Sprite PortraitSprite;
-    public GameItem[] CharacterInventory;
-    public Magic[] Magic;
+    public GameItem[] CharacterInventory = new GameItem[4];
+    public Magic[] Magic = new Magic[4];
     public AnimatorController AnimatorSprite;
 
     public int Kills = 0;
@@ -25,7 +25,7 @@ public class Character {
 
 
     public void RemoveItem(GameItem item) {
-        CharacterInventory[(int)item.positionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem));
+        CharacterInventory[(int)item.positionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
     }
     public Equipment GetCurrentEquipment(EnumEquipmentType equipmentType) {
         return (Equipment) CharacterInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,7 +34,7 @@ public class MemberOverviewUI : MonoBehaviour {
         _magicList = new GameObject[] {
             TopMagic, LeftMagic, BottomMagic, RightMagic
         };
-        _blankSprite = Resources.Load<Sprite>(Constants.PathEmptyItemSprite);
+        _blankSprite = Resources.Load<Sprite>(Constants.SpriteEmptyItem);
 
     }
 
@@ -71,7 +72,7 @@ public class MemberOverviewUI : MonoBehaviour {
             }
         }
 
-        if (charMagic == null) {
+        if (charMagic == null || charMagic.All(x => x == null)) {
             foreach (var magic in _magicList) {
                 magic.gameObject.GetComponent<Image>().sprite = _blankSprite;
                 magic.transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
@@ -85,7 +86,7 @@ public class MemberOverviewUI : MonoBehaviour {
                 if (charMagic[i] != null) {
                     var spellSprite = charMagic[i].SpellSprite;
                     _magicList[i].gameObject.GetComponent<Image>().sprite =
-                        spellSprite != null ? spellSprite : _blankSprite;
+                        (spellSprite != null && charMagic[i].CurrentLevel != 0) ? spellSprite : _blankSprite;
                     _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text =
                         charMagic[i].SpellName;
                     _magicList[i].transform.Find("SpellLevel").gameObject.GetComponent<Text>().text = 

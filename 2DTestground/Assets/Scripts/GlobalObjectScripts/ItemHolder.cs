@@ -27,9 +27,16 @@ public class ItemHolder : MonoBehaviour {
 
     void Update() {
         if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabled) {
-            var addedToWhom = inventory.AddGameItem(Instantiate(gameItem));
-            Dialogue.Sentences.Add(addedToWhom);
-            TriggerDialogue();
+            if (gameItem != null) {
+                var addedToWhom = inventory.AddGameItem(Instantiate(gameItem));
+                Dialogue.Sentences.Add(addedToWhom);
+                TriggerDialogue();
+                Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
+                RemoveItem();
+            } else {
+                TriggerDialogue();
+            }
+
             if (DespawnAfterUser) {
                 Destroy(gameObject);
             }
@@ -42,7 +49,15 @@ public class ItemHolder : MonoBehaviour {
             AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }
     }
-    
+
+    public void RemoveItem() {
+        gameItem = null;
+        audioClip = null;
+        Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
+        Dialogue.Sentences.Add("Nothing here...");
+    }
+
+
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.gameObject.tag.Equals("InteractionPointer")) {
             _isInSpace = true;

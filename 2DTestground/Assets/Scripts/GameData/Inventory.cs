@@ -32,10 +32,16 @@ public sealed class Inventory {
             Id = 0,
             Name = "Bowie",
             CharacterInventory = new GameItem[] {
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathWunderWaffe)),
-                Object.Instantiate(Resources.Load<Equipment>(Constants.PathWoodenSword)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathPowerRings)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathQuickRing)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentWunderWaffe)),
+                Object.Instantiate(Resources.Load<Equipment>(Constants.EquipmentWoodenSword)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentPowerRings)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentQuickRing)),
+            },
+            Magic = new Magic[] {
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEgress)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
             },
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/bowie"),
             partyLeader = true,
@@ -86,10 +92,10 @@ public sealed class Inventory {
             Id = 3,
             Name = "JAHA",
             CharacterInventory = new GameItem[] {
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathMedicalHerb)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathHealingSeed)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathAntidote)),
-                Object.Instantiate(Resources.Load<GameItem>(Constants.PathFairyTear)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.ItemMedicalHerb)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.ItemHealingSeed)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.ItemAntidote)),
+                Object.Instantiate(Resources.Load<GameItem>(Constants.ItemFairyTear)),
             },
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/jaha"),
             partyLeader = false,
@@ -138,6 +144,12 @@ public sealed class Inventory {
             Id = 5,
             Name = "KAZIN",
             CharacterInventory = new GameItem[4],
+            Magic = new Magic[] {
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicBlaze)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEgress)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
+                Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty)),
+            },
             PortraitSprite = Resources.Load<Sprite>("ShiningForce/Images/face/kazin"),
             partyLeader = false,
             activeParty = false,
@@ -157,6 +169,7 @@ public sealed class Inventory {
                 Movement = new Stat(16)
             }
         };
+        karl.Magic[1].CurrentLevel = 0;
         var luke = new PartyMember() {
             Id = 6,
             Name = "lUkE",
@@ -245,7 +258,7 @@ public sealed class Inventory {
         }
         // active party full?
         partyMember.activeParty = Party.Select(x => x.activeParty).Count() < 6;
-        InitializeInventory(partyMember);
+        InitializeInventoryAndMagic(partyMember);
 
         Party.Add(partyMember);
         
@@ -300,14 +313,20 @@ public sealed class Inventory {
         
     }
 
-    private void InitializeInventory(PartyMember member) {
+    private void InitializeInventoryAndMagic(PartyMember member) {
         for (int i = 0; i < member.CharacterInventory.Length; i++) {
             if (member.CharacterInventory[i] == null) {
-                var gameItem = Object.Instantiate(Resources.Load<GameItem>(Constants.PathEmptyItem));
+                var gameItem = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
                 member.CharacterInventory[i] = gameItem;
             }
         }
-    }
 
+        for (int i = 0; i < member.Magic.Length; i++) {
+            if (member.Magic[i] == null) {
+                var gameItem = Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty));
+                member.Magic[i] = gameItem;
+            }
+        }
+    }
 }
 

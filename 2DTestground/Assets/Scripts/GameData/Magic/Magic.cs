@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Magic", menuName = "Magic/NewMagic")]
 public class Magic : ScriptableObject {
     public string SpellName;
     public Sprite SpellSprite;
     public int CurrentLevel = 1;
+    public DirectionType PositionInInventory;
     [SerializeField]
     private int _maxLevel = 4;
 

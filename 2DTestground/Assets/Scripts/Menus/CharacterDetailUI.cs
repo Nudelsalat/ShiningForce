@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -37,7 +38,7 @@ public class CharacterDetailUI : MonoBehaviour {
         _magicList = new GameObject[] {
             TopMagic, LeftMagic, BottomMagic, RightMagic
         };
-        _blankSprite = Resources.Load<Sprite>(Constants.PathEmptyItemSprite);
+        _blankSprite = Resources.Load<Sprite>(Constants.SpriteEmptyItem);
 
     }
 
@@ -64,10 +65,10 @@ public class CharacterDetailUI : MonoBehaviour {
         KillsNGold.transform.Find("Gold/GoldText").GetComponent<Text>().text = _inventory.GetGold().ToString();
         KillsNGold.transform.Find("KillsDefeats/Kills/KillCount").GetComponent<Text>().text = character.Kills.ToString();
         KillsNGold.transform.Find("KillsDefeats/Defeated/DefeatCount").GetComponent<Text>().text = character.Defeats.ToString();
-        //TODO THIS CANOT WORK, because i need images!
-        var SpriteAnimator = KillsNGold.transform.Find("KillsDefeats/Sprite").GetComponent<Animator>();
-        SpriteAnimator.runtimeAnimatorController = character.AnimatorSprite;
-        SpriteAnimator.SetInteger("moveDirection", 2);
+
+        var spriteAnimator = KillsNGold.transform.Find("KillsDefeats/Sprite").GetComponent<Animator>();
+        spriteAnimator.runtimeAnimatorController = character.AnimatorSprite;
+        spriteAnimator.SetInteger("moveDirection", 2);
 
         var charInventory = character.CharacterInventory;
         var charMagic = character.Magic;
@@ -98,7 +99,7 @@ public class CharacterDetailUI : MonoBehaviour {
             }
         }
 
-        if (charMagic == null) {
+        if (charMagic == null || charMagic.All(x => x == null)) {
             foreach (var magic in _magicList) {
                 magic.gameObject.GetComponent<Image>().sprite = _blankSprite;
                 magic.transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
@@ -113,7 +114,7 @@ public class CharacterDetailUI : MonoBehaviour {
                 if (charMagic[i] != null) {
                     var spellSprite = charMagic[i].SpellSprite;
                     _magicList[i].gameObject.GetComponent<Image>().sprite =
-                        spellSprite != null ? spellSprite : _blankSprite;
+                        (spellSprite != null && charMagic[i].CurrentLevel != 0) ? spellSprite : _blankSprite;
                     _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text =
                         charMagic[i].SpellName;
                     _magicList[i].transform.Find("SpellLevel").gameObject.GetComponent<Text>().text = 

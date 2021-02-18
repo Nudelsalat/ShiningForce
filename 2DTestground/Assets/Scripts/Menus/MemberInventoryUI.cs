@@ -15,7 +15,9 @@ public class MemberInventoryUI : MonoBehaviour {
     private GameObject[] _itemList;
     private GameObject _currentSelectedItem;
     private GameItem[] _gameItemList;
+    private Magic[] _magicList;
     private GameItem _currentSelectedGameItem;
+    private Magic _currentSelectedMagic;
     private PartyMember _partyMember;
     private bool _isEquipment;
     
@@ -77,17 +79,25 @@ public class MemberInventoryUI : MonoBehaviour {
         SelectObject(_currentSelectedGameItem != null ? _currentSelectedGameItem.positionInInventory : 0);
     }
 
-    public void LoadMemberMagic(GameItem[] gameItems) {
+    public void LoadMemberMagic(Magic[] gameItems) {
+        CurrentSelectedItem.transform.Find("Equipped").GetComponent<Image>().color = Constants.Invisible;
+        CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>().text = "";
+        _isEquipment = false;
+        _partyMember = null;
+        _magicList = gameItems;
         _titleText.text = "-MAGIC-";
         for (int i = 0; i < gameItems.Length; i++) {
-            var itemSprite = gameItems[i]?.ItemSprite;
-            if (itemSprite != null) {
-                _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite;
-            } else {
-                _itemList[i].gameObject.GetComponent<Image>().sprite = _blankSprite;
-            }
+            var itemSprite = gameItems[i].SpellSprite;
+            _itemList[i].gameObject.GetComponent<Image>().sprite = 
+                (itemSprite != null && gameItems[i].CurrentLevel != 0) ? itemSprite : _blankSprite;
 
-            _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i]?.itemName;
+            _magicList[i].PositionInInventory = (DirectionType)i;
+
+            _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i].SpellName;
+
+
+            _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
+            
         }
     }
 
@@ -104,6 +114,23 @@ public class MemberInventoryUI : MonoBehaviour {
                 break;
             case DirectionType.right:
                 SetCurrentSelectedItem(RightItem, _gameItemList[3]);
+                break;
+        }
+    }
+
+    public void SelectMagic(DirectionType direction) {
+        switch (direction) {
+            case DirectionType.up:
+                SetCurrentSelectedMagic(TopItem, _magicList[0]);
+                break;
+            case DirectionType.left:
+                SetCurrentSelectedMagic(LeftItem, _magicList[1]);
+                break;
+            case DirectionType.down:
+                SetCurrentSelectedMagic(BottomItem, _magicList[2]);
+                break;
+            case DirectionType.right:
+                SetCurrentSelectedMagic(RightItem, _magicList[3]);
                 break;
         }
     }
@@ -126,6 +153,25 @@ public class MemberInventoryUI : MonoBehaviour {
         selectedGameObject.transform.GetComponent<Image>().color = Constants.Redish;
         selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Redish;
         _currentSelectedGameItem = selectedItem;
+
+        if (_isEquipment) {
+            LoadEquipmentStats();
+        }
+    }
+
+    public Magic GetSelectedMagic() {
+        return _currentSelectedMagic;
+    }
+
+    private void SetCurrentSelectedMagic(GameObject selectedGameObject, Magic selectedMagic) {
+        if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
+            _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
+            _currentSelectedItem.transform.Find("ItemName").GetComponent<Text>().color = Color.white;
+        }
+        _currentSelectedItem = selectedGameObject;
+        selectedGameObject.transform.GetComponent<Image>().color = Constants.Redish;
+        selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Redish;
+        _currentSelectedMagic = selectedMagic;
 
         if (_isEquipment) {
             LoadEquipmentStats();
