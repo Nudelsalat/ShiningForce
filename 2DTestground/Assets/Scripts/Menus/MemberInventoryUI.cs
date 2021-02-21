@@ -3,7 +3,7 @@ using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MemberInventoryUI : MonoBehaviour {
+public class MemberInventoryUI : MonoBehaviour{
     public GameObject TopItem;
     public GameObject LeftItem;
     public GameObject RightItem;
@@ -20,12 +20,12 @@ public class MemberInventoryUI : MonoBehaviour {
     private Magic _currentSelectedMagic;
     private PartyMember _partyMember;
     private bool _isEquipment;
-    
+
     public static MemberInventoryUI Instance;
-    
+
     void Awake() {
-        if (Instance != null) {
-            Debug.LogWarning("More than once Instance of MemberInventoryUI found.");
+        if (Instance != null && Instance != this) {
+            Destroy(this);
         } else {
             Instance = this;
         }
@@ -118,6 +118,7 @@ public class MemberInventoryUI : MonoBehaviour {
         }
     }
 
+
     public void SelectMagic(DirectionType direction) {
         switch (direction) {
             case DirectionType.up:
@@ -150,8 +151,8 @@ public class MemberInventoryUI : MonoBehaviour {
             _currentSelectedItem.transform.Find("ItemName").GetComponent<Text>().color = Color.white;
         }
         _currentSelectedItem = selectedGameObject;
-        selectedGameObject.transform.GetComponent<Image>().color = Constants.Redish;
-        selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Redish;
+        selectedGameObject.transform.GetComponent<Image>().color = Constants.Orange;
+        selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Orange;
         _currentSelectedGameItem = selectedItem;
 
         if (_isEquipment) {
@@ -169,8 +170,8 @@ public class MemberInventoryUI : MonoBehaviour {
             _currentSelectedItem.transform.Find("ItemName").GetComponent<Text>().color = Color.white;
         }
         _currentSelectedItem = selectedGameObject;
-        selectedGameObject.transform.GetComponent<Image>().color = Constants.Redish;
-        selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Redish;
+        selectedGameObject.transform.GetComponent<Image>().color = Constants.Orange;
+        selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Orange;
         _currentSelectedMagic = selectedMagic;
 
         if (_isEquipment) {

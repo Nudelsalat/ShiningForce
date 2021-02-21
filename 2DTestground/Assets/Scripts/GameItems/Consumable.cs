@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.GameData;
+using Assets.Scripts.HelperScripts;
 using UnityEditorInternal;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -48,6 +48,7 @@ class Consumable : GameItem {
                 EvokeSingleSentenceDialogue($"{character.Name} MP was restored by {toRestore} points!");
                 return true;
             case EnumRestorse.both:
+                //TODO
                 Debug.LogError("THIS IS NOT YET IMPLEMENTED");
                 return false;
             case EnumRestorse.statusEffect:

@@ -104,7 +104,7 @@ public sealed class Inventory {
             AnimatorSprite = merchantAnimator,
             ClassType = EnumClassType.KNTE,
             CharacterType = EnumCharacterType.jaha,
-            StatusEffects = EnumStatusEffect.poisoned,
+            StatusEffects = EnumStatusEffect.poisoned | EnumStatusEffect.hasted,
             CharStats = new CharacterStatistics() {
                 Level = 1,
                 Exp = 0,
@@ -128,6 +128,7 @@ public sealed class Inventory {
             AnimatorSprite = chesterAnimator,
             ClassType = EnumClassType.WARR,
             CharacterType = EnumCharacterType.jaha,
+            StatusEffects = EnumStatusEffect.poisoned | EnumStatusEffect.hasted | EnumStatusEffect.dead,
             CharStats = new CharacterStatistics() {
                 Level = 2,
                 Exp = 0,
@@ -157,6 +158,9 @@ public sealed class Inventory {
             ClassType = EnumClassType.SDMN,
             AnimatorSprite = bowieAnimator,
             CharacterType = EnumCharacterType.bowie,
+            StatusEffects = EnumStatusEffect.poisoned | EnumStatusEffect.hasted | EnumStatusEffect.cursed
+                | EnumStatusEffect.silent | EnumStatusEffect.boosted | EnumStatusEffect.confused 
+                | EnumStatusEffect.sleep | EnumStatusEffect.slowed | EnumStatusEffect.paralysed,
             CharStats = new CharacterStatistics() {
                 Level = 2,
                 Exp = 0,
@@ -242,7 +246,7 @@ public sealed class Inventory {
         }
         foreach (var partyMember in Party) {
             if (TryAddGameItemToPartyMember(partyMember, gameItem)) {
-                return $"{gameItem.itemName.AddColor(Color.green)} added to {partyMember.Name.AddColor(Constants.Redish)}!";
+                return $"{gameItem.itemName.AddColor(Color.green)} added to {partyMember.Name.AddColor(Constants.Orange)}!";
             }
         }
 

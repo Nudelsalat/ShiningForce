@@ -122,11 +122,11 @@ public class DialogManager : MonoBehaviour {
     
     private string ReplaceNameVariables(string sentence) {
         var partyLeaderName = _inventory.GetPartyLeaderName();
-        sentence = sentence.Replace("#LEADERNAME#", partyLeaderName.AddColor(Constants.Redish));
+        sentence = sentence.Replace("#LEADERNAME#", partyLeaderName.AddColor(Constants.Orange));
         sentence = sentence.Replace("#CHESTER#", 
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester).AddColor(Constants.Redish));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester).AddColor(Constants.Orange));
         sentence = sentence.Replace("#SARAH#",
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah).AddColor(Constants.Redish));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah).AddColor(Constants.Orange));
         return sentence;
     }
 
@@ -238,9 +238,4 @@ public class DialogManager : MonoBehaviour {
             _dialogue.FollowUpEvent.Invoke("EventTrigger", 0);
         }
     }
-}
-
-public static class StringExtensions {
-    public static string AddColor(this string text, Color col) => $"<color={ColorHexFromUnityColor(col)}>{text}</color>";
-    public static string ColorHexFromUnityColor(this Color unityColor) => $"#{ColorUtility.ToHtmlStringRGBA(unityColor)}";
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -22,13 +25,13 @@ public class CharacterDetailUI : MonoBehaviour {
     private Sprite _blankSprite;
     private GameObject[] _itemList;
     private GameObject[] _magicList;
-    public Inventory _inventory;
+    private Inventory _inventory;
 
     public static CharacterDetailUI Instance;
-    
+
     void Awake() {
-        if (Instance != null) {
-            Debug.LogWarning("More than once Instance of MemberInventoryUI found.");
+        if (Instance != null && Instance != this) {
+            Destroy(this);
         } else {
             Instance = this;
         }
@@ -50,6 +53,9 @@ public class CharacterDetailUI : MonoBehaviour {
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
         MemberInfo.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), character.ClassType);
         MemberInfo.transform.Find("Level").GetComponent<Text>().text = "LEVEL " + character.CharStats.Level;
+        
+        StopAllCoroutines();
+        StartCoroutine(CycleThroughStatusEffects(character));
 
         Stats.transform.Find("HP/Current").GetComponent<Text>().text = character.CharStats.CurrentHp.ToString();
         Stats.transform.Find("MP/Max").GetComponent<Text>().text = character.CharStats.MaxMp.ToString();
@@ -82,7 +88,7 @@ public class CharacterDetailUI : MonoBehaviour {
                 item.transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
             }
             firstTextItem.text = "Nothing";
-            firstTextItem.color = Constants.Redish;
+            firstTextItem.color = Constants.Orange;
         } else {
             firstTextItem.color = Color.white;
             for (int i = 0; i < charInventory.Length; i++) {
@@ -105,7 +111,7 @@ public class CharacterDetailUI : MonoBehaviour {
                 magic.transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
             }
             firstTextMagic.text = "Nothing";
-            firstTextMagic.color = Constants.Redish;
+            firstTextMagic.color = Constants.Orange;
         } else {
             firstTextMagic.color = Color.white;
             for (int i = 0; i < charMagic.Length; i++) {
@@ -140,6 +146,41 @@ public class CharacterDetailUI : MonoBehaviour {
                 }
             }
         }
+    }
+    private List<Sprite> SetAllStatusEffectsAsSprites(EnumStatusEffect statusEffectsAsEnum) {
+        var spriteAtlas = Resources.Load<SpriteAtlas>(Constants.SpriteAtlasStatusEffects);
+        var spriteList = new List<Sprite>();
+        if (statusEffectsAsEnum == EnumStatusEffect.none) {
+            spriteList.Add(spriteAtlas.GetSprite(Enum.GetName(typeof(EnumStatusEffect), EnumStatusEffect.none)));
+            return spriteList;
+        } else if (statusEffectsAsEnum.HasFlag(EnumStatusEffect.dead)) {
+            spriteList.Add(spriteAtlas.GetSprite(Enum.GetName(typeof(EnumStatusEffect), EnumStatusEffect.dead)));
+            return spriteList;
+        }
+
+        // Get all names of set Enum from statusEffectsAsEnum
+        var stringList = Enum.GetValues(typeof(EnumStatusEffect)).Cast<EnumStatusEffect>()
+            .Where(x => statusEffectsAsEnum.HasFlag(x)).Select(x => Enum.GetName(typeof(EnumStatusEffect), x))
+            .ToList();
+
+        foreach (var spriteName in stringList) {
+            if (spriteName.Equals("none")) {
+                continue;
+            }
+            spriteList.Add(spriteAtlas.GetSprite(spriteName));
+        }
+
+        return spriteList;
+    }
+
+    IEnumerator CycleThroughStatusEffects(Character character) {
+        var spriteList = SetAllStatusEffectsAsSprites(character.StatusEffects);
+        do {
+            foreach (var sprite in spriteList) {
+                MemberInfo.transform.Find("StatusEffect").GetComponent<Image>().sprite = sprite;
+                yield return new WaitForSeconds(1f);
+            }
+        } while (true);
     }
 }
 

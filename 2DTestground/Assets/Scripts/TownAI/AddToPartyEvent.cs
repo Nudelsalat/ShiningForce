@@ -26,7 +26,7 @@ public class AddToPartyEvent : MonoBehaviour {
         Player.InputDisabledInEvent = true;
         FindObjectOfType<DialogManager>().StartDialogue(new Dialogue() {
             Name = "Event",
-            Sentences = new List<string>() { partyMemberToAdd.Name.AddColor(Constants.Redish) + " joined the Shining Force!" }
+            Sentences = new List<string>() { partyMemberToAdd.Name.AddColor(Constants.Orange) + " joined the Shining Force!" }
         });
         AudioClip audio = Resources.Load<AudioClip>("ShiningForce/sounds/victory");
         AudioSource.PlayClipAtPoint(audio, transform.position);

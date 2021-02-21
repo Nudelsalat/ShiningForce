@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.VersionControl;
 using UnityEditorInternal;
 using UnityEngine;
@@ -85,7 +85,6 @@ public class Menu : MonoBehaviour
     private bool _isInMainButtonMenu = false;
     private bool _isInObjectButtonMenu = false;
     private bool _inInventoryMenu = false;
-    private bool _inMagicMenu = false;
     private bool _isPause = false;
     private bool _currentlyShowingEquipmentList = false;
     private DirectionType _inputDirection;
@@ -183,9 +182,8 @@ public class Menu : MonoBehaviour
                 if (_inInventoryMenu) {
                     HandleInventoryMenu();
                     return;
-                } else if (_inMagicMenu) {
-                    HandleInventoryMenu();
                 }
+
                 HandleCharacterSelectionMenu();
                 return;
             }
@@ -283,8 +281,8 @@ public class Menu : MonoBehaviour
                     break;
                 case EnumCurrentMenu.magic:
                     _itemsToTrade.SetActive(true);
-                    _inMagicMenu = true;
-                    _memberInventoryUI.SelectObject(DirectionType.up);
+                    _inInventoryMenu= true;
+                    _memberInventoryUI.SelectMagic(DirectionType.up);
                     break;
             }
 
@@ -327,6 +325,7 @@ public class Menu : MonoBehaviour
                     }
                     else {
                         _enumCurrentMenuType = EnumCurrentMenu.none;
+                        _itemsToTrade.SetActive(false);
                         CloseMemberMenu();
                         CloseMagicMenu();
                         OpenMainButtonMenu();
@@ -361,34 +360,44 @@ public class Menu : MonoBehaviour
                     OpenMemberMenu();
                     break;
             }
-
             _memberInventoryUI.UnselectObject();
         }
 
-        if (_enumCurrentMenuType == EnumCurrentMenu.member || _enumCurrentMenuType == EnumCurrentMenu.magic) {
+        if (_enumCurrentMenuType == EnumCurrentMenu.member) {
             return;
-        }
-
-        _memberInventoryUI.SelectObject(_inputDirection);
-        if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
-            var selectedItem = _memberInventoryUI.GetSelectedGameItem();
-            if (_firstSelectedItem == null && !selectedItem.IsSet()) {
-                EvokeSingleSentenceDialogue("Select an Item first ...");
+        } else if (_enumCurrentMenuType == EnumCurrentMenu.magic) {
+            _memberInventoryUI.SelectMagic(_inputDirection);
+            if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
+                var selectedMagic = _memberInventoryUI.GetSelectedMagic();
+                if (selectedMagic.IsEmpty()) {
+                    EvokeSingleSentenceDialogue("Select a magic spell...");
+                    return;
+                }
+                EvokeSingleSentenceDialogue($"{selectedMagic.SpellName.AddColor(Constants.Violet)} doesn't seem to do anything.");
                 return;
             }
-            switch (_enumCurrentMenuType) {
-                case EnumCurrentMenu.use:
-                    HandleUseMenu(selectedItem);
-                    break;
-                case EnumCurrentMenu.give:
-                    HandleGiveMenu(selectedItem);
-                    break;
-                case EnumCurrentMenu.drop:
-                    HandelDropMenu(selectedItem);
-                    break;
-                case EnumCurrentMenu.equip:
-                    HandleEquipMenu(selectedItem);
-                    break;
+        } else {
+            _memberInventoryUI.SelectObject(_inputDirection);
+            if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
+                var selectedItem = _memberInventoryUI.GetSelectedGameItem();
+                if (_firstSelectedItem == null && !selectedItem.IsSet()) {
+                    EvokeSingleSentenceDialogue("Select an Item first ...");
+                    return;
+                }
+                switch (_enumCurrentMenuType) {
+                    case EnumCurrentMenu.use:
+                        HandleUseMenu(selectedItem);
+                        break;
+                    case EnumCurrentMenu.give:
+                        HandleGiveMenu(selectedItem);
+                        break;
+                    case EnumCurrentMenu.drop:
+                        HandelDropMenu(selectedItem);
+                        break;
+                    case EnumCurrentMenu.equip:
+                        HandleEquipMenu(selectedItem);
+                        break;
+                }
             }
         }
     }
@@ -486,7 +495,7 @@ public class Menu : MonoBehaviour
         if (answer) {
             RemoveCurrentItem();
             LoadInventory(_firstSelectedPartyMember);
-            _memberInventoryUI.SelectObject(0);
+            _memberInventoryUI.SelectObject(DirectionType.up);
         }
 
         _firstSelectedItem = null;

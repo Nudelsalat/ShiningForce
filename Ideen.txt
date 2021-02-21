@@ -1,17 +1,20 @@
-TODOS:
- //TODO THIS CANOT WORK, because i need images!
-
-TODOs:
-virtual void use() <- was pro object überschrieben werden kann, je nachdem was es macht
-virtual bool usable()
-
-
 TODO:
 draw poison, stunned, curesed ect. implement on view
+-> maybe as "gif"
+-> List<Sprite> -> Coroutine, yield xSeconds, show next Sprite, rinse and repeate
+
+to get that list:
+Enum.GetValues(typeof(SomeEnum))
+    .Cast<SomeEnum>()
+    .Select(v => v.ToString())
+    .ToList();
+https://stackoverflow.com/questions/1167361/how-do-i-convert-an-enum-to-a-list-in-c
+
 
 TODO:
 Singelton<T> von Dominik klauen
 
+Todo: stat growth? https://www.youtube.com/watch?v=mr5xkf6zSzk
 
 CHECK:
 Unity Awake -> on every Scene load? even if not destoryed
