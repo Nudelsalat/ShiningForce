@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f1eb1c28e286349ac4e01a0b130296, type: 3}
   m_Name: MedicalHerb
   m_EditorClassIdentifier: 
-  itemName: MEDICAL HERB
+  ItemName: 
+  Price: 10
   ItemSprite: {fileID: -4218608340749442826, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  buyValue: 10
-  positionInInventory: -1
-  itemType: 0
+  PositionInInventory: -1
+  EnumItemType: 0
   RestoreType: 0
   StatusEffectsToCure: 
   AmountToRestore: 10

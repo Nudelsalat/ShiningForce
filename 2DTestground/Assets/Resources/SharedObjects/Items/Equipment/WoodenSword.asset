@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b28155a072e9540bcd7d6ff7705a07, type: 3}
   m_Name: WoodenSword
   m_EditorClassIdentifier: 
-  itemName: WOODEN SWORD
+  ItemName: 
+  Price: 70
   ItemSprite: {fileID: -1172904248880273551, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  buyValue: 140
-  positionInInventory: -1
+  PositionInInventory: -1
   EnumItemType: 1
   AttackModifier: 3
   DefenseModifier: 0

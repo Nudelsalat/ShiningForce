@@ -246,13 +246,13 @@ public sealed class Inventory {
         }
         foreach (var partyMember in Party) {
             if (TryAddGameItemToPartyMember(partyMember, gameItem)) {
-                return $"{gameItem.itemName.AddColor(Color.green)} added to {partyMember.Name.AddColor(Constants.Orange)}!";
+                return $"{gameItem.ItemName.AddColor(Color.green)} added to {partyMember.Name.AddColor(Constants.Orange)}!";
             }
         }
 
         Backpack.Add(gameItem);
 
-        return $"{gameItem.itemName} added to Backpack!";
+        return $"{gameItem.ItemName} added to Backpack!";
     }
 
     public bool AddPartyMember(PartyMember partyMember) {
@@ -272,7 +272,7 @@ public sealed class Inventory {
     public bool TryAddGameItemToPartyMember(PartyMember partyMember, GameItem item) {
         for(int i = 0; i < 4; i++) {
             if (!partyMember.CharacterInventory[i].IsSet()) {
-                item.positionInInventory = (DirectionType) i;
+                item.PositionInInventory = (DirectionType) i;
                 partyMember.CharacterInventory[i] = item;
                 return true;
             }
@@ -309,12 +309,12 @@ public sealed class Inventory {
             secondMember.CharStats.UnEquip(secondEquipment);
         }
 
-        var tempDirection = firstItem.positionInInventory;
-        firstItem.positionInInventory = secondItem.positionInInventory;
-        secondItem.positionInInventory = tempDirection;
+        var tempDirection = firstItem.PositionInInventory;
+        firstItem.PositionInInventory = secondItem.PositionInInventory;
+        secondItem.PositionInInventory = tempDirection;
 
-        secondMember.CharacterInventory[(int) firstItem.positionInInventory] = firstItem;
-        firstMember.CharacterInventory[(int) secondItem.positionInInventory] = secondItem;
+        secondMember.CharacterInventory[(int) firstItem.PositionInInventory] = firstItem;
+        firstMember.CharacterInventory[(int) secondItem.PositionInInventory] = secondItem;
         
     }
 

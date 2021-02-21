@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.HelperScripts;
+using Assets.Scripts.Menus;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
@@ -48,8 +49,8 @@ public class MemberOverviewUI : MonoBehaviour {
         MemberInfo.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), character.ClassType);
         MemberInfo.transform.Find("Level").GetComponent<Text>().text = "LEVEL " + character.CharStats.Level;
 
-        StopAllCoroutines();
-        StartCoroutine(CycleThroughStatusEffects(character));
+        StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
+            MemberInfo.transform.Find("StatusEffect").gameObject, character.StatusEffects);
 
         var charInventory = character.CharacterInventory;
         var charMagic = character.Magic;
@@ -69,7 +70,7 @@ public class MemberOverviewUI : MonoBehaviour {
             for (int i = 0; i < charInventory.Length; i++) {
                 var itemSprite = charInventory[i].ItemSprite;
                 _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite != null ? itemSprite : _blankSprite;
-                _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = charInventory[i].itemName;
+                _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = charInventory[i].ItemName;
 
                 if (charInventory[i] is Equipment equipment && equipment.IsEquipped) {
                     _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Visible;
@@ -107,41 +108,6 @@ public class MemberOverviewUI : MonoBehaviour {
             }
         }
         
-    }
-    private List<Sprite> SetAllStatusEffectsAsSprites(EnumStatusEffect statusEffectsAsEnum) {
-        var spriteAtlas = Resources.Load<SpriteAtlas>(Constants.SpriteAtlasStatusEffects);
-        var spriteList = new List<Sprite>();
-        if (statusEffectsAsEnum == EnumStatusEffect.none) {
-            spriteList.Add(spriteAtlas.GetSprite(Enum.GetName(typeof(EnumStatusEffect), EnumStatusEffect.none)));
-            return spriteList;
-        } else if (statusEffectsAsEnum.HasFlag(EnumStatusEffect.dead)) {
-            spriteList.Add(spriteAtlas.GetSprite(Enum.GetName(typeof(EnumStatusEffect), EnumStatusEffect.dead)));
-            return spriteList;
-        }
-
-        // Get all names of set Enum from statusEffectsAsEnum
-        var stringList = Enum.GetValues(typeof(EnumStatusEffect)).Cast<EnumStatusEffect>()
-            .Where(x => statusEffectsAsEnum.HasFlag(x)).Select(x => Enum.GetName(typeof(EnumStatusEffect), x))
-            .ToList();
-
-        foreach (var spriteName in stringList) {
-            if (spriteName.Equals("none")) {
-                continue;
-            }
-            spriteList.Add(spriteAtlas.GetSprite(spriteName));
-        }
-
-        return spriteList;
-    }
-
-    IEnumerator CycleThroughStatusEffects(Character character) {
-        var spriteList = SetAllStatusEffectsAsSprites(character.StatusEffects);
-        do {
-            foreach (var sprite in spriteList) {
-                MemberInfo.transform.Find("StatusEffect").GetComponent<Image>().sprite = sprite;
-                yield return new WaitForSeconds(1f);
-            }
-        } while (true);
     }
 }
 

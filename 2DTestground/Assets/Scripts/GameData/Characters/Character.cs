@@ -25,7 +25,7 @@ public class Character {
 
 
     public void RemoveItem(GameItem item) {
-        CharacterInventory[(int)item.positionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
+        CharacterInventory[(int)item.PositionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
     }
     public Equipment GetCurrentEquipment(EnumEquipmentType equipmentType) {
         return (Equipment) CharacterInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment

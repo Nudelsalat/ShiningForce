@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b28155a072e9540bcd7d6ff7705a07, type: 3}
   m_Name: QuickRing
   m_EditorClassIdentifier: 
-  itemName: QUICK RING
+  ItemName: 
+  Price: 3000
   ItemSprite: {fileID: -4061852576441739039, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  buyValue: 3000
-  positionInInventory: -1
+  PositionInInventory: -1
   EnumItemType: 1
   AttackModifier: 0
   DefenseModifier: 0

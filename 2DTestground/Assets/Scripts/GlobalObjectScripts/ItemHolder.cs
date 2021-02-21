@@ -16,7 +16,7 @@ public class ItemHolder : MonoBehaviour {
     void Awake() {
         if (gameItem != null) {
             var newList = Dialogue.Sentences.Select(x => x.Replace("#ITEMNAME#",
-                gameItem.itemName.AddColor(Color.green))).ToList();
+                gameItem.ItemName.AddColor(Color.green))).ToList();
             Dialogue.Sentences = newList;
         }
     }

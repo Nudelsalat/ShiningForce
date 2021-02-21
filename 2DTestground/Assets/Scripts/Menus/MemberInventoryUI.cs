@@ -1,5 +1,7 @@
 ﻿
+using System.Reflection;
 using Assets.Scripts.GlobalObjectScripts;
+using Assets.Scripts.Menus;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +10,7 @@ public class MemberInventoryUI : MonoBehaviour{
     public GameObject LeftItem;
     public GameObject RightItem;
     public GameObject BottomItem;
+    public GameObject StatusEffects;
     public GameObject CurrentSelectedItem;
 
     private Text _titleText;
@@ -18,7 +21,7 @@ public class MemberInventoryUI : MonoBehaviour{
     private Magic[] _magicList;
     private GameItem _currentSelectedGameItem;
     private Magic _currentSelectedMagic;
-    private PartyMember _partyMember;
+    private Character _partyMember;
     private bool _isEquipment;
 
     public static MemberInventoryUI Instance;
@@ -41,7 +44,11 @@ public class MemberInventoryUI : MonoBehaviour{
 
     }
 
-    public void LoadMemberInventory(GameItem[] gameItems) {
+    public void LoadMemberInventory(Character character) {
+        StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
+            StatusEffects, character.StatusEffects);
+        var gameItems = character.CharacterInventory;
+
         CurrentSelectedItem.transform.Find("Equipped").GetComponent<Image>().color = Constants.Invisible;
         CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>().text = "";
         _isEquipment = false;
@@ -52,9 +59,9 @@ public class MemberInventoryUI : MonoBehaviour{
             var itemSprite = gameItems[i].ItemSprite;
             _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite != null ? itemSprite : _blankSprite;
 
-            _gameItemList[i].positionInInventory = (DirectionType) i;
+            _gameItemList[i].PositionInInventory = (DirectionType) i;
 
-            _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i].itemName;
+            _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i].ItemName;
 
             if (gameItems[i] is Equipment equipment && equipment.IsEquipped) {
                 _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Visible;
@@ -63,7 +70,10 @@ public class MemberInventoryUI : MonoBehaviour{
             }
         }
     }
-    public void LoadMemberEquipmentInventory(PartyMember member) {
+    public void LoadMemberEquipmentInventory(Character member) {
+        StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
+            StatusEffects, member.StatusEffects);
+
         _currentSelectedItem.transform.Find("ItemName").gameObject.SetActive(true);
         _partyMember = member;
         _isEquipment = true;
@@ -76,10 +86,14 @@ public class MemberInventoryUI : MonoBehaviour{
             _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
         }
 
-        SelectObject(_currentSelectedGameItem != null ? _currentSelectedGameItem.positionInInventory : 0);
+        SelectObject(_currentSelectedGameItem != null ? _currentSelectedGameItem.PositionInInventory : 0);
     }
 
-    public void LoadMemberMagic(Magic[] gameItems) {
+    public void LoadMemberMagic(Character character) {
+        StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
+            StatusEffects, character.StatusEffects);
+        var gameItems = character.Magic;
+
         CurrentSelectedItem.transform.Find("Equipped").GetComponent<Image>().color = Constants.Invisible;
         CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>().text = "";
         _isEquipment = false;
@@ -187,7 +201,7 @@ public class MemberInventoryUI : MonoBehaviour{
             oldEquipment = _partyMember.GetCurrentEquipment(equipment.EquipmentType);
 
             var text = CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>();
-            text.text = _currentSelectedGameItem.itemName;
+            text.text = _currentSelectedGameItem.ItemName;
             text.color = Constants.Visible;
 
 

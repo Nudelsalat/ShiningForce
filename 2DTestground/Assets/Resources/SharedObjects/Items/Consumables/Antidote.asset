@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f1eb1c28e286349ac4e01a0b130296, type: 3}
   m_Name: Antidote
   m_EditorClassIdentifier: 
-  itemName: ANTIDOTE
+  ItemName: 
+  Price: 20
   ItemSprite: {fileID: -8275941207053336697, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  buyValue: 20
-  positionInInventory: -1
-  itemType: 0
+  PositionInInventory: -1
+  EnumItemType: 0
   RestoreType: 2
   StatusEffectsToCure: 01000000
   AmountToRestore: 0

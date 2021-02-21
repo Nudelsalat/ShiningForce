@@ -259,6 +259,7 @@ public class Menu : MonoBehaviour
                     } else {
                         if (TryUseItemOnCharacter(_party[_currentListItemSelected])) {
                             RemoveCurrentItem();
+                            _listCreator.LoadCharacterList(_party, null, _currentListItemSelected);
                             ClearAllSelection();
                         }
                     }
@@ -414,7 +415,7 @@ public class Menu : MonoBehaviour
                 if (_firstSelectedItem == null) {
                     _itemsToTradeOne.sprite = selectedItem.ItemSprite;
                     _firstSelectedItem = selectedItem;
-                    EvokeSingleSentenceDialogue($"Use {selectedItem.itemName} with whom?");
+                    EvokeSingleSentenceDialogue($"Use {selectedItem.ItemName} with whom?");
                     _inInventoryMenu = false;
                     _memberInventoryUI.UnselectObject();
                 }
@@ -437,7 +438,7 @@ public class Menu : MonoBehaviour
         if (_firstSelectedItem == null) {
             _itemsToTradeOne.sprite = selectedItem.ItemSprite;
             _firstSelectedItem = selectedItem;
-            EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.itemName));
+            EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.ItemName));
             if (selectedItem.EnumItemType == EnumItemType.equipment) {
                 _currentlyShowingEquipmentList = true;
                 _listCreator.LoadCharacterList(_party, (Equipment) selectedItem, _currentListItemSelected);
@@ -449,11 +450,11 @@ public class Menu : MonoBehaviour
 
             var sentence = "";
             if (!selectedItem.IsSet()) {
-                sentence = $"Gave {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.itemName} " +
+                sentence = $"Gave {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.ItemName} " +
                            $"to {_secondSelectedPartyMember.Name}";
             } else {
-                sentence = $"Swapped {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.itemName} " +
-                           $"with {_secondSelectedPartyMember.Name}'s {_secondSelectedItem.itemName}";
+                sentence = $"Swapped {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.ItemName} " +
+                           $"with {_secondSelectedPartyMember.Name}'s {_secondSelectedItem.ItemName}";
             }
             EvokeSingleSentenceDialogue(sentence);
 
@@ -483,7 +484,7 @@ public class Menu : MonoBehaviour
         var dropItemCallback = new QuestionCallback {
             Name = "DropText",
             Sentences = new List<string>() {
-                $"Do you want really to drop {itemToDrop.itemName}"
+                $"Do you want really to drop {itemToDrop.ItemName}"
             },
             DefaultSelectionForQuestion = YesNo.No,
             OnAnswerAction = DropItemAnswer,
@@ -511,18 +512,18 @@ public class Menu : MonoBehaviour
                 
                 if (equipment == oldEquipment) {
                     _firstSelectedPartyMember.CharStats.UnEquip(equipment);
-                    EvokeSingleSentenceDialogue($"{itemToEquip.itemName} successfully unequipped.");
+                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName} successfully unequipped.");
                 } else {
                     _firstSelectedPartyMember.CharStats.Equip(equipment);
                     _firstSelectedPartyMember.CharStats.UnEquip(oldEquipment);
-                    EvokeSingleSentenceDialogue($"{itemToEquip.itemName} successfully equipped.");
+                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName} successfully equipped.");
                 }
                 _memberInventoryUI.LoadMemberEquipmentInventory(_firstSelectedPartyMember);
                 _listCreator.LoadCharacterList(_party, null, _currentListItemSelected);
             }
-            EvokeSingleSentenceDialogue($"{_firstSelectedPartyMember.Name} cannot equip {itemToEquip.itemName}");
+            EvokeSingleSentenceDialogue($"{_firstSelectedPartyMember.Name} cannot equip {itemToEquip.ItemName}");
         } else {
-            EvokeSingleSentenceDialogue($"{itemToEquip.itemName} is not an Equipment");
+            EvokeSingleSentenceDialogue($"{itemToEquip.ItemName} is not an Equipment");
         }
     }
 
@@ -750,14 +751,12 @@ public class Menu : MonoBehaviour
 
 
     private void LoadInventory(PartyMember partyMember) {
-        var gameItem = partyMember.CharacterInventory;
-        _memberInventoryUI.LoadMemberInventory(gameItem);
+        _memberInventoryUI.LoadMemberInventory(partyMember);
         LoadPortraitOfMember(partyMember);
     }
 
     private void LoadMagic(PartyMember partyMember) {
-        var gameItem = partyMember.Magic;
-        _memberInventoryUI.LoadMemberMagic(gameItem);
+        _memberInventoryUI.LoadMemberMagic(partyMember);
         LoadPortraitOfMember(partyMember);
     }
 
