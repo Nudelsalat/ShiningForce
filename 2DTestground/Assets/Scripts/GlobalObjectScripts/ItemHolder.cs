@@ -11,7 +11,8 @@ public class ItemHolder : MonoBehaviour {
     public bool DespawnAfterUser = false;
 
     private bool _isInSpace = false;
-    private Inventory inventory;
+    private Inventory _inventory;
+    private DialogManager _dialogManager;
 
     void Awake() {
         if (gameItem != null) {
@@ -22,13 +23,14 @@ public class ItemHolder : MonoBehaviour {
     }
 
     void Start() {
-        inventory = Inventory.Instance;
+        _inventory = Inventory.Instance;
+        _dialogManager = DialogManager.Instance;
     }
 
     void Update() {
         if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabled) {
             if (gameItem != null) {
-                var addedToWhom = inventory.AddGameItem(Instantiate(gameItem));
+                var addedToWhom = _inventory.AddGameItem(Instantiate(gameItem));
                 Dialogue.Sentences.Add(addedToWhom);
                 TriggerDialogue();
                 Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
@@ -44,7 +46,7 @@ public class ItemHolder : MonoBehaviour {
     }
 
     public void TriggerDialogue() {
-        FindObjectOfType<DialogManager>().StartDialogue(Dialogue);
+        _dialogManager.StartDialogue(Dialogue);
         if (audioClip != null) {
             AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }

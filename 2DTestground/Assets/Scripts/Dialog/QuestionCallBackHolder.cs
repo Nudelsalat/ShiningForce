@@ -6,6 +6,6 @@ public class QuestionCallBackHolder : AbstractDialogHolder {
 
     // Start is called before the first frame update
     public override void TriggerDialogue() {
-        FindObjectOfType<DialogManager>().StartDialogue(CallbackQuestion);
+        DialogManager.Instance.StartDialogue(CallbackQuestion);
     }
 }

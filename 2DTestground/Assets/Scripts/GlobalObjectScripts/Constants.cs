@@ -38,6 +38,14 @@ public class Constants {
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";
     public static string SoundNewPartyMember = "ShiningForce/sounds/victory";
 
+    public static string AudioVoiceDemon = "ShiningForce/sounds/talk7";
+    public static string AudioVoiceVeryLow = "ShiningForce/sounds/talk6";
+    public static string AudioVoiceLow = "ShiningForce/sounds/talk5";
+    public static string AudioVoiceMiddle = "ShiningForce/sounds/talk4";
+    public static string AudioVoiceHigh = "ShiningForce/sounds/talk3";
+    public static string AudioVoiceVeryHigh = "ShiningForce/sounds/talk2";
+    public static string AudioVoiceFairy = "ShiningForce/sounds/talk1";
+
     public static Color Visible = new Color(1, 1, 1, 1);
     public static Color Invisible = new Color(1, 1, 1, 0);
     public static Color Orange = new Color(1f, 0.6f, 0.6f);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f1eb1c28e286349ac4e01a0b130296, type: 3}
   m_Name: Antidote
   m_EditorClassIdentifier: 
-  ItemName: 
+  ItemName: Antidote
   Price: 20
   ItemSprite: {fileID: -8275941207053336697, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}

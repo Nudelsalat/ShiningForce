@@ -17,6 +17,7 @@ public sealed class Inventory {
     private List<PartyMember> Party = new List<PartyMember>();
 
     private int _gold;
+    private List<GameItem> _dealsList = new List<GameItem>();
 
     private static readonly Lazy<Inventory> lazy = new Lazy<Inventory>(() => new Inventory());
     public static Inventory Instance {
@@ -25,6 +26,9 @@ public sealed class Inventory {
         }
     }
     private Inventory() {
+        AddGold(7500);
+        _dealsList.Add(Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentWunderWaffe)));
+
         var chesterAnimator = Resources.Load<AnimatorController>(Constants.AnimationsFieldChester);
         var bowieAnimator = Resources.Load<AnimatorController>(Constants.AnimationsFieldBowie);
         var merchantAnimator = Resources.Load<AnimatorController>(Constants.AnimationsFieldMerchant);
@@ -238,6 +242,18 @@ public sealed class Inventory {
     }
     public int GetGold() {
         return _gold;
+    }
+
+    public List<GameItem> GetDeals() {
+        return _dealsList;
+    }
+
+    public void RemoveFromDeals(GameItem item) {
+        _dealsList.Remove(item);
+    }
+
+    public void AddToDeals(GameItem item) {
+        _dealsList.Add(item);
     }
 
     public string AddGameItem(GameItem gameItem) {

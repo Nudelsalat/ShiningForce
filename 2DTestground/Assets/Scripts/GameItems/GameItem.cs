@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameItem : ScriptableObject {
     public string ItemName;
     public int Price;
+    public bool IsUnique = false;
     public Sprite ItemSprite;
     public DirectionType PositionInInventory = DirectionType.none;
     public EnumItemType EnumItemType = EnumItemType.none;

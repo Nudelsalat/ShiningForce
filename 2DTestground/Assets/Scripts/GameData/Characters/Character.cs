@@ -25,6 +25,16 @@ public class Character {
 
 
     public void RemoveItem(GameItem item) {
+        if (item.IsUnique) {
+            Inventory.Instance.AddToDeals(item);
+        }
+        var itemToDrop = CharacterInventory[(int) item.PositionInInventory];
+        if (itemToDrop is Equipment equipment) {
+            if (equipment.IsEquipped) {
+                CharStats.UnEquip(equipment);
+            }
+        }
+
         CharacterInventory[(int)item.PositionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
     }
     public Equipment GetCurrentEquipment(EnumEquipmentType equipmentType) {

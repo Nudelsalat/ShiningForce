@@ -9,5 +9,17 @@ public class Dialogue {
     [TextArea(3,10)]
     public List<string> Sentences;
     public MonoBehaviour FollowUpEvent;
+    public EnumVoicePitch VoicePitch = EnumVoicePitch.middle;
+}
+
+public enum EnumVoicePitch {
+    deamon,
+    veryLow,
+    low,
+    middle,
+    high,
+    veryhigh,
+    fairy,
+    none
 }
 

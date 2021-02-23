@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c5cbe6f3a8d394fb90b701d4d02ec2, type: 3}
   m_Name: ItemEmpty
   m_EditorClassIdentifier: 
-  itemName: empty
+  ItemName: 
+  Price: 0
   ItemSprite: {fileID: 8807543358907615835, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  positionInInventory: -1
+  PositionInInventory: -1
   EnumItemType: 4

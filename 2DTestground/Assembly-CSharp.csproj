@@ -91,6 +91,9 @@
     <Compile Include="Assets\Scripts\GameItems\EnumItemType.cs" />
     <Compile Include="Assets\Scripts\GameItems\Equipment.cs" />
     <Compile Include="Assets\Scripts\GameItems\GameItem.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\Audio\SoundFile.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\CharacterSelector.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Constants.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertEquipmentStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertStatsToMenuList.cs" />
@@ -99,7 +102,6 @@
     <Compile Include="Assets\Scripts\GlobalObjectScripts\EnumCurrentMenu.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Fadeout.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ItemHolder.cs" />
-    <Compile Include="Assets\Scripts\GlobalObjectScripts\ListCreator.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\SaveLoadUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\StartPoint.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\WarpToScene.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Assets\Scripts\Menus\MemberOverviewUI.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
+    <Compile Include="Assets\Scripts\Menus\Portrait.cs" />
     <Compile Include="Assets\Scripts\Menus\StatusEffectDisplayer.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />

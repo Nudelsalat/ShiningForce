@@ -24,7 +24,7 @@ public class AddToPartyEvent : MonoBehaviour {
 
     IEnumerator AddPartyMember() {
         Player.InputDisabledInEvent = true;
-        FindObjectOfType<DialogManager>().StartDialogue(new Dialogue() {
+        DialogManager.Instance.StartDialogue(new Dialogue() {
             Name = "Event",
             Sentences = new List<string>() { partyMemberToAdd.Name.AddColor(Constants.Orange) + " joined the Shining Force!" }
         });

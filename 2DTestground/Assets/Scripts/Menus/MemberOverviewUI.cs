@@ -24,16 +24,18 @@ public class MemberOverviewUI : MonoBehaviour {
     private Sprite _blankSprite;
     private GameObject[] _itemList;
     private GameObject[] _magicList;
+    private Animator _animatorOverViewUi;
+    private bool _showUi;
     
     public static MemberOverviewUI Instance;
 
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this);
+            return;
         } else {
             Instance = this;
         }
-
         _itemList = new GameObject[] {
             TopItem, LeftItem, BottomItem, RightItem
         };
@@ -42,9 +44,13 @@ public class MemberOverviewUI : MonoBehaviour {
         };
         _blankSprite = Resources.Load<Sprite>(Constants.SpriteEmptyItem);
 
+        _animatorOverViewUi = transform.GetComponent<Animator>();
     }
 
+
     public void LoadMemberInventory(Character character) {
+        OpenMemberOverViewUi();
+
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
         MemberInfo.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), character.ClassType);
         MemberInfo.transform.Find("Level").GetComponent<Text>().text = "LEVEL " + character.CharStats.Level;
@@ -107,7 +113,24 @@ public class MemberOverviewUI : MonoBehaviour {
                 }
             }
         }
-        
+    }
+
+    private void OpenMemberOverViewUi() {
+        transform.gameObject.SetActive(true);
+        _showUi = true;
+        _animatorOverViewUi.SetBool("inventoryIsOpen", true);
+    }
+
+    public void CloseMemberOverviewUi() {
+        _showUi = false;
+        _animatorOverViewUi.SetBool("inventoryIsOpen", false);
+
+    }
+    IEnumerator WaitForTenthASecond() {
+        yield return new WaitForSeconds(0.1f);
+        if (!_showUi) {
+            transform.gameObject.SetActive(false);
+        }
     }
 }
 

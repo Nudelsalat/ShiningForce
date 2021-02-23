@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 2512733951962860677}
   - component: {fileID: 6695854931451031279}
   - component: {fileID: 5180572048311359785}
+  - component: {fileID: 6026208199501107576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -288,6 +289,73 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6026208199501107576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2512733951962860731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94023caafcd7f994db79b4789eaeb453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundFiles:
+  - Name: Town
+    AudioClip: {fileID: 8300000, guid: d8b22ca29cc87344b8872d7a30a4f879, type: 3}
+    Loop: 1
+    Volume: 0.01
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: fairy
+    AudioClip: {fileID: 8300000, guid: e06a4f6c34b6be543b8c57527951293a, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: veryhigh
+    AudioClip: {fileID: 8300000, guid: e5fe5a3cdea0bdb45beb76c6791e88da, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: high
+    AudioClip: {fileID: 8300000, guid: 43af9f41e478ec24cbe2b2f54e5e3f75, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: middle
+    AudioClip: {fileID: 8300000, guid: a034b1858d589af41999b5c0aa2a09df, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: low
+    AudioClip: {fileID: 8300000, guid: 9f38fb8a68947124484968e58b879d5f, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: veryLow
+    AudioClip: {fileID: 8300000, guid: b1793bd1f3bb62e4c837afd9c47b56af, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: none
+    AudioClip: {fileID: 8300000, guid: b5563014470ebc2429d6e08449fcf093, type: 3}
+    Loop: 0
+    Volume: 0
+    Pitch: 0.1
+    AudioSource: {fileID: 0}
+  - Name: deamon
+    AudioClip: {fileID: 8300000, guid: b5563014470ebc2429d6e08449fcf093, type: 3}
+    Loop: 1
+    Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
 --- !u!1 &2512733952207789208
 GameObject:
   m_ObjectHideFlags: 0

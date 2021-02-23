@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Assets.Scripts.Menus;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour {
     public GameObject DialogBox;
-    public GameObject Portrait;
     public GameObject DialogueTriangle;
     public GameObject YesNoBox;
 
@@ -27,12 +28,23 @@ public class DialogManager : MonoBehaviour {
     private bool _hasPortrait;
     private Dialogue _dialogue;
     private Inventory _inventory;
+    private Portrait _portrait;
+    public static AudioManager _audioManager;
 
     private bool _isInQuestion = false;
     private bool _selectedAnswer = true;
 
+    private string _voicePitch;
+
+    public static DialogManager Instance;
 
     void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(this);
+            return;
+        } else {
+            Instance = this;
+        }
         _sentences = new Queue<string>();
         DialogueTriangle.SetActive(false);
         YesNoBox.SetActive(false);
@@ -42,6 +54,8 @@ public class DialogManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         _inventory = Inventory.Instance;
+        _portrait = Portrait.Instance;
+        _audioManager = AudioManager.Instance;
     }
 
     void Update() {
@@ -80,6 +94,9 @@ public class DialogManager : MonoBehaviour {
         if (Player.IsInDialogue) {
             return;
         }
+
+        SelectVoice(dialogue.VoicePitch);
+
         _dialogue = dialogue;
 
         Debug.Log("Starting dialogue with: " + dialogue.Name);
@@ -92,11 +109,7 @@ public class DialogManager : MonoBehaviour {
 
         if (dialogue.Portrait != null) {
             _hasPortrait = true;
-            Debug.Log("Portrait not null.");
-            var image = Portrait.transform.Find("PortraitPicture").GetComponent<Image>();
-            image.sprite = dialogue.Portrait;
-            Portrait.SetActive(true);
-            AnimatorPortrait.SetBool("portraitIsOpen", true);
+            _portrait.ShowPortrait(dialogue.Portrait);
         }
 
         DialogBox.SetActive(true);
@@ -116,9 +129,12 @@ public class DialogManager : MonoBehaviour {
         DialogActive = true;
         var sentence = _sentences.Dequeue();
 
+
+        _audioManager.Play(_voicePitch);
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
+
     
     private string ReplaceNameVariables(string sentence) {
         var partyLeaderName = _inventory.GetPartyLeaderName();
@@ -159,6 +175,9 @@ public class DialogManager : MonoBehaviour {
         YesNoBox.SetActive(true);
     }
 
+    private void SelectVoice(EnumVoicePitch enumVoicePitch) {
+        _voicePitch = Enum.GetName(typeof(EnumVoicePitch), enumVoicePitch);
+    }
 
     IEnumerator TypeSentence(string sentence) {
         DialogText.text = "";
@@ -189,6 +208,8 @@ public class DialogManager : MonoBehaviour {
             }
         }
 
+        _audioManager.Stop(_voicePitch);
+
         DialogueTriangle.SetActive(true);
         
         if (_sentences.Count == 0 && _dialogue is Question question) {
@@ -197,6 +218,7 @@ public class DialogManager : MonoBehaviour {
             Player.InputDisabledInDialogue = false;
         }
     }
+
 
     IEnumerator WaitForQuaterSec(bool result) {
         //MLE waiting 0.2f before callback feels and looks wrong.
@@ -207,7 +229,7 @@ public class DialogManager : MonoBehaviour {
 
         DialogBox.SetActive(false);
         if (_hasPortrait) {
-            Portrait.SetActive(false);
+            _portrait.HidePortrait();
             _hasPortrait = false;
         }
         Player.IsInDialogue = false;
@@ -228,7 +250,7 @@ public class DialogManager : MonoBehaviour {
 
         DialogBox.SetActive(false);
         if (_hasPortrait) {
-            Portrait.SetActive(false);
+            _portrait.HidePortrait();
             _hasPortrait = false;
         }
         Player.IsInDialogue = false;

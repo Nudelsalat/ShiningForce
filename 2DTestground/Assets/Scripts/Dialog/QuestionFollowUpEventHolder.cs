@@ -4,8 +4,11 @@ public class QuestionFollowUpEventHolder : AbstractDialogHolder {
     [SerializeField]
     public QuestionFollowUpEvent FollowUpEventQuestion;
 
+    void Start() {
+    }
+
     // Start is called before the first frame update
     public override void TriggerDialogue() {
-        FindObjectOfType<DialogManager>().StartDialogue(FollowUpEventQuestion);
+        DialogManager.Instance.StartDialogue(FollowUpEventQuestion);
     }
 }

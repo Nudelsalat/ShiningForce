@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using System.Reflection;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
@@ -13,6 +14,7 @@ public class MemberInventoryUI : MonoBehaviour{
     public GameObject StatusEffects;
     public GameObject CurrentSelectedItem;
 
+    private Animator _inventoryAnimator;
     private Text _titleText;
     private Sprite _blankSprite;
     private GameObject[] _itemList;
@@ -23,28 +25,37 @@ public class MemberInventoryUI : MonoBehaviour{
     private Magic _currentSelectedMagic;
     private Character _partyMember;
     private bool _isEquipment;
+    private bool _showInventory;
 
     public static MemberInventoryUI Instance;
 
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this);
+            return;
         } else {
             Instance = this;
         }
-
-        _currentSelectedItem = TopItem;
 
         _itemList = new GameObject[] {
             TopItem, LeftItem, BottomItem, RightItem
         };
 
         _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
-        _titleText = transform.Find("Title").GetComponent<Text>();
+        _titleText = transform.Find("MemberInventoryUI/Title").GetComponent<Text>();
+        _inventoryAnimator = transform.GetComponent<Animator>();
+
+        transform.gameObject.SetActive(false);
+    }
+
+    void Start() {
+        _currentSelectedItem = TopItem;
 
     }
 
     public void LoadMemberInventory(Character character) {
+        OpenInventory();
+
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, character.StatusEffects);
         var gameItems = character.CharacterInventory;
@@ -71,6 +82,8 @@ public class MemberInventoryUI : MonoBehaviour{
         }
     }
     public void LoadMemberEquipmentInventory(Character member) {
+        OpenInventory();
+
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, member.StatusEffects);
 
@@ -90,6 +103,8 @@ public class MemberInventoryUI : MonoBehaviour{
     }
 
     public void LoadMemberMagic(Character character) {
+        OpenInventory();
+
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, character.StatusEffects);
         var gameItems = character.Magic;
@@ -158,6 +173,21 @@ public class MemberInventoryUI : MonoBehaviour{
     public GameItem GetSelectedGameItem() {
         return _currentSelectedGameItem;
     }
+    public Magic GetSelectedMagic() {
+        return _currentSelectedMagic;
+    }
+
+    public void CloseInventory() {
+        _inventoryAnimator.SetBool("inventoryIsOpen", false);
+        _showInventory = false;
+        StartCoroutine(WaitForTenthASecond());
+    }
+
+    private void OpenInventory() {
+        transform.gameObject.SetActive(true);
+        _showInventory = true;
+        _inventoryAnimator.SetBool("inventoryIsOpen", true);
+    }
 
     private void SetCurrentSelectedItem(GameObject selectedGameObject, GameItem selectedItem) {
         if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
@@ -173,11 +203,7 @@ public class MemberInventoryUI : MonoBehaviour{
             LoadEquipmentStats();
         }
     }
-
-    public Magic GetSelectedMagic() {
-        return _currentSelectedMagic;
-    }
-
+    
     private void SetCurrentSelectedMagic(GameObject selectedGameObject, Magic selectedMagic) {
         if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
             _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
@@ -227,6 +253,13 @@ public class MemberInventoryUI : MonoBehaviour{
         _itemList[3].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
             "MOVEMENT" + _partyMember.CharStats.CalculateNewMovement(newEquipment, oldEquipment).ToString().PadLeft(4);
 
+    }
+
+    IEnumerator WaitForTenthASecond() {
+        yield return new WaitForSeconds(0.1f);
+        if (!_showInventory) {
+            transform.gameObject.SetActive(false);
+        }
     }
 }
 

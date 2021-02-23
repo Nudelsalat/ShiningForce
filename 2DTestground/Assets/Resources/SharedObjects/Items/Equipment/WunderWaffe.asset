@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b28155a072e9540bcd7d6ff7705a07, type: 3}
   m_Name: WunderWaffe
   m_EditorClassIdentifier: 
-  ItemName: 
+  ItemName: Wunder Waffe
   Price: 9999
+  IsUnique: 1
   ItemSprite: {fileID: -9150330332852655256, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
   PositionInInventory: -1

@@ -258,6 +258,7 @@ MonoBehaviour:
     - Nevermind, I'll just tag along. Whatever you do must be more fun than staying
       here all day!
     FollowUpEvent: {fileID: 14714254}
+    VoicePitch: 3
 --- !u!61 &14714253
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -510,7 +511,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.44, y: -0.97}
+  m_AnchoredPosition: {x: -0.88, y: 5.88}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &99684746
@@ -829,6 +830,7 @@ MonoBehaviour:
     Sentences:
     - Hello I'm ze item zeller
     FollowUpEvent: {fileID: 161282729}
+    VoicePitch: 3
 --- !u!114 &161282729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1961,7 +1963,7 @@ PrefabInstance:
     - target: {fileID: 7262158038676917576, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.012340658
+      value: 0.000032271862
       objectReference: {fileID: 0}
     - target: {fileID: 7416353497121360462, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
@@ -4068,6 +4070,7 @@ MonoBehaviour:
     Sentences:
     - You investigate the vase.
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 2
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
   gameItem: {fileID: 11400000, guid: 4f822801ef9056d44a95996a9c1f8f14, type: 2}
   DespawnAfterUser: 0
@@ -4081,7 +4084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 716562752}
   m_Layer: 0
-  m_Name: Merchant3
+  m_Name: SearchingDude
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4296,6 +4299,7 @@ MonoBehaviour:
     - Wow, those are some nice swords!
     - ...oh wait, those are fake...
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 2
 --- !u!61 &1034414409
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4778,8 +4782,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DespawnAfterUser: 0
   FollowUpEvent: {fileID: 1250522658}
-  moveEveryXSeconds: 3
-  moveSpeed: 1
+  moveEveryXSeconds: 1
+  moveSpeed: 2
   _path: {fileID: 1585900590}
 --- !u!61 &1250522653
 BoxCollider2D:
@@ -4897,6 +4901,7 @@ MonoBehaviour:
     Sentences:
     - Oh thanks pal!
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 4
 --- !u!114 &1250522657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4917,6 +4922,7 @@ MonoBehaviour:
     Sentences:
     - Oh ... okay. Well never mind.
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 4
 --- !u!114 &1250522658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4938,6 +4944,7 @@ MonoBehaviour:
     - ahhh dammit... I lost my Antidote in these bushes somewhere...
     - Hey, would you like to help me find it?
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 4
     DefaultSelectionForQuestion: 0
     FollowUpEventForYes: {fileID: 1250522656}
     FollowUpEventForNo: {fileID: 1250522657}
@@ -5077,6 +5084,7 @@ MonoBehaviour:
     Sentences:
     - You found a #ITEMNAME# in these shrubs.
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 2
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
   gameItem: {fileID: 11400000, guid: c37e18a1fe55abd42b61cfa7729b914e, type: 2}
   DespawnAfterUser: 1
@@ -5920,20 +5928,20 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.11568128, y: 0.5203163}
-      - {x: -0.8977528, y: 0.4864751}
-      - {x: -0.8952845, y: 0.06002391}
-      - {x: -0.8935413, y: -0.0048685353}
-      - {x: -0.8942449, y: -0.42301798}
-      - {x: -0.7012173, y: -0.42886648}
-      - {x: -0.4964292, y: -0.43540907}
-      - {x: -0.49717724, y: -0.0068221986}
-      - {x: -0.2907406, y: -0.011446089}
-      - {x: -0.29335135, y: -0.40734154}
-      - {x: -0.10324374, y: -0.41984314}
-      - {x: 0.09182605, y: -0.42161304}
-      - {x: 0.096901834, y: 0.028530454}
-      - {x: 0.10182171, y: 0.082939416}
+    - - {x: 0.11072701, y: 0.5285734}
+      - {x: -0.89171547, y: 0.53317684}
+      - {x: -0.8922656, y: 0.042089943}
+      - {x: -1.0924959, y: 0.032734126}
+      - {x: -1.0906959, y: -0.45733416}
+      - {x: -0.49232772, y: -0.46532297}
+      - {x: -0.49039164, y: -0.45804977}
+      - {x: -0.48892033, y: 0.034462605}
+      - {x: -0.292392, y: 0.029838715}
+      - {x: -0.29335135, y: -0.44036943}
+      - {x: -0.0933353, y: -0.44874257}
+      - {x: 0.3121957, y: -0.45180064}
+      - {x: 0.30821526, y: 0.05871807}
+      - {x: 0.31313512, y: 0.5269189}
 --- !u!1 &1620255828
 GameObject:
   m_ObjectHideFlags: 0
@@ -10049,8 +10057,8 @@ Tilemap:
   - first: {x: -16, y: 5, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 38
-      m_TileSpriteIndex: 42
+      m_TileIndex: 24
+      m_TileSpriteIndex: 24
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -10229,8 +10237,8 @@ Tilemap:
   - first: {x: -16, y: 6, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 38
-      m_TileSpriteIndex: 42
+      m_TileIndex: 24
+      m_TileSpriteIndex: 24
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -10429,7 +10437,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 208
+  - m_RefCount: 210
     m_Data: {fileID: 11400000, guid: c049af6cc700bdf41874b12c1e893e57, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -10457,7 +10465,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 2c8147153cc447844bca96aa079e5c24, type: 2}
   - m_RefCount: 6
     m_Data: {fileID: 11400000, guid: 13593f1089b0d1b408c6d1822eef09e4, type: 2}
-  - m_RefCount: 9
+  - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: d460359835b3ed94384c0e3d6a8db61f, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 7a354eee2fb1a2b4c9d511ad6afee004, type: 2}
@@ -10532,7 +10540,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 208
+  - m_RefCount: 210
     m_Data: {fileID: -566838535543343518, guid: eaa1be116e738d84e84b189f65f16ed3,
       type: 3}
   - m_RefCount: 0
@@ -10579,7 +10587,7 @@ Tilemap:
   - m_RefCount: 7
     m_Data: {fileID: -5603565267259425653, guid: eaa1be116e738d84e84b189f65f16ed3,
       type: 3}
-  - m_RefCount: 9
+  - m_RefCount: 7
     m_Data: {fileID: 1958905859579935825, guid: eaa1be116e738d84e84b189f65f16ed3,
       type: 3}
   - m_RefCount: 2
@@ -10641,7 +10649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1640550526}
   m_Layer: 0
-  m_Name: Merchant2
+  m_Name: DudeOnWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10748,7 +10756,10 @@ MonoBehaviour:
     Sentences:
     - Hey Pal! How're you doing Today?
     - ... you don't have to answer me i guess...
+    - I need a whole lot of text, to check how the BIEP stuff is working. I have
+      the feeling that this is only played once, so.... i don't know what todo.....
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 6
 --- !u!95 &1700877665
 Animator:
   serializedVersion: 3
@@ -10913,6 +10924,7 @@ MonoBehaviour:
     Sentences:
     - You found a #ITEMNAME#!
     FollowUpEvent: {fileID: 0}
+    VoicePitch: 2
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
   gameItem: {fileID: 11400000, guid: 0bf6ae881a6ebef48a54e07f90576bbd, type: 2}
   DespawnAfterUser: 1

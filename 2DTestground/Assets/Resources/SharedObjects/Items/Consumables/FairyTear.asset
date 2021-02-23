@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f1eb1c28e286349ac4e01a0b130296, type: 3}
   m_Name: FairyTear
   m_EditorClassIdentifier: 
-  ItemName: 
+  ItemName: Fairy Tear
   Price: 300
   ItemSprite: {fileID: -6667363313952836740, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}

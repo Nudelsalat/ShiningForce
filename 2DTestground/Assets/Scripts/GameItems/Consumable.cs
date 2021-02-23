@@ -73,7 +73,7 @@ class Consumable : GameItem {
     private void EvokeSingleSentenceDialogue(string sentence) {
         _tempDialogue.Sentences.Clear();
         _tempDialogue.Sentences.Add(sentence);
-       FindObjectOfType<DialogManager>().StartDialogue(_tempDialogue);
+        DialogManager.Instance.StartDialogue(_tempDialogue);
     }
 
 }

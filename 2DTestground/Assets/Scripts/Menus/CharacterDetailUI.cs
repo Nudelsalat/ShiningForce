@@ -22,20 +22,27 @@ public class CharacterDetailUI : MonoBehaviour {
     public GameObject MemberInfo;
     public GameObject Stats;
     public GameObject KillsNGold;
-    
+
+    private Animator _animatorCharacterDetail;
+    private Animator _animatorKillsNGold;
+
+    private Inventory _inventory;
+
     private Sprite _blankSprite;
     private GameObject[] _itemList;
     private GameObject[] _magicList;
-    private Inventory _inventory;
+    private bool _showUi;
 
     public static CharacterDetailUI Instance;
 
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this);
+            return;
         } else {
             Instance = this;
         }
+
         _itemList = new GameObject[] {
             TopItem, LeftItem, BottomItem, RightItem
         };
@@ -44,6 +51,8 @@ public class CharacterDetailUI : MonoBehaviour {
         };
         _blankSprite = Resources.Load<Sprite>(Constants.SpriteEmptyItem);
 
+        _animatorCharacterDetail = transform.Find("BigWindow").GetComponent<Animator>();
+        _animatorKillsNGold = transform.Find("KillsNGold").GetComponent<Animator>();
     }
 
     void Start() {
@@ -51,6 +60,7 @@ public class CharacterDetailUI : MonoBehaviour {
     }
 
     public void LoadCharacterDetails(Character character) {
+        OpenCharacterDetails();
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
         MemberInfo.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), character.ClassType);
         MemberInfo.transform.Find("Level").GetComponent<Text>().text = "LEVEL " + character.CharStats.Level;
@@ -146,6 +156,25 @@ public class CharacterDetailUI : MonoBehaviour {
                     _magicList[i].transform.Find("SpellLevel").gameObject.GetComponent<Text>().text = "";
                 }
             }
+        }
+    }
+    private void OpenCharacterDetails() {
+        transform.gameObject.SetActive(true);
+        _showUi = true;
+        _animatorKillsNGold.SetBool("isOpen", true);
+        _animatorCharacterDetail.SetBool("isOpen", true);
+    }
+
+    public void CloseCharacterDetailsUi() {
+        _showUi = false;
+        _animatorKillsNGold.SetBool("isOpen", false);
+        _animatorCharacterDetail.SetBool("isOpen", false);
+    }
+
+    IEnumerator WaitForTenthASecond() {
+        yield return new WaitForSeconds(0.1f);
+        if (!_showUi) {
+            transform.gameObject.SetActive(false);
         }
     }
 }
