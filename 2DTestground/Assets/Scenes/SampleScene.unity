@@ -1963,7 +1963,7 @@ PrefabInstance:
     - target: {fileID: 7262158038676917576, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000032271862
+      value: 0.0000066668213
       objectReference: {fileID: 0}
     - target: {fileID: 7416353497121360462, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
@@ -4070,7 +4070,7 @@ MonoBehaviour:
     Sentences:
     - You investigate the vase.
     FollowUpEvent: {fileID: 0}
-    VoicePitch: 2
+    VoicePitch: 7
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
   gameItem: {fileID: 11400000, guid: 4f822801ef9056d44a95996a9c1f8f14, type: 2}
   DespawnAfterUser: 0
@@ -4299,7 +4299,7 @@ MonoBehaviour:
     - Wow, those are some nice swords!
     - ...oh wait, those are fake...
     FollowUpEvent: {fileID: 0}
-    VoicePitch: 2
+    VoicePitch: 7
 --- !u!61 &1034414409
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4379,9 +4379,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DespawnAfterUser: 0
   FollowUpEvent: {fileID: 0}
-  moveEveryXSeconds: 2
-  moveSpeed: 1
-  _path: {fileID: 99684744}
+  MoveEveryXSeconds: 2
+  MoveSpeed: 1
+  Path: {fileID: 99684744}
 --- !u!95 &1074724391
 Animator:
   serializedVersion: 3
@@ -4782,9 +4782,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DespawnAfterUser: 0
   FollowUpEvent: {fileID: 1250522658}
-  moveEveryXSeconds: 1
-  moveSpeed: 2
-  _path: {fileID: 1585900590}
+  MoveEveryXSeconds: 2
+  MoveSpeed: 1
+  Path: {fileID: 1585900590}
 --- !u!61 &1250522653
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5084,7 +5084,7 @@ MonoBehaviour:
     Sentences:
     - You found a #ITEMNAME# in these shrubs.
     FollowUpEvent: {fileID: 0}
-    VoicePitch: 2
+    VoicePitch: 7
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
   gameItem: {fileID: 11400000, guid: c37e18a1fe55abd42b61cfa7729b914e, type: 2}
   DespawnAfterUser: 1
@@ -10844,9 +10844,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DespawnAfterUser: 0
   FollowUpEvent: {fileID: 1700877664}
-  moveEveryXSeconds: 2
-  moveSpeed: 1
-  _path: {fileID: 854320305}
+  MoveEveryXSeconds: 2
+  MoveSpeed: 1
+  Path: {fileID: 854320305}
 --- !u!1 &1876598593
 GameObject:
   m_ObjectHideFlags: 0
@@ -10924,7 +10924,7 @@ MonoBehaviour:
     Sentences:
     - You found a #ITEMNAME#!
     FollowUpEvent: {fileID: 0}
-    VoicePitch: 2
+    VoicePitch: 7
   audioClip: {fileID: 8300000, guid: 37f047c31dd1ef447a2c89c04d8cc0b6, type: 3}
   gameItem: {fileID: 11400000, guid: 0bf6ae881a6ebef48a54e07f90576bbd, type: 2}
   DespawnAfterUser: 1
