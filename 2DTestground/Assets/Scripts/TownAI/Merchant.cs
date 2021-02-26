@@ -17,9 +17,7 @@ namespace Assets.Scripts.TownAI {
         }
 
         void EventTrigger() {
-            Player.InputDisabled = true;
             _merchantMenu.OpenMerchantWindow(ItemsToSell);
-
         }
     }
 }

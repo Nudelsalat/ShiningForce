@@ -2,29 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.GlobalObjectScripts;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = System.Object;
 
 namespace Assets.Scripts.Menus {
     public class MerchantMenu : MonoBehaviour {
 
-        public GameObject Buttons;
         public GameObject ObjectsForSale;
         public GameObject Gold;
-        public GameObject CharacterSelector;
 
-        private Animator _animatorButtons;
         private Animator _animatorObjectsForSale;
         private Animator _animatorGold;
 
-        private Animator _animatorBuyButton;
-        private Animator _animatorSellButton;
-        private Animator _animatorDealsButton;
-        private Animator _animatorRepairButton;
+        private AnimatorController _animatorBuyButton;
+        private AnimatorController _animatorSellButton;
+        private AnimatorController _animatorDealsButton;
+        private AnimatorController _animatorRepairButton;
+
+        private AudioClip _menuSwish;
+        private AudioClip _menuDing;
 
         private Dialogue _tempDialogue = new Dialogue {
             Name = "Itemtext",
@@ -34,16 +32,16 @@ namespace Assets.Scripts.Menus {
         };
 
         private GameObject _buyItem;
-        private Animator _currentlyAnimatedButton;
         private Portrait _portrait;
         private DialogManager _dialogManager;
         private GameItem _itemToSell;
+        private AudioManager _audioManager;
         private List<GameItem> _itemsToBuy;
         private List<GameItem> _itemsInCurrentMenu;
         private List<PartyMember> _party;
         private Text _buttonLabel;
-        private bool _menuActive = false;
         private bool _inInventoryMenu = false;
+        private string _currentlyAnimatedButton;
         private DirectionType _inputDirection;
         private DirectionType _lastInputDirection;
         private EnumCurrentMerchantMenu _enumCurrentMenuType;
@@ -56,6 +54,7 @@ namespace Assets.Scripts.Menus {
         private CharacterSelector _characterSelector;
         private Inventory _inventory;
         private MemberInventoryUI _memberInventoryUi;
+        private FourWayButtonMenu _fourWayButtonMenu;
 
         public static MerchantMenu Instance;
 
@@ -69,19 +68,17 @@ namespace Assets.Scripts.Menus {
             }
 
             _buyItem = Resources.Load<GameObject>("SharedObjects/BuyItem");
+            
+            _animatorBuyButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonBuy);
+            _animatorSellButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonSell);
+            _animatorDealsButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonDeals);
+            _animatorRepairButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonRepair);
 
-            _characterSelector = CharacterSelector.GetComponent<CharacterSelector>();
-
-            _buttonLabel = Buttons.transform.Find("Label/LabelText").GetComponent<Text>();
-
-            _animatorBuyButton = Buttons.transform.Find("Buy").GetComponent<Animator>();
-            _animatorSellButton = Buttons.transform.Find("Sell").GetComponent<Animator>();
-            _animatorDealsButton = Buttons.transform.Find("Deals").GetComponent<Animator>();
-            _animatorRepairButton = Buttons.transform.Find("Repair").GetComponent<Animator>();
-
-            _animatorButtons = Buttons.transform.GetComponent<Animator>();
             _animatorObjectsForSale = ObjectsForSale.transform.GetComponent<Animator>();
             _animatorGold = Gold.transform.GetComponent<Animator>();
+
+            _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
+            _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
         }
 
         void Start() {
@@ -89,6 +86,9 @@ namespace Assets.Scripts.Menus {
             _inventory = Inventory.Instance;
             _dialogManager = DialogManager.Instance;
             _portrait = Portrait.Instance;
+            _audioManager = AudioManager.Instance;
+            _characterSelector = CharacterSelector.Instance;
+            _fourWayButtonMenu = FourWayButtonMenu.Instance;
         }
 
         #region OverAllInput
@@ -96,13 +96,14 @@ namespace Assets.Scripts.Menus {
 
         // Update is called once per frame
         void Update() {
-            if (!_menuActive) {
+            if (Player.PlayerIsInMenu != EnumMenuType.merchantMenu) {
                 return;
             }
             GetInputDirection();
 
             if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
-                if (Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
+                if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
+                    && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
                     _dialogManager.DisplayNextSentence();
                 }
                 return;
@@ -130,54 +131,42 @@ namespace Assets.Scripts.Menus {
         #endregion
 
         public void OpenMerchantWindow(List<GameItem> itemsToSell) {
+            if (Player.PlayerIsInMenu != EnumMenuType.none) {
+                return;
+            }
+            Player.PlayerIsInMenu = EnumMenuType.merchantMenu;
             _party = _inventory.GetParty();
-            Buttons.SetActive(true);
             ObjectsForSale.SetActive(true);
             Gold.SetActive(true);
-            SetButtonActiveAndDeactivateLastButton(_animatorBuyButton);
-            OpenMerchantMenu();
+
+            _audioManager.PlaySFX(_menuSwish);
+            _fourWayButtonMenu.InitializeButtons(_animatorBuyButton, _animatorSellButton, 
+                _animatorDealsButton, _animatorRepairButton, 
+                "Buy", "Sell", "Deals", "Repair");
             
             _itemsToBuy = itemsToSell;
         }
 
-        private void OpenMerchantMenu() {
-            _animatorButtons.SetBool("mainMenuIsOpen", true);
-            _menuActive = true;
-        }
-
         private void HandleMerchantMenu() {
-            switch (_inputDirection) {
-                case DirectionType.up:
-                    SetButtonActiveAndDeactivateLastButton(_animatorBuyButton);
-                    break;
-                case DirectionType.left:
-                    SetButtonActiveAndDeactivateLastButton(_animatorSellButton);
-                    break;
-                case DirectionType.down:
-                    SetButtonActiveAndDeactivateLastButton(_animatorDealsButton);
-                    break;
-                case DirectionType.right:
-                    SetButtonActiveAndDeactivateLastButton(_animatorRepairButton);
-                    break;
-            }
+            _currentlyAnimatedButton = _fourWayButtonMenu.SetDirection(_inputDirection);
 
             if (Input.GetButtonUp("Interact")) {
-                switch (_currentlyAnimatedButton.name) {
+                switch (_currentlyAnimatedButton) {
                     case "Buy":
                         _enumCurrentMenuType = EnumCurrentMerchantMenu.buy;
                         OpenBuyMenu(_itemsToBuy);
-                        CloseButtonMenu();
+                        _fourWayButtonMenu.CloseButtons();
                         break;
                     case "Sell":
                         _enumCurrentMenuType = EnumCurrentMerchantMenu.sell;
                         OpenSellMenu();
-                        CloseButtonMenu();
+                        _fourWayButtonMenu.CloseButtons();
                         break;
                     case "Deals":
                         _enumCurrentMenuType = EnumCurrentMerchantMenu.deals;
                         if (_inventory.GetDeals().Count > 0) {
                             OpenBuyMenu(_inventory.GetDeals());
-                            CloseButtonMenu();
+                            _fourWayButtonMenu.CloseButtons();
                         } else {
                             EvokeSingleSentenceDialogue("Sorry, pal. Don't got any deals for ya!");
                         }
@@ -186,7 +175,7 @@ namespace Assets.Scripts.Menus {
                         _enumCurrentMenuType = EnumCurrentMerchantMenu.repair;
                         //TODO
                         OpenRepairMenu();
-                        CloseButtonMenu();
+                        _fourWayButtonMenu.CloseButtons();
                         break;
                 }
             }
@@ -231,7 +220,7 @@ namespace Assets.Scripts.Menus {
             if (Input.GetButtonUp("Back")) {
                 _enumCurrentMenuType = EnumCurrentMerchantMenu.none;
                 CloseBuyMenu();
-                OpenMerchantMenu();
+                _fourWayButtonMenu.OpenButtons();
             }
         }
 
@@ -380,7 +369,7 @@ namespace Assets.Scripts.Menus {
             if (itemsToSellList.Count <= 0) {
                 _enumCurrentMenuType = EnumCurrentMerchantMenu.none;
                 CloseBuyMenu();
-                OpenMerchantMenu();
+                _fourWayButtonMenu.OpenButtons();
                 EvokeSingleSentenceDialogue("Sorry, I'm out of stock...");
                 return;
             }
@@ -407,7 +396,7 @@ namespace Assets.Scripts.Menus {
             _enumCurrentMenuType = EnumCurrentMerchantMenu.none;
             CloseGold();
             CloseCharacterSelection();
-            OpenMerchantMenu();
+            _fourWayButtonMenu.OpenButtons();
         }
 
         private void OpenRepairMenu() {
@@ -415,31 +404,17 @@ namespace Assets.Scripts.Menus {
             OpenGold();
             OpenCharacterSelectMenu(null);
         }
-
-        private void CloseButtonMenu() {
-            _animatorButtons.SetBool("mainMenuIsOpen", false);
-        }
-
+        
         private void CloseMenuForGood() {
-            _animatorButtons.SetBool("mainMenuIsOpen", false);
+            _fourWayButtonMenu.CloseButtons();
             StartCoroutine(WaitForQuaterSecCloseMainMenu());
-            _menuActive = false;
+            Player.PlayerIsInMenu = EnumMenuType.none;
         }
         private void OpenCharacterSelectMenu(Equipment equipment) {
             _characterSelector.LoadCharacterList(_party, equipment, _currentListItemSelected);
             LoadInventory(_party[_currentListItemSelected]);
         }
-
-        private void SetButtonActiveAndDeactivateLastButton(Animator animator) {
-            if (_currentlyAnimatedButton != null) {
-                _currentlyAnimatedButton.SetBool("selected", false);
-            }
-
-            _buttonLabel.text = animator.name;
-            animator.SetBool("selected", true);
-            _currentlyAnimatedButton = animator;
-        }
-
+        
         private void LoadItemsToBuy() {
             var upDown = ObjectsForSale.transform.Find("UpDown").gameObject;
             var itemCount = _itemsInCurrentMenu.Count();
@@ -518,6 +493,13 @@ namespace Assets.Scripts.Menus {
                 _inputDirection = DirectionType.none;
             } else {
                 _lastInputDirection = _inputDirection = currentDirection;
+                if (_inputDirection != DirectionType.none) {
+                    _audioManager.PlaySFX(_menuDing);
+                }
+            }
+
+            if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact")) {
+                _audioManager.PlaySFX(_menuSwish);
             }
 
         }
@@ -579,10 +561,8 @@ namespace Assets.Scripts.Menus {
 
         IEnumerator WaitForQuaterSecCloseMainMenu() {
             yield return new WaitForSeconds(0.1f);
-            Buttons.SetActive(false);
             ObjectsForSale.SetActive(false);
             Gold.SetActive(false);
-            Player.InputDisabled = false;
         }
 
         IEnumerator DisplaySentenceWithDelay(string sentence) {

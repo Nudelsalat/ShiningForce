@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DirectionType.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\EnumCurrentMenu.cs" />
+    <Compile Include="Assets\Scripts\GlobalObjectScripts\EnumMenuType.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Fadeout.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ItemHolder.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\SaveLoadUI.cs" />
@@ -110,11 +111,13 @@
     <Compile Include="Assets\Scripts\HelperScripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\StringExtension.cs" />
     <Compile Include="Assets\Scripts\Menus\CharacterDetailUI.cs" />
+    <Compile Include="Assets\Scripts\Menus\FourWayButtonMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\MemberInventoryUI.cs" />
     <Compile Include="Assets\Scripts\Menus\MemberOverviewUI.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\Portrait.cs" />
+    <Compile Include="Assets\Scripts\Menus\PriestMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\StatusEffectDisplayer.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />

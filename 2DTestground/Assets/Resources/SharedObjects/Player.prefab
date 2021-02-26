@@ -305,7 +305,7 @@ MonoBehaviour:
   - Name: Town
     AudioClip: {fileID: 8300000, guid: d8b22ca29cc87344b8872d7a30a4f879, type: 3}
     Loop: 1
-    Volume: 0.01
+    Volume: 0.25
     Pitch: 1
     AudioSource: {fileID: 0}
   - Name: fairy
@@ -354,6 +354,12 @@ MonoBehaviour:
     AudioClip: {fileID: 8300000, guid: b5563014470ebc2429d6e08449fcf093, type: 3}
     Loop: 1
     Volume: 1
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: victory
+    AudioClip: {fileID: 8300000, guid: 90d8cfa84fdc0b84eab9daf95a6d464a, type: 3}
+    Loop: 1
+    Volume: 0.5
     Pitch: 1
     AudioSource: {fileID: 0}
 --- !u!1 &2512733952207789208

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -11,9 +12,9 @@ public class Player : MonoBehaviour
     public LayerMask Collider;
     public LayerMask StairCollider;
     public static bool IsInDialogue = false;
-    public static bool InputDisabled = false;
     public static bool InputDisabledInDialogue = false;
     public static bool InputDisabledInEvent = false;
+    public static EnumMenuType PlayerIsInMenu = EnumMenuType.none;
     public GameObject _interactionSelector;
     
     private Vector2 _movement;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     }
 
     private void HandleInput() {
-        if (InputDisabled || InputDisabledInDialogue || InputDisabledInEvent) {
+        if (InputDisabledInDialogue || InputDisabledInEvent || PlayerIsInMenu != EnumMenuType.none) {
             _movement.x = _movement.y = 0;
             return;
         } else if (IsInDialogue) {
@@ -106,3 +107,4 @@ public class Player : MonoBehaviour
         }
     }
 }
+

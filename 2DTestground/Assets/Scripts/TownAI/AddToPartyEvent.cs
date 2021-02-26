@@ -26,11 +26,16 @@ public class AddToPartyEvent : MonoBehaviour {
         Player.InputDisabledInEvent = true;
         DialogManager.Instance.StartDialogue(new Dialogue() {
             Name = "Event",
-            Sentences = new List<string>() { partyMemberToAdd.Name.AddColor(Constants.Orange) + " joined the Shining Force!" }
+            Sentences = new List<string>() {
+                partyMemberToAdd.Name.AddColor(Constants.Orange) + " joined the Shining Force!"
+            },
+            VoicePitch = EnumVoicePitch.none
         });
         AudioClip audio = Resources.Load<AudioClip>("ShiningForce/sounds/victory");
-        AudioSource.PlayClipAtPoint(audio, transform.position);
-        yield return new WaitForSecondsRealtime(audio.length-5);
+        AudioManager.Instance.PauseAll();
+        AudioManager.Instance.Play("victory", false);
+        yield return new WaitForSecondsRealtime(audio.length-3);
         Player.InputDisabledInEvent = false;
+        AudioManager.Instance.UnPauseAll();
     }
 }

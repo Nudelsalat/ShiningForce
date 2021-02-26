@@ -34,9 +34,33 @@ public class Constants {
     public static string AnimationsFieldChester = "ShiningForce/images/Animations_field/Chester";
     public static string AnimationsFieldMerchant = "ShiningForce/images/Animations_field/Merchant";
 
+    #region ButtonsAnimation
+    public static string AnimationsButtonMember = "ShiningForce/images/Animations/Icons/Member";
+    public static string AnimationsButtonMagic = "ShiningForce/images/Animations/Icons/Magic";
+    public static string AnimationsButtonSearch = "ShiningForce/images/Animations/Icons/Search";
+    public static string AnimationsButtonItem = "ShiningForce/images/Animations/Icons/Item";
+
+    public static string AnimationsButtonUse = "ShiningForce/images/Animations/Icons/Use";
+    public static string AnimationsButtonGive = "ShiningForce/images/Animations/Icons/Give";
+    public static string AnimationsButtonDrop = "ShiningForce/images/Animations/Icons/Drop";
+    public static string AnimationsButtonEquip = "ShiningForce/images/Animations/Icons/Equip";
+
+    public static string AnimationsButtonBuy = "ShiningForce/images/Animations/Icons/Buy";
+    public static string AnimationsButtonSell = "ShiningForce/images/Animations/Icons/Sell";
+    public static string AnimationsButtonDeals = "ShiningForce/images/Animations/Icons/Deals";
+    public static string AnimationsButtonRepair = "ShiningForce/images/Animations/Icons/Repair";
+
+    public static string AnimationsButtonRaise = "ShiningForce/images/Animations/Icons/Raise";
+    public static string AnimationsButtonCure = "ShiningForce/images/Animations/Icons/Cure";
+    public static string AnimationsButtonSave = "ShiningForce/images/Animations/Icons/Save";
+    public static string AnimationsButtonPromote = "ShiningForce/images/Animations/Icons/Promote";
+    #endregion
+
     public static string SoundItemPickup = "ShiningForce/sounds/ding";
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";
     public static string SoundNewPartyMember = "ShiningForce/sounds/victory";
+    public static string SoundMenuSwish = "ShiningForce/sounds/swish1";
+    public static string SoundMenuDing = "ShiningForce/sounds/ding";
 
     public static string AudioVoiceDemon = "ShiningForce/sounds/talk7";
     public static string AudioVoiceVeryLow = "ShiningForce/sounds/talk6";

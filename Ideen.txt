@@ -1,11 +1,19 @@
+TODO:
+Refactor buttons -> set Icons & Text based on menu loaded.
 
 TODO:
 CharacterDetails & CharacterOverview <- CharacterDetails erbt von overview?
 
-Todo: stat growth? https://www.youtube.com/watch?v=mr5xkf6zSzk
+TODO: stat growth? https://www.youtube.com/watch?v=mr5xkf6zSzk
+also stat growth: http://theliquidfire.com/2015/08/10/tactics-rpg-jobs/
 
-CHECK:
-Unity Awake -> on every Scene load? even if not destoryed
+TODO:
+AI: http://theliquidfire.com/2015/11/30/tactics-rpg-intro-to-a-i/
+Name of the game: Gambits
+
+
+Trainyourbrain
+http://theliquidfire.com/2015/05/11/tactics-rpg-project-setup/
 
 
 Character der ein healing item refilled, be jedem kampfstart.

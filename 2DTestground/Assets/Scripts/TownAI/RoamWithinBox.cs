@@ -35,7 +35,7 @@ public class RoamWithinBox : AbstractDialogHolder {
     public override void Update() {
         base.Update();
 
-        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabled) {
+        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.PlayerIsInMenu != EnumMenuType.none) {
             return;
         }
         if (!(Vector3.Distance(transform.position, _nextPoint.transform.position) <= 0.005f)) {
@@ -58,7 +58,7 @@ public class RoamWithinBox : AbstractDialogHolder {
     }
 
     void FixedUpdate() {
-        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabled) {
+        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.PlayerIsInMenu != EnumMenuType.none) {
             if (_playerDirection != DirectionType.none) {
                 _animator.SetInteger("moveDirection", (int)_playerDirection);
             }

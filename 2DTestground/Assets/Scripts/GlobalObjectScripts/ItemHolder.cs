@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
 public class ItemHolder : MonoBehaviour {
@@ -28,7 +29,8 @@ public class ItemHolder : MonoBehaviour {
     }
 
     void Update() {
-        if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabled) {
+        if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue 
+            && Player.PlayerIsInMenu == EnumMenuType.none) {
             if (gameItem != null) {
                 var addedToWhom = _inventory.AddGameItem(Instantiate(gameItem));
                 Dialogue.Sentences.Add(addedToWhom);
@@ -48,7 +50,7 @@ public class ItemHolder : MonoBehaviour {
     public void TriggerDialogue() {
         _dialogManager.StartDialogue(Dialogue);
         if (audioClip != null) {
-            AudioSource.PlayClipAtPoint(audioClip, transform.position);
+            AudioManager.Instance.PlaySFX(audioClip);
         }
     }
 

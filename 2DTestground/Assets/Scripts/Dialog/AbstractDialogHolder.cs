@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.GlobalObjectScripts;
+using UnityEngine;
 
 public abstract class AbstractDialogHolder : MonoBehaviour {
     public bool DespawnAfterUser = false;
@@ -14,7 +15,7 @@ public abstract class AbstractDialogHolder : MonoBehaviour {
 
     public virtual void Update() {
         if (_isInSpace && Input.GetButtonUp("Interact") && !Player.IsInDialogue 
-            && !Player.InputDisabledInDialogue && !Player.InputDisabled) {
+            && !Player.InputDisabledInDialogue && Player.PlayerIsInMenu == EnumMenuType.none) {
             TriggerDialogue();
             if (DespawnAfterUser) {
                 Destroy(gameObject);

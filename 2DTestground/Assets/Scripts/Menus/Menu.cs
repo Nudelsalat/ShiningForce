@@ -3,36 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
     #region public
-    
     public GameObject PauseUI;
-    public GameObject MainMenu;
     public GameObject ObjectMenu;
-
     #endregion
 
     #region private
-    private Animator _animatorMainMenuButtons;
-    private Animator _animatorObjectMenuButtons;
+    private AnimatorController _animatorMemberButton;
+    private AnimatorController _animatorMagicButton;
+    private AnimatorController _animatorSearchButton;
+    private AnimatorController _animatorItemButton;
 
-    private Animator _animatorMemberButton;
-    private Animator _animatorMagicButton;
-    private Animator _animatorSearchButton;
-    private Animator _animatorItemButton;
-
-    private Animator _animatorUseButton;
-    private Animator _animatorGiveButton;
-    private Animator _animatorDropButton;
-    private Animator _animatorEquipButton;
-
-
-    private Text _textMainButtonMenu;
-    private Text _textObjectButtonMenu;
+    private AnimatorController _animatorUseButton;
+    private AnimatorController _animatorGiveButton;
+    private AnimatorController _animatorDropButton;
+    private AnimatorController _animatorEquipButton;
 
     private MemberInventoryUI _memberInventoryUI;
     private MemberOverviewUI _memberOverviewUI;
@@ -41,9 +32,9 @@ public class Menu : MonoBehaviour
     private DialogManager _dialogManager;
     private CharacterSelector _characterSelector;
     private Portrait _portrait;
-
-    private Animator _currentlyAnimatedButton;
-
+    private AudioManager _audioManager;
+    private FourWayButtonMenu _fourWayButtonMenu;
+    
     private Dialogue _dialogueSearchButton;
     private Dialogue _tempDialogue = new Dialogue {
         Name = "Itemtext",
@@ -52,6 +43,7 @@ public class Menu : MonoBehaviour
         },
     };
     private string _itemDialogue = "Give #ITEMNAME# to whom?";
+    private string _currentlyAnimatedButton = "";
     
     private List<PartyMember> _party;
     private int _currentListItemSelected = 0;
@@ -66,19 +58,27 @@ public class Menu : MonoBehaviour
 
     private EnumCurrentMenu _enumCurrentMenuType = EnumCurrentMenu.none;
 
-    private bool _isInMainButtonMenu = false;
-    private bool _isInObjectButtonMenu = false;
     private bool _inInventoryMenu = false;
-    private bool _isPause = false;
     private bool _currentlyShowingEquipmentList = false;
     private DirectionType _inputDirection;
     private DirectionType _lastInputDirection;
+    private EnumMenuType _previousMenuType;
     private GameItem _firstSelectedItem;
     private GameItem _secondSelectedItem;
-
+    private AudioClip _menuSwish;
+    private AudioClip _menuDing;
     #endregion
 
+    public Menu Instance;
+
     void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(this);
+            return;
+        } else {
+            Instance = this;
+        }
+
         _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
 
         _itemsToTrade = ObjectMenu.transform.Find("ItemsToTrade").gameObject;
@@ -86,22 +86,18 @@ public class Menu : MonoBehaviour
         _itemsToTradeTwo = _itemsToTrade.transform.Find("ItemToTradeTwo").GetComponent<Image>();
         _itemsToTrade.SetActive(false);
         
-        _animatorObjectMenuButtons = ObjectMenu.transform.Find("ObjectButtons").GetComponent<Animator>();
-        _animatorMainMenuButtons = MainMenu.transform.Find("Buttons").GetComponent<Animator>();
-
-        _animatorMemberButton = MainMenu.transform.Find("Buttons/Member").GetComponent<Animator>();
-        _animatorMagicButton = MainMenu.transform.Find("Buttons/Magic").GetComponent<Animator>();
-        _animatorSearchButton = MainMenu.transform.Find("Buttons/Search").GetComponent<Animator>();
-        _animatorItemButton = MainMenu.transform.Find("Buttons/Item").GetComponent<Animator>();
-
-        _textMainButtonMenu = MainMenu.transform.Find("Buttons/Label/LabelText").GetComponent<Text>();
-
-        _animatorUseButton = ObjectMenu.transform.Find("ObjectButtons/Use").GetComponent<Animator>();
-        _animatorGiveButton = ObjectMenu.transform.Find("ObjectButtons/Give").GetComponent<Animator>();
-        _animatorDropButton = ObjectMenu.transform.Find("ObjectButtons/Drop").GetComponent<Animator>();
-        _animatorEquipButton = ObjectMenu.transform.Find("ObjectButtons/Equip").GetComponent<Animator>();
-
-        _textObjectButtonMenu = ObjectMenu.transform.Find("ObjectButtons/Label/LabelText").GetComponent<Text>();
+        _animatorMemberButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonMember);
+        _animatorMagicButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonMagic);
+        _animatorSearchButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonSearch);
+        _animatorItemButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonItem);
+        
+        _animatorUseButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonUse);
+        _animatorGiveButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonGive);
+        _animatorDropButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonDrop);
+        _animatorEquipButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonEquip);
+        
+        _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
+        _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
 
         _dialogueSearchButton = new Dialogue {
             Name = "SearchText",
@@ -121,36 +117,50 @@ public class Menu : MonoBehaviour
         _portrait = Portrait.Instance;
         _dialogManager = DialogManager.Instance;
         _characterSelector = CharacterSelector.Instance;
+        _audioManager = AudioManager.Instance;
+        _fourWayButtonMenu = FourWayButtonMenu.Instance;
 
-        MainMenu.SetActive(false);
         ObjectMenu.SetActive(false);
     }
 
     #region OverAllInput
     // Update is called once per frame
     void Update() {
-        GetInputDirection();
-
         if (Input.GetButtonUp("Select")) {
-            if (!_isPause) {
+            if (Player.PlayerIsInMenu != EnumMenuType.pause) {
                 Pause();
             }
         }
-        if (_isPause) {
+        if (Player.PlayerIsInMenu == EnumMenuType.pause) {
             if (Input.GetButtonUp("Back")) {
                 Resume();
             }
             return;
         }
+        if (Input.GetButtonUp("Menu")) {
+            if (Player.PlayerIsInMenu == EnumMenuType.none) {
+                _audioManager.PlaySFX(_menuSwish);
+                OpenMainButtonMenu();
+            }
+        }
+
+        
 
         if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
-            if (Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
+            if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
+                && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
                 _dialogManager.DisplayNextSentence();
             }
             return;
         }
-        
-        if (_isInMainButtonMenu) {
+
+        if (Player.PlayerIsInMenu == EnumMenuType.mainMenu) {
+            GetInputDirection();
+
+            if (_enumCurrentMenuType == EnumCurrentMenu.objectMenu) {
+                HandleObjectButtonMenu();
+                return;
+            }
             if (_enumCurrentMenuType != EnumCurrentMenu.none) {
                 if (_inInventoryMenu) {
                     HandleInventoryMenu();
@@ -161,21 +171,8 @@ public class Menu : MonoBehaviour
                 return;
             }
 
-            if (_isInObjectButtonMenu) {
-                HandleObjectButtonMenu();
-                return;
-            }
-            
             HandleMainMenu();
             return;
-        }
-
-
-
-        if (Input.GetButtonUp("Menu")) {
-            if (!_isInMainButtonMenu) {
-                OpenMainButtonMenu();
-            }
         }
     }
     #endregion
@@ -302,7 +299,6 @@ public class Menu : MonoBehaviour
                 case EnumCurrentMenu.member:
                     if (_firstSelectedPartyMember != null) {
                         _firstSelectedPartyMember = null;
-                        //TODD: soundeffekt
                     }
                     else {
                         _enumCurrentMenuType = EnumCurrentMenu.none;
@@ -315,7 +311,6 @@ public class Menu : MonoBehaviour
                 case EnumCurrentMenu.magic:
                     if (_firstSelectedPartyMember != null) {
                         _firstSelectedPartyMember = null;
-                        //TODD: soundeffekt
                     }
                     else {
                         _enumCurrentMenuType = EnumCurrentMenu.none;
@@ -355,7 +350,7 @@ public class Menu : MonoBehaviour
                 case EnumCurrentMenu.member:
                     CloseCharacterDetail();
                     OpenMemberMenu();
-                    break;
+                    return;
             }
             _memberInventoryUI.UnselectObject();
         }
@@ -536,31 +531,18 @@ public class Menu : MonoBehaviour
     #endregion
 
     private void HandleMainMenu() {
-        switch (_inputDirection) {
-            case DirectionType.up:
-                SetButtonActiveAndDeactivateLastButton(_animatorMemberButton, _textMainButtonMenu);
-                break;
-            case DirectionType.left:
-                SetButtonActiveAndDeactivateLastButton(_animatorMagicButton, _textMainButtonMenu);
-                break;
-            case DirectionType.down:
-                SetButtonActiveAndDeactivateLastButton(_animatorSearchButton, _textMainButtonMenu);
-                break;
-            case DirectionType.right:
-                SetButtonActiveAndDeactivateLastButton(_animatorItemButton, _textMainButtonMenu);
-                break;
-        }
+        _currentlyAnimatedButton = _fourWayButtonMenu.SetDirection(_inputDirection);
 
         if (Input.GetButtonUp("Interact")) {
-            switch (_currentlyAnimatedButton.name) {
+            switch (_currentlyAnimatedButton) {
                 case "Member":
                     _enumCurrentMenuType = EnumCurrentMenu.member;
-                    CloseMainButtonMenu();
+                    _fourWayButtonMenu.CloseButtons();
                     OpenMemberMenu();
                     break;
                 case "Magic":
                     _enumCurrentMenuType = EnumCurrentMenu.magic;
-                    CloseMainButtonMenu();
+                    _fourWayButtonMenu.CloseButtons();
                     OpenMagicMenu();
                     break;
                 case "Search":
@@ -568,38 +550,24 @@ public class Menu : MonoBehaviour
                     _dialogManager.StartDialogue(_dialogueSearchButton);
                     break;
                 case "Item":
-                    CloseMainButtonMenu();
+                    _fourWayButtonMenu.CloseButtons();
                     OpenObjectButtonMenu();
                     break;
             }
         }
 
         if (Input.GetButtonUp("Back")) {
-            if (_isInMainButtonMenu) {
+            if (_enumCurrentMenuType == EnumCurrentMenu.none) {
                 CloseMainMenuForGood();
             }
         }
     }
 
     private void HandleObjectButtonMenu() {
-        switch (_inputDirection) {
-            case DirectionType.up:
-                SetButtonActiveAndDeactivateLastButton(_animatorUseButton, _textObjectButtonMenu);
-                break;
-            case DirectionType.left:
-                SetButtonActiveAndDeactivateLastButton(_animatorGiveButton, _textObjectButtonMenu);
-                break;
-            case DirectionType.down:
-                SetButtonActiveAndDeactivateLastButton(_animatorDropButton, _textObjectButtonMenu);
-                break;
-            case DirectionType.right:
-                SetButtonActiveAndDeactivateLastButton(_animatorEquipButton, _textObjectButtonMenu);
-                break;
-        }
-
+        _currentlyAnimatedButton = _fourWayButtonMenu.SetDirection(_inputDirection);
 
         if (Input.GetButtonUp("Interact")) {
-            switch (_currentlyAnimatedButton.name) {
+            switch (_currentlyAnimatedButton) {
                 case "Use":
                     _enumCurrentMenuType = EnumCurrentMenu.use;
                     break;
@@ -614,39 +582,29 @@ public class Menu : MonoBehaviour
                     break;
             }
             OpenObjectMenu();
-            CloseObjectButtonMenu();
+            _fourWayButtonMenu.CloseButtons();
         }
 
         if (Input.GetButtonUp("Back")) {
-            CloseObjectButtonMenu();
-            _isInObjectButtonMenu = false;
+            _fourWayButtonMenu.CloseButtons();
             OpenMainButtonMenu();
         }
     }
 
-
-
     private void OpenMainButtonMenu() {
-        _isInMainButtonMenu = true;
-        Player.InputDisabled = true;
-        MainMenu.SetActive(true);
+        Player.PlayerIsInMenu = EnumMenuType.mainMenu;
+        _enumCurrentMenuType = EnumCurrentMenu.none;
         ObjectMenu.SetActive(true);
-        _animatorMainMenuButtons.SetBool("mainMenuIsOpen", true);
-        SetButtonActiveAndDeactivateLastButton(_animatorMemberButton, _textMainButtonMenu);
-    }
-
-    private void CloseMainButtonMenu() {
-        _animatorMainMenuButtons.SetBool("mainMenuIsOpen", false);
+        _fourWayButtonMenu.InitializeButtons(_animatorMemberButton, _animatorMagicButton,
+            _animatorSearchButton, _animatorItemButton,
+            "Member", "Magic", "Search", "Item");
     }
 
     private void OpenObjectButtonMenu() {
-        _isInObjectButtonMenu = true;
-        _animatorObjectMenuButtons.SetBool("isOpen", true);
-        SetButtonActiveAndDeactivateLastButton(_animatorUseButton, _textObjectButtonMenu);
-    }
-
-    private void CloseObjectButtonMenu() {
-        _animatorObjectMenuButtons.SetBool("isOpen", false);
+        _enumCurrentMenuType = EnumCurrentMenu.objectMenu;
+        _fourWayButtonMenu.InitializeButtons(_animatorUseButton, _animatorGiveButton,
+            _animatorDropButton, _animatorEquipButton,
+            "Use", "Give", "Drop", "Equip");
     }
 
     private void OpenObjectMenu() {
@@ -661,7 +619,6 @@ public class Menu : MonoBehaviour
         _memberInventoryUI.CloseInventory();
         _characterSelector.ClearCharacterList();
     }
-
 
     private void OpenMagicMenu() {
         _party = _inventory.GetParty();
@@ -705,26 +662,25 @@ public class Menu : MonoBehaviour
     }
 
     private void CloseMainMenuForGood() {
-        _animatorMainMenuButtons.SetBool("mainMenuIsOpen", false);
+        _fourWayButtonMenu.CloseButtons();
         StartCoroutine(WaitForQuaterSecCloseMainMenu());
-        _isInMainButtonMenu = false;
+        Player.PlayerIsInMenu = EnumMenuType.none;
     }
 
     #region Pause
     private void Resume() {
         PauseUI.SetActive(false);
         Time.timeScale = 1f;
-        _isPause = false;
+        Player.PlayerIsInMenu = _previousMenuType;
     }
 
     private void Pause() {
         PauseUI.SetActive(true);
         Time.timeScale = 0f;
-        _isPause = true;
+        _previousMenuType = Player.PlayerIsInMenu;
+        Player.PlayerIsInMenu = EnumMenuType.pause;
     }
     #endregion
-
-
 
     private void LoadInventory(PartyMember partyMember) {
         _memberInventoryUI.LoadMemberInventory(partyMember);
@@ -739,16 +695,6 @@ public class Menu : MonoBehaviour
     private void LoadMemberOverview(PartyMember partyMember) {
         _memberOverviewUI.LoadMemberInventory(partyMember);
         _portrait.ShowPortrait(partyMember.PortraitSprite);
-    }
-
-    private void SetButtonActiveAndDeactivateLastButton(Animator animator, Text label) {
-        if (_currentlyAnimatedButton != null) {
-            _currentlyAnimatedButton.SetBool("selected", false);
-        }
-
-        label.text = animator.name;
-        animator.SetBool("selected", true);
-        _currentlyAnimatedButton = animator;
     }
 
     private void GetInputDirection() {
@@ -770,6 +716,13 @@ public class Menu : MonoBehaviour
         }
         else {
             _lastInputDirection = _inputDirection = currentDirection;
+            if (_inputDirection != DirectionType.none) {
+                _audioManager.PlaySFX(_menuDing);
+            }
+        }
+
+        if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact")) {
+            _audioManager.PlaySFX(_menuSwish);
         }
 
     }
@@ -793,9 +746,7 @@ public class Menu : MonoBehaviour
 
     IEnumerator WaitForQuaterSecCloseMainMenu() {
         yield return new WaitForSeconds(0.1f);
-        MainMenu.SetActive(false);
         ObjectMenu.SetActive(false);
-        Player.InputDisabled = false;
     }
 
     #endregion
