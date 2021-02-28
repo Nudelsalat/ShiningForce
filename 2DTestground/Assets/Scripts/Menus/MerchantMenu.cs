@@ -39,7 +39,6 @@ namespace Assets.Scripts.Menus {
         private List<GameItem> _itemsToBuy;
         private List<GameItem> _itemsInCurrentMenu;
         private List<PartyMember> _party;
-        private Text _buttonLabel;
         private bool _inInventoryMenu = false;
         private string _currentlyAnimatedButton;
         private DirectionType _inputDirection;
@@ -163,8 +162,8 @@ namespace Assets.Scripts.Menus {
                         _fourWayButtonMenu.CloseButtons();
                         break;
                     case "Deals":
-                        _enumCurrentMenuType = EnumCurrentMerchantMenu.deals;
                         if (_inventory.GetDeals().Count > 0) {
+                            _enumCurrentMenuType = EnumCurrentMerchantMenu.deals;
                             OpenBuyMenu(_inventory.GetDeals());
                             _fourWayButtonMenu.CloseButtons();
                         } else {
@@ -407,9 +406,9 @@ namespace Assets.Scripts.Menus {
         
         private void CloseMenuForGood() {
             _fourWayButtonMenu.CloseButtons();
-            StartCoroutine(WaitForQuaterSecCloseMainMenu());
             Player.PlayerIsInMenu = EnumMenuType.none;
         }
+
         private void OpenCharacterSelectMenu(Equipment equipment) {
             _characterSelector.LoadCharacterList(_party, equipment, _currentListItemSelected);
             LoadInventory(_party[_currentListItemSelected]);
@@ -557,12 +556,6 @@ namespace Assets.Scripts.Menus {
             _tempDialogue.Sentences.Clear();
             _tempDialogue.Sentences.Add(sentence);
             _dialogManager.StartDialogue(_tempDialogue);
-        }
-
-        IEnumerator WaitForQuaterSecCloseMainMenu() {
-            yield return new WaitForSeconds(0.1f);
-            ObjectsForSale.SetActive(false);
-            Gold.SetActive(false);
         }
 
         IEnumerator DisplaySentenceWithDelay(string sentence) {

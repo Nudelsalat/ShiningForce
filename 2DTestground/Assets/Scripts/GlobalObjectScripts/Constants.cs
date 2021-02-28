@@ -15,7 +15,8 @@ public class Constants {
     public static string ItemFairyTear = "SharedObjects/Items/Consumables/FairyTear";
 
 
-    public static string SpriteEmptyItem = "ShiningForce/images/icon/sfitems";
+    public static string SpriteEmptyItem = "ShiningForce/images/face/sfitems";
+    public static string SpritePortraitKazin = "ShiningForce/images/face/kazin";
 
     public static string SpriteAtlasStatusEffects = "ShiningForce/images/icon/statusEffects";
     

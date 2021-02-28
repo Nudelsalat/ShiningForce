@@ -406,7 +406,7 @@ public class Menu : MonoBehaviour
                 if (_firstSelectedItem == null) {
                     _itemsToTradeOne.sprite = selectedItem.ItemSprite;
                     _firstSelectedItem = selectedItem;
-                    EvokeSingleSentenceDialogue($"Use {selectedItem.ItemName} with whom?");
+                    EvokeSingleSentenceDialogue($"Use {selectedItem.ItemName.AddColor(Color.green)} with whom?");
                     _inInventoryMenu = false;
                     _memberInventoryUI.UnselectObject();
                 }
@@ -429,7 +429,7 @@ public class Menu : MonoBehaviour
         if (_firstSelectedItem == null) {
             _itemsToTradeOne.sprite = selectedItem.ItemSprite;
             _firstSelectedItem = selectedItem;
-            EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.ItemName));
+            EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.ItemName.AddColor(Color.green)));
             if (selectedItem.EnumItemType == EnumItemType.equipment) {
                 _currentlyShowingEquipmentList = true;
                 _characterSelector.LoadCharacterList(_party, (Equipment) selectedItem, _currentListItemSelected);
@@ -441,11 +441,11 @@ public class Menu : MonoBehaviour
 
             var sentence = "";
             if (!selectedItem.IsSet()) {
-                sentence = $"Gave {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.ItemName} " +
-                           $"to {_secondSelectedPartyMember.Name}";
+                sentence = $"Gave {_firstSelectedPartyMember.Name.AddColor(Constants.Orange)}'s {_firstSelectedItem.ItemName.AddColor(Color.green)} " +
+                           $"to {_secondSelectedPartyMember.Name.AddColor(Constants.Orange)}";
             } else {
-                sentence = $"Swapped {_firstSelectedPartyMember.Name}'s {_firstSelectedItem.ItemName} " +
-                           $"with {_secondSelectedPartyMember.Name}'s {_secondSelectedItem.ItemName}";
+                sentence = $"Swapped {_firstSelectedPartyMember.Name.AddColor(Constants.Orange)}'s {_firstSelectedItem.ItemName.AddColor(Color.green)} " +
+                           $"with {_secondSelectedPartyMember.Name.AddColor(Constants.Orange)}'s {_secondSelectedItem.ItemName.AddColor(Color.green)}";
             }
             EvokeSingleSentenceDialogue(sentence);
 
@@ -475,7 +475,7 @@ public class Menu : MonoBehaviour
         var dropItemCallback = new QuestionCallback {
             Name = "DropText",
             Sentences = new List<string>() {
-                $"Do you want really to drop {itemToDrop.ItemName}"
+                $"Do you want really to drop {itemToDrop.ItemName.AddColor(Color.green)}"
             },
             DefaultSelectionForQuestion = YesNo.No,
             OnAnswerAction = DropItemAnswer,
@@ -503,18 +503,18 @@ public class Menu : MonoBehaviour
                 
                 if (equipment == oldEquipment) {
                     _firstSelectedPartyMember.CharStats.UnEquip(equipment);
-                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName} successfully unequipped.");
+                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName.AddColor(Color.green)} successfully unequipped.");
                 } else {
                     _firstSelectedPartyMember.CharStats.Equip(equipment);
                     _firstSelectedPartyMember.CharStats.UnEquip(oldEquipment);
-                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName} successfully equipped.");
+                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName.AddColor(Color.green)} successfully equipped.");
                 }
                 _memberInventoryUI.LoadMemberEquipmentInventory(_firstSelectedPartyMember);
                 _characterSelector.LoadCharacterList(_party, null, _currentListItemSelected);
             }
-            EvokeSingleSentenceDialogue($"{_firstSelectedPartyMember.Name} cannot equip {itemToEquip.ItemName}");
+            EvokeSingleSentenceDialogue($"{_firstSelectedPartyMember.Name} cannot equip {itemToEquip.ItemName.AddColor(Color.green)}");
         } else {
-            EvokeSingleSentenceDialogue($"{itemToEquip.ItemName} is not an Equipment");
+            EvokeSingleSentenceDialogue($"{itemToEquip.ItemName.AddColor(Color.green)} is not an Equipment");
         }
     }
 

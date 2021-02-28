@@ -135,6 +135,9 @@ public class DialogManager : MonoBehaviour {
         StartCoroutine(TypeSentence(sentence));
     }
 
+    public void AddSentenceAndContinue(string sentence) {
+        _sentences.Enqueue(sentence);
+    }
     
     private string ReplaceNameVariables(string sentence) {
         var partyLeaderName = _inventory.GetPartyLeaderName();

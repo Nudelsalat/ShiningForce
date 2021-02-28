@@ -268,7 +268,7 @@ public sealed class Inventory {
 
         Backpack.Add(gameItem);
 
-        return $"{gameItem.ItemName} added to Backpack!";
+        return $"{gameItem.ItemName.AddColor(Color.green)} added to Backpack!";
     }
 
     public bool AddPartyMember(PartyMember partyMember) {
@@ -305,7 +305,7 @@ public sealed class Inventory {
     }
 
     public string GetPartyLeaderName() {
-        return Party.First(x => x.partyLeader == true).Name;
+        return Party.First(x => x.partyLeader == true).Name.AddColor(Constants.Orange);
     }
     public string GetPartyMemberNameByEnum(EnumCharacterType enumCharacterType) {
         var partyMember = Party.FirstOrDefault(x => x.CharacterType == enumCharacterType);
@@ -313,7 +313,7 @@ public sealed class Inventory {
             return "PartyMemberDoesNotExist";
         }
         else {
-            return partyMember.Name;
+            return partyMember.Name.AddColor(Constants.Orange);
         }
     }
 

@@ -11,6 +11,7 @@ using Object = UnityEngine.Object;
 public class Character {
     public int Id;
     public string Name;
+    public bool IsPromoted;
     public Sprite PortraitSprite;
     public GameItem[] CharacterInventory = new GameItem[4];
     public Magic[] Magic = new Magic[4];

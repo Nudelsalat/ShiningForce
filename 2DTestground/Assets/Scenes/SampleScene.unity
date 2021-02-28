@@ -300,6 +300,7 @@ MonoBehaviour:
   partyMemberToAdd:
     Id: 1
     Name: CHESTER
+    IsPromoted: 0
     PortraitSprite: {fileID: 1051506275367356307, guid: d28881cd07bd79b45b3f387ce8915aa5,
       type: 3}
     CharacterInventory:
@@ -1963,7 +1964,7 @@ PrefabInstance:
     - target: {fileID: 7262158038676917576, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000048585287
+      value: -0.000006332829
       objectReference: {fileID: 0}
     - target: {fileID: 7416353497121360462, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
@@ -2367,6 +2368,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33256033194f97f44a4fcdff4816eaf2, type: 3}
+--- !u!1 &253078754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8570707636724756274, guid: 33256033194f97f44a4fcdff4816eaf2,
+    type: 3}
+  m_PrefabInstance: {fileID: 253078753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &253078755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2418230964736480168, guid: 33256033194f97f44a4fcdff4816eaf2,
+    type: 3}
+  m_PrefabInstance: {fileID: 253078753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &299566227
 GameObject:
   m_ObjectHideFlags: 0
@@ -5881,6 +5894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3cc189fe5cf73439aa9e0e8f3d043b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  YesNoBox: {fileID: 253078755}
+  Gold: {fileID: 253078754}
 --- !u!114 &1463647854
 MonoBehaviour:
   m_ObjectHideFlags: 0
