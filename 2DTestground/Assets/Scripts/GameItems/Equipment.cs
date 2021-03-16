@@ -15,6 +15,11 @@ public class Equipment : GameItem {
 
     public bool IsEquipped = false;
 
+    public override string GetResourcePath() {
+        var equipmentType = EquipmentType == EnumEquipmentType.weapon ? "Weapons" : "Rings";
+        return string.Concat("SharedObjects/Items/Equipment/", equipmentType, "/", name.Replace("(Clone)", ""));
+    }
+
     public Equipment() {
         EnumItemType = EnumItemType.equipment;
     }

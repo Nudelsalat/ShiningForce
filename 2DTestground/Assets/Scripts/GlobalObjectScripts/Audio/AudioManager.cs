@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -47,28 +48,18 @@ public class AudioManager : MonoBehaviour  {
     ///     Play the given audio file.
     /// </summary>
     public void PlaySFX(AudioClip audioClip) {
-        var soundFile = SoundFiles.FirstOrDefault();
-
-        if (soundFile == null) {
-            Debug.Log($"No Soundfile");
-            return;
-        }
-
-        var audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = audioClip;
-        audioSource.volume = _SFXvolume;
-        audioSource.Play();
+        AudioSource.PlayClipAtPoint(audioClip, this.gameObject.transform.position, _SFXvolume);
     }
 
     /// <summary>
     ///     Play the given audio file.
     /// </summary>
-    public void Play(string soundFileName, bool loop = true) {
+    public float Play(string soundFileName, bool loop = true) {
         var soundFile = Array.Find(SoundFiles, sound => sound.Name == soundFileName);
 
         if (soundFile == null) {
             Debug.Log($"Sound file with name {soundFileName} not found.");
-            return;
+            return 0f;
         }
 
 
@@ -76,6 +67,7 @@ public class AudioManager : MonoBehaviour  {
         //TODO need to change the volume of the Themes... way to loud
         //soundFile.AudioSource.volume = _volume;
         soundFile.AudioSource.Play();
+        return soundFile.AudioClip.length;
     }
 
     /// <summary>

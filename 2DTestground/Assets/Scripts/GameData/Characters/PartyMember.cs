@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[System.Serializable]
+[CreateAssetMenu(fileName = "PartyMember", menuName = "Character/new PartyMember")]
 public class PartyMember : Character {
     public bool partyLeader;
     public bool activeParty = true;

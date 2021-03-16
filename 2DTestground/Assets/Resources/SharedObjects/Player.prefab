@@ -129,6 +129,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -359,6 +361,12 @@ MonoBehaviour:
   - Name: victory
     AudioClip: {fileID: 8300000, guid: 90d8cfa84fdc0b84eab9daf95a6d464a, type: 3}
     Loop: 1
+    Volume: 0.5
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: save
+    AudioClip: {fileID: 8300000, guid: 7ee45a6f51d10554baed65c4933e7c97, type: 3}
+    Loop: 0
     Volume: 0.5
     Pitch: 1
     AudioSource: {fileID: 0}

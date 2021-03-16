@@ -22,30 +22,34 @@ class Consumable : GameItem {
         EnumItemType = EnumItemType.consumable;
     }
 
+    public override string GetResourcePath() {
+        return string.Concat("SharedObjects/Items/Consumables/", name.Replace("(Clone)",""));
+    }
+
     public bool TryUseItem(Character character) {
         var toRestore = 0;
         switch (RestoreType) {
             case EnumRestorse.hp:
                 toRestore = character.CharStats.MaxHp - character.CharStats.CurrentHp;
                 if (toRestore == 0) {
-                    EvokeSingleSentenceDialogue($"{character.Name} does not need any healing!");
+                    EvokeSingleSentenceDialogue($"{character.Name.AddColor(Constants.Orange)} does not need any healing!");
                     return false;
                 }
 
                 toRestore = toRestore >= AmountToRestore ? AmountToRestore : toRestore;
                 character.CharStats.CurrentHp += toRestore;
-                EvokeSingleSentenceDialogue($"{character.Name} was healed for {toRestore} points!");
+                EvokeSingleSentenceDialogue($"{character.Name.AddColor(Constants.Orange)} was healed for {toRestore} points!");
                 return true;
             case EnumRestorse.mp:
                 toRestore = character.CharStats.MaxMp - character.CharStats.CurrentMp;
                 if (toRestore == 0) {
-                    EvokeSingleSentenceDialogue($"{character.Name} has full MP!");
+                    EvokeSingleSentenceDialogue($"{character.Name.AddColor(Constants.Orange)} has full MP!");
                     return false;
                 }
 
                 toRestore = toRestore >= AmountToRestore ? AmountToRestore : toRestore;
                 character.CharStats.CurrentMp += toRestore;
-                EvokeSingleSentenceDialogue($"{character.Name} MP was restored by {toRestore} points!");
+                EvokeSingleSentenceDialogue($"{character.Name.AddColor(Constants.Orange)} MP was restored by {toRestore} points!");
                 return true;
             case EnumRestorse.both:
                 //TODO
@@ -56,13 +60,14 @@ class Consumable : GameItem {
                 foreach (var statusEffect in StatusEffectsToCure) {
                     if (character.StatusEffects.HasFlag(statusEffect)) {
                         character.StatusEffects = character.StatusEffects.Remove(statusEffect);
-                        EvokeSingleSentenceDialogue($"{character.Name} is no longer {Enum.GetName(typeof(EnumStatusEffect), statusEffect)}");
+                        EvokeSingleSentenceDialogue($"{character.Name.AddColor(Constants.Orange)} is no longer " +
+                                                    $"{Enum.GetName(typeof(EnumStatusEffect), statusEffect).AddColor(Color.gray)}");
                         itemWasUsed = true;
                     }
                 }
 
                 if (!itemWasUsed) {
-                    EvokeSingleSentenceDialogue($"{character.Name} has no proper status effects that could be cured.");
+                    EvokeSingleSentenceDialogue($"{character.Name.AddColor(Constants.Orange)} has no proper status effects that could be cured.");
                 }
                 return itemWasUsed;
             default:

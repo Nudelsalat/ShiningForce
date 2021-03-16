@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef0fbc430bbcdc46ae1048e4f9b0cd7, type: 3}
   m_Name: EmptyMagic
   m_EditorClassIdentifier: 
-  SpellName: empty
+  SpellName: 
   SpellSprite: {fileID: 8807543358907615835, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
   CurrentLevel: 0
   PositionInInventory: -1
-  _maxLevel: 0
+  MaxLevel: 4

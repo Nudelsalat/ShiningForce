@@ -52,14 +52,18 @@ public class MemberOverviewUI : MonoBehaviour {
         OpenMemberOverViewUi();
 
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
+        MemberInfo.transform.Find("Name").GetComponent<Text>().color = 
+            character.StatusEffects.HasFlag(EnumStatusEffect.dead)
+                ? Constants.Orange
+                : Constants.Visible;
         MemberInfo.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), character.ClassType);
         MemberInfo.transform.Find("Level").GetComponent<Text>().text = "LEVEL " + character.CharStats.Level;
 
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             MemberInfo.transform.Find("StatusEffect").gameObject, character.StatusEffects);
 
-        var charInventory = character.CharacterInventory;
-        var charMagic = character.Magic;
+        var charInventory = character.GetInventory();
+        var charMagic = character.GetMagic();
         var firstTextItem = _itemList[0].transform.Find("ItemName").gameObject.GetComponent<Text>();
         var firstTextMagic = _magicList[0].transform.Find("SpellName").gameObject.GetComponent<Text>();
 

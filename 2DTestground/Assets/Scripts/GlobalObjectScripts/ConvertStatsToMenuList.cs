@@ -17,8 +17,12 @@ class ConvertStatsToMenuList : MonoBehaviour {
     public void DoConvert(PartyMember member) {
         var image = gameObject.transform.Find("Image").GetComponent<Image>();
         image.color = member.activeParty ? Constants.Visible : Constants.Invisible;
-
+        
         gameObject.transform.Find("Name").GetComponent<Text>().text = member.Name;
+        gameObject.transform.Find("Name").GetComponent<Text>().color =
+            member.StatusEffects.HasFlag(EnumStatusEffect.dead) 
+                ? Constants.Orange 
+                : Constants.Visible;
         gameObject.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), member.ClassType);
         gameObject.transform.Find("Level").GetComponent<Text>().text = member.CharStats.Level.ToString();
         gameObject.transform.Find("EXP").GetComponent<Text>().text = member.CharStats.Exp.ToString();

@@ -1,22 +1,88 @@
+MAYBE DO:
+Inventory ScriptableObject, für die Character Invenotries...
+https://www.youtube.com/watch?v=232EqU1k9yQ&list=PLJWSdH2kAe_Ij7d7ZFR2NIW8QCJE74CyT&index=2
+instead of using IDs for the items, as long as the names are unique -> you're fine.
+BUT: won't the item allways be the same? like, several chars having the same item... destroying one -> destroys all!
+
+
+
 TODO:
-Refactor buttons -> set Icons & Text based on menu loaded.
+https://forum.unity.com/threads/saving-scriptable-objects-solved.551866/#:~:text=Unity%20will%20save%20it%20when,and%20SerializedProperty%20to%20modify%20it.
+
+Strings to find that item to initlialize. -> Generate those during creation. private string -> GetResourceString()
+if consumable -> /SharedObjects/Items/Consumable/${removeWhitespaces}
+if Equipment && if Ring -> /SharedObjects/Items/Equipment/Rings/${removeWhitespaces}
 
 TODO:
 CharacterDetails & CharacterOverview <- CharacterDetails erbt von overview?
 
+
+##########GamePlay###########
+
 TODO: stat growth? https://www.youtube.com/watch?v=mr5xkf6zSzk
 also stat growth: http://theliquidfire.com/2015/08/10/tactics-rpg-jobs/
+
+TODO: make the main character an Axe user
 
 TODO:
 AI: http://theliquidfire.com/2015/11/30/tactics-rpg-intro-to-a-i/
 Name of the game: Gambits
+
+TODO:
+headquater talk CHANGES over time!
+
+https://www.youtube.com/watch?v=ICBPLr0JFWI&list=PLv41sqyP8vwYxBMEBOmrFmVtHslK3Ku55&index=17
+
+shining force Central
+user: nudelsalat
+ShiningForce999!
+
+Gizmo fight has it's own rules...
+
+###HOW IT WORKS:###
+
+LevelDiff:
+0 -> X = 50
+1 -> X = 40
+2 -> X = 30
+3 -> X = 20
+4 -> X = 10
+5 -> X = 0
+
+DamageEXP = X*(damage/MAXHP)
+Kill EXP = DamageEXP + X
+
+###// HOW IT WORKS:###
+
+Experience: kill
+E-lev == enemy level
+C-lev == character level
+(E-lev - C-lev) > 0 -> Range(46,50)
+(E-lev - C-lev) = 0 -> Range(30,36)
+(E-lev - C-lev) = -1 -> Range(15,25)
+(E-lev - C-lev) < -1 -> Range(1,3)
+
+damage EXP -> min exp 5
+100% damage -> 49exp -> prozetuell vom gesamt HP rounded down
+C-lev == level -> halfed...
+level+1 -> 1/4
+level+2+ -> 1
+9 19
+heal -> 10 exp -> up to 25??
+Again % of 50 halfed
+
+46
+15
+8
+
+Magic damager targeting multiple -> Additive? but all are on the lower end?
 
 
 Trainyourbrain
 http://theliquidfire.com/2015/05/11/tactics-rpg-project-setup/
 
 
-Character der ein healing item refilled, be jedem kampfstart.
+Character der ein healing item refilled, be jedem kampfstart. (half an onion)
 und nur exp durch healing items bekommt, weil er sonst nichts kann.
 
 

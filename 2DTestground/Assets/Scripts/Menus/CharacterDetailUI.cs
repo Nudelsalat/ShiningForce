@@ -21,10 +21,12 @@ public class CharacterDetailUI : MonoBehaviour {
 
     public GameObject MemberInfo;
     public GameObject Stats;
-    public GameObject KillsNGold;
+    public GameObject Kills;
+    public GameObject Gold;
 
     private Animator _animatorCharacterDetail;
-    private Animator _animatorKillsNGold;
+    private Animator _animatorKills;
+    private Animator _animatorGold;
 
     private Inventory _inventory;
 
@@ -52,7 +54,8 @@ public class CharacterDetailUI : MonoBehaviour {
         _blankSprite = Resources.Load<Sprite>(Constants.SpriteEmptyItem);
 
         _animatorCharacterDetail = transform.Find("BigWindow").GetComponent<Animator>();
-        _animatorKillsNGold = transform.Find("KillsNGold").GetComponent<Animator>();
+        _animatorKills = transform.Find("Kills").GetComponent<Animator>();
+        _animatorGold = Gold.GetComponent<Animator>();
     }
 
     void Start() {
@@ -62,7 +65,12 @@ public class CharacterDetailUI : MonoBehaviour {
     public void LoadCharacterDetails(Character character) {
         OpenCharacterDetails();
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
-        MemberInfo.transform.Find("Class").GetComponent<Text>().text = Enum.GetName(typeof(EnumClassType), character.ClassType);
+        MemberInfo.transform.Find("Name").GetComponent<Text>().color =
+            character.StatusEffects.HasFlag(EnumStatusEffect.dead)
+                ? Constants.Orange
+                : Constants.Visible;
+        MemberInfo.transform.Find("Class").GetComponent<Text>().text =
+            Enum.GetName(typeof(EnumClassType), character.ClassType);
         MemberInfo.transform.Find("Level").GetComponent<Text>().text = "LEVEL " + character.CharStats.Level;
 
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
@@ -74,21 +82,27 @@ public class CharacterDetailUI : MonoBehaviour {
         Stats.transform.Find("HP/Max").GetComponent<Text>().text = character.CharStats.MaxHp.ToString();
         Stats.transform.Find("EXP/Value").GetComponent<Text>().text = character.CharStats.Exp.ToString();
         Stats.transform.Find("Level/Value").GetComponent<Text>().text = character.CharStats.Level.ToString();
-        Stats.transform.Find("Attack/Value").GetComponent<Text>().text = character.CharStats.Attack.GetModifiedValue().ToString();
-        Stats.transform.Find("Defense/Value").GetComponent<Text>().text = character.CharStats.Defense.GetModifiedValue().ToString();
-        Stats.transform.Find("Agility/Value").GetComponent<Text>().text = character.CharStats.Agility.GetModifiedValue().ToString();
-        Stats.transform.Find("Movement/Value").GetComponent<Text>().text = character.CharStats.Movement.GetModifiedValue().ToString();
+        Stats.transform.Find("Attack/Value").GetComponent<Text>().text =
+            character.CharStats.Attack.GetModifiedValue().ToString();
+        Stats.transform.Find("Defense/Value").GetComponent<Text>().text =
+            character.CharStats.Defense.GetModifiedValue().ToString();
+        Stats.transform.Find("Agility/Value").GetComponent<Text>().text =
+            character.CharStats.Agility.GetModifiedValue().ToString();
+        Stats.transform.Find("Movement/Value").GetComponent<Text>().text =
+            character.CharStats.Movement.GetModifiedValue().ToString();
 
-        KillsNGold.transform.Find("Gold/GoldText").GetComponent<Text>().text = _inventory.GetGold().ToString();
-        KillsNGold.transform.Find("KillsDefeats/Kills/KillCount").GetComponent<Text>().text = character.Kills.ToString();
-        KillsNGold.transform.Find("KillsDefeats/Defeated/DefeatCount").GetComponent<Text>().text = character.Defeats.ToString();
+        Gold.transform.Find("GoldText").GetComponent<Text>().text = _inventory.GetGold().ToString();
+        Kills.transform.Find("KillsDefeats/Kills/KillCount").GetComponent<Text>().text =
+            character.CharStats.Kills.ToString();
+        Kills.transform.Find("KillsDefeats/Defeated/DefeatCount").GetComponent<Text>().text =
+            character.CharStats.Defeats.ToString();
 
-        var spriteAnimator = KillsNGold.transform.Find("KillsDefeats/Sprite").GetComponent<Animator>();
+        var spriteAnimator = Kills.transform.Find("KillsDefeats/Sprite").GetComponent<Animator>();
         spriteAnimator.runtimeAnimatorController = character.AnimatorSprite;
         spriteAnimator.SetInteger("moveDirection", 2);
 
-        var charInventory = character.CharacterInventory;
-        var charMagic = character.Magic;
+        var charInventory = character.GetInventory();
+        var charMagic = character.GetMagic();
         var firstTextItem = _itemList[0].transform.Find("ItemName").gameObject.GetComponent<Text>();
         var firstTextMagic = _magicList[0].transform.Find("SpellName").gameObject.GetComponent<Text>();
 
@@ -98,20 +112,24 @@ public class CharacterDetailUI : MonoBehaviour {
                 item.transform.Find("ItemName").gameObject.GetComponent<Text>().text = "";
                 item.transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
             }
+
             firstTextItem.text = "Nothing";
             firstTextItem.color = Constants.Orange;
-        } else {
+        }
+        else {
             firstTextItem.color = Color.white;
             for (int i = 0; i < charInventory.Length; i++) {
                 var itemSprite = charInventory[i].ItemSprite;
                 _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite != null ? itemSprite : _blankSprite;
-                _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = charInventory[i].ItemName;
+                _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
+                    charInventory[i].ItemName;
 
                 if (charInventory[i] is Equipment equipment && equipment.IsEquipped) {
                     _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Visible;
                 }
                 else {
-                    _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
+                    _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color =
+                        Constants.Invisible;
                 }
             }
         }
@@ -121,53 +139,51 @@ public class CharacterDetailUI : MonoBehaviour {
                 magic.gameObject.GetComponent<Image>().sprite = _blankSprite;
                 magic.transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
             }
+
             firstTextMagic.text = "Nothing";
             firstTextMagic.color = Constants.Orange;
-        } else {
+        }
+        else {
             firstTextMagic.color = Color.white;
             for (int i = 0; i < charMagic.Length; i++) {
-                if (charMagic[i] != null) {
-                    var currentMagic = charMagic[i];
-                    var spellSprite = currentMagic.SpellSprite;
-                    _magicList[i].gameObject.GetComponent<Image>().sprite =
-                        (spellSprite != null && currentMagic.CurrentLevel != 0) ? spellSprite : _blankSprite;
-                    _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text =
-                        currentMagic.SpellName;
+                var currentMagic = charMagic[i];
+                var spellSprite = currentMagic.SpellSprite;
+                _magicList[i].gameObject.GetComponent<Image>().sprite =
+                    spellSprite != null ? spellSprite : _blankSprite;
+                _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text =
+                    currentMagic.SpellName;
 
-                    for (int j = 1; j <= 4; j++) {
-                        var spawnPoint = _magicList[i].transform.Find("SpellLevel/" + j.ToString());
+                for (int j = 1; j <= 4; j++) {
+                    var spawnPoint = _magicList[i].transform.Find("SpellLevel/" + j.ToString());
 
-                        if (currentMagic.CurrentLevel >= j) {
-                            var item = Resources.Load(Constants.HealthBar) as GameObject;
-                            var pos = new Vector3(0, 0, spawnPoint.transform.position.z);
-                            var spawnedItem = Instantiate(item, pos, spawnPoint.transform.rotation);
-                            spawnedItem.transform.SetParent(spawnPoint.transform, false);
-                        }
-                        else {
-                            foreach (Transform child in spawnPoint.transform) {
-                                Destroy(child.gameObject);
-                            }
+                    if (currentMagic.CurrentLevel >= j) {
+                        var item = Resources.Load(Constants.HealthBar) as GameObject;
+                        var pos = new Vector3(0, 0, spawnPoint.transform.position.z);
+                        var spawnedItem = Instantiate(item, pos, spawnPoint.transform.rotation);
+                        spawnedItem.transform.SetParent(spawnPoint.transform, false);
+                    }
+                    else {
+                        foreach (Transform child in spawnPoint.transform) {
+                            Destroy(child.gameObject);
                         }
                     }
-
-                } else {
-                    _magicList[i].GetComponent<Image>().sprite = _blankSprite;
-                    _magicList[i].transform.Find("SpellName").gameObject.GetComponent<Text>().text = "";
-                    _magicList[i].transform.Find("SpellLevel").gameObject.GetComponent<Text>().text = "";
                 }
             }
         }
     }
+
     private void OpenCharacterDetails() {
         transform.gameObject.SetActive(true);
         _showUi = true;
-        _animatorKillsNGold.SetBool("isOpen", true);
+        _animatorKills.SetBool("isOpen", true);
+        _animatorGold.SetBool("isOpen", true);
         _animatorCharacterDetail.SetBool("isOpen", true);
     }
 
     public void CloseCharacterDetailsUi() {
         _showUi = false;
-        _animatorKillsNGold.SetBool("isOpen", false);
+        _animatorKills.SetBool("isOpen", false);
+        _animatorGold.SetBool("isOpen", false);
         _animatorCharacterDetail.SetBool("isOpen", false);
     }
 

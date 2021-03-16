@@ -2,28 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = System.Object;
 
 namespace Assets.Scripts.Menus {
     public class PriestMenu : MonoBehaviour {
+        
+        public Sprite PriestSprite;
 
-        public GameObject YesNoBox;
-        public GameObject Gold;
+        private GameObject Gold;
 
         private AnimatorController _animatorRaiseButton;
         private AnimatorController _animatorCureButton;
         private AnimatorController _animatorSaveButton;
         private AnimatorController _animatorPromoteButton;
 
-        private Animator _animatorYes;
-        private Animator _animatorNo;
         private Animator _animatorGold;
 
         private AudioClip _menuSwish;
@@ -32,24 +28,22 @@ namespace Assets.Scripts.Menus {
         private Dialogue _tempDialogue;
 
         private string _currentlyAnimatedButton;
-        private bool _selectedAnswer;
         private bool _inMenu = false;
-        private Portrait _portrait;
-        private DialogManager _dialogManager;
-        private AudioManager _audioManager;
-        private List<PartyMember> _party;
+        private int _currentPrice;
+        private List<PartyMember> _party; 
+        private List<string> _sentences = new List<string>();
         private Queue<PartyMember> _affectedMembersQueue;
         private Queue<EnumStatusEffect> _statusEffectsToCureQueue;
-        private EnumStatusEffect _currentStatusEffect;
-        private int _currentPrice;
         private PartyMember _currentPartyMember;
-        private List<string> _sentences = new List<string>();
+        private EnumStatusEffect _currentStatusEffect;
         private DirectionType _inputDirection;
         private DirectionType _lastInputDirection;
         private EnumCurrentPriestMenu _currentPriestMenu;
 
         private Inventory _inventory;
         private FourWayButtonMenu _fourWayButtonMenu;
+        private DialogManager _dialogManager;
+        private AudioManager _audioManager;
 
         public static PriestMenu Instance;
 
@@ -67,7 +61,7 @@ namespace Assets.Scripts.Menus {
                 Sentences = new List<string>() {
                     "SENTENCE NOT REPLACED!"
                 },
-                Portrait = Resources.Load<Sprite>(Constants.SpritePortraitKazin)
+                Portrait = PriestSprite
             };
 
             _affectedMembersQueue = new Queue<PartyMember>();
@@ -78,8 +72,7 @@ namespace Assets.Scripts.Menus {
             _animatorSaveButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonSave);
             _animatorPromoteButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonPromote);
 
-            _animatorYes = YesNoBox.transform.Find("Yes").GetComponent<Animator>();
-            _animatorNo = YesNoBox.transform.Find("No").GetComponent<Animator>();
+            Gold = GameObject.Find("Gold");
             _animatorGold = Gold.transform.GetComponent<Animator>();
 
             _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
@@ -89,7 +82,6 @@ namespace Assets.Scripts.Menus {
         void Start() {
             _inventory = Inventory.Instance;
             _dialogManager = DialogManager.Instance;
-            _portrait = Portrait.Instance;
             _audioManager = AudioManager.Instance;
             _fourWayButtonMenu = FourWayButtonMenu.Instance;
         }
@@ -126,7 +118,7 @@ namespace Assets.Scripts.Menus {
                         HandleCure();
                         break;
                     case EnumCurrentPriestMenu.save:
-                        HandlePriestMenu();
+                        EndSave();
                         break;
                     case EnumCurrentPriestMenu.promote:
                         HandlePriestMenu();
@@ -166,7 +158,7 @@ namespace Assets.Scripts.Menus {
                         InitializeCure();
                         break;
                     case "Save":
-                        //TODO HandleSave();
+                        InitializeSave();
                         break;
                     case "Promote":
                         //TODO HandlePromote();
@@ -216,8 +208,8 @@ namespace Assets.Scripts.Menus {
             var raiseCallback = new QuestionCallback {
                 Name = "Raise",
                 Sentences = _sentences,
-                DefaultSelectionForQuestion = YesNo.No,
                 OnAnswerAction = CureOrNot,
+                Portrait = PriestSprite
             };
             _inMenu = true;
             _dialogManager.StartDialogue(raiseCallback);
@@ -280,8 +272,8 @@ namespace Assets.Scripts.Menus {
                 var raiseCallback = new QuestionCallback {
                     Name = "Raise",
                     Sentences = _sentences,
-                    DefaultSelectionForQuestion = YesNo.No,
                     OnAnswerAction = CureOrNot,
+                    Portrait = PriestSprite
                 };
                 _inMenu = true;
                 _dialogManager.StartDialogue(raiseCallback);
@@ -297,11 +289,10 @@ namespace Assets.Scripts.Menus {
                     return;
                 }
 
-                if (_currentStatusEffect == EnumStatusEffect.dead) {
-                    _currentPartyMember.StatusEffects = EnumStatusEffect.none;
-                } else {
-                    _currentPartyMember.StatusEffects = _currentPartyMember.StatusEffects.Remove(_currentStatusEffect);
-                }
+                _currentPartyMember.StatusEffects = 
+                    _currentStatusEffect == EnumStatusEffect.dead 
+                        ? EnumStatusEffect.none 
+                        : _currentPartyMember.StatusEffects.Remove(_currentStatusEffect);
 
                 _inventory.RemoveGold(_currentPrice);
                 OpenGold();
@@ -309,6 +300,39 @@ namespace Assets.Scripts.Menus {
                 _sentences.Add($"{_currentPartyMember.Name.AddColor(Constants.Orange)} is no longer " +
                                $"{statusEffectName.AddColor(Color.grey)}!\n");
             } else {
+                _sentences.Add("O...okay\n");
+            }
+            _inMenu = false;
+        }
+
+        private void InitializeSave() {
+            _currentPriestMenu = EnumCurrentPriestMenu.save;
+            _sentences.Clear();
+            _sentences.Add($"Should I write down your journey so far?");
+
+            var raiseCallback = new QuestionCallback {
+                Name = "Save",
+                Sentences = _sentences,
+                OnAnswerAction = SaveOrNot,
+                Portrait = PriestSprite
+            };
+            _inMenu = true;
+            _dialogManager.StartDialogue(raiseCallback);
+        }
+
+        private void EndSave() {
+            EvokeSentencesDialogue(_sentences);
+            _fourWayButtonMenu.OpenButtons();
+            _currentPriestMenu = EnumCurrentPriestMenu.none;
+        }
+
+        private void SaveOrNot(bool answer) {
+            _sentences.Clear();
+            if (answer) {
+                SaveLoadGame.Save();
+                StartCoroutine(SaveGame());
+            }
+            else {
                 _sentences.Add("O...okay\n");
             }
             _inMenu = false;
@@ -360,6 +384,17 @@ namespace Assets.Scripts.Menus {
         private void EvokeSentencesDialogue(List<string> sentence) {
             _tempDialogue.Sentences = (sentence);
             _dialogManager.StartDialogue(_tempDialogue);
+        }
+
+        IEnumerator SaveGame() {
+            Player.InputDisabledInEvent = true;
+            _audioManager.PauseAll();
+            var duration = _audioManager.Play("save", false);
+            yield return new WaitForSecondsRealtime(duration);
+            Player.InputDisabledInEvent = false;
+            _audioManager.UnPauseAll();
+            _sentences.Clear();
+            _sentences.Add("The light allows you to resume your adventure.");
         }
 
         public enum EnumCurrentPriestMenu {

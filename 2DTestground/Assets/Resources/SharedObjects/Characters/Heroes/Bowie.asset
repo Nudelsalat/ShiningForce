@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7b9c53320b7fd4689345dbec83d17f, type: 3}
+  m_Name: Bowie
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Bowie
+  IsPromoted: 0
+  PortraitSprite: {fileID: -5808642168596437580, guid: 34ec50996440ff144a995109f6bb8b13,
+    type: 3}
+  AnimatorSprite: {fileID: 9100000, guid: f23760264e1303b44885f60f0ced52b8, type: 2}
+  ClassType: 0
+  CharacterType: 0
+  CharStats:
+    Level: 1
+    Exp: 0
+    MaxHp: 12
+    CurrentHp: 12
+    MaxMp: 8
+    CurrentMp: 8
+    Attack:
+      _baseValue: 6
+    Defense:
+      _baseValue: 4
+    Agility:
+      _baseValue: 4
+    Movement:
+      _baseValue: 6
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  CharacterInventory:
+  - item1: {fileID: 11400000, guid: 53ef62d4a4b2e47489b893cd2838caaa, type: 2}
+    item2: 1
+  - item1: {fileID: 11400000, guid: e54790970a0e95143a7dbf3625186494, type: 2}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 11400000, guid: 304d891fe02a9b4489ab717957f6c8b6, type: 2}
+    item2: 1
+  - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    item2: 3
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  partyLeader: 1
+  activeParty: 1

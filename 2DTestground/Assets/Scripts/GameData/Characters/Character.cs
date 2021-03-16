@@ -1,48 +1,120 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.GameData.Magic;
 using UnityEditor.Animations;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[System.Serializable]
-public class Character {
+[CreateAssetMenu(fileName = "Monster", menuName = "Character/new Monster")]
+public class Character : ScriptableObject {
     public int Id;
     public string Name;
     public bool IsPromoted;
     public Sprite PortraitSprite;
-    public GameItem[] CharacterInventory = new GameItem[4];
-    public Magic[] Magic = new Magic[4];
     public AnimatorController AnimatorSprite;
 
-    public int Kills = 0;
-    public int Defeats = 0;
     public EnumClassType ClassType = EnumClassType.SDMN;
     public EnumCharacterType CharacterType;
     public CharacterStatistics CharStats;
     public EnumStatusEffect StatusEffects = EnumStatusEffect.none;
 
+    [SerializeField]
+    private Tuple<GameItem, bool>[] CharacterInventory = new Tuple<GameItem, bool>[4];
+    [SerializeField]
+    private Tuple<Magic, int>[] Magic = new Tuple<Magic, int>[4];
+
+    private GameItem[] _characterInventory = new GameItem[4];
+    private Magic[] _magic = new Magic[4];
+
+    void OnEnable() {
+        for (int i = 0; i < CharacterInventory.Length; i++) {
+            if (CharacterInventory[i] == null || CharacterInventory[i].Item1 == null) {
+                _characterInventory[i] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
+                continue;
+            }
+            var addItem = Object.Instantiate(CharacterInventory[i].Item1);
+            if (addItem is Equipment equipment) {
+                if (CharacterInventory[i].Item2) {
+                    CharStats.Equip(equipment);
+                }
+            }
+            _characterInventory[i] = addItem;
+        }
+
+        for (int i = 0; i < Magic.Length; i++) {
+            if (Magic[i] == null || Magic[i].Item1 == null) {
+                _magic[i] = Object.Instantiate(Resources.Load<Magic>(Constants.MagicEmpty));
+                continue;
+            }
+
+            var addMagic = Object.Instantiate(Magic[i].Item1);
+            addMagic.CurrentLevel = Magic[i].Item2;
+            _magic[i] = addMagic;
+        }
+    }
 
     public void RemoveItem(GameItem item) {
         if (item.IsUnique) {
             Inventory.Instance.AddToDeals(item);
         }
-        var itemToDrop = CharacterInventory[(int) item.PositionInInventory];
+        var itemToDrop = _characterInventory[(int) item.PositionInInventory];
         if (itemToDrop is Equipment equipment) {
             if (equipment.IsEquipped) {
                 CharStats.UnEquip(equipment);
             }
         }
 
-        CharacterInventory[(int)item.PositionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
+        _characterInventory[(int)item.PositionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
     }
     public Equipment GetCurrentEquipment(EnumEquipmentType equipmentType) {
-        return (Equipment) CharacterInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment
+        return (Equipment) _characterInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment
                                                         && ((Equipment)x).EquipmentType == equipmentType
                                                         && ((Equipment)x).IsEquipped);
     }
-}
 
+    public GameItem[] GetInventory() {
+        return _characterInventory;
+    }
+
+    public Magic[] GetMagic() {
+        return _magic;
+    }
+}
+[Serializable]
+public class Tuple<T1, T2> : IStructuralComparable, IStructuralEquatable, IComparable {
+    [SerializeField]
+    private T1 item1;
+
+    [SerializeField]
+    private T2 item2;
+
+    public T1 Item1 => item1;
+    public T2 Item2 => item2;
+
+    public Tuple(T1 item1, T2 item2) {
+        this.item1 = item1;
+        this.item2 = item2;
+    }
+
+    public int CompareTo(object other, IComparer comparer) {
+        throw new NotImplementedException(); // TODO
+    }
+
+    public int CompareTo(object obj) {
+        throw new NotImplementedException(); // TODO
+    }
+
+    public bool Equals(object other, IEqualityComparer comparer) {
+        throw new NotImplementedException(); // TODO
+    }
+
+    public int GetHashCode(IEqualityComparer comparer) {
+        throw new NotImplementedException(); // TODO
+    }
+}
 

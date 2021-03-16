@@ -20,8 +20,8 @@ public class Constants {
 
     public static string SpriteAtlasStatusEffects = "ShiningForce/images/icon/statusEffects";
     
-    public static string EquipmentWoodenSword = "SharedObjects/Items/Equipment/WoodenSword";
-    public static string EquipmentWunderWaffe = "SharedObjects/Items/Equipment/WunderWaffe";
+    public static string EquipmentWoodenSword = "SharedObjects/Items/Equipment/Weapons/WoodenSword";
+    public static string EquipmentWunderWaffe = "SharedObjects/Items/Equipment/Weapons/WunderWaffe";
 
 
     public static string EquipmentQuickRing = "SharedObjects/Items/Equipment/Rings/QuickRing";
@@ -56,6 +56,10 @@ public class Constants {
     public static string AnimationsButtonSave = "ShiningForce/images/Animations/Icons/Save";
     public static string AnimationsButtonPromote = "ShiningForce/images/Animations/Icons/Promote";
     #endregion
+
+    public static string CharacterBowie = "SharedObjects/Characters/Heroes/Bowie";
+    public static string CharacterSarah = "SharedObjects/Characters/Heroes/Sarah";
+    public static string CharacterChester = "SharedObjects/Characters/Heroes/Chester";
 
     public static string SoundItemPickup = "ShiningForce/sounds/ding";
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";

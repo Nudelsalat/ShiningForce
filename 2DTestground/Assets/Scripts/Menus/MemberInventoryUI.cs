@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Reflection;
+using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
 using UnityEngine;
@@ -58,7 +59,7 @@ public class MemberInventoryUI : MonoBehaviour{
 
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, character.StatusEffects);
-        var gameItems = character.CharacterInventory;
+        var gameItems = character.GetInventory();
 
         CurrentSelectedItem.transform.Find("Equipped").GetComponent<Image>().color = Constants.Invisible;
         CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>().text = "";
@@ -90,7 +91,7 @@ public class MemberInventoryUI : MonoBehaviour{
         _currentSelectedItem.transform.Find("ItemName").gameObject.SetActive(true);
         _partyMember = member;
         _isEquipment = true;
-        _gameItemList = member?.CharacterInventory;
+        _gameItemList = member?.GetInventory();
         _titleText.text = "-EQUIPMENT-";
 
         for (int i = 0; i < _gameItemList.Length; i++) {
@@ -107,7 +108,7 @@ public class MemberInventoryUI : MonoBehaviour{
 
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, character.StatusEffects);
-        var gameItems = character.Magic;
+        var gameItems = character.GetMagic();
 
         CurrentSelectedItem.transform.Find("Equipped").GetComponent<Image>().color = Constants.Invisible;
         CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>().text = "";

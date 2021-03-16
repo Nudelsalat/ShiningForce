@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class SaveLoadGame {
     
@@ -11,7 +12,7 @@ public static class SaveLoadGame {
         FileStream file = File.Open(Application.persistentDataPath + "/gameData.dat", FileMode.Create);
         Debug.Log(Application.persistentDataPath);
         var player = GameObject.Find("Player");
-        GameData data = new GameData(player.GetComponent<Player>());
+        GameData data = new GameData(player.GetComponent<Player>(), SceneManager.GetActiveScene().name);
 
         bf.Serialize(file, data);
         file.Close();

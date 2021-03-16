@@ -233,7 +233,7 @@ namespace Assets.Scripts.Menus {
             }
 
             if (Input.GetButtonUp("Interact")) {
-                var inventory = selectedMember.CharacterInventory;
+                var inventory = selectedMember.GetInventory();
                 for (int i = 0; i < 4; i++) {
                     if (inventory[i].IsSet()) {
                         continue;

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
@@ -14,5 +14,13 @@ public class GameItem : ScriptableObject {
 
     public bool IsSet() {
         return EnumItemType != EnumItemType.none;
+    }
+
+    protected GameItem() {
+
+    }
+
+    public virtual string GetResourcePath() {
+        return Constants.ItemEmptyItem;
     }
 }

@@ -16,7 +16,9 @@ public class CharacterStatistics {
     public Stat Defense;
     public Stat Agility;
     public Stat Movement;
-   
+    public int Kills = 0;
+    public int Defeats = 0;
+
 
     public CharacterStatistics() {
         Level = 1;
@@ -100,4 +102,11 @@ public class CharacterStatistics {
         return Movement.GetModifiedValue() + newEquipment.MovementModifier;
     }
 
+    public void AddKill() {
+        Kills += 1;
+    }
+
+    public void AddDefeat() {
+        Defeats += 1;
+    }
 }
