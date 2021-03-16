@@ -45,13 +45,11 @@ public class MemberInventoryUI : MonoBehaviour{
         _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
         _titleText = transform.Find("MemberInventoryUI/Title").GetComponent<Text>();
         _inventoryAnimator = transform.GetComponent<Animator>();
-
-        transform.gameObject.SetActive(false);
     }
 
     void Start() {
         _currentSelectedItem = TopItem;
-
+        transform.gameObject.SetActive(false);
     }
 
     public void LoadMemberInventory(Character character) {

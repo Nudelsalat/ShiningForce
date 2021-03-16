@@ -2,5 +2,19 @@
     bowie,
     chester,
     sarah,
-    jaha
+    jaha,
+    kazin,
+    slade,
+    kiwi,
+    peter,
+    may,
+    gerhalt,
+    luke,
+    rohde,
+    rick,
+    elric,
+    eric,
+    karan,
+    randolf,
+    monster
 }

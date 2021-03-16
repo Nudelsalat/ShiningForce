@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Menus {
     public class PriestMenu : MonoBehaviour {
         
-        public Sprite PriestSprite;
-
+        private Sprite PriestSprite;
         private GameObject Gold;
 
-        private AnimatorController _animatorRaiseButton;
-        private AnimatorController _animatorCureButton;
-        private AnimatorController _animatorSaveButton;
-        private AnimatorController _animatorPromoteButton;
+        private RuntimeAnimatorController _animatorRaiseButton;
+        private RuntimeAnimatorController _animatorCureButton;
+        private RuntimeAnimatorController _animatorSaveButton;
+        private RuntimeAnimatorController _animatorPromoteButton;
 
         private Animator _animatorGold;
 
@@ -29,6 +27,7 @@ namespace Assets.Scripts.Menus {
 
         private string _currentlyAnimatedButton;
         private bool _inMenu = false;
+        private bool _showUi = false;
         private int _currentPrice;
         private List<PartyMember> _party; 
         private List<string> _sentences = new List<string>();
@@ -67,10 +66,10 @@ namespace Assets.Scripts.Menus {
             _affectedMembersQueue = new Queue<PartyMember>();
             _statusEffectsToCureQueue = new Queue<EnumStatusEffect>();
 
-            _animatorRaiseButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonRaise);
-            _animatorCureButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonCure);
-            _animatorSaveButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonSave);
-            _animatorPromoteButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonPromote);
+            _animatorRaiseButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonRaise);
+            _animatorCureButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonCure);
+            _animatorSaveButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonSave);
+            _animatorPromoteButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonPromote);
 
             Gold = GameObject.Find("Gold");
             _animatorGold = Gold.transform.GetComponent<Animator>();
@@ -84,14 +83,11 @@ namespace Assets.Scripts.Menus {
             _dialogManager = DialogManager.Instance;
             _audioManager = AudioManager.Instance;
             _fourWayButtonMenu = FourWayButtonMenu.Instance;
+            transform.gameObject.SetActive(false);
         }
 
         #region OverAllInput
-
-        void EventTrigger() {
-            OpenPriestWindow();
-        }
-
+        
         // Update is called once per frame
         void Update() {
             if (Player.PlayerIsInMenu != EnumMenuType.priestMenu) {
@@ -128,14 +124,19 @@ namespace Assets.Scripts.Menus {
         }
         #endregion
 
-        public void OpenPriestWindow() {
+        public void OpenPriestWindow(Sprite priestSprite) {
             if (Player.PlayerIsInMenu != EnumMenuType.none) {
                 return;
             }
+
+            PriestSprite = priestSprite;
+            _tempDialogue.Portrait = priestSprite;
+            transform.gameObject.SetActive(true);
             Gold.SetActive(true);
             Player.PlayerIsInMenu = EnumMenuType.priestMenu;
             _audioManager.PlaySFX(_menuSwish);
             _party = _inventory.GetParty();
+            _showUi = true;
             OpenPriestMenu();
         }
 
@@ -340,8 +341,10 @@ namespace Assets.Scripts.Menus {
 
         private void CloseMenuForGood() {
             Gold.SetActive(false);
+            _showUi = false;
             _fourWayButtonMenu.CloseButtons();
             Player.PlayerIsInMenu = EnumMenuType.none;
+            StartCoroutine(WaitForTenthASecond());
         }
 
         private void GetInputDirection() {
@@ -395,6 +398,14 @@ namespace Assets.Scripts.Menus {
             _audioManager.UnPauseAll();
             _sentences.Clear();
             _sentences.Add("The light allows you to resume your adventure.");
+        }
+
+        IEnumerator WaitForTenthASecond() {
+            yield return new WaitForSeconds(0.1f);
+            if (!_showUi) {
+                transform.gameObject.SetActive(false);
+                Gold.SetActive(false);
+            }
         }
 
         public enum EnumCurrentPriestMenu {

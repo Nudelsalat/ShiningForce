@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
-using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
@@ -33,19 +29,15 @@ public sealed class Inventory {
 
         var bowie = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterBowie));
         var sarah = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterSarah));
+        var jaha = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterJaha));
+        var kazin = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterKazin));
         sarah.StatusEffects = sarah.StatusEffects.Add(EnumStatusEffect.dead);
         sarah.StatusEffects = sarah.StatusEffects.Add(EnumStatusEffect.poisoned);
 
         AddPartyMember(bowie);
         AddPartyMember(sarah);
-        /*
-        AddPartyMember(sarah);
+        AddPartyMember(kazin);
         AddPartyMember(jaha);
-        AddPartyMember(seppPartyMember);
-        AddPartyMember(karl);
-        AddPartyMember(luke);
-        AddPartyMember(may);
-        */
     }
 
     public void Initialize(List<PartyMember> party, List<GameItem> backPack, List<GameItem> dealsList, int gold) {

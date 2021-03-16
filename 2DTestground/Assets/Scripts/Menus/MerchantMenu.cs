@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.GlobalObjectScripts;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +15,10 @@ namespace Assets.Scripts.Menus {
         private Animator _animatorObjectsForSale;
         private Animator _animatorGold;
 
-        private AnimatorController _animatorBuyButton;
-        private AnimatorController _animatorSellButton;
-        private AnimatorController _animatorDealsButton;
-        private AnimatorController _animatorRepairButton;
+        private RuntimeAnimatorController _animatorBuyButton;
+        private RuntimeAnimatorController _animatorSellButton;
+        private RuntimeAnimatorController _animatorDealsButton;
+        private RuntimeAnimatorController _animatorRepairButton;
 
         private AudioClip _menuSwish;
         private AudioClip _menuDing;
@@ -40,6 +39,7 @@ namespace Assets.Scripts.Menus {
         private List<GameItem> _itemsInCurrentMenu;
         private List<PartyMember> _party;
         private bool _inInventoryMenu = false;
+        private bool _showUi = false;
         private string _currentlyAnimatedButton;
         private DirectionType _inputDirection;
         private DirectionType _lastInputDirection;
@@ -68,10 +68,10 @@ namespace Assets.Scripts.Menus {
 
             _buyItem = Resources.Load<GameObject>("SharedObjects/BuyItem");
             
-            _animatorBuyButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonBuy);
-            _animatorSellButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonSell);
-            _animatorDealsButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonDeals);
-            _animatorRepairButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonRepair);
+            _animatorBuyButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonBuy);
+            _animatorSellButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonSell);
+            _animatorDealsButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonDeals);
+            _animatorRepairButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonRepair);
 
             _animatorObjectsForSale = ObjectsForSale.transform.GetComponent<Animator>();
             _animatorGold = Gold.transform.GetComponent<Animator>();
@@ -88,6 +88,9 @@ namespace Assets.Scripts.Menus {
             _audioManager = AudioManager.Instance;
             _characterSelector = CharacterSelector.Instance;
             _fourWayButtonMenu = FourWayButtonMenu.Instance;
+
+            Gold.gameObject.SetActive(false);
+            transform.gameObject.SetActive(false);
         }
 
         #region OverAllInput
@@ -133,10 +136,13 @@ namespace Assets.Scripts.Menus {
             if (Player.PlayerIsInMenu != EnumMenuType.none) {
                 return;
             }
+
+            _showUi = true;
             Player.PlayerIsInMenu = EnumMenuType.merchantMenu;
             _party = _inventory.GetParty();
             ObjectsForSale.SetActive(true);
             Gold.SetActive(true);
+            transform.gameObject.SetActive(true);
 
             _audioManager.PlaySFX(_menuSwish);
             _fourWayButtonMenu.InitializeButtons(_animatorBuyButton, _animatorSellButton, 
@@ -406,7 +412,9 @@ namespace Assets.Scripts.Menus {
         
         private void CloseMenuForGood() {
             _fourWayButtonMenu.CloseButtons();
+            _showUi = false;
             Player.PlayerIsInMenu = EnumMenuType.none;
+            StartCoroutine(WaitForTenthASecond());
         }
 
         private void OpenCharacterSelectMenu(Equipment equipment) {
@@ -561,6 +569,14 @@ namespace Assets.Scripts.Menus {
         IEnumerator DisplaySentenceWithDelay(string sentence) {
             yield return new WaitForSeconds(0.15f);
             EvokeSingleSentenceDialogue(sentence);
+        }
+
+        IEnumerator WaitForTenthASecond() {
+            yield return new WaitForSeconds(0.1f);
+            if (!_showUi) {
+                transform.gameObject.SetActive(false);
+                Gold.SetActive(false);
+            }
         }
     }
 

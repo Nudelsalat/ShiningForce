@@ -60,6 +60,10 @@ public class Constants {
     public static string CharacterBowie = "SharedObjects/Characters/Heroes/Bowie";
     public static string CharacterSarah = "SharedObjects/Characters/Heroes/Sarah";
     public static string CharacterChester = "SharedObjects/Characters/Heroes/Chester";
+    public static string CharacterJaha = "SharedObjects/Characters/Heroes/Jaha";
+    public static string CharacterKazin = "SharedObjects/Characters/Heroes/Kazin";
+
+    public static string CharacterDwarf = "SharedObjects/Characters/Monsters/Dwarf";
 
     public static string SoundItemPickup = "ShiningForce/sounds/ding";
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";

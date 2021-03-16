@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.GameData.Magic;
-using UnityEditor.Animations;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -16,7 +11,7 @@ public class Character : ScriptableObject {
     public string Name;
     public bool IsPromoted;
     public Sprite PortraitSprite;
-    public AnimatorController AnimatorSprite;
+    public RuntimeAnimatorController AnimatorSprite;
 
     public EnumClassType ClassType = EnumClassType.SDMN;
     public EnumCharacterType CharacterType;

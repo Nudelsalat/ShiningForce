@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using Assets.Scripts.GlobalObjectScripts;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,11 +42,15 @@ namespace Assets.Scripts.Menus {
             _textLabel = transform.Find("Label/LabelText").GetComponent<Text>();
         }
 
+        void Start() {
+            transform.gameObject.SetActive(false);
+        }
+
         public void InitializeButtons(
-            UnityEditor.Animations.AnimatorController up, 
-            UnityEditor.Animations.AnimatorController left, 
-            UnityEditor.Animations.AnimatorController down, 
-            UnityEditor.Animations.AnimatorController right, 
+            RuntimeAnimatorController up,
+            RuntimeAnimatorController left,
+            RuntimeAnimatorController down,
+            RuntimeAnimatorController right, 
             string labelUp, 
             string labelLeft, 
             string labelDown, 

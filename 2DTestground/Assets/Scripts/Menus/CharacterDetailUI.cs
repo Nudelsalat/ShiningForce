@@ -60,6 +60,7 @@ public class CharacterDetailUI : MonoBehaviour {
 
     void Start() {
         _inventory = Inventory.Instance;
+        transform.gameObject.SetActive(false);
     }
 
     public void LoadCharacterDetails(Character character) {
@@ -185,6 +186,7 @@ public class CharacterDetailUI : MonoBehaviour {
         _animatorKills.SetBool("isOpen", false);
         _animatorGold.SetBool("isOpen", false);
         _animatorCharacterDetail.SetBool("isOpen", false);
+        StartCoroutine(WaitForTenthASecond());
     }
 
     IEnumerator WaitForTenthASecond() {

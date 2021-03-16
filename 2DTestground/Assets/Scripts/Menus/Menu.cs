@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,15 +14,15 @@ public class Menu : MonoBehaviour
     #endregion
 
     #region private
-    private AnimatorController _animatorMemberButton;
-    private AnimatorController _animatorMagicButton;
-    private AnimatorController _animatorSearchButton;
-    private AnimatorController _animatorItemButton;
+    private RuntimeAnimatorController _animatorMemberButton;
+    private RuntimeAnimatorController _animatorMagicButton;
+    private RuntimeAnimatorController _animatorSearchButton;
+    private RuntimeAnimatorController _animatorItemButton;
 
-    private AnimatorController _animatorUseButton;
-    private AnimatorController _animatorGiveButton;
-    private AnimatorController _animatorDropButton;
-    private AnimatorController _animatorEquipButton;
+    private RuntimeAnimatorController _animatorUseButton;
+    private RuntimeAnimatorController _animatorGiveButton;
+    private RuntimeAnimatorController _animatorDropButton;
+    private RuntimeAnimatorController _animatorEquipButton;
 
     private MemberInventoryUI _memberInventoryUI;
     private MemberOverviewUI _memberOverviewUI;
@@ -58,6 +57,7 @@ public class Menu : MonoBehaviour
 
     private EnumCurrentMenu _enumCurrentMenuType = EnumCurrentMenu.none;
 
+    private bool _showUi = false;
     private bool _disableSounds = false;
     private bool _inInventoryMenu = false;
     private bool _currentlyShowingEquipmentList = false;
@@ -87,15 +87,15 @@ public class Menu : MonoBehaviour
         _itemsToTradeTwo = _itemsToTrade.transform.Find("ItemToTradeTwo").GetComponent<Image>();
         _itemsToTrade.SetActive(false);
         
-        _animatorMemberButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonMember);
-        _animatorMagicButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonMagic);
-        _animatorSearchButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonSearch);
-        _animatorItemButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonItem);
+        _animatorMemberButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonMember);
+        _animatorMagicButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonMagic);
+        _animatorSearchButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonSearch);
+        _animatorItemButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonItem);
         
-        _animatorUseButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonUse);
-        _animatorGiveButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonGive);
-        _animatorDropButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonDrop);
-        _animatorEquipButton = Resources.Load<AnimatorController>(Constants.AnimationsButtonEquip);
+        _animatorUseButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonUse);
+        _animatorGiveButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonGive);
+        _animatorDropButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonDrop);
+        _animatorEquipButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonEquip);
         
         _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
         _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
@@ -595,6 +595,7 @@ public class Menu : MonoBehaviour
     private void OpenMainButtonMenu() {
         Player.PlayerIsInMenu = EnumMenuType.mainMenu;
         _enumCurrentMenuType = EnumCurrentMenu.none;
+        _showUi = true;
         ObjectMenu.SetActive(true);
         _fourWayButtonMenu.InitializeButtons(_animatorMemberButton, _animatorMagicButton,
             _animatorSearchButton, _animatorItemButton,
@@ -666,6 +667,7 @@ public class Menu : MonoBehaviour
 
     private void CloseMainMenuForGood() {
         _fourWayButtonMenu.CloseButtons();
+        _showUi = false;
         StartCoroutine(WaitForQuaterSecCloseMainMenu());
         Player.PlayerIsInMenu = EnumMenuType.none;
     }
@@ -749,7 +751,9 @@ public class Menu : MonoBehaviour
 
     IEnumerator WaitForQuaterSecCloseMainMenu() {
         yield return new WaitForSeconds(0.1f);
-        ObjectMenu.SetActive(false);
+        if (!_showUi) {
+            ObjectMenu.SetActive(false);
+        }
     }
 
     #endregion

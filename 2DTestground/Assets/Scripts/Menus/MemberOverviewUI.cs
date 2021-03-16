@@ -47,6 +47,9 @@ public class MemberOverviewUI : MonoBehaviour {
         _animatorOverViewUi = transform.GetComponent<Animator>();
     }
 
+    void Start() {
+        transform.gameObject.SetActive(false);
+    }
 
     public void LoadMemberInventory(Character character) {
         OpenMemberOverViewUi();
@@ -128,6 +131,7 @@ public class MemberOverviewUI : MonoBehaviour {
     public void CloseMemberOverviewUi() {
         _showUi = false;
         _animatorOverViewUi.SetBool("inventoryIsOpen", false);
+        StartCoroutine(WaitForTenthASecond());
 
     }
     IEnumerator WaitForTenthASecond() {
