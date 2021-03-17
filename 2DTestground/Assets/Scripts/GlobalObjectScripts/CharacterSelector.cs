@@ -38,13 +38,13 @@ public class CharacterSelector : MonoBehaviour
 
         switch (equipmentItem != null) {
             case true:
-                item = Resources.Load("SharedObjects/CharacterListObjectEquipment") as GameObject;
-                header = Resources.Load("SharedObjects/HeaderEquipment") as GameObject;
+                item = Resources.Load(Constants.PrefabListCharacterEquipment) as GameObject;
+                header = Resources.Load(Constants.PrefabHeaderEquipment) as GameObject;
                 break;
             case false:
                 default:
-                item = Resources.Load("SharedObjects/CharacterListObject") as GameObject;
-                header = Resources.Load("SharedObjects/Header") as GameObject;
+                item = Resources.Load(Constants.PrefabListCharacterObject) as GameObject;
+                header = Resources.Load(Constants.PrefabHeader) as GameObject;
                 break;
 
         }

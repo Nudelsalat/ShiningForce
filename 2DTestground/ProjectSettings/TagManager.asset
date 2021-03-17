@@ -10,6 +10,7 @@ TagManager:
   - FadeOutScreen
   - StairWarp
   - Item
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -26,13 +27,13 @@ TagManager:
   - Background
   - Background+
   - Collision
-  - 
+  - Boarder
   - Player
   - 
   - 
   - 
   - StairCollider
-  - 
+  - Terrain
   - 
   - 
   - 
@@ -64,6 +65,9 @@ TagManager:
     locked: 0
   - name: Forground+
     uniqueID: 1684408117
+    locked: 0
+  - name: Terrain
+    uniqueID: 4293267943
     locked: 0
   - name: Default
     uniqueID: 0

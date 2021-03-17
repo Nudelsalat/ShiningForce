@@ -158,7 +158,7 @@ public class CharacterDetailUI : MonoBehaviour {
                     var spawnPoint = _magicList[i].transform.Find("SpellLevel/" + j.ToString());
 
                     if (currentMagic.CurrentLevel >= j) {
-                        var item = Resources.Load(Constants.HealthBar) as GameObject;
+                        var item = Resources.Load(Constants.PrefabHealthBar) as GameObject;
                         var pos = new Vector3(0, 0, spawnPoint.transform.position.z);
                         var spawnedItem = Instantiate(item, pos, spawnPoint.transform.rotation);
                         spawnedItem.transform.SetParent(spawnPoint.transform, false);

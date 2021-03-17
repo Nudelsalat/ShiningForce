@@ -13,6 +13,8 @@ public class OverviewCameraMovement : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         _initialSpeed = MoveSpeed;
+        transform.position = new Vector3(PlayerObject.transform.position.x, PlayerObject.transform.position.y, 
+            transform.position.z);
     }
 
     // Update is called once per frame
@@ -30,7 +32,7 @@ public class OverviewCameraMovement : MonoBehaviour {
 
         if ((Mathf.Abs(transform.position.x - PlayerObject.position.x) >= CameraOffsetx + 2) ||
             (Mathf.Abs(transform.position.y - PlayerObject.position.y) >= CameraOffsety + 1)) {
-            MoveSpeed = _initialSpeed+1;
+            MoveSpeed = _initialSpeed*1.2f;
         } else {
             MoveSpeed = _initialSpeed;
         }

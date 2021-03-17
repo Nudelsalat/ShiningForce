@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public class Constants {
-    public static string HealthBar = "SharedObjects/HealthBar";
+    public static string PrefabHealthBar = "SharedObjects/Prefab/UI/HealthBar";
+    public static string PrefabListCharacterEquipment = "SharedObjects/Prefab/UI/CharacterListObjectEquipment";
+    public static string PrefabHeaderEquipment = "SharedObjects/Prefab/UI/HeaderEquipment";
+    public static string PrefabHeader = "SharedObjects/Prefab/UI/Header";
+    public static string PrefabListCharacterObject = "SharedObjects/Prefab/UI/CharacterListObject";
 
     public static string ItemMedicalHerb = "SharedObjects/Items/Consumables/MedicalHerb";
     public static string ItemAntidote = "SharedObjects/Items/Consumables/Antidote";

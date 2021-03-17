@@ -473,6 +473,15 @@ TextureImporter:
   - first:
       213: 1378448841918999838
     second: tileset24_8x24_156
+  - first:
+      213: 2721243109884817011
+    second: tileset24_8x24_157
+  - first:
+      213: 4358103812971253843
+    second: tileset24_8x24_158
+  - first:
+      213: -7501806413167369057
+    second: tileset24_8x24_159
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -494,6 +503,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -525,9 +535,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -1347,31 +1360,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset24_8x24_37
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 456
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0986f8c6132f98d10800000000000000
-      internalID: 2128498592997927056
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: tileset24_8x24_38
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 456
         width: 24
         height: 24
@@ -1392,8 +1384,8 @@ TextureImporter:
       name: tileset24_8x24_39
       rect:
         serializedVersion: 2
-        x: 0
-        y: 432
+        x: 168
+        y: 456
         width: 24
         height: 24
       alignment: 0
@@ -1413,7 +1405,7 @@ TextureImporter:
       name: tileset24_8x24_40
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 432
         width: 24
         height: 24
@@ -1434,7 +1426,7 @@ TextureImporter:
       name: tileset24_8x24_41
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 432
         width: 24
         height: 24
@@ -1455,7 +1447,7 @@ TextureImporter:
       name: tileset24_8x24_42
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 432
         width: 24
         height: 24
@@ -1476,7 +1468,7 @@ TextureImporter:
       name: tileset24_8x24_43
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 432
         width: 24
         height: 24
@@ -1497,7 +1489,7 @@ TextureImporter:
       name: tileset24_8x24_44
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 432
         width: 24
         height: 24
@@ -1518,7 +1510,7 @@ TextureImporter:
       name: tileset24_8x24_45
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 432
         width: 24
         height: 24
@@ -1539,7 +1531,7 @@ TextureImporter:
       name: tileset24_8x24_46
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 432
         width: 24
         height: 24
@@ -1560,8 +1552,8 @@ TextureImporter:
       name: tileset24_8x24_47
       rect:
         serializedVersion: 2
-        x: 0
-        y: 408
+        x: 168
+        y: 432
         width: 24
         height: 24
       alignment: 0
@@ -1581,7 +1573,7 @@ TextureImporter:
       name: tileset24_8x24_48
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 408
         width: 24
         height: 24
@@ -1602,7 +1594,7 @@ TextureImporter:
       name: tileset24_8x24_49
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 408
         width: 24
         height: 24
@@ -1623,7 +1615,7 @@ TextureImporter:
       name: tileset24_8x24_50
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 408
         width: 24
         height: 24
@@ -1644,7 +1636,7 @@ TextureImporter:
       name: tileset24_8x24_51
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 408
         width: 24
         height: 24
@@ -1665,7 +1657,7 @@ TextureImporter:
       name: tileset24_8x24_52
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 408
         width: 24
         height: 24
@@ -1686,7 +1678,7 @@ TextureImporter:
       name: tileset24_8x24_53
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 408
         width: 24
         height: 24
@@ -1707,7 +1699,7 @@ TextureImporter:
       name: tileset24_8x24_54
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 408
         width: 24
         height: 24
@@ -1728,8 +1720,8 @@ TextureImporter:
       name: tileset24_8x24_55
       rect:
         serializedVersion: 2
-        x: 0
-        y: 384
+        x: 168
+        y: 408
         width: 24
         height: 24
       alignment: 0
@@ -1749,7 +1741,7 @@ TextureImporter:
       name: tileset24_8x24_56
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 384
         width: 24
         height: 24
@@ -1770,7 +1762,7 @@ TextureImporter:
       name: tileset24_8x24_57
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 384
         width: 24
         height: 24
@@ -1791,7 +1783,7 @@ TextureImporter:
       name: tileset24_8x24_58
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 384
         width: 24
         height: 24
@@ -1812,7 +1804,7 @@ TextureImporter:
       name: tileset24_8x24_59
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 384
         width: 24
         height: 24
@@ -1833,7 +1825,7 @@ TextureImporter:
       name: tileset24_8x24_60
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 384
         width: 24
         height: 24
@@ -1854,7 +1846,7 @@ TextureImporter:
       name: tileset24_8x24_61
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 384
         width: 24
         height: 24
@@ -1875,7 +1867,7 @@ TextureImporter:
       name: tileset24_8x24_62
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 384
         width: 24
         height: 24
@@ -1896,8 +1888,8 @@ TextureImporter:
       name: tileset24_8x24_63
       rect:
         serializedVersion: 2
-        x: 0
-        y: 360
+        x: 168
+        y: 384
         width: 24
         height: 24
       alignment: 0
@@ -1917,7 +1909,7 @@ TextureImporter:
       name: tileset24_8x24_64
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 360
         width: 24
         height: 24
@@ -1938,7 +1930,7 @@ TextureImporter:
       name: tileset24_8x24_65
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 360
         width: 24
         height: 24
@@ -1959,7 +1951,7 @@ TextureImporter:
       name: tileset24_8x24_66
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 360
         width: 24
         height: 24
@@ -1980,7 +1972,7 @@ TextureImporter:
       name: tileset24_8x24_67
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 360
         width: 24
         height: 24
@@ -2001,7 +1993,7 @@ TextureImporter:
       name: tileset24_8x24_68
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 360
         width: 24
         height: 24
@@ -2022,7 +2014,7 @@ TextureImporter:
       name: tileset24_8x24_69
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 360
         width: 24
         height: 24
@@ -2043,7 +2035,7 @@ TextureImporter:
       name: tileset24_8x24_70
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 360
         width: 24
         height: 24
@@ -2064,8 +2056,8 @@ TextureImporter:
       name: tileset24_8x24_71
       rect:
         serializedVersion: 2
-        x: 0
-        y: 336
+        x: 168
+        y: 360
         width: 24
         height: 24
       alignment: 0
@@ -2085,7 +2077,7 @@ TextureImporter:
       name: tileset24_8x24_72
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 336
         width: 24
         height: 24
@@ -2106,7 +2098,7 @@ TextureImporter:
       name: tileset24_8x24_73
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 336
         width: 24
         height: 24
@@ -2127,7 +2119,7 @@ TextureImporter:
       name: tileset24_8x24_74
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 336
         width: 24
         height: 24
@@ -2148,7 +2140,7 @@ TextureImporter:
       name: tileset24_8x24_75
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 336
         width: 24
         height: 24
@@ -2169,7 +2161,7 @@ TextureImporter:
       name: tileset24_8x24_76
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 336
         width: 24
         height: 24
@@ -2190,7 +2182,7 @@ TextureImporter:
       name: tileset24_8x24_77
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 336
         width: 24
         height: 24
@@ -2211,7 +2203,7 @@ TextureImporter:
       name: tileset24_8x24_78
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 336
         width: 24
         height: 24
@@ -2232,8 +2224,8 @@ TextureImporter:
       name: tileset24_8x24_79
       rect:
         serializedVersion: 2
-        x: 0
-        y: 312
+        x: 168
+        y: 336
         width: 24
         height: 24
       alignment: 0
@@ -2253,7 +2245,7 @@ TextureImporter:
       name: tileset24_8x24_80
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 312
         width: 24
         height: 24
@@ -2274,7 +2266,7 @@ TextureImporter:
       name: tileset24_8x24_81
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 312
         width: 24
         height: 24
@@ -2295,7 +2287,7 @@ TextureImporter:
       name: tileset24_8x24_82
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 312
         width: 24
         height: 24
@@ -2316,7 +2308,7 @@ TextureImporter:
       name: tileset24_8x24_83
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 312
         width: 24
         height: 24
@@ -2337,7 +2329,7 @@ TextureImporter:
       name: tileset24_8x24_84
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 312
         width: 24
         height: 24
@@ -2358,7 +2350,7 @@ TextureImporter:
       name: tileset24_8x24_85
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 312
         width: 24
         height: 24
@@ -2379,7 +2371,7 @@ TextureImporter:
       name: tileset24_8x24_86
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 312
         width: 24
         height: 24
@@ -2400,8 +2392,8 @@ TextureImporter:
       name: tileset24_8x24_87
       rect:
         serializedVersion: 2
-        x: 0
-        y: 288
+        x: 168
+        y: 312
         width: 24
         height: 24
       alignment: 0
@@ -2421,7 +2413,7 @@ TextureImporter:
       name: tileset24_8x24_88
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 288
         width: 24
         height: 24
@@ -2442,7 +2434,7 @@ TextureImporter:
       name: tileset24_8x24_89
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 288
         width: 24
         height: 24
@@ -2463,7 +2455,7 @@ TextureImporter:
       name: tileset24_8x24_90
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 288
         width: 24
         height: 24
@@ -2484,7 +2476,7 @@ TextureImporter:
       name: tileset24_8x24_91
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 288
         width: 24
         height: 24
@@ -2505,7 +2497,7 @@ TextureImporter:
       name: tileset24_8x24_92
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 288
         width: 24
         height: 24
@@ -2526,7 +2518,7 @@ TextureImporter:
       name: tileset24_8x24_93
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 288
         width: 24
         height: 24
@@ -2547,7 +2539,7 @@ TextureImporter:
       name: tileset24_8x24_94
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 288
         width: 24
         height: 24
@@ -2568,8 +2560,8 @@ TextureImporter:
       name: tileset24_8x24_95
       rect:
         serializedVersion: 2
-        x: 0
-        y: 264
+        x: 168
+        y: 288
         width: 24
         height: 24
       alignment: 0
@@ -2589,7 +2581,7 @@ TextureImporter:
       name: tileset24_8x24_96
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 264
         width: 24
         height: 24
@@ -2610,7 +2602,7 @@ TextureImporter:
       name: tileset24_8x24_97
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 264
         width: 24
         height: 24
@@ -2631,7 +2623,7 @@ TextureImporter:
       name: tileset24_8x24_98
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 264
         width: 24
         height: 24
@@ -2652,7 +2644,7 @@ TextureImporter:
       name: tileset24_8x24_99
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 264
         width: 24
         height: 24
@@ -2673,7 +2665,7 @@ TextureImporter:
       name: tileset24_8x24_100
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 264
         width: 24
         height: 24
@@ -2694,7 +2686,7 @@ TextureImporter:
       name: tileset24_8x24_101
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 264
         width: 24
         height: 24
@@ -2715,7 +2707,7 @@ TextureImporter:
       name: tileset24_8x24_102
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 264
         width: 24
         height: 24
@@ -2736,8 +2728,8 @@ TextureImporter:
       name: tileset24_8x24_103
       rect:
         serializedVersion: 2
-        x: 0
-        y: 240
+        x: 168
+        y: 264
         width: 24
         height: 24
       alignment: 0
@@ -2757,7 +2749,7 @@ TextureImporter:
       name: tileset24_8x24_104
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 240
         width: 24
         height: 24
@@ -2778,7 +2770,7 @@ TextureImporter:
       name: tileset24_8x24_105
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 240
         width: 24
         height: 24
@@ -2799,7 +2791,7 @@ TextureImporter:
       name: tileset24_8x24_106
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 240
         width: 24
         height: 24
@@ -2820,7 +2812,7 @@ TextureImporter:
       name: tileset24_8x24_107
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 240
         width: 24
         height: 24
@@ -2841,7 +2833,7 @@ TextureImporter:
       name: tileset24_8x24_108
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 240
         width: 24
         height: 24
@@ -2862,7 +2854,7 @@ TextureImporter:
       name: tileset24_8x24_109
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 240
         width: 24
         height: 24
@@ -2883,7 +2875,7 @@ TextureImporter:
       name: tileset24_8x24_110
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 240
         width: 24
         height: 24
@@ -2904,8 +2896,8 @@ TextureImporter:
       name: tileset24_8x24_111
       rect:
         serializedVersion: 2
-        x: 0
-        y: 216
+        x: 168
+        y: 240
         width: 24
         height: 24
       alignment: 0
@@ -2925,7 +2917,7 @@ TextureImporter:
       name: tileset24_8x24_112
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 216
         width: 24
         height: 24
@@ -2946,7 +2938,7 @@ TextureImporter:
       name: tileset24_8x24_113
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 216
         width: 24
         height: 24
@@ -2967,7 +2959,7 @@ TextureImporter:
       name: tileset24_8x24_114
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 216
         width: 24
         height: 24
@@ -2988,7 +2980,7 @@ TextureImporter:
       name: tileset24_8x24_115
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 216
         width: 24
         height: 24
@@ -3009,7 +3001,7 @@ TextureImporter:
       name: tileset24_8x24_116
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 216
         width: 24
         height: 24
@@ -3030,7 +3022,7 @@ TextureImporter:
       name: tileset24_8x24_117
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 216
         width: 24
         height: 24
@@ -3051,7 +3043,7 @@ TextureImporter:
       name: tileset24_8x24_118
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 216
         width: 24
         height: 24
@@ -3072,8 +3064,8 @@ TextureImporter:
       name: tileset24_8x24_119
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 168
+        y: 216
         width: 24
         height: 24
       alignment: 0
@@ -3093,7 +3085,7 @@ TextureImporter:
       name: tileset24_8x24_120
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 192
         width: 24
         height: 24
@@ -3114,7 +3106,7 @@ TextureImporter:
       name: tileset24_8x24_121
       rect:
         serializedVersion: 2
-        x: 48
+        x: 24
         y: 192
         width: 24
         height: 24
@@ -3135,7 +3127,7 @@ TextureImporter:
       name: tileset24_8x24_122
       rect:
         serializedVersion: 2
-        x: 72
+        x: 48
         y: 192
         width: 24
         height: 24
@@ -3156,7 +3148,7 @@ TextureImporter:
       name: tileset24_8x24_123
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 192
         width: 24
         height: 24
@@ -3177,7 +3169,7 @@ TextureImporter:
       name: tileset24_8x24_124
       rect:
         serializedVersion: 2
-        x: 120
+        x: 96
         y: 192
         width: 24
         height: 24
@@ -3198,7 +3190,7 @@ TextureImporter:
       name: tileset24_8x24_125
       rect:
         serializedVersion: 2
-        x: 144
+        x: 120
         y: 192
         width: 24
         height: 24
@@ -3219,7 +3211,7 @@ TextureImporter:
       name: tileset24_8x24_126
       rect:
         serializedVersion: 2
-        x: 168
+        x: 144
         y: 192
         width: 24
         height: 24
@@ -3240,8 +3232,8 @@ TextureImporter:
       name: tileset24_8x24_127
       rect:
         serializedVersion: 2
-        x: 0
-        y: 168
+        x: 168
+        y: 192
         width: 24
         height: 24
       alignment: 0
@@ -3261,7 +3253,7 @@ TextureImporter:
       name: tileset24_8x24_128
       rect:
         serializedVersion: 2
-        x: 24
+        x: 0
         y: 168
         width: 24
         height: 24
@@ -3282,7 +3274,7 @@ TextureImporter:
       name: tileset24_8x24_129
       rect:
         serializedVersion: 2
-        x: 72
+        x: 24
         y: 168
         width: 24
         height: 24
@@ -3300,31 +3292,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset24_8x24_130
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 168
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4936909dfce0d7a90800000000000000
-      internalID: -7314673933917527148
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: tileset24_8x24_131
       rect:
         serializedVersion: 2
-        x: 120
+        x: 72
         y: 168
         width: 24
         height: 24
@@ -3345,7 +3316,7 @@ TextureImporter:
       name: tileset24_8x24_132
       rect:
         serializedVersion: 2
-        x: 144
+        x: 96
         y: 168
         width: 24
         height: 24
@@ -3366,7 +3337,7 @@ TextureImporter:
       name: tileset24_8x24_133
       rect:
         serializedVersion: 2
-        x: 168
+        x: 120
         y: 168
         width: 24
         height: 24
@@ -3387,8 +3358,8 @@ TextureImporter:
       name: tileset24_8x24_134
       rect:
         serializedVersion: 2
-        x: 0
-        y: 144
+        x: 144
+        y: 168
         width: 24
         height: 24
       alignment: 0
@@ -3408,8 +3379,8 @@ TextureImporter:
       name: tileset24_8x24_135
       rect:
         serializedVersion: 2
-        x: 24
-        y: 144
+        x: 168
+        y: 168
         width: 24
         height: 24
       alignment: 0
@@ -3429,7 +3400,7 @@ TextureImporter:
       name: tileset24_8x24_136
       rect:
         serializedVersion: 2
-        x: 48
+        x: 0
         y: 144
         width: 24
         height: 24
@@ -3450,7 +3421,7 @@ TextureImporter:
       name: tileset24_8x24_137
       rect:
         serializedVersion: 2
-        x: 72
+        x: 24
         y: 144
         width: 24
         height: 24
@@ -3471,7 +3442,7 @@ TextureImporter:
       name: tileset24_8x24_138
       rect:
         serializedVersion: 2
-        x: 96
+        x: 48
         y: 144
         width: 24
         height: 24
@@ -3492,7 +3463,7 @@ TextureImporter:
       name: tileset24_8x24_139
       rect:
         serializedVersion: 2
-        x: 120
+        x: 72
         y: 144
         width: 24
         height: 24
@@ -3513,7 +3484,7 @@ TextureImporter:
       name: tileset24_8x24_140
       rect:
         serializedVersion: 2
-        x: 144
+        x: 96
         y: 144
         width: 24
         height: 24
@@ -3534,7 +3505,7 @@ TextureImporter:
       name: tileset24_8x24_141
       rect:
         serializedVersion: 2
-        x: 168
+        x: 120
         y: 144
         width: 24
         height: 24
@@ -3555,8 +3526,8 @@ TextureImporter:
       name: tileset24_8x24_142
       rect:
         serializedVersion: 2
-        x: 0
-        y: 120
+        x: 144
+        y: 144
         width: 24
         height: 24
       alignment: 0
@@ -3576,8 +3547,8 @@ TextureImporter:
       name: tileset24_8x24_143
       rect:
         serializedVersion: 2
-        x: 24
-        y: 120
+        x: 168
+        y: 144
         width: 24
         height: 24
       alignment: 0
@@ -3597,7 +3568,7 @@ TextureImporter:
       name: tileset24_8x24_144
       rect:
         serializedVersion: 2
-        x: 48
+        x: 0
         y: 120
         width: 24
         height: 24
@@ -3618,7 +3589,7 @@ TextureImporter:
       name: tileset24_8x24_145
       rect:
         serializedVersion: 2
-        x: 72
+        x: 24
         y: 120
         width: 24
         height: 24
@@ -3639,7 +3610,7 @@ TextureImporter:
       name: tileset24_8x24_146
       rect:
         serializedVersion: 2
-        x: 96
+        x: 48
         y: 120
         width: 24
         height: 24
@@ -3660,7 +3631,7 @@ TextureImporter:
       name: tileset24_8x24_147
       rect:
         serializedVersion: 2
-        x: 120
+        x: 72
         y: 120
         width: 24
         height: 24
@@ -3681,7 +3652,7 @@ TextureImporter:
       name: tileset24_8x24_148
       rect:
         serializedVersion: 2
-        x: 144
+        x: 96
         y: 120
         width: 24
         height: 24
@@ -3702,7 +3673,7 @@ TextureImporter:
       name: tileset24_8x24_149
       rect:
         serializedVersion: 2
-        x: 168
+        x: 120
         y: 120
         width: 24
         height: 24
@@ -3723,8 +3694,8 @@ TextureImporter:
       name: tileset24_8x24_150
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
+        x: 144
+        y: 120
         width: 24
         height: 24
       alignment: 0
@@ -3744,8 +3715,8 @@ TextureImporter:
       name: tileset24_8x24_151
       rect:
         serializedVersion: 2
-        x: 24
-        y: 96
+        x: 168
+        y: 120
         width: 24
         height: 24
       alignment: 0
@@ -3765,7 +3736,7 @@ TextureImporter:
       name: tileset24_8x24_152
       rect:
         serializedVersion: 2
-        x: 48
+        x: 0
         y: 96
         width: 24
         height: 24
@@ -3786,7 +3757,7 @@ TextureImporter:
       name: tileset24_8x24_153
       rect:
         serializedVersion: 2
-        x: 96
+        x: 24
         y: 96
         width: 24
         height: 24
@@ -3807,7 +3778,7 @@ TextureImporter:
       name: tileset24_8x24_154
       rect:
         serializedVersion: 2
-        x: 120
+        x: 48
         y: 96
         width: 24
         height: 24
@@ -3828,7 +3799,7 @@ TextureImporter:
       name: tileset24_8x24_155
       rect:
         serializedVersion: 2
-        x: 144
+        x: 72
         y: 96
         width: 24
         height: 24
@@ -3849,7 +3820,7 @@ TextureImporter:
       name: tileset24_8x24_156
       rect:
         serializedVersion: 2
-        x: 168
+        x: 96
         y: 96
         width: 24
         height: 24
@@ -3862,6 +3833,69 @@ TextureImporter:
       bones: []
       spriteID: e1d61ab1beb312310800000000000000
       internalID: 1378448841918999838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset24_8x24_157
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 96
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37ee920d03cc3c520800000000000000
+      internalID: 2721243109884817011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset24_8x24_158
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 96
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3505d62e3581b7c30800000000000000
+      internalID: 4358103812971253843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset24_8x24_159
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 96
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f94696140da34e790800000000000000
+      internalID: -7501806413167369057
       vertices: []
       indices: 
       edges: []
