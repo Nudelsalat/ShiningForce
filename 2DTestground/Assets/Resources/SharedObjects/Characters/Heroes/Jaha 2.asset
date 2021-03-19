@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7b9c53320b7fd4689345dbec83d17f, type: 3}
+  m_Name: Jaha 2
+  m_EditorClassIdentifier: 
+  Id: 5
+  Name: TeStY
+  IsPromoted: 0
+  PortraitSprite: {fileID: -5627607277695456536, guid: 0a8ffeab11ee328449de20b6e254325a,
+    type: 3}
+  AnimatorSprite: {fileID: 9100000, guid: 88e92e446e7ef5f44be723dd1eafe959, type: 2}
+  ClassType: 3
+  CharacterType: 3
+  MovementType: 4
+  CharStats:
+    Level: 1
+    Exp: 0
+    MaxHp: 400
+    CurrentHp: 333
+    MaxMp: 250
+    CurrentMp: 240
+    Attack:
+      _baseValue: 9
+    Defense:
+      _baseValue: 7
+    Agility:
+      _baseValue: 4
+    Movement:
+      _baseValue: 5
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  CharacterInventory:
+  - item1: {fileID: 11400000, guid: 4f822801ef9056d44a95996a9c1f8f14, type: 2}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  partyLeader: 0
+  activeParty: 1

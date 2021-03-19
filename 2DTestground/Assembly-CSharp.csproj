@@ -79,12 +79,14 @@
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Menus\FourWayButtonMenu.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Monster.cs" />
+    <Compile Include="Assets\Scripts\Menus\Battle\LandeffectUi.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\WarpToScene.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\GameItems\Consumable.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\Singleton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\GameData\Magic\Magic.cs" />
+    <Compile Include="Assets\Scripts\GameData\TerrainEffects.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\EnumCharacterType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\Scripts\Menus\PriestMenu.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Menus\Portrait.cs" />
     <Compile Include="Assets\Scripts\GameData\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Menus\Battle\QuickInfoUi.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Audio\AudioManager.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="Assets\Scripts\GameItems\EnumEquipmentType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Scripts\GameData\EnumTerrainType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertEquipmentStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemy.cs" />
@@ -150,17 +154,13 @@
     <Compile Include="Assets\Scripts\Menus\StatusEffectDisplayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Dialog\Question.cs" />
+    <Compile Include="Assets\Scripts\GameData\Characters\EnumMovementType.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\EnumerationExtensions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
-    <Compile Include="Assets\Scripts\GameData\Characters\EnumMovementType.cs" />
-    <Compile Include="Assets\Scripts\GameData\EnumTerrainType.cs" />
-    <Compile Include="Assets\Scripts\GameData\TerrainEffects.cs" />
-    <Compile Include="Assets\Scripts\Menus\Battle\LandeffectUi.cs" />
-    <Compile Include="Assets\Scripts\Menus\Battle\QuickInfoUi.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
