@@ -22,7 +22,7 @@ TextureImporter:
     second: Hover
   - first:
       213: 4794510293436115577
-    second: plain
+    second: Plain
   - first:
       213: -8218422151308288996
     second: Road
@@ -247,7 +247,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: plain
+      name: Plain
       rect:
         serializedVersion: 2
         x: 64

@@ -20,6 +20,7 @@ MonoBehaviour:
   AnimatorSprite: {fileID: 9100000, guid: 3cbe532e3f9f53d4b8e2f5c229e3d650, type: 2}
   ClassType: 1
   CharacterType: 2
+  MovementType: 4
   CharStats:
     Level: 1
     Exp: 0

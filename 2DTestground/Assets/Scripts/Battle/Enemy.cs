@@ -17,13 +17,9 @@ namespace Assets.Scripts.Battle {
         void OnValidate() {
             var sprite = GetComponent<SpriteRenderer>();
             var clip = Character.AnimatorSprite.animationClips[0];
-            foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip)) {
-                var keyframes = AnimationUtility.GetObjectReferenceCurve(clip, binding);
-                foreach (var frame in keyframes) {
-                    sprite.sprite = (Sprite)frame.value;
-                    return;
-                }
-            }
+            var binding = AnimationUtility.GetObjectReferenceCurveBindings(clip).FirstOrDefault();
+            var keyframes = AnimationUtility.GetObjectReferenceCurve(clip, binding).FirstOrDefault();
+            sprite.sprite = (Sprite)keyframes.value;
         }
 #endif
 
@@ -37,6 +33,13 @@ namespace Assets.Scripts.Battle {
         void OnTriggerEnter2D(Collider2D collider) {
             if (collider.gameObject.tag.Equals("Player")) {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
+                QuickInfoUi.Instance.ShowQuickInfo(_character);
+            }
+        }
+        void OnTriggerExit2D(Collider2D collider) {
+            if (collider.gameObject.tag.Equals("Player")) {
+                Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
+                QuickInfoUi.Instance.CloseQuickInfo();
             }
         }
     }

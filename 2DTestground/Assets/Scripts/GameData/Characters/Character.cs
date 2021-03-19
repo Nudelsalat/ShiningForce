@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Assets.Scripts.GameData.Characters;
 using Assets.Scripts.GameData.Magic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -15,6 +16,7 @@ public class Character : ScriptableObject {
 
     public EnumClassType ClassType = EnumClassType.SDMN;
     public EnumCharacterType CharacterType;
+    public EnumMovementType MovementType;
     public CharacterStatistics CharStats;
     public EnumStatusEffect StatusEffects = EnumStatusEffect.none;
 

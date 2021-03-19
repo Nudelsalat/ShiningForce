@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -16,6 +17,7 @@ public class Cursor : MonoBehaviour {
     private Vector2 _movement;
     private Animator _animator;
     private Tilemap _terrainTileMap;
+    private LandeffectUi _landEffect;
 
     // Start is called before the first frame update
     void Start() {
@@ -26,6 +28,7 @@ public class Cursor : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        _landEffect = LandeffectUi.Instance;
         HandleInput();
     }
 
@@ -87,7 +90,9 @@ public class Cursor : MonoBehaviour {
     private void CheckTile() {
         var test = _terrainTileMap.WorldToCell(MovePoint.position);
         var sprite = _terrainTileMap.GetSprite(test);
-        Debug.Log("Your on tile:" + sprite.name);
+        var value = TerrainEffects.GetLandEffect(sprite.name);
+        _landEffect.ShowLandEffect(value);
+        Debug.Log($"Your on tile: {sprite.name}, with value {value}");
     }
 }
 

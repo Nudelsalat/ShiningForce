@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7b9c53320b7fd4689345dbec83d17f, type: 3}
+  m_Name: Testy
+  m_EditorClassIdentifier: 
+  Id: 1000
+  Name: TESTY
+  IsPromoted: 0
+  PortraitSprite: {fileID: -3783737809093913687, guid: e9c0c084f5339ab49986f910116da86d,
+    type: 3}
+  AnimatorSprite: {fileID: 9100000, guid: 3cbe532e3f9f53d4b8e2f5c229e3d650, type: 2}
+  ClassType: 30
+  CharacterType: 2
+  MovementType: 0
+  CharStats:
+    Level: 69
+    Exp: 0
+    MaxHp: 1000
+    CurrentHp: 650
+    MaxMp: 319
+    CurrentMp: 120
+    Attack:
+      _baseValue: 5
+    Defense:
+      _baseValue: 5
+    Agility:
+      _baseValue: 5
+    Movement:
+      _baseValue: 5
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  CharacterInventory:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 11400000, guid: 8a0acbe5822486b49ad3801488488938, type: 2}
+    item2: 1
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
+    item2: 1
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  partyLeader: 0
+  activeParty: 1
