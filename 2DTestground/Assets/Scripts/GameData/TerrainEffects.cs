@@ -106,28 +106,28 @@ namespace Assets.Scripts.GameData {
                 { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.water), 99},
 
                 //tires
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.block), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.desert), 1.5f},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.forest), 1.5f},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.grass), 1},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.hill), 1.5f},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.hover), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.plain), 1},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.road), 1},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.sky), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.water), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.block), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.desert), 1.5f},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.forest), 1.5f},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.grass), 1},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.hill), 1.5f},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.hover), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.plain), 1},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.road), 1},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.sky), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.tires,EnumTerrainType.water), 99},
 
                 //water
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.block), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.desert), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.forest), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.grass), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.hill), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.hover), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.plain), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.road), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.sky), 99},
-                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.horse,EnumTerrainType.water), 1},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.block), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.desert), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.forest), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.grass), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.hill), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.hover), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.plain), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.road), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.sky), 99},
+                { new Tuple<EnumMovementType, EnumTerrainType>(EnumMovementType.water,EnumTerrainType.water), 1},
             };
 
         public static int GetLandEffect(EnumTerrainType terrain) {
@@ -138,6 +138,13 @@ namespace Assets.Scripts.GameData {
             var terrainTypeName = Enum.GetName(typeof(EnumTerrainType), terrain);
             Debug.LogError($"Terraintype '{terrainTypeName}' could not be found!");
             return returnValue;
+        }
+
+        public static EnumTerrainType GetTerrainTypeByName(string terrain) {
+            if (!Enum.TryParse(terrain, true, out EnumTerrainType enumTerrain)) {
+                Debug.LogError($"Terraintype '{terrain}' could not be found!");
+            }
+            return enumTerrain;
         }
 
         public static int GetLandEffect(string terrain) {

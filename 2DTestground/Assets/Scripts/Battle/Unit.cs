@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle {
-    public class Enemy : MonoBehaviour {
+    public class Unit : MonoBehaviour {
         public Character Character;
 
         private Character _character;
@@ -34,12 +34,14 @@ namespace Assets.Scripts.Battle {
             if (collider.gameObject.tag.Equals("Player")) {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                 QuickInfoUi.Instance.ShowQuickInfo(_character);
+                BattleController.Instance.SetSelectedUnit(this);
             }
         }
         void OnTriggerExit2D(Collider2D collider) {
             if (collider.gameObject.tag.Equals("Player")) {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                 QuickInfoUi.Instance.CloseQuickInfo();
+                BattleController.Instance.DestroyMovementSquareSprites();
             }
         }
     }

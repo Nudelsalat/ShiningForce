@@ -39,6 +39,9 @@ public class Constants {
     public static string AnimationsFieldChester = "ShiningForce/images/Animations_field/Chester";
     public static string AnimationsFieldMerchant = "ShiningForce/images/Animations_field/Merchant";
 
+
+    public static string PrefabMovementSquare = "SharedObjects/Prefab/Battle/MovementSquare";
+
     #region ButtonsAnimation
     public static string AnimationsButtonMember = "ShiningForce/images/Animations/Icons/Member";
     public static string AnimationsButtonMagic = "ShiningForce/images/Animations/Icons/Magic";

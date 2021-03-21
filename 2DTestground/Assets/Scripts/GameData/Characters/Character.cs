@@ -83,7 +83,7 @@ public class Character : ScriptableObject {
     }
 }
 [Serializable]
-public class Tuple<T1, T2> : IStructuralComparable, IStructuralEquatable, IComparable {
+public class Tuple<T1, T2> : IEquatable<Tuple<T1,T2>> {
     [SerializeField]
     private T1 item1;
 
@@ -98,20 +98,19 @@ public class Tuple<T1, T2> : IStructuralComparable, IStructuralEquatable, ICompa
         this.item2 = item2;
     }
 
-    public int CompareTo(object other, IComparer comparer) {
-        throw new NotImplementedException(); // TODO
+    public override int GetHashCode() {
+        return item1.GetHashCode() ^ item2.GetHashCode();
     }
 
-    public int CompareTo(object obj) {
-        throw new NotImplementedException(); // TODO
+    public override bool Equals(object obj) {
+        if (obj == null || GetType() != obj.GetType()) {
+            return false;
+        }
+        return Equals((Tuple<T1, T2>)obj);
     }
 
-    public bool Equals(object other, IEqualityComparer comparer) {
-        throw new NotImplementedException(); // TODO
-    }
-
-    public int GetHashCode(IEqualityComparer comparer) {
-        throw new NotImplementedException(); // TODO
+    public bool Equals(Tuple<T1, T2> other) {
+        return other.item1.Equals(item1) && other.item2.Equals(item2);
     }
 }
 
