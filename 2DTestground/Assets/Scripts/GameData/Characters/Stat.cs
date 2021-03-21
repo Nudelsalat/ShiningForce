@@ -15,7 +15,7 @@ public class Stat {
         _baseValue = baseValue;
     }
 
-    public int GetValue() {
+    public int GetBaseValue() {
         return _baseValue;
     }
 

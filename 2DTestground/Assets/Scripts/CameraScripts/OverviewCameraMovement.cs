@@ -31,8 +31,16 @@ public class OverviewCameraMovement : MonoBehaviour {
         }
 
         if ((Mathf.Abs(transform.position.x - PlayerObject.position.x) >= CameraOffsetx + 2) ||
-            (Mathf.Abs(transform.position.y - PlayerObject.position.y) >= CameraOffsety + 1)) {
-            MoveSpeed = _initialSpeed*1.2f;
+                   (Mathf.Abs(transform.position.y - PlayerObject.position.y) >= CameraOffsety + 1)) {
+            var cursor = PlayerObject.GetComponent<Cursor>();
+            var player = PlayerObject.GetComponent<Player>();
+            if (cursor != null) {
+                MoveSpeed = cursor.MoveSpeed;
+            } else if (player != null) {
+                MoveSpeed = player.MoveSpeed;
+            } else {
+                MoveSpeed = _initialSpeed * 1.2f;
+            }
         } else {
             MoveSpeed = _initialSpeed;
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,7 +8,7 @@ namespace Assets.Scripts.Battle {
 
         private Character _character;
         private Animator _animator;
-
+        private BattleController _battleController;
 #if UNITY_EDITOR
         void OnValidate() {
             var sprite = GetComponent<SpriteRenderer>();
@@ -30,18 +26,30 @@ namespace Assets.Scripts.Battle {
             _animator.SetInteger("moveDirection", 2);
         }
 
+        void Start() {
+            _battleController = BattleController.Instance;
+        }
+
+        public Animator GetAnimator() {
+            return _animator;
+        }
+
         void OnTriggerEnter2D(Collider2D collider) {
+            if (_battleController.GetCurrentState() == EnumBattleState.unitSelected) {
+                return;
+            }
             if (collider.gameObject.tag.Equals("Player")) {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                 QuickInfoUi.Instance.ShowQuickInfo(_character);
-                BattleController.Instance.SetSelectedUnit(this);
             }
         }
         void OnTriggerExit2D(Collider2D collider) {
+            if (_battleController.GetCurrentState() == EnumBattleState.unitSelected) {
+                return;
+            }
             if (collider.gameObject.tag.Equals("Player")) {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                 QuickInfoUi.Instance.CloseQuickInfo();
-                BattleController.Instance.DestroyMovementSquareSprites();
             }
         }
     }
