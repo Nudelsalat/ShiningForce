@@ -158,6 +158,7 @@
     <Compile Include="Assets\Scripts\Dialog\Question.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\EnumMovementType.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
+    <Compile Include="Assets\Scripts\Battle\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\EnumerationExtensions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />

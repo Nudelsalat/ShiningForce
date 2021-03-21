@@ -53,11 +53,11 @@ namespace Assets.Scripts.Battle {
             if (Input.GetButtonDown("Back")) {
                 switch (_currentBattleState) {
                     case EnumBattleState.freeCursor:
-                        _cursor.ReturnToPosition(_originalPosition);
+                        _cursor.ReturnToPosition(null, _originalPosition);
                         break;
                     case EnumBattleState.unitSelected:
                         DestroyMovementSquareSprites();
-                        _cursor.ReturnToPosition(_originalPosition);
+                        _cursor.ReturnToPosition(_movementSquareSprites, _originalPosition);
                         _cursor.ClearControlUnit();
                         _currentBattleState = EnumBattleState.freeCursor;
                         break;
@@ -111,7 +111,7 @@ namespace Assets.Scripts.Battle {
             }
             _currentUnit = _turnOrder.Dequeue();
             _originalPosition = _currentUnit.transform.position;
-            _cursor.ReturnToPosition(_originalPosition);
+            _cursor.ReturnToPosition(null, _originalPosition);
         }
 
         private void SetNewTurnOrder() {
@@ -145,12 +145,13 @@ namespace Assets.Scripts.Battle {
 
         private void GenerateMovementSquares() {
             //_originalPosition = _terrainTileMap.WorldToCell(_currentUnit.transform.position);
-            var reachableSquares = _movementGrid.GetMovementPointsOfUnit(_currentUnit);
+            var reachableSquares = _movementGrid.GetMovementPointsOfUnit(_currentUnit).ToList();
             ShowMovementSquareSprites(reachableSquares);
             _cursor.SetMoveWithinBattleSquares();
         }
         
         private void ShowMovementSquareSprites(IEnumerable<Vector3Int> movementSquares) {
+            _movementSquareSprites.Clear();
             var square = Resources.Load<GameObject>(Constants.PrefabMovementSquare);
             foreach (var movementSquare in movementSquares) {
                 _movementSquareSprites.Add(Instantiate(square,

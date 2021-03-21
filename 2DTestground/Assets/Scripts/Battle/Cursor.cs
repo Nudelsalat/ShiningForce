@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using Assets.Scripts.Battle;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
+using UnityEditor.Tilemaps;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class Cursor : MonoBehaviour {
     public Transform MovePoint;
@@ -21,6 +28,7 @@ public class Cursor : MonoBehaviour {
     private Vector2 _movement;
     private Animator _animator;
     private Tilemap _terrainTileMap;
+    private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
     private bool _isMoveInBattleSquares = false;
     private bool _isAi = false;
@@ -78,11 +86,25 @@ public class Cursor : MonoBehaviour {
         return unit != null;
     }
 
-    public void ReturnToPosition(Vector3 origPosition) {
+    public void ReturnToPosition(List<GameObject> walkableSprites, Vector3 origPosition) {
+        var walkablePoints = new List<Vector3>();
+        if (walkableSprites == null) {
+            walkablePoints = null;
+        } else {
+            walkablePoints.AddRange(walkableSprites.Select(x => x.transform.position));
+            //cursor and unit has Offset...
+            walkablePoints = walkablePoints.Select(x => { x.y += 0.25f;
+                return x;
+            }).ToList();
+        }
+
         //TODO: ShortestPath calculation and method which walks through all GridPoints sequential
-        MovePoint.position = origPosition;
+        var position = MovePoint.position;
+        var pathfinder = new Pathfinder(walkablePoints, position,origPosition);
+        var result = pathfinder.GetShortestPath();
+        _setPath = new Queue<Vector3>(result);
         MoveSpeed = 20f;
-        _clearControlUnitAfterMovement = true;
+        ClearControlUnit();
     }
 
     public void SetControlUnit(Unit unit) {
@@ -114,6 +136,11 @@ public class Cursor : MonoBehaviour {
             _currentUnit.transform.position = transform.position;
         }
         if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.005f)) {
+            return;
+        }
+
+        if (_setPath != null && _setPath.Any()) {
+            MovePoint.position = _setPath.Dequeue();
             return;
         }
 
