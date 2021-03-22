@@ -73,9 +73,8 @@ public class Cursor : MonoBehaviour {
         _isMoveInBattleSquares = false;
     }
 
-    public bool CheckIfCursorIsOverUnit(out Unit unit) {
-        var overlappedObject = Physics2D.OverlapCircle(transform.position, 0.2f, 
-            LayerMask.GetMask("Force") | LayerMask.GetMask("Enemies"));
+    public bool CheckIfCursorIsOverUnit(out Unit unit, LayerMask layerMask) {
+        var overlappedObject = Physics2D.OverlapCircle(transform.position, 0.2f, layerMask);
 
         if (overlappedObject == null) {
             unit = null;
@@ -98,7 +97,6 @@ public class Cursor : MonoBehaviour {
             }).ToList();
         }
 
-        //TODO: ShortestPath calculation and method which walks through all GridPoints sequential
         var position = MovePoint.position;
         var pathfinder = new Pathfinder(walkablePoints, position,origPosition);
         var result = pathfinder.GetShortestPath();
@@ -140,11 +138,15 @@ public class Cursor : MonoBehaviour {
         }
 
         if (_setPath != null && _setPath.Any()) {
-            MovePoint.position = _setPath.Dequeue();
+            var newPosition = _setPath.Dequeue();
+            SetAnimationDirection(MovePoint.position, newPosition);
+            MovePoint.position = newPosition;
             return;
         }
 
         if (_clearControlUnitAfterMovement) {
+            //reset unit to look down
+            _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)DirectionType.down);
             _currentUnit = null;
             MoveSpeed = _initialSpeed;
             _clearControlUnitAfterMovement = false;
@@ -190,6 +192,22 @@ public class Cursor : MonoBehaviour {
         _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)direction);
 
     }
+
+    private void SetAnimationDirection(Vector3 currentPos, Vector3 nextPos) {
+        var direction = DirectionType.none;
+        if (currentPos.x < nextPos.x) {
+            direction = DirectionType.right;
+        } else if (currentPos.x > nextPos.x) {
+            direction = DirectionType.left;
+        } else if (currentPos.y < nextPos.y) {
+            direction = DirectionType.up;
+        } else if (currentPos.y > nextPos.y) {
+            direction = DirectionType.down;
+        }
+        _animator.SetInteger("moveDirection", (int)direction);
+        _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)direction);
+    }
+
     private bool CheckForCollider(Vector3 pointToCheck) {
         if (_isMoveInBattleSquares) {
             return !Physics2D.OverlapCircle(pointToCheck, .2f, BattleCollider);

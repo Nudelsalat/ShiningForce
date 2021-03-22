@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.Battle;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Characters;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Menus.Battle {
         private List<Vector3Int> _movementGrid = new List<Vector3Int>();
         private Dictionary<Vector3Int, float> _movementGridWithRestMovement = new Dictionary<Vector3Int, float>();
         private Tilemap _terrainTileMap;
+        private LayerMask _oppositeLayerMask;
         private EnumMovementType _currentUnitMovementType;
         private float _z;
 
@@ -27,6 +29,15 @@ namespace Assets.Scripts.Menus.Battle {
             _movementGrid.Clear();
             _movementGridWithRestMovement.Clear();
             _currentUnitMovementType = currentUnit.Character.MovementType;
+
+            if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Force")) {
+                _oppositeLayerMask = LayerMask.GetMask("Enemies");
+            } else if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
+                _oppositeLayerMask = LayerMask.GetMask("Force");
+            } else {
+                _oppositeLayerMask = 0;
+            }
+
             return MoveFunction(currentUnit.transform.position.x, currentUnit.transform.position.y,
                 currentUnit.Character.CharStats.Movement.GetModifiedValue());
         }
@@ -67,27 +78,44 @@ namespace Assets.Scripts.Menus.Battle {
 
             var movementCost = isUnit ? GetMovementCost(x - 1, y) : 1;
             if (movement - movementCost >= 0) {
-                MoveFunction(x - 1, y, movement - movementCost, isUnit);
+                if (!IsOccupiedByOpponent(x - 1,y)) {
+                    MoveFunction(x - 1, y, movement - movementCost, isUnit);
+                }
             }
 
             movementCost = isUnit ?  GetMovementCost(x, y - 1) : 1;
             if (movement - movementCost >= 0) {
-                MoveFunction(x, y - 1, movement - movementCost, isUnit);
+                if (!IsOccupiedByOpponent(x, y - 1)) {
+                    MoveFunction(x, y - 1, movement - movementCost, isUnit);
+                }
             }
 
             movementCost = isUnit ? GetMovementCost(x + 1, y) : 1;
             if (movement - movementCost >= 0) {
-                MoveFunction(x + 1, y, movement - movementCost, isUnit);
+                if (!IsOccupiedByOpponent(x + 1, y)) {
+                    MoveFunction(x + 1, y, movement - movementCost, isUnit);
+                }
             }
 
             movementCost = isUnit ? GetMovementCost(x, y + 1) : 1;
             if (movement - movementCost >= 0) {
-                MoveFunction(x, y + 1, movement - movementCost, isUnit);
+                if (!IsOccupiedByOpponent(x,y + 1)) {
+                    MoveFunction(x, y + 1, movement - movementCost, isUnit);
+                }
             }
 
             return _movementGrid;
         }
-        
+
+        private bool IsOccupiedByOpponent(float x, float y) {
+            var collision = Physics2D.OverlapCircle(new Vector2(x, y), 0.2f, _oppositeLayerMask);
+            if (collision != null) {
+                Debug.Log($"GameObjectName: {collision.name}");
+                return true;
+            }
+            return false;
+        }
+
         private float GetMovementCost(float x, float y) {
             var worldPosition = _terrainTileMap.WorldToCell(new Vector3(x, y, _z));
             var sprite = _terrainTileMap.GetSprite(worldPosition);

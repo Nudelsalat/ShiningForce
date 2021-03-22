@@ -66,7 +66,8 @@ namespace Assets.Scripts.Battle {
             if (Input.GetButtonDown("Interact")) {
                 switch (_currentBattleState) {
                     case EnumBattleState.freeCursor:
-                        _cursor.CheckIfCursorIsOverUnit(out var unit);
+                        _cursor.CheckIfCursorIsOverUnit(out var unit,
+                            LayerMask.GetMask("Force", "Enemies"));
                         if (_currentUnit == unit) {
                             SetSelectedUnit(_currentUnit);
                             _cursor.SetControlUnit(_currentUnit);
