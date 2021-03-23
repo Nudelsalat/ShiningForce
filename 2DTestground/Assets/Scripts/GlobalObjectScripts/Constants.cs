@@ -62,6 +62,10 @@ public class Constants {
     public static string AnimationsButtonCure = "ShiningForce/images/Animations/Icons/Cure";
     public static string AnimationsButtonSave = "ShiningForce/images/Animations/Icons/Save";
     public static string AnimationsButtonPromote = "ShiningForce/images/Animations/Icons/Promote";
+
+
+    public static string AnimationsButtonStay = "ShiningForce/images/Animations/Icons/Stay";
+    public static string AnimationsButtonAttack = "ShiningForce/images/Animations/Icons/Attack";
     #endregion
 
     public static string CharacterBowie = "SharedObjects/Characters/Heroes/Bowie";
@@ -77,6 +81,7 @@ public class Constants {
     public static string SoundNewPartyMember = "ShiningForce/sounds/victory";
     public static string SoundMenuSwish = "ShiningForce/sounds/swish1";
     public static string SoundMenuDing = "ShiningForce/sounds/ding";
+    public static string SoundMovement = "ShiningForce/sounds/dwoowoo";
 
     public static string AudioVoiceDemon = "ShiningForce/sounds/talk7";
     public static string AudioVoiceVeryLow = "ShiningForce/sounds/talk6";

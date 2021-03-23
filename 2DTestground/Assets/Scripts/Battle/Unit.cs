@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +10,9 @@ namespace Assets.Scripts.Battle {
 
         private Character _character;
         private Animator _animator;
+        private SpriteRenderer _spriteRenderer;
         private BattleController _battleController;
+        private bool _isSelected;
 #if UNITY_EDITOR
         void OnValidate() {
             var sprite = GetComponent<SpriteRenderer>();
@@ -24,6 +28,7 @@ namespace Assets.Scripts.Battle {
             _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _character.AnimatorSprite;
             _animator.SetInteger("moveDirection", 2);
+            _spriteRenderer = this.GetComponent<SpriteRenderer>();
         }
 
         void Start() {
@@ -32,6 +37,14 @@ namespace Assets.Scripts.Battle {
 
         public Animator GetAnimator() {
             return _animator;
+        }
+
+        public void SetUnitFlicker() {
+            StartCoroutine(FlickerAnimator());
+        }
+        public void ClearUnitFlicker() {
+            StopAllCoroutines();
+            _spriteRenderer.color = Constants.Visible;
         }
 
         void OnTriggerEnter2D(Collider2D collider) {
@@ -50,6 +63,15 @@ namespace Assets.Scripts.Battle {
             if (collider.gameObject.tag.Equals("Player")) {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                 QuickInfoUi.Instance.CloseQuickInfo();
+            }
+        }
+
+        IEnumerator FlickerAnimator() {
+            while (true) {
+                _spriteRenderer.color = Constants.Visible;
+                yield return new WaitForSeconds(0.4f);
+                _spriteRenderer.color = Constants.Invisible;
+                yield return new WaitForSeconds(0.1f);
             }
         }
     }

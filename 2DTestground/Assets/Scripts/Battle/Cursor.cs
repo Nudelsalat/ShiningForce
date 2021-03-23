@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -23,18 +24,25 @@ public class Cursor : MonoBehaviour {
     public static bool IsInDialogue = false;
     public static bool InputDisabledInDialogue = false;
     public static bool InputDisabledInEvent = false;
-    public static EnumMenuType PlayerIsInMenu = EnumMenuType.none;
+    public EnumMenuType PlayerIsInMenu = EnumMenuType.none;
 
     private Vector2 _movement;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     private Tilemap _terrainTileMap;
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
     private bool _isMoveInBattleSquares = false;
     private bool _isAi = false;
+    private bool _unitReached = false;
+    private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
     private Unit _currentUnit = null;
     private float _initialSpeed;
+    private AudioClip _movementNoice;
+
+    private AudioManager _audioManager;
+    private BattleController _battleController;
 
     public static Cursor Instance;
 
@@ -45,12 +53,16 @@ public class Cursor : MonoBehaviour {
         } else {
             Instance = this;
         }
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _movementNoice = Resources.Load<AudioClip>(Constants.SoundMovement);
     }
 
     // Start is called before the first frame update
     void Start() {
+        _audioManager = AudioManager.Instance;
+        _battleController = BattleController.Instance;
         _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
-        _animator = GetComponent<Animator>();
         _isMoveInBattleSquares = false;
         _initialSpeed = MoveSpeed;
         MovePoint.parent = null;
@@ -85,6 +97,14 @@ public class Cursor : MonoBehaviour {
         return unit != null;
     }
 
+    public void ReturnToUnit(Vector3 origPosition, Unit unit) {
+        var position = MovePoint.position;
+        var pathfinder = new Pathfinder(null, position, origPosition);
+        var result = pathfinder.GetShortestPath();
+        _setPath = new Queue<Vector3>(result);
+        MoveSpeed = 20f;
+    }
+
     public void ReturnToPosition(List<GameObject> walkableSprites, Vector3 origPosition) {
         var walkablePoints = new List<Vector3>();
         if (walkableSprites == null) {
@@ -106,10 +126,17 @@ public class Cursor : MonoBehaviour {
     }
 
     public void SetControlUnit(Unit unit) {
+        _spriteRenderer.color = Constants.Invisible;
         _currentUnit = unit;
         //BUGFIX: could move unity on blocked terrain, as MovePoint was a square ahead while unit was selected
         MovePoint.position = _currentUnit.transform.position;
     }
+
+    public void EndTurn() {
+        _endTurn = true;
+        ClearControlUnit();
+    }
+
     public void ClearControlUnit() {
         _clearControlUnitAfterMovement = true;
     }
@@ -128,28 +155,45 @@ public class Cursor : MonoBehaviour {
     }
 
     private void HandleMovement() {
-        transform.position = 
+        transform.position =
             Vector3.MoveTowards(transform.position, MovePoint.position, MoveSpeed * Time.deltaTime);
         if (_currentUnit) {
-            _currentUnit.transform.position = transform.position;
+            _currentUnit.transform.position =
+                Vector3.MoveTowards(_currentUnit.transform.position, MovePoint.position, MoveSpeed * Time.deltaTime);
         }
-        if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.005f)) {
+
+        if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.0005f)) {
             return;
-        }
+        } 
 
         if (_setPath != null && _setPath.Any()) {
             var newPosition = _setPath.Dequeue();
             SetAnimationDirection(MovePoint.position, newPosition);
             MovePoint.position = newPosition;
+            _unitReached = false;
             return;
+        }
+        //TODO THIS IS ALL BULLSHIT.... rethink this
+        if (!_unitReached) {
+            SetControlUnit(_battleController.GetCurrentUnit());
+            QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().Character);
+            MoveSpeed = _initialSpeed;
+            _unitReached = true;
         }
 
         if (_clearControlUnitAfterMovement) {
+            _spriteRenderer.color = Constants.Visible;
             //reset unit to look down
             _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)DirectionType.down);
-            _currentUnit = null;
+            _currentUnit?.SetUnitFlicker();
             MoveSpeed = _initialSpeed;
             _clearControlUnitAfterMovement = false;
+            if (_endTurn) {
+                _endTurn = false;
+                _currentUnit?.ClearUnitFlicker();
+                _battleController.NextUnit();
+            }
+            _currentUnit = null;
         }
 
         _animator.speed = 1;
@@ -189,8 +233,9 @@ public class Cursor : MonoBehaviour {
             direction = DirectionType.down;
         }
         _animator.SetInteger("moveDirection", (int)direction);
-        _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)direction);
-
+        if (_currentUnit) {
+            _currentUnit.GetAnimator().SetInteger("moveDirection", (int) direction);
+        }
     }
 
     private void SetAnimationDirection(Vector3 currentPos, Vector3 nextPos) {
@@ -226,6 +271,11 @@ public class Cursor : MonoBehaviour {
         Debug.Log($"Your on tile: {sprite.name}, with value {value}");
     }
 
-
+    IEnumerator MovementNoice(float speed) {
+        while (true) {
+            _audioManager.PlaySFX(_movementNoice);
+            yield return new WaitForSeconds(speed);
+        }
+    }
 }
 

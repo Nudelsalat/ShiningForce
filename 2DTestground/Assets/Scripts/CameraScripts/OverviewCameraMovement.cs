@@ -35,7 +35,7 @@ public class OverviewCameraMovement : MonoBehaviour {
             var cursor = PlayerObject.GetComponent<Cursor>();
             var player = PlayerObject.GetComponent<Player>();
             if (cursor != null) {
-                MoveSpeed = cursor.MoveSpeed;
+                MoveSpeed = cursor.MoveSpeed*0.95f;
             } else if (player != null) {
                 MoveSpeed = player.MoveSpeed;
             } else {

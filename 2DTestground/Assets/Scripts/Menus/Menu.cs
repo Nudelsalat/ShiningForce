@@ -286,7 +286,6 @@ public class Menu : MonoBehaviour
                         }
 
                         _itemsToTradeOne.sprite = _blankSprite;
-                        //TODD: soundeffekt
                     }
                     else {
                         CloseObjectMenu();
