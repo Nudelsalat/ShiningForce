@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Enums;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ namespace Assets.Scripts.GameData.Magic {
         public Sprite SpellSprite;
         public int CurrentLevel = 1;
         public DirectionType PositionInInventory;
-        public int MaxLevel = 4; 
-
+        public int MaxLevel = 4;
+        public EnumAttackRange[] AttackRange = new EnumAttackRange[4];
         public bool IsEmpty() {
             return SpellName.Equals("");
         }

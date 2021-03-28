@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Enums;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
 using Assets.Scripts.Menus.Battle;
@@ -132,7 +133,10 @@ namespace Assets.Scripts.Battle {
             if (Input.GetButtonUp("Interact")) {
                 switch (_currentlyAnimatedButton) {
                     case "Attack":
+                        DestroyMovementSquareSprites();
                         _enumCurrentMenuType = EnumCurrentBattleMenu.attack;
+                        GenerateMovementSquaresForAction(_currentUnit.transform.position, 
+                            _currentUnit.Character.GetAttackRange());
                         //Todo
                         _fourWayButtonMenu.CloseButtons();
                         break;
@@ -234,17 +238,22 @@ namespace Assets.Scripts.Battle {
             _selectedUnit = selectedUnit;
             _selectedUnit.ClearUnitFlicker();
             _currentUnit = selectedUnit;
-            GenerateMovementSquares();
+            GenerateMovementSquaresForUnit();
             _currentBattleState = EnumBattleState.unitSelected;
         }
 
-        private void GenerateMovementSquares() {
-            //_originalPosition = _terrainTileMap.WorldToCell(_currentUnit.transform.position);
+        private void GenerateMovementSquaresForUnit() {
             var reachableSquares = _movementGrid.GetMovementPointsOfUnit(_currentUnit).ToList();
             ShowMovementSquareSprites(reachableSquares);
             _cursor.SetMoveWithinBattleSquares();
         }
-        
+
+        private void GenerateMovementSquaresForAction(Vector3 currentPosition, EnumAttackRange attackRange) {
+            var reachableSquares = _movementGrid.GetMovementPointsAreaOfEffect(currentPosition, attackRange).ToList();
+            ShowMovementSquareSprites(reachableSquares);
+            _cursor.SetMoveWithinBattleSquares();
+        }
+
         private void ShowMovementSquareSprites(IEnumerable<Vector3Int> movementSquares) {
             _movementSquareSprites.Clear();
             var square = Resources.Load<GameObject>(Constants.PrefabMovementSquare);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Assets.Enums;
 using Assets.Scripts.GameData.Characters;
 using Assets.Scripts.GameData.Magic;
 using UnityEngine;
@@ -80,6 +81,14 @@ public class Character : ScriptableObject {
 
     public Magic[] GetMagic() {
         return _magic;
+    }
+
+    public EnumAttackRange GetAttackRange() {
+        var weapon = GetCurrentEquipment(EnumEquipmentType.weapon);
+        if (weapon == null) {
+            return EnumAttackRange.Melee;
+        }
+        return weapon.AttackRange;
     }
 }
 [Serializable]

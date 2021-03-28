@@ -59,7 +59,6 @@
     <Compile Include="Assets\Scripts\HelperScripts\StringExtension.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Audio\SoundFile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
-    <Compile Include="Assets\Scripts\GlobalObjectScripts\EnumMenuType.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ItemHolder.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Scripts\GameData\GameData.cs" />
@@ -69,13 +68,11 @@
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DirectionType.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Stat.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Fadeout.cs" />
-    <Compile Include="Assets\Scripts\GameData\Characters\EnumStatusEffect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Menus\MemberOverviewUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\StartPoint.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEvent.cs" />
     <Compile Include="Assets\Scripts\Dialog\Dialogue.cs" />
-    <Compile Include="Assets\Scripts\GlobalObjectScripts\EnumCurrentMenu.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Menus\FourWayButtonMenu.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Monster.cs" />
@@ -87,12 +84,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\GameData\Magic\Magic.cs" />
     <Compile Include="Assets\Scripts\Battle\TerrainEffects.cs" />
-    <Compile Include="Assets\Scripts\GameData\Characters\EnumCharacterType.cs" />
     <Compile Include="Assets\Scripts\Battle\MovementGrid.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\Scripts\Menus\PriestMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-    <Compile Include="Assets\Scripts\GameItems\EnumItemType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Constants.cs" />
@@ -100,6 +95,7 @@
     <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEventHolder.cs" />
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />
     <Compile Include="Assets\Scripts\TownAI\AddToPartyEvent.cs" />
+    <Compile Include="Assets\Scripts\GameData\Chests\PickedUpItemStorage.cs" />
     <Compile Include="Assets\Scripts\GameItems\Equipment.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Menus\Portrait.cs" />
@@ -109,10 +105,8 @@
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
-    <Compile Include="Assets\Scripts\GameItems\EnumEquipmentType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\Scripts\Battle\EnumTerrainType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertEquipmentStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\Battle\Unit.cs" />
@@ -133,7 +127,6 @@
     <Compile Include="Assets\Scripts\CameraScripts\OverviewCameraMovement.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
-    <Compile Include="Assets\Scripts\GameData\Characters\EnumClassType.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionCallback.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\CharacterStatistics.cs" />
@@ -156,7 +149,6 @@
     <Compile Include="Assets\Scripts\Menus\StatusEffectDisplayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Dialog\Question.cs" />
-    <Compile Include="Assets\Scripts\GameData\Characters\EnumMovementType.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
     <Compile Include="Assets\Scripts\Battle\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\EnumerationExtensions.cs" />
@@ -164,7 +156,16 @@
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
-    <Compile Include="Assets\Scripts\GameData\Chests\PickedUpItemStorage.cs" />
+    <Compile Include="Assets\Enums\EnumCurrentMenu.cs" />
+    <Compile Include="Assets\Enums\EnumItemType.cs" />
+    <Compile Include="Assets\Enums\EnumEquipmentType.cs" />
+    <Compile Include="Assets\Enums\EnumClassType.cs" />
+    <Compile Include="Assets\Enums\EnumMovementType.cs" />
+    <Compile Include="Assets\Enums\EnumCharacterType.cs" />
+    <Compile Include="Assets\Enums\EnumStatusEffect.cs" />
+    <Compile Include="Assets\Enums\EnumMenuType.cs" />
+    <Compile Include="Assets\Enums\EnumTerrainType.cs" />
+    <Compile Include="Assets\Enums\EnumAttackRange.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

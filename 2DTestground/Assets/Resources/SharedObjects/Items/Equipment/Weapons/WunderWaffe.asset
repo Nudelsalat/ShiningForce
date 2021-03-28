@@ -25,4 +25,5 @@ MonoBehaviour:
   MovementModifier: 2
   EquipmentForClass: 000000000100000002000000
   EquipmentType: 0
+  AttackRange: 8
   IsEquipped: 0

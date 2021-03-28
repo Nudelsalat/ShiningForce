@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Enums;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -12,6 +13,7 @@ public class Equipment : GameItem {
 
     public List<EnumClassType> EquipmentForClass;
     public EnumEquipmentType EquipmentType;
+    public EnumAttackRange AttackRange;
 
     public bool IsEquipped = false;
 

@@ -18,3 +18,4 @@ MonoBehaviour:
   CurrentLevel: 1
   PositionInInventory: -1
   MaxLevel: 4
+  AttackRange: 01000000020000000600000006000000

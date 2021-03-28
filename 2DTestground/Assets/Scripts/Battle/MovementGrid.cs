@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Enums;
 using Assets.Scripts.Battle;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Characters;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Menus.Battle {
         private EnumMovementType _currentUnitMovementType;
         private float _z;
 
-        public MovementGrid (Tilemap terrainTileMap) {
+        public MovementGrid(Tilemap terrainTileMap) {
             _terrainTileMap = terrainTileMap;
         }
 
@@ -32,18 +33,58 @@ namespace Assets.Scripts.Menus.Battle {
 
             if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Force")) {
                 _oppositeLayerMask = LayerMask.GetMask("Enemies");
-            } else if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
+            }
+            else if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
                 _oppositeLayerMask = LayerMask.GetMask("Force");
-            } else {
+            }
+            else {
                 _oppositeLayerMask = 0;
             }
 
             return MoveFunction(currentUnit.transform.position.x, currentUnit.transform.position.y,
                 currentUnit.Character.CharStats.Movement.GetModifiedValue());
         }
+
+        public IEnumerable<Vector3Int> GetMovementPointsAreaOfEffect(Vector3 startPoint, EnumAttackRange attackRange) {
+            IEnumerable<Vector3Int> result = new List<Vector3Int>();
+            switch (attackRange) {
+                case EnumAttackRange.Self:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 0, 0);
+                    break;
+                case EnumAttackRange.Melee:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 1, 0);
+                    break;
+                case EnumAttackRange.Spear:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 2, 0);
+                    break;
+                case EnumAttackRange.ShortBow:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 2, 1);
+                    break;
+                case EnumAttackRange.LongBow:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 3, 1);
+                    break;
+                case EnumAttackRange.StraightLine:
+                    Debug.LogError("Straight line attack not yet implemented.");
+                    break;
+                case EnumAttackRange.Range3:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 3, 0);
+                    break;
+                case EnumAttackRange.Range4:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 4, 0);
+                    break;
+                case EnumAttackRange.Range5:
+                    result = GetMovementPointsAreaOfEffect(startPoint, 5, 0);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(attackRange), attackRange, null);
+            }
+            return result;
+        }
+
         // antiRange is used for e.g.: archer, where the space right next to them is not included within the 
         // range grid.
         public IEnumerable<Vector3Int> GetMovementPointsAreaOfEffect(Vector3 startPoint, int range, int antiRange) {
+            _oppositeLayerMask = 0;
             _z = startPoint.z;
             _movementGrid.Clear();
             _movementGridWithRestMovement.Clear();
@@ -68,9 +109,11 @@ namespace Assets.Scripts.Menus.Battle {
                 if (restMovement >= movement) {
                     return _movementGrid;
                 }
+
                 // This is a better way to this point
                 _movementGridWithRestMovement[point] = movement;
-            } else {
+            }
+            else {
                 // This point is new.
                 _movementGrid.Add(point);
                 _movementGridWithRestMovement.Add(point, movement);
@@ -78,12 +121,12 @@ namespace Assets.Scripts.Menus.Battle {
 
             var movementCost = isUnit ? GetMovementCost(x - 1, y) : 1;
             if (movement - movementCost >= 0) {
-                if (!IsOccupiedByOpponent(x - 1,y)) {
+                if (!IsOccupiedByOpponent(x - 1, y)) {
                     MoveFunction(x - 1, y, movement - movementCost, isUnit);
                 }
             }
 
-            movementCost = isUnit ?  GetMovementCost(x, y - 1) : 1;
+            movementCost = isUnit ? GetMovementCost(x, y - 1) : 1;
             if (movement - movementCost >= 0) {
                 if (!IsOccupiedByOpponent(x, y - 1)) {
                     MoveFunction(x, y - 1, movement - movementCost, isUnit);
@@ -99,7 +142,7 @@ namespace Assets.Scripts.Menus.Battle {
 
             movementCost = isUnit ? GetMovementCost(x, y + 1) : 1;
             if (movement - movementCost >= 0) {
-                if (!IsOccupiedByOpponent(x,y + 1)) {
+                if (!IsOccupiedByOpponent(x, y + 1)) {
                     MoveFunction(x, y + 1, movement - movementCost, isUnit);
                 }
             }
@@ -113,6 +156,7 @@ namespace Assets.Scripts.Menus.Battle {
                 Debug.Log($"GameObjectName: {collision.name}");
                 return true;
             }
+
             return false;
         }
 

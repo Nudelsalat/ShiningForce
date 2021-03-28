@@ -42,8 +42,8 @@ MonoBehaviour:
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 4f822801ef9056d44a95996a9c1f8f14, type: 2}
     item2: 0
-  - item1: {fileID: 0}
-    item2: 0
+  - item1: {fileID: 11400000, guid: c1a5f684f034fa9469addae07e1f101d, type: 2}
+    item2: 1
   - item1: {fileID: 0}
     item2: 0
   - item1: {fileID: 0}

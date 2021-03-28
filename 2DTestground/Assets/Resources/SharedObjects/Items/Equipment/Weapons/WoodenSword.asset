@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Wooden Sword
   Price: 70
+  IsUnique: 0
   ItemSprite: {fileID: -1172904248880273551, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
   PositionInInventory: -1
@@ -24,4 +25,5 @@ MonoBehaviour:
   MovementModifier: 0
   EquipmentForClass: 00000000
   EquipmentType: 0
+  AttackRange: 1
   IsEquipped: 0
