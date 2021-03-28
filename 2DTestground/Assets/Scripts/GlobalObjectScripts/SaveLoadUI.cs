@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.GameData.Chests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +30,8 @@ class SaveLoadUI :MonoBehaviour {
         GameData data = SaveLoadGame.Load();
 
         SceneManager.LoadScene(data.SceneName, LoadSceneMode.Single);
+
+        PickedUpItemStorage.Instance.LoadData(data.PickedUpItemStorage);
 
         Vector3 position = new Vector3(data.Position[0], data.Position[1], data.Position[2]);
         var player = GameObject.Find("Player");

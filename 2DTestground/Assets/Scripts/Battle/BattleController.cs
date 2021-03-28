@@ -37,6 +37,7 @@ namespace Assets.Scripts.Battle {
         private EnumCurrentBattleMenu _enumCurrentMenuType = EnumCurrentBattleMenu.none;
         private AudioClip _menuDing;
         private AudioClip _menuSwish;
+        private AudioClip _error;
 
         private FourWayButtonMenu _fourWayButtonMenu;
         private AudioManager _audioManager;
@@ -59,6 +60,7 @@ namespace Assets.Scripts.Battle {
 
             _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
             _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
+            _error = Resources.Load<AudioClip>(Constants.SoundError);
         }
 
         void Start() {
@@ -96,9 +98,10 @@ namespace Assets.Scripts.Battle {
                 }
             }
             if (Input.GetButtonUp("Interact")) {
+                Unit unit;
                 switch (_currentBattleState) {
                     case EnumBattleState.freeCursor:
-                        _cursor.CheckIfCursorIsOverUnit(out var unit,
+                        _cursor.CheckIfCursorIsOverUnit(out unit,
                             LayerMask.GetMask("Force", "Enemies"));
                         if (_currentUnit == unit) {
                             SetSelectedUnit(_currentUnit);
@@ -106,6 +109,11 @@ namespace Assets.Scripts.Battle {
                         }
                         break;
                     case EnumBattleState.unitSelected:
+                        var collider2D = _currentUnit.GetComponent<Collider2D>();
+                        if (collider2D.IsTouchingLayers(LayerMask.GetMask("Force", "Enemies"))) {
+                            _audioManager.PlaySFX(_error);
+                            break;
+                        }
                         _audioManager.PlaySFX(_menuSwish);
                         _cursor.PlayerIsInMenu = EnumMenuType.battleMenu;
                         _fourWayButtonMenu.InitializeButtons(_animatorAttackButton, _animatorMagicButton,

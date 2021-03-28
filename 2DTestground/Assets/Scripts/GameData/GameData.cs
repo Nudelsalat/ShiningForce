@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Characters;
+using Assets.Scripts.GameData.Chests;
 using UnityEngine;
 
 [Serializable]
@@ -13,6 +14,7 @@ public class GameData {
     public List<SerializableCharacter> Party;
     public int Gold;
     public List<SerializableGameItem> DealsList;
+    public PickedUpItemStorage PickedUpItemStorage;
 
 
     public GameData(Player player, string sceneName) {
@@ -44,5 +46,7 @@ public class GameData {
         Party = serializableParty;
 
         Gold = inventory.GetGold();
+
+        PickedUpItemStorage = PickedUpItemStorage.Instance;
     }
 }

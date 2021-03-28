@@ -7,9 +7,10 @@ public class WarpToScene : MonoBehaviour {
 
     public string sceneToWarpTo;
     public AudioClip audioClip;
+    private GameObject _fadeOutScreen;
 
     void Start() {
-        GameObject.Find("FadeOutScreen").GetComponent<CanvasGroup>().alpha = 0;
+        _fadeOutScreen = GameObject.Find("FadeOutScreen");
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
@@ -24,7 +25,7 @@ public class WarpToScene : MonoBehaviour {
         }
     }
     IEnumerator DoFade() {
-        CanvasGroup canvas = GameObject.Find("FadeOutScreen").GetComponent<CanvasGroup>();
+        CanvasGroup canvas = _fadeOutScreen.GetComponent<CanvasGroup>();
         canvas.alpha = 0;
         while (canvas.alpha < 1) {
             canvas.alpha += Time.deltaTime * 2;

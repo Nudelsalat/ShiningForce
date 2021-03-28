@@ -86,7 +86,7 @@
     <Compile Include="Assets\Scripts\HelperScripts\Singleton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\GameData\Magic\Magic.cs" />
-    <Compile Include="Assets\Scripts\GameData\TerrainEffects.cs" />
+    <Compile Include="Assets\Scripts\Battle\TerrainEffects.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\EnumCharacterType.cs" />
     <Compile Include="Assets\Scripts\Battle\MovementGrid.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -112,7 +112,7 @@
     <Compile Include="Assets\Scripts\GameItems\EnumEquipmentType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\Scripts\GameData\EnumTerrainType.cs" />
+    <Compile Include="Assets\Scripts\Battle\EnumTerrainType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertEquipmentStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\Battle\Unit.cs" />
@@ -164,6 +164,7 @@
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
+    <Compile Include="Assets\Scripts\GameData\Chests\PickedUpItemStorage.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -164,27 +164,16 @@ public class Cursor : MonoBehaviour {
 
         if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.0005f)) {
             return;
-        } 
-
-        if (_setPath != null && _setPath.Any()) {
-            var newPosition = _setPath.Dequeue();
-            SetAnimationDirection(MovePoint.position, newPosition);
-            MovePoint.position = newPosition;
-            _unitReached = false;
-            return;
         }
-        //TODO THIS IS ALL BULLSHIT.... rethink this
-        if (!_unitReached) {
-            SetControlUnit(_battleController.GetCurrentUnit());
-            QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().Character);
-            MoveSpeed = _initialSpeed;
-            _unitReached = true;
+
+        if (DoPredefinedMovement()) {
+            return;
         }
 
         if (_clearControlUnitAfterMovement) {
             _spriteRenderer.color = Constants.Visible;
             //reset unit to look down
-            _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)DirectionType.down);
+            _currentUnit?.SetAnimatorDirection(DirectionType.down);
             _currentUnit?.SetUnitFlicker();
             MoveSpeed = _initialSpeed;
             _clearControlUnitAfterMovement = false;
@@ -197,6 +186,7 @@ public class Cursor : MonoBehaviour {
         }
 
         _animator.speed = 1;
+        _currentUnit?.SetAnimatorSpeed(1);
         // order is important:
         // still moves player towards movePoint, but does not modify movePoint
         if (IsInDialogue) {
@@ -209,6 +199,7 @@ public class Cursor : MonoBehaviour {
             }
             MovePoint.position += new Vector3(_movement.x, 0f, 0f);
             _animator.speed = 2;
+            _currentUnit?.SetAnimatorSpeed(2);
             CheckTile();
         } else if (Math.Abs(Mathf.Abs(_movement.y) - 1f) < 0.01f) {
             if (CheckForCollider(MovePoint.position + new Vector3(0f, _movement.y, 0f))) {
@@ -216,11 +207,30 @@ public class Cursor : MonoBehaviour {
             }
             MovePoint.position += new Vector3(0f, _movement.y, 0f);
             _animator.speed = 2;
+            _currentUnit?.SetAnimatorSpeed(2);
             CheckTile();
         }
         HandleAnimation();
     }
 
+    private bool DoPredefinedMovement() {
+        if (_setPath != null && _setPath.Any()) {
+            var newPosition = _setPath.Dequeue();
+            SetAnimationDirection(MovePoint.position, newPosition);
+            MovePoint.position = newPosition;
+            _unitReached = false;
+            return true;
+        }
+        //TODO THIS IS ALL BULLSHIT.... rethink this
+        if (!_unitReached) {
+            SetControlUnit(_battleController.GetCurrentUnit());
+            QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().Character);
+            MoveSpeed = _initialSpeed;
+            _unitReached = true;
+        }
+
+        return false;
+    }
     private void HandleAnimation() {
         var direction = DirectionType.none;
         if (_movement.x > 0) {
@@ -233,9 +243,7 @@ public class Cursor : MonoBehaviour {
             direction = DirectionType.down;
         }
         _animator.SetInteger("moveDirection", (int)direction);
-        if (_currentUnit) {
-            _currentUnit.GetAnimator().SetInteger("moveDirection", (int) direction);
-        }
+        _currentUnit?.SetAnimatorDirection(direction);
     }
 
     private void SetAnimationDirection(Vector3 currentPos, Vector3 nextPos) {
@@ -250,7 +258,7 @@ public class Cursor : MonoBehaviour {
             direction = DirectionType.down;
         }
         _animator.SetInteger("moveDirection", (int)direction);
-        _currentUnit?.GetAnimator().SetInteger("moveDirection", (int)direction);
+        _currentUnit?.SetAnimatorDirection(direction);
     }
 
     private bool CheckForCollider(Vector3 pointToCheck) {

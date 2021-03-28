@@ -82,6 +82,7 @@ public class Constants {
     public static string SoundMenuSwish = "ShiningForce/sounds/swish1";
     public static string SoundMenuDing = "ShiningForce/sounds/ding";
     public static string SoundMovement = "ShiningForce/sounds/dwoowoo";
+    public static string SoundError = "ShiningForce/sounds/error";
 
     public static string AudioVoiceDemon = "ShiningForce/sounds/talk7";
     public static string AudioVoiceVeryLow = "ShiningForce/sounds/talk6";

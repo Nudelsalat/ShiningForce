@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,8 +36,11 @@ namespace Assets.Scripts.Battle {
             _battleController = BattleController.Instance;
         }
 
-        public Animator GetAnimator() {
-            return _animator;
+        public void SetAnimatorDirection(DirectionType direction) {
+            _animator.SetInteger("moveDirection", (int) direction);
+        }
+        public void SetAnimatorSpeed(int speed) {
+            _animator.speed = speed;
         }
 
         public void SetUnitFlicker() {
