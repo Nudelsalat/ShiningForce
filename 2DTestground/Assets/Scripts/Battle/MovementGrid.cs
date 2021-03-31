@@ -25,24 +25,16 @@ namespace Assets.Scripts.Menus.Battle {
             _terrainTileMap = terrainTileMap;
         }
 
-        public IEnumerable<Vector3Int> GetMovementPointsOfUnit(Unit currentUnit) {
-            _z = currentUnit.transform.position.z;
+        public IEnumerable<Vector3Int> GetMovementPointsOfUnit(Unit currentUnit, Vector3 origPosition) {
+            _z = origPosition.z;
             _movementGrid.Clear();
             _movementGridWithRestMovement.Clear();
-            _currentUnitMovementType = currentUnit.Character.MovementType;
+            _currentUnitMovementType = currentUnit.GetCharacter().MovementType;
 
-            if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Force")) {
-                _oppositeLayerMask = LayerMask.GetMask("Enemies");
-            }
-            else if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
-                _oppositeLayerMask = LayerMask.GetMask("Force");
-            }
-            else {
-                _oppositeLayerMask = 0;
-            }
+            _oppositeLayerMask = GetOpponentLayerMask(currentUnit);
 
-            return MoveFunction(currentUnit.transform.position.x, currentUnit.transform.position.y,
-                currentUnit.Character.CharStats.Movement.GetModifiedValue());
+            return MoveFunction(origPosition.x, origPosition.y,
+                currentUnit.GetCharacter().CharStats.Movement.GetModifiedValue());
         }
 
         public IEnumerable<Vector3Int> GetMovementPointsAreaOfEffect(Vector3 startPoint, EnumAttackRange attackRange) {
@@ -121,28 +113,28 @@ namespace Assets.Scripts.Menus.Battle {
 
             var movementCost = isUnit ? GetMovementCost(x - 1, y) : 1;
             if (movement - movementCost >= 0) {
-                if (!IsOccupiedByOpponent(x - 1, y)) {
+                if (!IsOccupiedByOpponent(x - 1, y, _oppositeLayerMask)) {
                     MoveFunction(x - 1, y, movement - movementCost, isUnit);
                 }
             }
 
             movementCost = isUnit ? GetMovementCost(x, y - 1) : 1;
             if (movement - movementCost >= 0) {
-                if (!IsOccupiedByOpponent(x, y - 1)) {
+                if (!IsOccupiedByOpponent(x, y - 1, _oppositeLayerMask)) {
                     MoveFunction(x, y - 1, movement - movementCost, isUnit);
                 }
             }
 
             movementCost = isUnit ? GetMovementCost(x + 1, y) : 1;
             if (movement - movementCost >= 0) {
-                if (!IsOccupiedByOpponent(x + 1, y)) {
+                if (!IsOccupiedByOpponent(x + 1, y, _oppositeLayerMask)) {
                     MoveFunction(x + 1, y, movement - movementCost, isUnit);
                 }
             }
 
             movementCost = isUnit ? GetMovementCost(x, y + 1) : 1;
             if (movement - movementCost >= 0) {
-                if (!IsOccupiedByOpponent(x, y + 1)) {
+                if (!IsOccupiedByOpponent(x, y + 1, _oppositeLayerMask)) {
                     MoveFunction(x, y + 1, movement - movementCost, isUnit);
                 }
             }
@@ -150,14 +142,24 @@ namespace Assets.Scripts.Menus.Battle {
             return _movementGrid;
         }
 
-        private bool IsOccupiedByOpponent(float x, float y) {
-            var collision = Physics2D.OverlapCircle(new Vector2(x, y), 0.2f, _oppositeLayerMask);
+        public bool IsOccupiedByOpponent(float x, float y, LayerMask opponentLayerMask) {
+            var collision = Physics2D.OverlapCircle(new Vector2(x, y), 0.2f, opponentLayerMask);
             if (collision != null) {
                 Debug.Log($"GameObjectName: {collision.name}");
                 return true;
             }
 
             return false;
+        }
+
+        public LayerMask GetOpponentLayerMask(Unit currentUnit) {
+            if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Force")) {
+                return LayerMask.GetMask("Enemies");
+            } else if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
+                return LayerMask.GetMask("Force");
+            } else {
+                return 0;
+            }
         }
 
         private float GetMovementCost(float x, float y) {

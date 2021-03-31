@@ -109,4 +109,11 @@ public class CharacterStatistics {
     public void AddDefeat() {
         Defeats += 1;
     }
+
+    public void ClearModifiers() {
+        Movement.ClearModifier();
+        Attack.ClearModifier();
+        Defense.ClearModifier();
+        Agility.ClearModifier();
+    }
 }

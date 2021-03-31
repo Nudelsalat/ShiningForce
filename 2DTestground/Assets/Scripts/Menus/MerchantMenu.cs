@@ -173,7 +173,7 @@ namespace Assets.Scripts.Menus {
                             OpenBuyMenu(_inventory.GetDeals());
                             _fourWayButtonMenu.CloseButtons();
                         } else {
-                            EvokeSingleSentenceDialogue("Sorry, pal. Don't got any deals for ya!");
+                            _dialogManager.EvokeSingleSentenceDialogue("Sorry, pal. Don't got any deals for ya!");
                         }
                         break;
                     case "Repair":
@@ -208,10 +208,11 @@ namespace Assets.Scripts.Menus {
             if (Input.GetButtonUp("Interact")) {
                 var itemToBuy = _itemsInCurrentMenu.ToArray()[_currentBuyItemSelected + _currentBuyItemPage * 8];
                 if (!HasEnoughGoldForItem(itemToBuy)) {
-                    EvokeSingleSentenceDialogue($"Ups... You don't have enough gold.");
+                    _dialogManager.EvokeSingleSentenceDialogue($"Ups... You don't have enough gold.");
                     return;
                 }
-                EvokeSingleSentenceDialogue($"Give {itemToBuy.ItemName.AddColor(Color.green)} to whom?");
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    $"Give {itemToBuy.ItemName.AddColor(Color.green)} to whom?");
                 var equipment = itemToBuy is Equipment ? (Equipment) itemToBuy : null;
 
                 OpenCharacterSelectMenu(equipment);
@@ -260,11 +261,12 @@ namespace Assets.Scripts.Menus {
                     _enumCurrentMenuType = _previousState;
                     CloseCharacterSelection();
                     OpenBuyMenu(_itemsInCurrentMenu);
-                    EvokeSingleSentenceDialogue(sentence);
+                    _dialogManager.EvokeSingleSentenceDialogue(sentence);
                     return;
                 }
-                EvokeSingleSentenceDialogue($"{selectedMember.Name.AddColor(Constants.Orange)} " +
-                                            $"already has enough items.");
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    $"{selectedMember.Name.AddColor(Constants.Orange)} " +
+                    $"already has enough items.");
             }
         }
 
@@ -299,7 +301,7 @@ namespace Assets.Scripts.Menus {
 
         private void TrySellSelectedItem(GameItem selectedItem) {
             if (!selectedItem.IsSet()) {
-                EvokeSingleSentenceDialogue("Please select an item to sell...");
+                _dialogManager.EvokeSingleSentenceDialogue("Please select an item to sell...");
             }
 
             _itemToSell = selectedItem;
@@ -348,7 +350,7 @@ namespace Assets.Scripts.Menus {
 
         private void TryRepairSelectedItem(GameItem itemToRepair) {
             //TODO
-            EvokeSingleSentenceDialogue("SORRY THIS IS NOT YET IMPLEMENTED...");
+            _dialogManager.EvokeSingleSentenceDialogue("SORRY THIS IS NOT YET IMPLEMENTED...");
         }
 
         private void DecisionSellItem(bool sold) {
@@ -375,10 +377,10 @@ namespace Assets.Scripts.Menus {
                 _enumCurrentMenuType = EnumCurrentMerchantMenu.none;
                 CloseBuyMenu();
                 _fourWayButtonMenu.OpenButtons();
-                EvokeSingleSentenceDialogue("Sorry, I'm out of stock...");
+                _dialogManager.EvokeSingleSentenceDialogue("Sorry, I'm out of stock...");
                 return;
             }
-            EvokeSingleSentenceDialogue("What do you want to buy?");
+            _dialogManager.EvokeSingleSentenceDialogue("What do you want to buy?");
 
             _animatorObjectsForSale.SetBool("isOpen", true);
             _itemsInCurrentMenu = itemsToSellList;
@@ -392,7 +394,7 @@ namespace Assets.Scripts.Menus {
         }
 
         private void OpenSellMenu() {
-            EvokeSingleSentenceDialogue("Let me see your goods...");
+            _dialogManager.EvokeSingleSentenceDialogue("Let me see your goods...");
             OpenGold();
             OpenCharacterSelectMenu(null);
         }
@@ -405,7 +407,7 @@ namespace Assets.Scripts.Menus {
         }
 
         private void OpenRepairMenu() {
-            EvokeSingleSentenceDialogue("What can I repair for ya?");
+            _dialogManager.EvokeSingleSentenceDialogue("What can I repair for ya?");
             OpenGold();
             OpenCharacterSelectMenu(null);
         }
@@ -560,15 +562,9 @@ namespace Assets.Scripts.Menus {
             _animatorGold.SetBool("isOpen", false);
         }
 
-        private void EvokeSingleSentenceDialogue(string sentence) {
-            _tempDialogue.Sentences.Clear();
-            _tempDialogue.Sentences.Add(sentence);
-            _dialogManager.StartDialogue(_tempDialogue);
-        }
-
         IEnumerator DisplaySentenceWithDelay(string sentence) {
             yield return new WaitForSeconds(0.15f);
-            EvokeSingleSentenceDialogue(sentence);
+            _dialogManager.EvokeSingleSentenceDialogue(sentence);
         }
 
         IEnumerator WaitForTenthASecond() {

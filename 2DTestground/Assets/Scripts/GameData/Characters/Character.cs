@@ -30,6 +30,7 @@ public class Character : ScriptableObject {
     private Magic[] _magic = new Magic[4];
 
     void OnEnable() {
+        CharStats.ClearModifiers();
         for (int i = 0; i < CharacterInventory.Length; i++) {
             if (CharacterInventory[i] == null || CharacterInventory[i].Item1 == null) {
                 _characterInventory[i] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));

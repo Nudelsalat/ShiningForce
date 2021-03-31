@@ -88,6 +88,24 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
+    public void EvokeSingleSentenceDialogue(string sentence) {
+        var dialogue = new Dialogue {
+            Sentences = new List<string>() {sentence},
+            Name = "singleSentence",
+            VoicePitch = EnumVoicePitch.none
+        };
+        StartDialogue(dialogue);
+    }
+
+    public void EvokeSentenceDialogue(List<string> sentence) {
+        var dialogue = new Dialogue {
+            Sentences = sentence,
+            Name = "singleSentence",
+            VoicePitch = EnumVoicePitch.none
+        };
+        StartDialogue(dialogue);
+    }
+
     public void StartDialogue(Dialogue dialogue) {
         if (Player.IsInDialogue) {
             return;

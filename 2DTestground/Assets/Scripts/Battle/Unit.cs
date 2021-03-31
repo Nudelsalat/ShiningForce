@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.Battle {
     public class Unit : MonoBehaviour {
-        public Character Character;
+        [SerializeField]
+        private Character Character;
 
         private Character _character;
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
         private BattleController _battleController;
-        private bool _isSelected;
 #if UNITY_EDITOR
         void OnValidate() {
             var sprite = GetComponent<SpriteRenderer>();
@@ -34,6 +34,10 @@ namespace Assets.Scripts.Battle {
 
         void Start() {
             _battleController = BattleController.Instance;
+        }
+
+        public Character GetCharacter() {
+            return _character;
         }
 
         public void SetAnimatorDirection(DirectionType direction) {

@@ -362,10 +362,11 @@ public class Menu : MonoBehaviour
             if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
                 var selectedMagic = _memberInventoryUI.GetSelectedMagic();
                 if (selectedMagic.IsEmpty()) {
-                    EvokeSingleSentenceDialogue("Select a magic spell...");
+                    _dialogManager.EvokeSingleSentenceDialogue("Select a magic spell...");
                     return;
                 }
-                EvokeSingleSentenceDialogue($"{selectedMagic.SpellName.AddColor(Constants.Violet)} doesn't seem to do anything.");
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    $"{selectedMagic.SpellName.AddColor(Constants.Violet)} doesn't seem to do anything.");
                 return;
             }
         } else {
@@ -373,7 +374,7 @@ public class Menu : MonoBehaviour
             if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
                 var selectedItem = _memberInventoryUI.GetSelectedGameItem();
                 if (_firstSelectedItem == null && !selectedItem.IsSet()) {
-                    EvokeSingleSentenceDialogue("Select an Item first ...");
+                    _dialogManager.EvokeSingleSentenceDialogue("Select an Item first ...");
                     return;
                 }
                 switch (_enumCurrentMenuType) {
@@ -397,25 +398,32 @@ public class Menu : MonoBehaviour
     private void HandleUseMenu(GameItem selectedItem) {
         switch (selectedItem.EnumItemType) {
             case EnumItemType.none:
-                EvokeSingleSentenceDialogue("Select an Item first ...");
+                _dialogManager.EvokeSingleSentenceDialogue("Select an Item first ...");
                 break;
             case EnumItemType.equipment:
-                EvokeSingleSentenceDialogue("This is an equipment.\nEquipment cannot be 'used', only equipped.");
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    "This is an equipment.\n" +
+                    "Equipment cannot be 'used', only equipped.");
                 break;
             case EnumItemType.consumable:
                 if (_firstSelectedItem == null) {
                     _itemsToTradeOne.sprite = selectedItem.ItemSprite;
                     _firstSelectedItem = selectedItem;
-                    EvokeSingleSentenceDialogue($"Use {selectedItem.ItemName.AddColor(Color.green)} with whom?");
+                    _dialogManager.EvokeSingleSentenceDialogue(
+                        $"Use {selectedItem.ItemName.AddColor(Color.green)} with whom?");
                     _inInventoryMenu = false;
                     _memberInventoryUI.UnselectObject();
                 }
                 break;
             case EnumItemType.forgeable:
-                EvokeSingleSentenceDialogue("This item can be used for forging.\nYou need a forge to combine this item with another item.");
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    "This item can be used for forging\n" +
+                    "You need a forge to combine this item with another item.");
                 break;
             case EnumItemType.promotion:
-                EvokeSingleSentenceDialogue("This is a promotion Item.\nOnce a character can be promoted you might be able to use this.");
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    "This is a promotion Item.\n" +
+                    "Once a character can be promoted you might be able to use this.");
                 break;
         }
     }
@@ -429,7 +437,9 @@ public class Menu : MonoBehaviour
         if (_firstSelectedItem == null) {
             _itemsToTradeOne.sprite = selectedItem.ItemSprite;
             _firstSelectedItem = selectedItem;
-            EvokeSingleSentenceDialogue(_itemDialogue.Replace("#ITEMNAME#", selectedItem.ItemName.AddColor(Color.green)));
+            _dialogManager.EvokeSingleSentenceDialogue(
+                _itemDialogue.Replace(
+                    "#ITEMNAME#", selectedItem.ItemName.AddColor(Color.green)));
             if (selectedItem.EnumItemType == EnumItemType.equipment) {
                 _currentlyShowingEquipmentList = true;
                 _characterSelector.LoadCharacterList(_party, (Equipment) selectedItem, _currentListItemSelected);
@@ -447,7 +457,7 @@ public class Menu : MonoBehaviour
                 sentence = $"Swapped {_firstSelectedPartyMember.Name.AddColor(Constants.Orange)}'s {_firstSelectedItem.ItemName.AddColor(Color.green)} " +
                            $"with {_secondSelectedPartyMember.Name.AddColor(Constants.Orange)}'s {_secondSelectedItem.ItemName.AddColor(Color.green)}";
             }
-            EvokeSingleSentenceDialogue(sentence);
+            _dialogManager.EvokeSingleSentenceDialogue(sentence);
 
             _itemsToTradeTwo.sprite = selectedItem.ItemSprite;
             _inventory.SwapItems(_firstSelectedPartyMember, _secondSelectedPartyMember,
@@ -467,7 +477,7 @@ public class Menu : MonoBehaviour
 
     private void HandelDropMenu(GameItem itemToDrop) {
         if (itemToDrop.EnumItemType == EnumItemType.none) {
-            EvokeSingleSentenceDialogue("Select an item to drop ...");
+            _dialogManager.EvokeSingleSentenceDialogue("Select an item to drop ...");
             return;
         }
 
@@ -503,18 +513,23 @@ public class Menu : MonoBehaviour
                 
                 if (equipment == oldEquipment) {
                     _firstSelectedPartyMember.CharStats.UnEquip(equipment);
-                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName.AddColor(Color.green)} successfully unequipped.");
+                    _dialogManager.EvokeSingleSentenceDialogue(
+                        $"{itemToEquip.ItemName.AddColor(Color.green)} successfully unequipped.");
                 } else {
                     _firstSelectedPartyMember.CharStats.Equip(equipment);
                     _firstSelectedPartyMember.CharStats.UnEquip(oldEquipment);
-                    EvokeSingleSentenceDialogue($"{itemToEquip.ItemName.AddColor(Color.green)} successfully equipped.");
+                    _dialogManager.EvokeSingleSentenceDialogue(
+                        $"{itemToEquip.ItemName.AddColor(Color.green)} successfully equipped.");
                 }
                 _memberInventoryUI.LoadMemberEquipmentInventory(_firstSelectedPartyMember);
                 _characterSelector.LoadCharacterList(_party, null, _currentListItemSelected);
             }
-            EvokeSingleSentenceDialogue($"{_firstSelectedPartyMember.Name} cannot equip {itemToEquip.ItemName.AddColor(Color.green)}");
+            _dialogManager.EvokeSingleSentenceDialogue(
+                $"{_firstSelectedPartyMember.Name} cannot equip " +
+                $"{itemToEquip.ItemName.AddColor(Color.green)}");
         } else {
-            EvokeSingleSentenceDialogue($"{itemToEquip.ItemName.AddColor(Color.green)} is not an Equipment");
+            _dialogManager.EvokeSingleSentenceDialogue(
+                $"{itemToEquip.ItemName.AddColor(Color.green)} is not an Equipment");
         }
     }
 
@@ -729,12 +744,6 @@ public class Menu : MonoBehaviour
             _audioManager.PlaySFX(_menuSwish);
         }
 
-    }
-
-    private void EvokeSingleSentenceDialogue(string sentence) {
-        _tempDialogue.Sentences.Clear();
-        _tempDialogue.Sentences.Add(sentence);
-        _dialogManager.StartDialogue(_tempDialogue);
     }
 
     #region Coroutines

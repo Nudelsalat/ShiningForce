@@ -33,7 +33,6 @@ public class Cursor : MonoBehaviour {
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
     private bool _isMoveInBattleSquares = false;
-    private bool _isAi = false;
     private bool _unitReached = false;
     private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
@@ -137,8 +136,26 @@ public class Cursor : MonoBehaviour {
         ClearControlUnit();
     }
 
-    public void ClearControlUnit() {
+    public void ClearControlUnit(bool immediately = false) {
+        if (immediately) {
+            DoClearControlUnit();
+        }
         _clearControlUnitAfterMovement = true;
+    }
+
+    public void DoClearControlUnit() {
+        _spriteRenderer.color = Constants.Visible;
+        //reset unit to look down
+        _currentUnit?.SetAnimatorDirection(DirectionType.down);
+        _currentUnit?.SetUnitFlicker();
+        MoveSpeed = _initialSpeed;
+        _clearControlUnitAfterMovement = false;
+        if (_endTurn) {
+            _endTurn = false;
+            _currentUnit?.ClearUnitFlicker();
+            _battleController.NextUnit();
+        }
+        _currentUnit = null;
     }
 
     private void HandleInput() {
@@ -171,18 +188,7 @@ public class Cursor : MonoBehaviour {
         }
 
         if (_clearControlUnitAfterMovement) {
-            _spriteRenderer.color = Constants.Visible;
-            //reset unit to look down
-            _currentUnit?.SetAnimatorDirection(DirectionType.down);
-            _currentUnit?.SetUnitFlicker();
-            MoveSpeed = _initialSpeed;
-            _clearControlUnitAfterMovement = false;
-            if (_endTurn) {
-                _endTurn = false;
-                _currentUnit?.ClearUnitFlicker();
-                _battleController.NextUnit();
-            }
-            _currentUnit = null;
+            DoClearControlUnit();
         }
 
         _animator.speed = 1;
@@ -221,10 +227,11 @@ public class Cursor : MonoBehaviour {
             _unitReached = false;
             return true;
         }
-        //TODO THIS IS ALL BULLSHIT.... rethink this
+        //Need to wait until uint ACTUALLY reached the destination,
+        //therefor we don't check for _setPath.Size == 1...
         if (!_unitReached) {
             SetControlUnit(_battleController.GetCurrentUnit());
-            QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().Character);
+            QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
             MoveSpeed = _initialSpeed;
             _unitReached = true;
         }
@@ -270,13 +277,14 @@ public class Cursor : MonoBehaviour {
         }
     }
 
-
-    private void CheckTile() {
+    public int GetLandEffect() {
         var test = _terrainTileMap.WorldToCell(MovePoint.position);
         var sprite = _terrainTileMap.GetSprite(test);
-        var value = TerrainEffects.GetLandEffect(sprite.name);
-        _landEffect.ShowLandEffect(value);
-        Debug.Log($"Your on tile: {sprite.name}, with value {value}");
+        return TerrainEffects.GetLandEffect(sprite.name);
+    }
+
+    private void CheckTile() {
+        _landEffect.ShowLandEffect(GetLandEffect());
     }
 
     IEnumerator MovementNoice(float speed) {

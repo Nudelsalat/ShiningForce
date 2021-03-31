@@ -33,5 +33,9 @@ public class Stat {
         _modifiers.Remove(modifier);
     }
 
+    public void ClearModifier() {
+        _modifiers.Clear();
+    }
+
 }
 
