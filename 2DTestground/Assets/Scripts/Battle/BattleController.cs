@@ -112,7 +112,7 @@ namespace Assets.Scripts.Battle {
             if (Input.GetButtonUp("Back")) {
                 switch (_currentBattleState) {
                     case EnumBattleState.freeCursor:
-                        _cursor.ReturnToUnit(_originalPosition, _currentUnit);
+                        _cursor.ReturnToUnit(_originalPosition);
                         SetSelectedUnit(_currentUnit);
                         break;
                     case EnumBattleState.unitSelected:
@@ -145,7 +145,7 @@ namespace Assets.Scripts.Battle {
                         _fourWayButtonMenu.InitializeButtons(_animatorAttackButton, _animatorMagicButton,
                             _animatorStayButton, _animatorItemButton,
                             "Attack", "Magic", "Stay", "Item");
-                        if (!TryGetTargetsInRange()) {
+                        if (!TryGetTargetsInRange(_currentUnit.GetCharacter().GetAttackRange())) {
                             _fourWayButtonMenu.SetDirection(DirectionType.down);
                         }
                         _currentBattleState = EnumBattleState.unitMenu;
@@ -161,13 +161,14 @@ namespace Assets.Scripts.Battle {
             if (Input.GetButtonUp("Interact")) {
                 switch (currentlyAnimatedButton) {
                     case "Attack":
-                        if (!TryGetTargetsInRange()) {
+                        var character = _currentUnit.GetCharacter();
+                        if (!TryGetTargetsInRange(character.GetAttackRange())) {
                             _dialogManager.EvokeSingleSentenceDialogue("There are no Targets in Range.");
                             break;
                         }
                         _cursor.ClearControlUnit(true);
                         _llNodeCurrentTarget = _linkedListTargetUnits.First;
-                        _cursor.MovePoint.position = _llNodeCurrentTarget.Value;
+                        _cursor.SetAttackArea(_llNodeCurrentTarget.Value, character.GetAttackAreaOfEffect());
                         UpdateUnitDirectionToTarget();
                         DestroyMovementSquareSprites();
                         GenerateMovementSquaresForAction(_currentUnit.transform.position,
@@ -220,6 +221,7 @@ namespace Assets.Scripts.Battle {
 
             if (Input.GetButtonUp("Back")) {
                 _enumCurrentMenuType = EnumCurrentBattleMenu.none;
+                _cursor.ClearAttackArea();
                 _cursor.SetControlUnit(_currentUnit);
                 _fourWayButtonMenu.OpenButtons();
                 DestroyMovementSquareSprites();
@@ -227,30 +229,41 @@ namespace Assets.Scripts.Battle {
             }
 
             if(Input.GetButtonUp("Interact")) {
-                //TODO
-                Unit target;
+                if (!_cursor.IsTargetSelected()) {
+                    return;
+                }
+                //TODO add all into sequence, and process this sequence
                 var sentence = new List<string>();
-                _cursor.CheckIfCursorIsOverUnit(out target, LayerMask.GetMask("Force", "Enemies"));
-                var damage = _battleCalculator.GetBaseDamageWeaponAttack(
-                    _currentUnit, target, _cursor.GetLandEffect());
-                var isCrit = _battleCalculator.RollForCrit(_currentUnit);
-                if (isCrit) {
-                    damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
-                    sentence.Add("Critical hit!");
+                var targets = _cursor.GetTargetsInAreaOfEffect(
+                    _movementGrid.GetOpponentLayerMask(_currentUnit));
+                var critString = "";
+                foreach (var target in targets) {
+                    var damage = _battleCalculator.GetBaseDamageWeaponAttack(
+                        _currentUnit, target, _cursor.GetLandEffect());
+                    var isCrit = _battleCalculator.RollForCrit(_currentUnit);
+                    critString = "";
+                    if (isCrit) {
+                        damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
+                        critString = "Critical hit!\n";
+                    }
+
+                    sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage}" +
+                                 $"points of damage.");
+                    if (target.GetCharacter().CharStats.CurrentHp <= damage) {
+                        sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
+                                     $" was defeated!");
+                        target.GetCharacter().CharStats.CurrentHp = 0;
+                        //TODO set to destroy. Give EXP if _current unit == force.
+                    }
+                    else {
+                        target.GetCharacter().CharStats.CurrentHp -= damage;
+                    }
                 }
-                sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage}" +
-                             $"points of damage.");
-                if (target.GetCharacter().CharStats.CurrentHp <= damage) {
-                    sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
-                                 $" was defeated!");
-                    target.GetCharacter().CharStats.CurrentHp = 0;
-                    //TODO set to destroy. Give EXP if _current unit == force.
-                }
-                else {
-                    target.GetCharacter().CharStats.CurrentHp -= damage;
-                }
+
                 _dialogManager.EvokeSentenceDialogue(sentence);
+
                 _enumCurrentMenuType = EnumCurrentBattleMenu.none;
+                _cursor.ClearAttackArea();
                 NextUnit();
             }
 
@@ -268,9 +281,9 @@ namespace Assets.Scripts.Battle {
             _currentUnit.SetAnimatorDirection(direction);
         }
 
-        private bool TryGetTargetsInRange() {
+        private bool TryGetTargetsInRange(EnumAttackRange attackRange) {
             var reachableSquares = _movementGrid.GetMovementPointsAreaOfEffect(
-                _currentUnit.transform.position, _currentUnit.GetCharacter().GetAttackRange()).ToList();
+                _currentUnit.transform.position, attackRange).ToList();
             var reachableSquares2 = reachableSquares.Select(x => {
                 var vector3 = new Vector3 {
                     x = x.x + 0.5f,
@@ -336,7 +349,7 @@ namespace Assets.Scripts.Battle {
             _currentUnit = _turnOrder.Dequeue();
             _currentUnit.SetUnitFlicker();
             _originalPosition = _currentUnit.transform.position;
-            _cursor.ReturnToUnit(_originalPosition, _currentUnit);
+            _cursor.ReturnToUnit(_originalPosition);
             SetSelectedUnit(_currentUnit);
         }
 

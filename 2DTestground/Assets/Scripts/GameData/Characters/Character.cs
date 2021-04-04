@@ -91,6 +91,13 @@ public class Character : ScriptableObject {
         }
         return weapon.AttackRange;
     }
+    public EnumAreaOfEffect GetAttackAreaOfEffect() {
+        var weapon = GetCurrentEquipment(EnumEquipmentType.weapon);
+        if (weapon == null) {
+            return EnumAreaOfEffect.Single;
+        }
+        return weapon.AreaOfEffect;
+    }
 }
 [Serializable]
 public class Tuple<T1, T2> : IEquatable<Tuple<T1,T2>> {

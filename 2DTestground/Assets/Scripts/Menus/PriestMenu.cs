@@ -223,7 +223,7 @@ namespace Assets.Scripts.Menus {
             var statesToCure = new List<EnumStatusEffect>() {
                 EnumStatusEffect.poisoned,
                 EnumStatusEffect.cursed,
-                EnumStatusEffect.paralysed,
+                EnumStatusEffect.paralyzed,
                 EnumStatusEffect.confused,
                 EnumStatusEffect.sleep,
                 EnumStatusEffect.silent,

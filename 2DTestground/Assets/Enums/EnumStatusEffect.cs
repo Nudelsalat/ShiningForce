@@ -10,7 +10,7 @@
     boosted = 1 << 5,
     cursed = 1 << 6,
     hasted = 1 << 7,
-    paralysed = 1 << 8,
+    paralyzed = 1 << 8,
     notUsed = 1 << 9,
     dead = 1 << 10,
 }

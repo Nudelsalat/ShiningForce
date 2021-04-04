@@ -13,6 +13,12 @@ namespace Assets.Scripts.GameData.Magic {
         public DirectionType PositionInInventory;
         public int MaxLevel = 4;
         public EnumAttackRange[] AttackRange = new EnumAttackRange[4];
+        public EnumAreaOfEffect[] AreaOfEffect = new EnumAreaOfEffect[4];
+        public EnumMagicType MagicType;
+        public EnumElementType ElementType;
+        public int[] Damage = new int[4];
+        public int[] ManaCost = new int[4];
+
         public bool IsEmpty() {
             return SpellName.Equals("");
         }

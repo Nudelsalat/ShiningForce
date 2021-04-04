@@ -26,4 +26,5 @@ MonoBehaviour:
   EquipmentForClass: 000000000100000002000000
   EquipmentType: 0
   AttackRange: 8
+  AreaOfEffect: 2
   IsEquipped: 0

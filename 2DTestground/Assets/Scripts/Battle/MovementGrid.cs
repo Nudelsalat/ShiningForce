@@ -81,10 +81,12 @@ namespace Assets.Scripts.Menus.Battle {
 
             _movementGrid.Clear();
             _movementGridWithRestMovement.Clear();
-            var antiRangeList = MoveFunction(startPoint.x, startPoint.y, antiRange, false);
+            if (antiRange > 0) {
+                var antiRangeList = MoveFunction(startPoint.x, startPoint.y, antiRange, false);
 
-            foreach (var point in antiRangeList) {
-                completeRange.Remove(point);
+                foreach (var point in antiRangeList) {
+                    completeRange.Remove(point);
+                }
             }
 
             return completeRange;

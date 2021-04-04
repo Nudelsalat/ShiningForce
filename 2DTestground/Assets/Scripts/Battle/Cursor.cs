@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Enums;
 using Assets.Scripts.Battle;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
@@ -27,6 +28,8 @@ public class Cursor : MonoBehaviour {
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
     private AudioClip _audioClipMovementNoise;
+    private Transform _areaOfEffectSpawnPoint;
+    private GameObject _areaOfEffect;
     private bool _isMoveInBattleSquares = false;
     private bool _unitReached = false;
     private bool _endTurn = false;
@@ -51,6 +54,7 @@ public class Cursor : MonoBehaviour {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioClipMovementNoise = Resources.Load<AudioClip>(Constants.SoundMovement);
+        _areaOfEffectSpawnPoint = transform.Find("SpawnAreaOfEffect").GetComponent<Transform>();
     }
 
     // Start is called before the first frame update
@@ -80,6 +84,51 @@ public class Cursor : MonoBehaviour {
         _isMoveInBattleSquares = false;
     }
 
+    public void SetAttackArea(Vector3 target, EnumAreaOfEffect areaOfEffect) {
+        _spriteRenderer.color = Constants.Invisible;
+        var path = Constants.PrefabPrefixAreaOfEffect + Enum.GetName(typeof(EnumAreaOfEffect), areaOfEffect);
+        var spawnItem = Resources.Load(path) as GameObject;
+        _areaOfEffect = Instantiate(spawnItem, new Vector3(0, 0, _areaOfEffectSpawnPoint.position.z),
+            _areaOfEffectSpawnPoint.rotation);
+        _areaOfEffect.transform.SetParent(_areaOfEffectSpawnPoint, false);
+        MovePoint.position = target;
+    }
+
+    public void ClearAttackArea() {
+        _spriteRenderer.color = Constants.Visible;
+        Destroy(_areaOfEffect);
+    }
+
+    public List<Unit> GetTargetsInAreaOfEffect(LayerMask layerMask) {
+        if (_areaOfEffect == null) {
+            return null;
+        } 
+        var colliderManager = _areaOfEffect.GetComponent<AreaOfEffectColliderManager>();
+
+        if (colliderManager.name.Contains(Enum.GetName(typeof(EnumAreaOfEffect), EnumAreaOfEffect.AllAllies))) {
+            //TODO GET all allies of Unit -> via Battle Controller
+        }
+        var colliderList = colliderManager.GetAllCurrentCollider(layerMask);
+        var results = new List<Unit>();
+        foreach (var colliderEntry in colliderList) {
+            var unit = colliderEntry.GetComponent<Unit>();
+            if (unit != null) {
+                results.Add(unit);
+            }
+        }
+
+        return results;
+    }
+
+    public bool IsTargetSelected() {
+        if (_areaOfEffect == null) {
+            Debug.LogError("_areaOfEffect of Cursor is null, whilest checking if target " +
+                           "is selected. this SHOULD not happen...");
+            return false;
+        }
+        return Vector3.Distance(transform.position, MovePoint.position) <= 0.0005f;
+    }
+
     public bool CheckIfCursorIsOverUnit(out Unit unit, LayerMask layerMask) {
         var overlappedObject = Physics2D.OverlapCircle(transform.position, 0.2f, layerMask);
 
@@ -92,7 +141,7 @@ public class Cursor : MonoBehaviour {
         return unit != null;
     }
 
-    public void ReturnToUnit(Vector3 origPosition, Unit unit) {
+    public void ReturnToUnit(Vector3 origPosition) {
         var position = MovePoint.position;
         var pathfinder = new Pathfinder(null, position, origPosition);
         var result = pathfinder.GetShortestPath();
@@ -135,6 +184,7 @@ public class Cursor : MonoBehaviour {
     public void ClearControlUnit(bool immediately = false) {
         if (immediately) {
             DoClearControlUnit();
+            return;
         }
         _clearControlUnitAfterMovement = true;
     }
