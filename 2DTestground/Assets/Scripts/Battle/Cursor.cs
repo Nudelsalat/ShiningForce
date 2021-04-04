@@ -2,17 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using Assets.Scripts.Battle;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
-using UnityEditor.Tilemaps;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -32,13 +26,15 @@ public class Cursor : MonoBehaviour {
     private Tilemap _terrainTileMap;
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
+    private AudioClip _audioClipMovementNoise;
     private bool _isMoveInBattleSquares = false;
     private bool _unitReached = false;
     private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
+    private bool _movementNoise = false;
+    private float _movementNoiseInterval = 0.2f;
     private Unit _currentUnit = null;
     private float _initialSpeed;
-    private AudioClip _movementNoice;
 
     private AudioManager _audioManager;
     private BattleController _battleController;
@@ -54,7 +50,7 @@ public class Cursor : MonoBehaviour {
         }
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _movementNoice = Resources.Load<AudioClip>(Constants.SoundMovement);
+        _audioClipMovementNoise = Resources.Load<AudioClip>(Constants.SoundMovement);
     }
 
     // Start is called before the first frame update
@@ -62,6 +58,7 @@ public class Cursor : MonoBehaviour {
         _audioManager = AudioManager.Instance;
         _battleController = BattleController.Instance;
         _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
+        _landEffect = LandeffectUi.Instance;
         _isMoveInBattleSquares = false;
         _initialSpeed = MoveSpeed;
         MovePoint.parent = null;
@@ -69,7 +66,6 @@ public class Cursor : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        _landEffect = LandeffectUi.Instance;
         HandleInput();
     }
 
@@ -180,8 +176,13 @@ public class Cursor : MonoBehaviour {
         }
 
         if (!(Vector3.Distance(transform.position, MovePoint.position) <= 0.0005f)) {
+            if (_currentUnit && !_movementNoise &&
+                !(Vector3.Distance(_currentUnit.transform.position, MovePoint.position) <= 0.0005f)) {
+                StartCoroutine("MovementNoise");
+            }
             return;
         }
+        
 
         if (DoPredefinedMovement()) {
             return;
@@ -191,8 +192,6 @@ public class Cursor : MonoBehaviour {
             DoClearControlUnit();
         }
 
-        _animator.speed = 1;
-        _currentUnit?.SetAnimatorSpeed(1);
         // order is important:
         // still moves player towards movePoint, but does not modify movePoint
         if (IsInDialogue) {
@@ -201,6 +200,7 @@ public class Cursor : MonoBehaviour {
         
         if (Math.Abs(Mathf.Abs(_movement.x) - 1f) < 0.01f) {
             if (CheckForCollider(MovePoint.position + new Vector3(_movement.x, 0f, 0f))) {
+                StopMovementAnimationAndNoise();
                 return;
             }
             MovePoint.position += new Vector3(_movement.x, 0f, 0f);
@@ -209,18 +209,31 @@ public class Cursor : MonoBehaviour {
             CheckTile();
         } else if (Math.Abs(Mathf.Abs(_movement.y) - 1f) < 0.01f) {
             if (CheckForCollider(MovePoint.position + new Vector3(0f, _movement.y, 0f))) {
+                StopMovementAnimationAndNoise();
                 return;
             }
             MovePoint.position += new Vector3(0f, _movement.y, 0f);
             _animator.speed = 2;
             _currentUnit?.SetAnimatorSpeed(2);
             CheckTile();
+        } else {
+            StopMovementAnimationAndNoise();
         }
         HandleAnimation();
     }
 
+    private void StopMovementAnimationAndNoise() {
+        _animator.speed = 1;
+        if (_currentUnit) {
+            _currentUnit?.SetAnimatorSpeed(1);
+        }
+        StopCoroutine("MovementNoise");
+        _movementNoise = false;
+    }
+
     private bool DoPredefinedMovement() {
         if (_setPath != null && _setPath.Any()) {
+            _movementNoiseInterval = 0.1f;
             var newPosition = _setPath.Dequeue();
             SetAnimationDirection(MovePoint.position, newPosition);
             MovePoint.position = newPosition;
@@ -230,6 +243,7 @@ public class Cursor : MonoBehaviour {
         //Need to wait until uint ACTUALLY reached the destination,
         //therefor we don't check for _setPath.Size == 1...
         if (!_unitReached) {
+            _movementNoiseInterval = 0.2f;
             SetControlUnit(_battleController.GetCurrentUnit());
             QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
             MoveSpeed = _initialSpeed;
@@ -287,10 +301,11 @@ public class Cursor : MonoBehaviour {
         _landEffect.ShowLandEffect(GetLandEffect());
     }
 
-    IEnumerator MovementNoice(float speed) {
+    IEnumerator MovementNoise() {
+        _movementNoise = true;
         while (true) {
-            _audioManager.PlaySFX(_movementNoice);
-            yield return new WaitForSeconds(speed);
+            _audioManager.PlaySFX(_audioClipMovementNoise);
+            yield return new WaitForSeconds(_movementNoiseInterval);
         }
     }
 }

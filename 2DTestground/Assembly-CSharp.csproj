@@ -159,6 +159,7 @@
     <Compile Include="Assets\Scripts\Menus\StatusEffectDisplayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Dialog\Question.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleCalculator.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
     <Compile Include="Assets\Scripts\Battle\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\EnumerationExtensions.cs" />
@@ -166,7 +167,6 @@
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
-    <Compile Include="Assets\Scripts\Battle\BattleCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

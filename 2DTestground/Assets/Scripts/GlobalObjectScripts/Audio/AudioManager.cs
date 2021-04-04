@@ -68,6 +68,17 @@ public class AudioManager : MonoBehaviour  {
         return soundFile.AudioClip.length;
     }
 
+    public bool IsPlaying(string soundFileName) {
+        var soundFile = Array.Find(SoundFiles, sound => sound.Name == soundFileName);
+
+        if (soundFile == null) {
+            Debug.Log($"Sound file with name {soundFileName} not found.");
+            return false;
+        }
+
+        return soundFile.AudioSource.isPlaying;
+    }
+
     /// <summary>
     ///     Stop playing the given audio file.
     /// </summary>

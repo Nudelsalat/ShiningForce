@@ -29,8 +29,6 @@ namespace Assets.Scripts.Battle {
 
         private Tilemap _terrainTileMap;
         private readonly List<GameObject> _movementSquareSprites = new List<GameObject>();
-        private bool _inBattle = false;
-        private int _selectedTargetId = 0;
 
         private MovementGrid _movementGrid;
         private Cursor _cursor;
@@ -281,7 +279,6 @@ namespace Assets.Scripts.Battle {
                 return vector3;
             }).ToList();
             var opponentLayerMask = _movementGrid.GetOpponentLayerMask(_currentUnit);
-            _selectedTargetId = 0;
             _linkedListTargetUnits = new LinkedList<Vector3>();
             foreach (var vector3 in reachableSquares2) {
                 if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, opponentLayerMask)) {
