@@ -150,11 +150,11 @@ namespace Assets.Scripts.Menus.Battle {
             return false;
         }
 
-        public LayerMask GetOpponentLayerMask(Unit currentUnit) {
+        public LayerMask GetOpponentLayerMask(Unit currentUnit, bool reverse = false) {
             if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Force")) {
-                return LayerMask.GetMask("Enemies");
+                return reverse ? LayerMask.GetMask("Force")  : LayerMask.GetMask("Enemies");
             } else if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
-                return LayerMask.GetMask("Force");
+                return reverse ? LayerMask.GetMask("Enemies") : LayerMask.GetMask("Force");
             } else {
                 return 0;
             }

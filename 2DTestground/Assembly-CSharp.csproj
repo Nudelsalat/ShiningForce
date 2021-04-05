@@ -95,11 +95,13 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Enums\EnumItemType.cs" />
+    <Compile Include="Assets\Scripts\Menus\Battle\FourWayMagicMenu.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Constants.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEventHolder.cs" />
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />
     <Compile Include="Assets\Scripts\TownAI\AddToPartyEvent.cs" />
+    <Compile Include="Assets\Enums\EnumElementType.cs" />
     <Compile Include="Assets\Scripts\GameData\Chests\PickedUpItemStorage.cs" />
     <Compile Include="Assets\Scripts\GameItems\Equipment.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertEquipmentStatsToMenuList.cs" />
     <Compile Include="Assets\Scripts\Battle\Unit.cs" />
     <Compile Include="Assets\Scripts\Battle\Cursor.cs" />
+    <Compile Include="Assets\Scripts\Battle\AreaOfEffectColliderManager.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogHolder.cs" />
     <Compile Include="Assets\Scripts\GameItems\GameItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -133,12 +136,14 @@
     <Compile Include="Assets\Scripts\HelperScripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\CameraScripts\OverviewCameraMovement.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />
+    <Compile Include="Assets\Enums\EnumAreaOfEffect.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionCallback.cs" />
     <Compile Include="Assets\Enums\EnumStatusEffect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\CharacterStatistics.cs" />
     <Compile Include="Assets\Enums\EnumMovementType.cs" />
+    <Compile Include="Assets\Enums\EnumMagicType.cs" />
     <Compile Include="Assets\Scripts\TownAI\Priest.cs" />
     <Compile Include="Assets\Scripts\GameData\Magic\SerializableMagic.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -167,10 +172,6 @@
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
-    <Compile Include="Assets\Enums\EnumAreaOfEffect.cs" />
-    <Compile Include="Assets\Enums\EnumElementType.cs" />
-    <Compile Include="Assets\Enums\EnumMagicType.cs" />
-    <Compile Include="Assets\Scripts\Battle\AreaOfEffectColliderManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
