@@ -17,10 +17,22 @@ public class Player : MonoBehaviour
     private Vector2 _movement;
     private Animator _animator;
 
+    public static Player Instance;
+
+    void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(this);
+            return;
+        } else {
+            Instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start() {
         _animator = GetComponent<Animator>();
         MovePoint.parent = null;
+        MovePoint.position = this.transform.position;
     }
 
     // Update is called once per frame

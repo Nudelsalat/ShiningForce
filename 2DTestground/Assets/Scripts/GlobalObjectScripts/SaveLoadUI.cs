@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Chests;
 using UnityEngine;
 using UnityEngine.SceneManagement;

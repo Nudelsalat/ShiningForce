@@ -10,20 +10,25 @@ public class WarpToScene : MonoBehaviour {
     private GameObject _fadeOutScreen;
 
     void Start() {
-        _fadeOutScreen = GameObject.Find("FadeOutScreen");
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.gameObject.tag.Equals("Player")) {
-            if (audioClip != null) {
-                AudioSource.PlayClipAtPoint(audioClip, transform.position);
-            }
-            Player.InputDisabledInDialogue = true;
-            LevelManager.setLastLevelInt(SceneManager.GetActiveScene().buildIndex);
-            LevelManager.setLastLevelString(SceneManager.GetActiveScene().name);
-            StartCoroutine(DoFade());
+            DoWarp();
         }
     }
+
+    public void DoWarp() {
+        if (audioClip != null) {
+            AudioSource.PlayClipAtPoint(audioClip, transform.position);
+        }
+        Player.InputDisabledInDialogue = true;
+        LevelManager.setLastLevelInt(SceneManager.GetActiveScene().buildIndex);
+        LevelManager.setLastLevelString(SceneManager.GetActiveScene().name);
+        _fadeOutScreen = GameObject.Find("FadeOutScreen");
+        StartCoroutine(DoFade());
+    }
+
     IEnumerator DoFade() {
         CanvasGroup canvas = _fadeOutScreen.GetComponent<CanvasGroup>();
         canvas.alpha = 0;

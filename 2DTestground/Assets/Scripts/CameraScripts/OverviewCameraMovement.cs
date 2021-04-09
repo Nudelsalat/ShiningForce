@@ -9,6 +9,16 @@ public class OverviewCameraMovement : MonoBehaviour {
     public float MoveSpeed;
     private float _initialSpeed;
 
+    public static OverviewCameraMovement Instance;
+
+    void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(this);
+            return;
+        } else {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -44,5 +54,10 @@ public class OverviewCameraMovement : MonoBehaviour {
         } else {
             MoveSpeed = _initialSpeed;
         }
+    }
+
+    public void SetPlayerObject(GameObject playerToFollow) {
+        PlayerObject = playerToFollow.gameObject.transform;
+        transform.position = new Vector3(PlayerObject.position.x, PlayerObject.position.y, transform.position.z);
     }
 }

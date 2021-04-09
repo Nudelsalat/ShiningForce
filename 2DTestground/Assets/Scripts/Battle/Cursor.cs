@@ -27,6 +27,7 @@ public class Cursor : MonoBehaviour {
     private Tilemap _terrainTileMap;
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
+    private QuickInfoUi _quickInfo;
     private AudioClip _audioClipMovementNoise;
     private Transform _areaOfEffectSpawnPoint;
     private GameObject _areaOfEffect;
@@ -63,6 +64,7 @@ public class Cursor : MonoBehaviour {
         _battleController = BattleController.Instance;
         _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
         _landEffect = LandeffectUi.Instance;
+        _quickInfo = QuickInfoUi.Instance;
         _isMoveInBattleSquares = false;
         _initialSpeed = MoveSpeed;
         MovePoint.parent = null;
@@ -75,6 +77,11 @@ public class Cursor : MonoBehaviour {
 
     private void FixedUpdate() {
         HandleMovement();
+    }
+
+    public void EndBattle() {
+        _landEffect.CloseLandEffect();
+        _quickInfo.CloseQuickInfo();
     }
 
     public void SetMoveWithinBattleSquares() {
@@ -295,7 +302,7 @@ public class Cursor : MonoBehaviour {
         if (!_unitReached) {
             _movementNoiseInterval = 0.2f;
             SetControlUnit(_battleController.GetCurrentUnit());
-            QuickInfoUi.Instance.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
+            _quickInfo.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
             MoveSpeed = _initialSpeed;
             _unitReached = true;
         }

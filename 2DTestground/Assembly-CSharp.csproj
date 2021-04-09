@@ -146,6 +146,7 @@
     <Compile Include="Assets\Enums\EnumMagicType.cs" />
     <Compile Include="Assets\Scripts\TownAI\Priest.cs" />
     <Compile Include="Assets\Scripts\GameData\Magic\SerializableMagic.cs" />
+    <Compile Include="Assets\Scripts\GameData\Magic\SpecialMagic\Egress.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\Enums\EnumEquipmentType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />

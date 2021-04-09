@@ -49,7 +49,7 @@ MonoBehaviour:
   - item1: {fileID: 0}
     item2: 0
   Magic:
-  - item1: {fileID: 11400000, guid: 304d891fe02a9b4489ab717957f6c8b6, type: 2}
+  - item1: {fileID: 11400000, guid: a77685e2d14c87c47b7b8c07d59e0b32, type: 2}
     item2: 1
   - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
     item2: 3

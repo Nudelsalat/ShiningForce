@@ -9,16 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef0fbc430bbcdc46ae1048e4f9b0cd7, type: 3}
+  m_Script: {fileID: 11500000, guid: c11109bfc039c1f46acd7381477238ba, type: 3}
   m_Name: Egress
   m_EditorClassIdentifier: 
   SpellName: Egress
   SpellSprite: {fileID: 2513645537047985625, guid: 0f3180743aedaab4393bc7b33b4edf3e,
     type: 3}
   CurrentLevel: 1
-  PositionInInventory: -1
+  PositionInInventory: 0
   MaxLevel: 1
   AttackRange: 00000000000000000000000000000000
   AreaOfEffect: 00000000000000000000000000000000
+  MagicType: 2
+  ElementType: 0
   Damage: 00000000000000000000000000000000
   ManaCost: 08000000000000000000000000000000

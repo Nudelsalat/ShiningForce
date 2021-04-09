@@ -7,8 +7,9 @@ public class AudioManager : MonoBehaviour  {
     public SoundFile[] SoundFiles;
 
     private List<SoundFile> _pausedSoundFiles = new List<SoundFile>();
-    private float _volume = 0.4f;
+    private float _volume = 0.2f;
     private float _SFXvolume = 0.6f;
+    private AudioSource _audioSource;
 
     public static AudioManager Instance;
 
@@ -20,6 +21,8 @@ public class AudioManager : MonoBehaviour  {
         else {
             Instance = this;
         }
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start() {
@@ -46,7 +49,7 @@ public class AudioManager : MonoBehaviour  {
     ///     Play the given audio file.
     /// </summary>
     public void PlaySFX(AudioClip audioClip) {
-        AudioSource.PlayClipAtPoint(audioClip, this.gameObject.transform.position, _SFXvolume);
+        _audioSource.PlayOneShot(audioClip, _SFXvolume);
     }
 
     /// <summary>

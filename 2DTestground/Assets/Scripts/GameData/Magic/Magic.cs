@@ -24,6 +24,10 @@ namespace Assets.Scripts.GameData.Magic {
         }
         // TODO: how to deal with different levels? -> Enable flag?
         // MP cost? 
+
+        public virtual void ExecuteMagicAtLevel(Character caster, Character target, int magicLevel) {
+
+        }
     }
 }
 

@@ -30,8 +30,7 @@ namespace Assets.Scripts.Battle {
         private Tilemap _terrainTileMap;
         private readonly List<GameObject> _movementSquareSprites = new List<GameObject>();
 
-        private MovementGrid _movementGrid;
-        private Cursor _cursor;
+
         private EnumBattleState _currentBattleState;
         private DirectionType _inputDirection;
         private DirectionType _lastInputDirection;
@@ -41,6 +40,10 @@ namespace Assets.Scripts.Battle {
         private AudioClip _menuSwish;
         private AudioClip _error;
 
+        private MovementGrid _movementGrid;
+        private Cursor _cursor;
+        private Player _player;
+        private OverviewCameraMovement _overviewCameraMovment;
         private FourWayButtonMenu _fourWayButtonMenu;
         private FourWayMagicMenu _fourWayMagicMenu;
         private AudioManager _audioManager;
@@ -80,6 +83,8 @@ namespace Assets.Scripts.Battle {
             _fourWayButtonMenu = FourWayButtonMenu.Instance;
             _fourWayMagicMenu = FourWayMagicMenu.Instance;
             _dialogManager = DialogManager.Instance;
+            _player = Player.Instance;
+            _overviewCameraMovment = OverviewCameraMovement.Instance;
             _battleCalculator = new BattleCalculator();
 
             _terrainTileMap.color = Constants.Invisible;
@@ -242,6 +247,7 @@ namespace Assets.Scripts.Battle {
                 if (!_cursor.IsTargetSelected()) {
                     return;
                 }
+
                 //TODO add all into sequence, and process this sequence
                 var sentence = new List<string>();
                 // or target is confused?
@@ -303,6 +309,8 @@ namespace Assets.Scripts.Battle {
                             }
                             break;
                         case EnumMagicType.Special:
+                            _magicToAttack.ExecuteMagicAtLevel(_currentUnit.GetCharacter(), 
+                                target.GetCharacter(), _magicLevelToAttack);
                             break;
                     }
                     
@@ -417,6 +425,9 @@ namespace Assets.Scripts.Battle {
         }
 
         public void BeginBattle() {
+            _player?.gameObject.SetActive(false);
+            _cursor.gameObject.SetActive(true);
+            _overviewCameraMovment.SetPlayerObject(_cursor.gameObject);
             _currentBattleState = EnumBattleState.freeCursor;
             transform.gameObject.SetActive(true);
             var force = GameObject.Find("Force").transform;
@@ -435,6 +446,13 @@ namespace Assets.Scripts.Battle {
             }
             SetNewTurnOrder();
             NextUnit();
+        }
+
+        public void EndBattle() {
+            _cursor.EndBattle();
+            _player.gameObject.SetActive(true);
+            _cursor.gameObject.SetActive(false);
+            _overviewCameraMovment.SetPlayerObject(_player.gameObject);
         }
 
         public Unit GetCurrentUnit() {

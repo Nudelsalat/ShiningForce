@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.SceneManager;
 using UnityEngine;
@@ -14,22 +15,36 @@ public class StartPoint : MonoBehaviour {
 
     // Start is called before the first frame update
     void Awake() {
+        if (sceneFromWhichToCome.Equals("Default")) {
+            FadeIn();
+        }
+    }
+
+    void Start() {
         var lastSceneName = LevelManager.getLastNameLevelString().ToLower();
-        if (!sceneFromWhichToCome.ToLower().Equals(lastSceneName)) {
+        if (sceneFromWhichToCome.ToLower().Equals(lastSceneName)) {
+            FadeIn();
+        }
+    }
+
+    private void FadeIn() {
+        _fadeOutScreen = GameObject.Find("FadeOutScreen");
+        player = FindObjectOfType<Player>();
+        if (!player) {
+            CanvasGroup canvas = _fadeOutScreen.GetComponent<CanvasGroup>();
+            canvas.alpha = 0;
             return;
         }
-        player = FindObjectOfType<Player>();
         movePoint = GameObject.FindGameObjectWithTag("MovePoint");
         overViewCamere = FindObjectOfType<OverviewCameraMovement>();
-        player.transform.position = movePoint.transform.position = gameObject.transform.position;
+        player.transform.position = gameObject.transform.position;
+        movePoint.transform.position = gameObject.transform.position;
         overViewCamere.transform.position = new Vector3(gameObject.transform.position.x,
             gameObject.transform.position.y, overViewCamere.transform.position.z);
-    }
-    void Start() {
-        _fadeOutScreen = GameObject.Find("FadeOutScreen");
         Player.InputDisabledInDialogue = true;
         StartCoroutine(DoFadeIn());
     }
+
     IEnumerator DoFadeIn() {
         CanvasGroup canvas = _fadeOutScreen.GetComponent<CanvasGroup>();
         canvas.alpha = 1;
