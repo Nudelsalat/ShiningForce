@@ -66,7 +66,7 @@ namespace Assets.Scripts.Menus {
                 Instance = this;
             }
 
-            _buyItem = Resources.Load<GameObject>("SharedObjects/BuyItem");
+            _buyItem = Resources.Load<GameObject>(Constants.PrefabBuyItem);
             
             _animatorBuyButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonBuy);
             _animatorSellButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonSell);
@@ -416,7 +416,9 @@ namespace Assets.Scripts.Menus {
             _fourWayButtonMenu.CloseButtons();
             _showUi = false;
             Player.PlayerIsInMenu = EnumMenuType.none;
-            StartCoroutine(WaitForTenthASecond());
+            if (this.isActiveAndEnabled) {
+                StartCoroutine(WaitForTenthASecond());
+            }
         }
 
         private void OpenCharacterSelectMenu(Equipment equipment) {

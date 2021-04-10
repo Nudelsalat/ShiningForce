@@ -111,7 +111,9 @@ namespace Assets.Scripts.Menus {
         public void CloseButtons() {
             _buttonsAnimator.SetBool("isOpen", false);
             _showUi = false;
-            StartCoroutine(WaitForTenthASecond());
+            if (this.isActiveAndEnabled) {
+                StartCoroutine(WaitForTenthASecond());
+            }
         }
 
         IEnumerator WaitForTenthASecond() {

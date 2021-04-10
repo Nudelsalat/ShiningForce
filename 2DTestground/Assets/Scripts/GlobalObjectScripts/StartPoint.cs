@@ -8,9 +8,6 @@ using UnityEngine.SceneManagement;
 public class StartPoint : MonoBehaviour {
     public string sceneFromWhichToCome;
 
-    private Player player;
-    private OverviewCameraMovement overViewCamere;
-    private GameObject movePoint;
     private GameObject _fadeOutScreen;
 
     // Start is called before the first frame update
@@ -29,18 +26,18 @@ public class StartPoint : MonoBehaviour {
 
     private void FadeIn() {
         _fadeOutScreen = GameObject.Find("FadeOutScreen");
-        player = FindObjectOfType<Player>();
-        if (!player) {
+        var player = Player.Instance;
+        var cursor = Cursor.Instance;
+        if (!player || !cursor) {
             CanvasGroup canvas = _fadeOutScreen.GetComponent<CanvasGroup>();
             canvas.alpha = 0;
             return;
         }
-        movePoint = GameObject.FindGameObjectWithTag("MovePoint");
-        overViewCamere = FindObjectOfType<OverviewCameraMovement>();
-        player.transform.position = gameObject.transform.position;
-        movePoint.transform.position = gameObject.transform.position;
-        overViewCamere.transform.position = new Vector3(gameObject.transform.position.x,
-            gameObject.transform.position.y, overViewCamere.transform.position.z);
+        var overViewCamera = OverviewCameraMovement.Instance;
+        player.SetPosition(gameObject.transform.position);
+        cursor.SetPosition(gameObject.transform.position);
+        overViewCamera.transform.position = new Vector3(gameObject.transform.position.x,
+            gameObject.transform.position.y, overViewCamera.transform.position.z);
         Player.InputDisabledInDialogue = true;
         StartCoroutine(DoFadeIn());
     }

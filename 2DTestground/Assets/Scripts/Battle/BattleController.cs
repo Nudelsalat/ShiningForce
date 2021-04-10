@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Battle {
     public class BattleController : MonoBehaviour {
+        public bool IsActive;
 
         private Unit _currentUnit;
         private Queue<Unit> _turnOrder;
@@ -49,6 +50,8 @@ namespace Assets.Scripts.Battle {
         private AudioManager _audioManager;
         private DialogManager _dialogManager;
         private BattleCalculator _battleCalculator;
+        private CharacterDetailUI _characterDetailUI;
+        private Menu _menu;
         private Magic _magicToAttack;
         private int _magicLevelToAttack;
 
@@ -65,6 +68,8 @@ namespace Assets.Scripts.Battle {
                 Instance = this;
             }
 
+            IsActive = false;
+
             _animatorAttackButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonAttack);
             _animatorMagicButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonMagic);
             _animatorStayButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonStay);
@@ -76,8 +81,6 @@ namespace Assets.Scripts.Battle {
         }
 
         void Start() {
-            _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
-            _movementGrid = new MovementGrid(_terrainTileMap);
             _cursor = Cursor.Instance;
             _audioManager = AudioManager.Instance;
             _fourWayButtonMenu = FourWayButtonMenu.Instance;
@@ -85,18 +88,18 @@ namespace Assets.Scripts.Battle {
             _dialogManager = DialogManager.Instance;
             _player = Player.Instance;
             _overviewCameraMovment = OverviewCameraMovement.Instance;
+            _characterDetailUI = CharacterDetailUI.Instance;
+            _menu = Menu.Instance;
             _battleCalculator = new BattleCalculator();
-
-            _terrainTileMap.color = Constants.Invisible;
             transform.gameObject.SetActive(false);
-            //TODO BeginBattle will be evoke via event, not automatically.
-            BeginBattle();
         }
 
         void Update() {
-            if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent) {
+            if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent 
+                || Player.PlayerIsInMenu == EnumMenuType.pause) {
                 return;
             }
+
             if (_currentBattleState == EnumBattleState.unitMenu) {
                 switch (_enumCurrentMenuType) {
                     case EnumCurrentBattleMenu.none:
@@ -117,6 +120,7 @@ namespace Assets.Scripts.Battle {
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
                 return;
             }
 
@@ -133,18 +137,24 @@ namespace Assets.Scripts.Battle {
                         _cursor.ClearControlUnit();
                         _currentBattleState = EnumBattleState.freeCursor;
                         break;
+                    case EnumBattleState.characterDetails:
+                        _characterDetailUI.CloseCharacterDetailsUi();
+                        _cursor.ClearControlUnit();
+                        _currentBattleState = EnumBattleState.freeCursor;
+                        break;
                 }
             }
+
             if (Input.GetButtonUp("Interact")) {
-                Unit unit;
                 switch (_currentBattleState) {
                     case EnumBattleState.freeCursor:
-                        _cursor.CheckIfCursorIsOverUnit(out unit,
+                        _cursor.CheckIfCursorIsOverUnit(out var unit,
                             LayerMask.GetMask("Force", "Enemies"));
                         if (_currentUnit == unit) {
                             SetSelectedUnit(_currentUnit);
                             _cursor.SetControlUnit(_currentUnit);
                         }
+
                         break;
                     case EnumBattleState.unitSelected:
                         var collider2D = _currentUnit.GetComponent<Collider2D>();
@@ -152,6 +162,7 @@ namespace Assets.Scripts.Battle {
                             _audioManager.PlaySFX(_error);
                             break;
                         }
+
                         _audioManager.PlaySFX(_menuSwish);
                         _cursor.PlayerIsInMenu = EnumMenuType.battleMenu;
                         _fourWayButtonMenu.InitializeButtons(_animatorAttackButton, _animatorMagicButton,
@@ -160,7 +171,20 @@ namespace Assets.Scripts.Battle {
                         if (!TryGetTargetsInRange(_currentUnit.GetCharacter().GetAttackRange())) {
                             _fourWayButtonMenu.SetDirection(DirectionType.down);
                         }
+
                         _currentBattleState = EnumBattleState.unitMenu;
+                        break;
+                }
+            }
+
+            if (Input.GetButtonUp("Menu")) {
+                switch (_currentBattleState) {
+                    case EnumBattleState.freeCursor:
+                        if (_cursor.CheckIfCursorIsOverUnit(out var unit,
+                            LayerMask.GetMask("Force", "Enemies"))) {
+                            _characterDetailUI.LoadCharacterDetails(unit.GetCharacter());
+                            _currentBattleState = EnumBattleState.characterDetails;
+                        }
                         break;
                 }
             }
@@ -423,10 +447,18 @@ namespace Assets.Scripts.Battle {
             _currentBattleState = EnumBattleState.unitSelected;
             _cursor.PlayerIsInMenu = EnumMenuType.none;
         }
-
+        
         public void BeginBattle() {
+            _menu.ObjectMenu.SetActive(false);
             _player?.gameObject.SetActive(false);
             _cursor.gameObject.SetActive(true);
+
+            _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
+            _movementGrid = new MovementGrid(_terrainTileMap);
+            _terrainTileMap.color = Constants.Invisible;
+            _cursor.BeginBattle(_terrainTileMap);
+            IsActive = true;
+            
             _overviewCameraMovment.SetPlayerObject(_cursor.gameObject);
             _currentBattleState = EnumBattleState.freeCursor;
             transform.gameObject.SetActive(true);
@@ -449,10 +481,21 @@ namespace Assets.Scripts.Battle {
         }
 
         public void EndBattle() {
+            _turnOrder.Clear();
+            _force.Clear();
+            _enemies.Clear();
+
+            _currentUnit = null;
+            _menu.ObjectMenu.SetActive(false);
+            IsActive = false;
+            _fourWayButtonMenu.CloseButtons();
+            _fourWayMagicMenu.CloseButtons();
             _cursor.EndBattle();
             _player.gameObject.SetActive(true);
             _cursor.gameObject.SetActive(false);
             _overviewCameraMovment.SetPlayerObject(_player.gameObject);
+            
+            gameObject.SetActive(false);
         }
 
         public Unit GetCurrentUnit() {
@@ -491,6 +534,7 @@ namespace Assets.Scripts.Battle {
                 unitList.Add(new Tuple<Unit, float>(force, agility));
             }
             unitList.Sort((x,y) => -(x.Item2.CompareTo(y.Item2)));
+            _turnOrder?.Clear();
             _turnOrder = new Queue<Unit>(unitList.Select(x => x.Item1));
         }
 
@@ -575,6 +619,7 @@ namespace Assets.Scripts.Battle {
         attack,
         magic,
         item,
+        characterDetails,
         overworldMenu,
     }
 

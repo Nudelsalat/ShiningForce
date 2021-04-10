@@ -37,7 +37,9 @@ public class LandeffectUi : MonoBehaviour {
     public void CloseLandEffect() {
         _menuAnimator.SetBool("isOpen", false);
         _showUi = false;
-        StartCoroutine(WaitForTenthASecond());
+        if (this.isActiveAndEnabled) {
+            StartCoroutine(WaitForTenthASecond());
+        }
     }
 
     IEnumerator WaitForTenthASecond() {

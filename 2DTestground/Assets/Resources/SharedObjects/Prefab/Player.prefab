@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2512733951741491287}
   - component: {fileID: 2512733951741491285}
   - component: {fileID: 3323079849102272147}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: movePoint
   m_TagString: MovePoint
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 6695854931451031279}
   - component: {fileID: 5180572048311359785}
   - component: {fileID: 2974251217556230816}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}

@@ -36,7 +36,9 @@ namespace Assets.Scripts.Menus {
         public void HidePortrait() {
             _portraitAnimator.SetBool("portraitIsOpen", false);
             _showPortrait = false;
-            StartCoroutine(WaitForTenthASecond());
+            if (this.isActiveAndEnabled) {
+                StartCoroutine(WaitForTenthASecond());
+            }
         }
 
         IEnumerator WaitForTenthASecond() {

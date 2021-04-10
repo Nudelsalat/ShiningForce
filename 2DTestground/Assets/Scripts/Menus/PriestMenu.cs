@@ -344,7 +344,9 @@ namespace Assets.Scripts.Menus {
             _showUi = false;
             _fourWayButtonMenu.CloseButtons();
             Player.PlayerIsInMenu = EnumMenuType.none;
-            StartCoroutine(WaitForTenthASecond());
+            if (this.isActiveAndEnabled) {
+                StartCoroutine(WaitForTenthASecond());
+            }
         }
 
         private void GetInputDirection() {

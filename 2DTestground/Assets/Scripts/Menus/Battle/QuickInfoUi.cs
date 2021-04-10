@@ -176,7 +176,9 @@ public class QuickInfoUi : MonoBehaviour
     public void CloseQuickInfo() {
         _menuAnimator.SetBool("isOpen", false);
         _showUi = false;
-        StartCoroutine(WaitForTenthASecond());
+        if (this.isActiveAndEnabled) {
+            StartCoroutine(WaitForTenthASecond());
+        }
     }
 
     IEnumerator WaitForTenthASecond() {

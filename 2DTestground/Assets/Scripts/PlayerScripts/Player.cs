@@ -43,6 +43,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate() {
         HandleMovement();
     }
+    public void SetPosition(Vector3 position) {
+        transform.position = position;
+        MovePoint.position = position;
+    }
 
     private void HandleInput() {
         if (InputDisabledInDialogue || InputDisabledInEvent || PlayerIsInMenu != EnumMenuType.none) {

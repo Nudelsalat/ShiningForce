@@ -131,7 +131,9 @@ public class MemberOverviewUI : MonoBehaviour {
     public void CloseMemberOverviewUi() {
         _showUi = false;
         _animatorOverViewUi.SetBool("inventoryIsOpen", false);
-        StartCoroutine(WaitForTenthASecond());
+        if (this.isActiveAndEnabled) {
+            StartCoroutine(WaitForTenthASecond());
+        }
 
     }
     IEnumerator WaitForTenthASecond() {

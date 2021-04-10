@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Menus;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
 public class CharacterDetailUI : MonoBehaviour {
     public GameObject TopItem;
@@ -186,7 +183,9 @@ public class CharacterDetailUI : MonoBehaviour {
         _animatorKills.SetBool("isOpen", false);
         _animatorGold.SetBool("isOpen", false);
         _animatorCharacterDetail.SetBool("isOpen", false);
-        StartCoroutine(WaitForTenthASecond());
+        if (this.isActiveAndEnabled) {
+            StartCoroutine(WaitForTenthASecond());
+        }
     }
 
     IEnumerator WaitForTenthASecond() {

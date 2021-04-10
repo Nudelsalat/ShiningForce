@@ -205,7 +205,9 @@ namespace Assets.Scripts.Menus.Battle {
         public void CloseButtons() {
             _inventoryAnimator.SetBool("isOpen", false);
             _showInventory = false;
-            StartCoroutine(WaitForTenthASecond());
+            if (this.isActiveAndEnabled) {
+                StartCoroutine(WaitForTenthASecond());
+            }
         }
 
         public void OpenButtons() {

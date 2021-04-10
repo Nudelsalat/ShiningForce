@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Battle;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class Menu : MonoBehaviour
     private Portrait _portrait;
     private AudioManager _audioManager;
     private FourWayButtonMenu _fourWayButtonMenu;
+    private BattleController _battleController;
     
     private Dialogue _dialogueSearchButton;
     private Dialogue _tempDialogue = new Dialogue {
@@ -120,6 +122,7 @@ public class Menu : MonoBehaviour
         _characterSelector = CharacterSelector.Instance;
         _audioManager = AudioManager.Instance;
         _fourWayButtonMenu = FourWayButtonMenu.Instance;
+        _battleController = BattleController.Instance;
 
         ObjectMenu.SetActive(false);
     }
@@ -139,7 +142,7 @@ public class Menu : MonoBehaviour
             return;
         }
         if (Input.GetButtonUp("Menu")) {
-            if (Player.PlayerIsInMenu == EnumMenuType.none) {
+            if (Player.PlayerIsInMenu == EnumMenuType.none && !_battleController.IsActive) {
                 _audioManager.PlaySFX(_menuSwish);
                 OpenMainButtonMenu();
             }

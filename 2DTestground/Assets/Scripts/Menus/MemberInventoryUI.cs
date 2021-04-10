@@ -179,7 +179,9 @@ public class MemberInventoryUI : MonoBehaviour{
     public void CloseInventory() {
         _inventoryAnimator.SetBool("inventoryIsOpen", false);
         _showInventory = false;
-        StartCoroutine(WaitForTenthASecond());
+        if (this.isActiveAndEnabled) {
+            StartCoroutine(WaitForTenthASecond());
+        }
     }
 
     private void OpenInventory() {

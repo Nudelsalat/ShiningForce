@@ -32,7 +32,7 @@ public class Cursor : MonoBehaviour {
     private Transform _areaOfEffectSpawnPoint;
     private GameObject _areaOfEffect;
     private bool _isMoveInBattleSquares = false;
-    private bool _unitReached = false;
+    private bool _unitReached = true;
     private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
     private bool _movementNoise = false;
@@ -47,7 +47,10 @@ public class Cursor : MonoBehaviour {
 
     void Awake() {
         if (Instance != null && Instance != this) {
-            Destroy(this);
+            foreach (Transform children in transform) {
+                Destroy(children.gameObject);
+            }
+            Destroy(this.gameObject);
             return;
         } else {
             Instance = this;
@@ -62,12 +65,12 @@ public class Cursor : MonoBehaviour {
     void Start() {
         _audioManager = AudioManager.Instance;
         _battleController = BattleController.Instance;
-        _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
         _landEffect = LandeffectUi.Instance;
         _quickInfo = QuickInfoUi.Instance;
         _isMoveInBattleSquares = false;
         _initialSpeed = MoveSpeed;
         MovePoint.parent = null;
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -79,9 +82,23 @@ public class Cursor : MonoBehaviour {
         HandleMovement();
     }
 
+    public void SetPosition(Vector3 position) {
+        transform.position = position;
+        MovePoint.position = position;
+    }
+
     public void EndBattle() {
         _landEffect.CloseLandEffect();
         _quickInfo.CloseQuickInfo();
+        ClearControlUnit(true);
+    }
+
+    public void BeginBattle(Tilemap tileMap) {
+        _isMoveInBattleSquares = false;
+        _unitReached = true;
+        _endTurn = false;
+        _clearControlUnitAfterMovement = false;
+        _terrainTileMap = tileMap;
     }
 
     public void SetMoveWithinBattleSquares() {
