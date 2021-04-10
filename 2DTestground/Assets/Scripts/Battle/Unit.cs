@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Assets.Scripts.GlobalObjectScripts;
+using Assets.Scripts.HelperScripts;
 using UnityEditor;
 using UnityEngine;
 
@@ -39,6 +40,11 @@ namespace Assets.Scripts.Battle {
             return _character;
         }
 
+        public void SetCharacter(Character character) {
+            _character = character;
+            _animator.runtimeAnimatorController = _character.AnimatorSprite;
+        }
+
         public void SetAnimatorDirection(DirectionType direction) {
             _animator.SetInteger("moveDirection", (int) direction);
         }
@@ -52,6 +58,11 @@ namespace Assets.Scripts.Battle {
         public void ClearUnitFlicker() {
             StopAllCoroutines();
             _spriteRenderer.color = Constants.Visible;
+        }
+
+        public void KillUnit() {
+            _character.StatusEffects = EnumStatusEffect.dead;
+            StartCoroutine(DestroyAnimation());
         }
 
         void OnTriggerEnter2D(Collider2D collider) {
@@ -71,6 +82,24 @@ namespace Assets.Scripts.Battle {
                 Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                 QuickInfoUi.Instance.CloseQuickInfo();
             }
+        }
+
+        IEnumerator DestroyAnimation() {
+            for (int j = 0; j < 3; j++) {
+                _animator.SetInteger("moveDirection", 0);
+                yield return new WaitForSeconds(0.1f);
+                _animator.SetInteger("moveDirection", 1);
+                yield return new WaitForSeconds(0.1f);
+                _animator.SetInteger("moveDirection", 2);
+                yield return new WaitForSeconds(0.1f);
+                _animator.SetInteger("moveDirection", 3);
+                yield return new WaitForSeconds(0.1f);
+                j++;
+            }
+
+            //TODO ADD EXPLOSION!
+            //TODO WITH SOUND BOOOOOOMMMMMM!!! goes the dynamite 
+            Destroy(gameObject);
         }
 
         IEnumerator FlickerAnimator() {

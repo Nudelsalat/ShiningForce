@@ -21,6 +21,8 @@ public class Cursor : MonoBehaviour {
     public static bool InputDisabledInEvent = false;
     public EnumMenuType PlayerIsInMenu = EnumMenuType.none;
 
+    public bool UnitReached = true;
+    
     private Vector2 _movement;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -32,7 +34,6 @@ public class Cursor : MonoBehaviour {
     private Transform _areaOfEffectSpawnPoint;
     private GameObject _areaOfEffect;
     private bool _isMoveInBattleSquares = false;
-    private bool _unitReached = true;
     private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
     private bool _movementNoise = false;
@@ -79,6 +80,10 @@ public class Cursor : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent
+            || Player.PlayerIsInMenu == EnumMenuType.pause) {
+            return;
+        }
         HandleMovement();
     }
 
@@ -95,7 +100,7 @@ public class Cursor : MonoBehaviour {
 
     public void BeginBattle(Tilemap tileMap) {
         _isMoveInBattleSquares = false;
-        _unitReached = true;
+        UnitReached = true;
         _endTurn = false;
         _clearControlUnitAfterMovement = false;
         _terrainTileMap = tileMap;
@@ -229,7 +234,7 @@ public class Cursor : MonoBehaviour {
     }
 
     private void HandleInput() {
-        if (InputDisabledInDialogue || InputDisabledInEvent || PlayerIsInMenu != EnumMenuType.none) {
+        if (InputDisabledInDialogue || InputDisabledInEvent || Player.IsInDialogue || PlayerIsInMenu != EnumMenuType.none) {
             _movement.x = _movement.y = 0;
             return;
         } else if (IsInDialogue) {
@@ -311,17 +316,17 @@ public class Cursor : MonoBehaviour {
             var newPosition = _setPath.Dequeue();
             SetAnimationDirection(MovePoint.position, newPosition);
             MovePoint.position = newPosition;
-            _unitReached = false;
+            UnitReached = false;
             return true;
         }
         //Need to wait until uint ACTUALLY reached the destination,
         //therefor we don't check for _setPath.Size == 1...
-        if (!_unitReached) {
+        if (!UnitReached) {
             _movementNoiseInterval = 0.2f;
             SetControlUnit(_battleController.GetCurrentUnit());
             _quickInfo.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
             MoveSpeed = _initialSpeed;
-            _unitReached = true;
+            UnitReached = true;
         }
 
         return false;

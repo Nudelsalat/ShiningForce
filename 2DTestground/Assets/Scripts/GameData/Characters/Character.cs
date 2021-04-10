@@ -91,12 +91,18 @@ public class Character : ScriptableObject {
         }
         return weapon.AttackRange;
     }
+    
     public EnumAreaOfEffect GetAttackAreaOfEffect() {
         var weapon = GetCurrentEquipment(EnumEquipmentType.weapon);
         if (weapon == null) {
             return EnumAreaOfEffect.Single;
         }
         return weapon.AreaOfEffect;
+    }
+
+    public void FullyHeal() {
+        CharStats.CurrentHp = CharStats.MaxHp;
+        CharStats.CurrentMp = CharStats.MaxMp;
     }
 }
 [Serializable]

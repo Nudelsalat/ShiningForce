@@ -51,6 +51,7 @@ namespace Assets.Scripts.Battle {
         private DialogManager _dialogManager;
         private BattleCalculator _battleCalculator;
         private CharacterDetailUI _characterDetailUI;
+        private Inventory _inventory;
         private Menu _menu;
         private Magic _magicToAttack;
         private int _magicLevelToAttack;
@@ -90,13 +91,96 @@ namespace Assets.Scripts.Battle {
             _overviewCameraMovment = OverviewCameraMovement.Instance;
             _characterDetailUI = CharacterDetailUI.Instance;
             _menu = Menu.Instance;
+            _inventory = Inventory.Instance;
             _battleCalculator = new BattleCalculator();
             transform.gameObject.SetActive(false);
         }
 
+
+        public void BeginBattle() {
+            _menu.ObjectMenu.SetActive(false);
+            _player?.gameObject.SetActive(false);
+            _cursor.gameObject.SetActive(true);
+
+            _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
+            _movementGrid = new MovementGrid(_terrainTileMap);
+            _terrainTileMap.color = Constants.Invisible;
+            _cursor.BeginBattle(_terrainTileMap);
+            IsActive = true;
+
+            _overviewCameraMovment.SetPlayerObject(_cursor.gameObject);
+            _currentBattleState = EnumBattleState.freeCursor;
+            transform.gameObject.SetActive(true);
+            var force = GameObject.Find("Force").transform;
+            var enemies = GameObject.Find("Enemies").transform;
+            foreach (Transform child in force) {
+                var unit = child.GetComponent<Unit>();
+                if (unit != null) {
+                    _force.Add(unit);
+                }
+            }
+            foreach (Transform child in enemies) {
+                var unit = child.GetComponent<Unit>();
+                if (unit != null) {
+                    _enemies.Add(unit);
+                }
+            }
+
+            LoadPartyMembersAsForce();
+            SetNewTurnOrder();
+            NextUnit();
+        }
+
+        public void EndBattle() {
+            HealWholeForce();
+
+            _turnOrder.Clear();
+            _force.Clear();
+            _enemies.Clear();
+
+            _currentUnit = null;
+            _menu.ObjectMenu.SetActive(false);
+            IsActive = false;
+            _fourWayButtonMenu.CloseButtons();
+            _fourWayMagicMenu.CloseButtons();
+            _cursor.EndBattle();
+            _player.gameObject.SetActive(true);
+            _cursor.gameObject.SetActive(false);
+            _overviewCameraMovment.SetPlayerObject(_player.gameObject);
+
+            gameObject.SetActive(false);
+        }
+
+        public Unit GetCurrentUnit() {
+            return _currentUnit;
+        }
+
+        public void NextUnit() {
+            _currentUnit?.SetAnimatorDirection(DirectionType.down);
+            _enumCurrentMenuType = EnumCurrentBattleMenu.none;
+            DestroyMovementSquareSprites();
+            _currentUnit?.ClearUnitFlicker();
+            //TODO CHECK win condition. (here?)
+            //TODO also check for events, like respawn, other events
+
+            //TODO remove player agency if AI
+            if (_turnOrder.Count <= 0) {
+                SetNewTurnOrder();
+            }
+            _currentUnit = _turnOrder.Dequeue();
+            if (_currentUnit == null) {
+                NextUnit();
+                return;
+            }
+            _currentUnit.SetUnitFlicker();
+            _originalPosition = _currentUnit.transform.position;
+            _cursor.ReturnToUnit(_originalPosition);
+            SetSelectedUnit(_currentUnit);
+        }
+
         void Update() {
             if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent 
-                || Player.PlayerIsInMenu == EnumMenuType.pause) {
+                || !_cursor.UnitReached || Player.PlayerIsInMenu == EnumMenuType.pause) {
                 return;
             }
 
@@ -272,7 +356,7 @@ namespace Assets.Scripts.Battle {
                     return;
                 }
 
-                //TODO add all into sequence, and process this sequence
+                //TODO add all into sequence, and process this sequence -> Or stop time for battle units or something...
                 var sentence = new List<string>();
                 // or target is confused?
                 var isReversedTargetSearch = _magicToAttack?.MagicType == EnumMagicType.Heal || 
@@ -314,6 +398,7 @@ namespace Assets.Scripts.Battle {
                                 sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
                                              $" was defeated!");
                                 target.GetCharacter().CharStats.CurrentHp = 0;
+                                RemoveUnitFromBattle(target);
                                 //TODO set to destroy. Give EXP if _current unit == force.
                             } else {
                                 target.GetCharacter().CharStats.CurrentHp -= damage;
@@ -392,6 +477,38 @@ namespace Assets.Scripts.Battle {
             }
         }
 
+        private void HealWholeForce() {
+            foreach (var unit in _force) {
+                unit.GetCharacter().FullyHeal();
+            }
+        }
+
+        private void RemoveUnitFromBattle(Unit target) {
+            _enemies.Remove(target);
+            _force.Remove(target);
+            _turnOrder = new Queue<Unit>(_turnOrder.Where(x => x != target));
+            target.KillUnit();
+        }
+
+        private void LoadPartyMembersAsForce() {
+            var unitsToRemove = new List<Unit>();
+            var activeAlivePartyMembersQueue = new Queue<PartyMember>(_inventory.GetParty().Where(
+                x => x.activeParty && 
+                     !x.StatusEffects.HasFlag(EnumStatusEffect.dead)));
+            foreach (var forceUnit in _force) {
+                if (activeAlivePartyMembersQueue.Count != 0) {
+                    forceUnit.SetCharacter(activeAlivePartyMembersQueue.Dequeue());
+                } else {
+                    unitsToRemove.Add(forceUnit);
+                    Destroy(forceUnit.gameObject);
+                }
+            }
+            foreach (var removeUnit in unitsToRemove) {
+                _force.Remove(removeUnit);
+            }
+            
+        }
+
         private bool TryInitializeAttack(EnumAttackRange attackRange, EnumAreaOfEffect areaOfEffect, bool reverseTargets = false) {
             if (!TryGetTargetsInRange(attackRange, reverseTargets)) {
                 _dialogManager.EvokeSingleSentenceDialogue("There are no Targets in Range.");
@@ -447,79 +564,6 @@ namespace Assets.Scripts.Battle {
             _currentBattleState = EnumBattleState.unitSelected;
             _cursor.PlayerIsInMenu = EnumMenuType.none;
         }
-        
-        public void BeginBattle() {
-            _menu.ObjectMenu.SetActive(false);
-            _player?.gameObject.SetActive(false);
-            _cursor.gameObject.SetActive(true);
-
-            _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
-            _movementGrid = new MovementGrid(_terrainTileMap);
-            _terrainTileMap.color = Constants.Invisible;
-            _cursor.BeginBattle(_terrainTileMap);
-            IsActive = true;
-            
-            _overviewCameraMovment.SetPlayerObject(_cursor.gameObject);
-            _currentBattleState = EnumBattleState.freeCursor;
-            transform.gameObject.SetActive(true);
-            var force = GameObject.Find("Force").transform;
-            var enemies = GameObject.Find("Enemies").transform;
-            foreach (Transform child in force) {
-                var unit = child.GetComponent<Unit>();
-                if (unit != null) {
-                    _force.Add(unit);
-                }
-            }
-            foreach (Transform child in enemies) {
-                var unit = child.GetComponent<Unit>();
-                if (unit != null) {
-                    _enemies.Add(unit);
-                }
-            }
-            SetNewTurnOrder();
-            NextUnit();
-        }
-
-        public void EndBattle() {
-            _turnOrder.Clear();
-            _force.Clear();
-            _enemies.Clear();
-
-            _currentUnit = null;
-            _menu.ObjectMenu.SetActive(false);
-            IsActive = false;
-            _fourWayButtonMenu.CloseButtons();
-            _fourWayMagicMenu.CloseButtons();
-            _cursor.EndBattle();
-            _player.gameObject.SetActive(true);
-            _cursor.gameObject.SetActive(false);
-            _overviewCameraMovment.SetPlayerObject(_player.gameObject);
-            
-            gameObject.SetActive(false);
-        }
-
-        public Unit GetCurrentUnit() {
-            return _currentUnit;
-        }
-
-        public void NextUnit() {
-            _currentUnit?.SetAnimatorDirection(DirectionType.down);
-            _enumCurrentMenuType = EnumCurrentBattleMenu.none;
-            DestroyMovementSquareSprites();
-            _currentUnit?.ClearUnitFlicker();
-            //TODO CHECK win condition. (here?)
-            //TODO also check for events, like respawn, other events
-
-            //TODO remove player agency
-            if (_turnOrder.Count <= 0) {
-                SetNewTurnOrder();
-            }
-            _currentUnit = _turnOrder.Dequeue();
-            _currentUnit.SetUnitFlicker();
-            _originalPosition = _currentUnit.transform.position;
-            _cursor.ReturnToUnit(_originalPosition);
-            SetSelectedUnit(_currentUnit);
-        }
 
         private void SetNewTurnOrder() {
             var unitList = new List<Tuple<Unit, float>>();
@@ -543,7 +587,7 @@ namespace Assets.Scripts.Battle {
                    + Random.Range(-1, 2); //Max is exclusive... so -1, 0, or 1
         }
 
-        public void SetSelectedUnit(Unit selectedUnit) {
+        private void SetSelectedUnit(Unit selectedUnit) {
             _currentUnit = selectedUnit;
             GenerateMovementSquaresForUnit();
             _currentBattleState = EnumBattleState.unitSelected;
@@ -570,13 +614,13 @@ namespace Assets.Scripts.Battle {
                     new Vector3(movementSquare.x + .5f, movementSquare.y + .5f), Quaternion.identity));
             }
         }
-
-        public void DestroyMovementSquareSprites() {
+        private void DestroyMovementSquareSprites() {
             foreach (var sprite in _movementSquareSprites) {
                 Destroy(sprite);
             }
             _cursor.UnsetMoveWithinBattleSquares();
         }
+
         public EnumBattleState GetCurrentState() {
             return _currentBattleState;
         }

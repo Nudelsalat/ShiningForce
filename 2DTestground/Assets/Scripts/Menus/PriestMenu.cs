@@ -290,10 +290,13 @@ namespace Assets.Scripts.Menus {
                     return;
                 }
 
-                _currentPartyMember.StatusEffects = 
-                    _currentStatusEffect == EnumStatusEffect.dead 
-                        ? EnumStatusEffect.none 
-                        : _currentPartyMember.StatusEffects.Remove(_currentStatusEffect);
+                if (_currentStatusEffect == EnumStatusEffect.dead) {
+                    _currentPartyMember.StatusEffects = EnumStatusEffect.none;
+                    _currentPartyMember.FullyHeal();
+                }
+                else {
+                    _currentPartyMember.StatusEffects = _currentPartyMember.StatusEffects.Remove(_currentStatusEffect);
+                }
 
                 _inventory.RemoveGold(_currentPrice);
                 OpenGold();

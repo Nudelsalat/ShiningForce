@@ -1997,7 +1997,7 @@ PrefabInstance:
     - target: {fileID: 7262158038676917576, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 41.049725
+      value: 0.0000028318104
       objectReference: {fileID: 0}
     - target: {fileID: 7368159763405816976, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
@@ -6048,7 +6048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea83324e2d3f7b2478d272f20a63518c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character: {fileID: 11400000, guid: 27cbab304eda8d7448633b98f3e8c568, type: 2}
+  Character: {fileID: 11400000, guid: 4c184632b5c31a84d9294cb7c72fcee8, type: 2}
 --- !u!95 &426427848
 Animator:
   serializedVersion: 3
