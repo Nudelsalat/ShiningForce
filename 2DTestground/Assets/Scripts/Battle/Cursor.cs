@@ -29,10 +29,11 @@ public class Cursor : MonoBehaviour {
     private Tilemap _terrainTileMap;
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
-    private QuickInfoUi _quickInfo;
     private AudioClip _audioClipMovementNoise;
     private Transform _areaOfEffectSpawnPoint;
     private GameObject _areaOfEffect;
+    private QuickInfoUi _quickInfoCharacter;
+    private QuickInfoUiTarget _quickInfoTarget;
     private bool _isMoveInBattleSquares = false;
     private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
@@ -67,7 +68,8 @@ public class Cursor : MonoBehaviour {
         _audioManager = AudioManager.Instance;
         _battleController = BattleController.Instance;
         _landEffect = LandeffectUi.Instance;
-        _quickInfo = QuickInfoUi.Instance;
+        _quickInfoCharacter = QuickInfoUi.Instance;
+        _quickInfoTarget = QuickInfoUiTarget.Instance;
         _isMoveInBattleSquares = false;
         _initialSpeed = MoveSpeed;
         MovePoint.parent = null;
@@ -94,7 +96,8 @@ public class Cursor : MonoBehaviour {
 
     public void EndBattle() {
         _landEffect.CloseLandEffect();
-        _quickInfo.CloseQuickInfo();
+        _quickInfoCharacter.CloseQuickInfo();
+        _quickInfoTarget.CloseQuickInfo();
         ClearControlUnit(true);
     }
 
@@ -120,10 +123,19 @@ public class Cursor : MonoBehaviour {
         _areaOfEffect = Instantiate(spawnItem, new Vector3(0, 0, _areaOfEffectSpawnPoint.position.z),
             _areaOfEffectSpawnPoint.rotation);
         _areaOfEffect.transform.SetParent(_areaOfEffectSpawnPoint, false);
+        SelectNextTarget(target);
+    }
+
+    public void SelectNextTarget(Vector3 target) {
         MovePoint.position = target;
+        if (CheckIfUnitIsAtPoint(out var unit,
+            LayerMask.GetMask("Force", "Enemies"), target)) {
+            _quickInfoTarget.ShowQuickInfo(unit.GetCharacter());
+        }
     }
 
     public void ClearAttackArea() {
+        _quickInfoTarget.CloseQuickInfo();
         _spriteRenderer.color = Constants.Visible;
         Destroy(_areaOfEffect);
     }
@@ -159,7 +171,11 @@ public class Cursor : MonoBehaviour {
     }
 
     public bool CheckIfCursorIsOverUnit(out Unit unit, LayerMask layerMask) {
-        var overlappedObject = Physics2D.OverlapCircle(transform.position, 0.2f, layerMask);
+        return CheckIfUnitIsAtPoint(out unit, layerMask, transform.position);
+    }
+
+    private bool CheckIfUnitIsAtPoint(out Unit unit, LayerMask layerMask, Vector3 point) {
+        var overlappedObject = Physics2D.OverlapCircle(point, 0.2f, layerMask);
 
         if (overlappedObject == null) {
             unit = null;
@@ -324,7 +340,7 @@ public class Cursor : MonoBehaviour {
         if (!UnitReached) {
             _movementNoiseInterval = 0.2f;
             SetControlUnit(_battleController.GetCurrentUnit());
-            _quickInfo.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
+            _quickInfoCharacter.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
             MoveSpeed = _initialSpeed;
             UnitReached = true;
         }

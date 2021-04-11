@@ -14,6 +14,7 @@ namespace Assets.Scripts.Battle {
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
         private BattleController _battleController;
+        private QuickInfoUi _quickInfoCurrentUnit;
 #if UNITY_EDITOR
         void OnValidate() {
             var sprite = GetComponent<SpriteRenderer>();
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Battle {
 
         void Start() {
             _battleController = BattleController.Instance;
+            _quickInfoCurrentUnit = QuickInfoUi.Instance;
         }
 
         public Character GetCharacter() {
@@ -66,21 +68,19 @@ namespace Assets.Scripts.Battle {
         }
 
         void OnTriggerEnter2D(Collider2D collider) {
-            if (_battleController.GetCurrentState() == EnumBattleState.unitSelected) {
-                return;
-            }
-            if (collider.gameObject.tag.Equals("Player")) {
-                Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
-                QuickInfoUi.Instance.ShowQuickInfo(_character);
+            if (_battleController.GetCurrentState() == EnumBattleState.freeCursor) {
+                if (collider.gameObject.tag.Equals("Player")) {
+                    Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
+                    _quickInfoCurrentUnit.ShowQuickInfo(_character);
+                }
             }
         }
         void OnTriggerExit2D(Collider2D collider) {
-            if (_battleController.GetCurrentState() == EnumBattleState.unitSelected) {
-                return;
-            }
-            if (collider.gameObject.tag.Equals("Player")) {
-                Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
-                QuickInfoUi.Instance.CloseQuickInfo();
+            if (_battleController.GetCurrentState() == EnumBattleState.freeCursor) {
+                if (collider.gameObject.tag.Equals("Player")) {
+                    Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
+                    _quickInfoCurrentUnit.CloseQuickInfo();
+                }
             }
         }
 

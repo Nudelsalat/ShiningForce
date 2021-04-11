@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class QuickInfoUi : MonoBehaviour
 {
-    /*private GameObject _nameTypeLevelGameObject;
-    private GameObject _hpGameObject;
-    private GameObject _mpGameObject;*/
     private Animator _menuAnimator;
 
     private Text _currentHP;
@@ -43,9 +40,6 @@ public class QuickInfoUi : MonoBehaviour
             Instance = this;
         }
 
-        /*_nameTypeLevelGameObject = transform.Find("QuickInfo/Name").GetComponent<GameObject>();
-        _hpGameObject = transform.Find("QuickInfo/HP").GetComponent<GameObject>();
-        _mpGameObject = transform.Find("QuickInfo/MP").GetComponent<GameObject>();*/
         _quickInfoRectTransform = transform.Find("QuickInfo").GetComponent<RectTransform>();
         _menuAnimator = transform.GetComponent<Animator>();
 

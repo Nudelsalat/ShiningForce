@@ -326,13 +326,13 @@ namespace Assets.Scripts.Battle {
                 case DirectionType.down:
                 case DirectionType.right:
                     _llNodeCurrentTarget = _llNodeCurrentTarget.Next ?? _llNodeCurrentTarget.List.First;
-                    _cursor.MovePoint.position = _llNodeCurrentTarget.Value;
+                    _cursor.SelectNextTarget(_llNodeCurrentTarget.Value);
                     UpdateUnitDirectionToTarget();
                     break;
                 case DirectionType.up:
                 case DirectionType.left:
                     _llNodeCurrentTarget = _llNodeCurrentTarget.Previous ?? _llNodeCurrentTarget.List.Last;
-                    _cursor.MovePoint.position = _llNodeCurrentTarget.Value;
+                    _cursor.SelectNextTarget(_llNodeCurrentTarget.Value);
                     UpdateUnitDirectionToTarget();
                     break;
             }
@@ -392,7 +392,7 @@ namespace Assets.Scripts.Battle {
                     switch (_magicToAttack?.MagicType) { 
                         case null:
                         case EnumMagicType.Damage:
-                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage}" +
+                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
                                          $"points of damage.");
                             if (target.GetCharacter().CharStats.CurrentHp <= damage) {
                                 sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
@@ -409,11 +409,11 @@ namespace Assets.Scripts.Battle {
                                        target.GetCharacter().CharStats.CurrentHp;
                             if (diff <= damage) {
                                 target.GetCharacter().CharStats.CurrentHp = target.GetCharacter().CharStats.MaxHp;
-                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {diff}" +
+                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {diff} " +
                                              $"points.");
                             } else {
                                 target.GetCharacter().CharStats.CurrentHp += damage;
-                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {damage}" +
+                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {damage} " +
                                              $"points.");
                             }
                             break;

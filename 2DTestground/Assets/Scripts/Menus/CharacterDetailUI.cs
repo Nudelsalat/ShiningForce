@@ -74,10 +74,14 @@ public class CharacterDetailUI : MonoBehaviour {
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             MemberInfo.transform.Find("StatusEffect").gameObject, character.StatusEffects);
 
-        Stats.transform.Find("HP/Current").GetComponent<Text>().text = character.CharStats.CurrentHp.ToString();
-        Stats.transform.Find("MP/Max").GetComponent<Text>().text = character.CharStats.MaxMp.ToString();
-        Stats.transform.Find("MP/Current").GetComponent<Text>().text = character.CharStats.CurrentMp.ToString();
-        Stats.transform.Find("HP/Max").GetComponent<Text>().text = character.CharStats.MaxHp.ToString();
+        Stats.transform.Find("HP/Current").GetComponent<Text>().text = character.CharStats.CurrentHp >= 1000 ?
+            "???" : character.CharStats.CurrentHp.ToString();
+        Stats.transform.Find("MP/Max").GetComponent<Text>().text = character.CharStats.MaxMp >= 1000 ?
+            "???" : character.CharStats.MaxMp.ToString();
+        Stats.transform.Find("MP/Current").GetComponent<Text>().text = character.CharStats.CurrentMp >= 1000 ?
+            "???" : character.CharStats.CurrentMp.ToString();
+        Stats.transform.Find("HP/Max").GetComponent<Text>().text = character.CharStats.MaxHp >= 1000 ?
+            "???" : character.CharStats.MaxHp.ToString();
         Stats.transform.Find("EXP/Value").GetComponent<Text>().text = character.CharStats.Exp.ToString();
         Stats.transform.Find("Level/Value").GetComponent<Text>().text = character.CharStats.Level.ToString();
         Stats.transform.Find("Attack/Value").GetComponent<Text>().text =
