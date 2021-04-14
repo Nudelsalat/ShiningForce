@@ -9,12 +9,14 @@ namespace Assets.Scripts.Battle {
     public class Unit : MonoBehaviour {
         [SerializeField]
         private Character Character;
-
+        
         private Character _character;
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
         private BattleController _battleController;
         private QuickInfoUi _quickInfoCurrentUnit;
+        private AudioManager _audioManager;
+
 #if UNITY_EDITOR
         void OnValidate() {
             var sprite = GetComponent<SpriteRenderer>();
@@ -36,6 +38,7 @@ namespace Assets.Scripts.Battle {
         void Start() {
             _battleController = BattleController.Instance;
             _quickInfoCurrentUnit = QuickInfoUi.Instance;
+            _audioManager = AudioManager.Instance;
         }
 
         public Character GetCharacter() {
@@ -85,7 +88,7 @@ namespace Assets.Scripts.Battle {
         }
 
         IEnumerator DestroyAnimation() {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 4; j++) {
                 _animator.SetInteger("moveDirection", 0);
                 yield return new WaitForSeconds(0.1f);
                 _animator.SetInteger("moveDirection", 1);
@@ -96,9 +99,12 @@ namespace Assets.Scripts.Battle {
                 yield return new WaitForSeconds(0.1f);
                 j++;
             }
-
-            //TODO ADD EXPLOSION!
-            //TODO WITH SOUND BOOOOOOMMMMMM!!! goes the dynamite 
+            _audioManager.PlaySFX(Constants.SfxExplosion);
+            var explosion = Instantiate(Resources.Load<GameObject>(Constants.PrefabExplosion), transform);
+            _spriteRenderer.color = Constants.Invisible;
+            yield return new WaitForSeconds(explosion.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length);
+            
+            Destroy(explosion);
             Destroy(gameObject);
         }
 

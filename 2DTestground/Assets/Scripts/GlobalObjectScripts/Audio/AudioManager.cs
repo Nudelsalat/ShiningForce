@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour  {
     public SoundFile[] SoundFiles;
 
-    private List<SoundFile> _pausedSoundFiles = new List<SoundFile>();
+    private readonly List<SoundFile> _sfxFiles = new List<SoundFile>();
+
+    private readonly List<SoundFile> _pausedSoundFiles = new List<SoundFile>();
     private float _volume = 0.2f;
     private float _SFXvolume = 0.6f;
     private AudioSource _audioSource;
@@ -23,6 +26,48 @@ public class AudioManager : MonoBehaviour  {
         }
 
         _audioSource = GetComponent<AudioSource>();
+
+        LoadSfxFiles();
+    }
+
+    private void LoadSfxFiles() {
+        _sfxFiles.Add(new SoundFile() {
+            AudioClip = Resources.Load<AudioClip>(Constants.SoundMenuSwish),
+            Name = Constants.SfxMenuSwish,
+            Volume = 1,
+            Loop = false,
+            Pitch = 1,
+        });
+        _sfxFiles.Add(new SoundFile() {
+            AudioClip = Resources.Load<AudioClip>(Constants.SoundMenuDing),
+            Name = Constants.SfxMenuDing,
+            Volume = 1,
+            Loop = false,
+            Pitch = 1,
+        });
+        _sfxFiles.Add(new SoundFile() {
+            AudioClip = Resources.Load<AudioClip>(Constants.SoundError),
+            Name = Constants.SfxError,
+            Volume = 1,
+            Loop = false,
+            Pitch = 1,
+        });
+        _sfxFiles.Add(new SoundFile() {
+            AudioClip = Resources.Load<AudioClip>(Constants.SoundExplosion),
+            Name = Constants.SfxExplosion,
+            Volume = 1,
+            Loop = false,
+            Pitch = 1,
+        });
+        _sfxFiles.Add(new SoundFile() {
+            AudioClip = Resources.Load<AudioClip>(Constants.SoundMovement),
+            Name = Constants.SfxMovement,
+            Volume = 1,
+            Loop = false,
+            Pitch = 1,
+        });
+
+        
     }
 
     private void Start() {
@@ -45,9 +90,17 @@ public class AudioManager : MonoBehaviour  {
         Play("Town");
     }
 
-    /// <summary>
-    ///     Play the given audio file.
-    /// </summary>
+
+    public void PlaySFX(string name) {
+        var soundFile = _sfxFiles.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+        if (soundFile == null) {
+            Debug.Log($"Sfx with name {name} not found.");
+            return;
+        }
+        PlaySFX(soundFile.AudioClip);
+    }
+
     public void PlaySFX(AudioClip audioClip) {
         _audioSource.PlayOneShot(audioClip, _SFXvolume);
     }
@@ -56,7 +109,7 @@ public class AudioManager : MonoBehaviour  {
     ///     Play the given audio file.
     /// </summary>
     public float Play(string soundFileName, bool loop = true) {
-        var soundFile = Array.Find(SoundFiles, sound => sound.Name == soundFileName);
+        var soundFile = Array.Find(SoundFiles, sound => sound.Name.Equals(soundFileName, StringComparison.OrdinalIgnoreCase));
 
         if (soundFile == null) {
             Debug.Log($"Sound file with name {soundFileName} not found.");
@@ -72,7 +125,7 @@ public class AudioManager : MonoBehaviour  {
     }
 
     public bool IsPlaying(string soundFileName) {
-        var soundFile = Array.Find(SoundFiles, sound => sound.Name == soundFileName);
+        var soundFile = Array.Find(SoundFiles, sound => sound.Name.Equals(soundFileName, StringComparison.OrdinalIgnoreCase));
 
         if (soundFile == null) {
             Debug.Log($"Sound file with name {soundFileName} not found.");
@@ -86,7 +139,7 @@ public class AudioManager : MonoBehaviour  {
     ///     Stop playing the given audio file.
     /// </summary>
     public void Stop(string soundFileName) {
-        var soundFile = Array.Find(SoundFiles, sound => sound.Name == soundFileName);
+        var soundFile = Array.Find(SoundFiles, sound => sound.Name.Equals(soundFileName, StringComparison.OrdinalIgnoreCase));
 
         if (soundFile == null) {
             Debug.LogError($"Sound file with name {soundFileName} not found.");
@@ -105,8 +158,8 @@ public class AudioManager : MonoBehaviour  {
     ///     Pause the given audio file.
     /// </summary>
     public void Pause(string soundFileName) {
-        var soundFile = Array.Find(SoundFiles, sound => sound.Name == soundFileName);
-        
+        var soundFile = Array.Find(SoundFiles, sound => sound.Name.Equals(soundFileName, StringComparison.OrdinalIgnoreCase));
+
         if (soundFile == null) {
             Debug.LogError($"Sound file with name {soundFileName} not found.");
             return;
@@ -122,7 +175,7 @@ public class AudioManager : MonoBehaviour  {
     }
 
     public void UnPause(string soundFileName) {
-        var soundFile = _pausedSoundFiles.Find(sound => sound.Name == soundFileName);
+        var soundFile = _pausedSoundFiles.Find(sound => sound.Name.Equals(soundFileName, StringComparison.OrdinalIgnoreCase));
 
         if (soundFile == null) {
             Debug.LogError($"Sound file with name {soundFileName} not found.");

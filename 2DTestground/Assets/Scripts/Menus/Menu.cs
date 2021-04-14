@@ -68,8 +68,6 @@ public class Menu : MonoBehaviour
     private EnumMenuType _previousMenuType;
     private GameItem _firstSelectedItem;
     private GameItem _secondSelectedItem;
-    private AudioClip _menuSwish;
-    private AudioClip _menuDing;
     #endregion
 
     public static Menu Instance;
@@ -99,9 +97,6 @@ public class Menu : MonoBehaviour
         _animatorDropButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonDrop);
         _animatorEquipButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonEquip);
         
-        _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
-        _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
-
         _dialogueSearchButton = new Dialogue {
             Name = "SearchText",
             Sentences = new List<string>() {
@@ -143,7 +138,7 @@ public class Menu : MonoBehaviour
         }
         if (Input.GetButtonUp("Menu")) {
             if (Player.PlayerIsInMenu == EnumMenuType.none && !_battleController.IsActive) {
-                _audioManager.PlaySFX(_menuSwish);
+                _audioManager.PlaySFX(Constants.SfxMenuSwish);
                 OpenMainButtonMenu();
             }
         }
@@ -668,13 +663,11 @@ public class Menu : MonoBehaviour
 
     private void OpenCharacterDetail(Character character) {
         _disableSounds = true;
-        _portrait.ShowPortrait(character.PortraitSprite);
         _characterDetailUI.LoadCharacterDetails(character);
     }
 
     private void CloseCharacterDetail() {
         _disableSounds = false;
-        _portrait.HidePortrait();
         _characterDetailUI.CloseCharacterDetailsUi();
     }
 
@@ -739,12 +732,12 @@ public class Menu : MonoBehaviour
         else {
             _lastInputDirection = _inputDirection = currentDirection;
             if (_inputDirection != DirectionType.none && !_disableSounds) {
-                _audioManager.PlaySFX(_menuDing);
+                _audioManager.PlaySFX(Constants.SfxMenuDing);
             }
         }
 
         if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact") && !_disableSounds) {
-            _audioManager.PlaySFX(_menuSwish);
+            _audioManager.PlaySFX(Constants.SfxMenuSwish);
         }
 
     }

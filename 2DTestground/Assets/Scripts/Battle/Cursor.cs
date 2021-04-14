@@ -16,9 +16,6 @@ public class Cursor : MonoBehaviour {
     public float MoveSpeed = 8f;
     public LayerMask Collider;
     public LayerMask BattleCollider;
-    public static bool IsInDialogue = false;
-    public static bool InputDisabledInDialogue = false;
-    public static bool InputDisabledInEvent = false;
     public EnumMenuType PlayerIsInMenu = EnumMenuType.none;
 
     public bool UnitReached = true;
@@ -82,10 +79,6 @@ public class Cursor : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent
-            || Player.PlayerIsInMenu == EnumMenuType.pause) {
-            return;
-        }
         HandleMovement();
     }
 
@@ -250,10 +243,11 @@ public class Cursor : MonoBehaviour {
     }
 
     private void HandleInput() {
-        if (InputDisabledInDialogue || InputDisabledInEvent || Player.IsInDialogue || PlayerIsInMenu != EnumMenuType.none) {
+        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent
+            || Player.PlayerIsInMenu == EnumMenuType.pause || Player.PlayerIsInMenu == EnumMenuType.battleMenu) {
             _movement.x = _movement.y = 0;
             return;
-        } else if (IsInDialogue) {
+        } else if (Player.IsInDialogue) {
             _movement.x = _movement.y = 0;
             return;
         }
@@ -289,7 +283,7 @@ public class Cursor : MonoBehaviour {
 
         // order is important:
         // still moves player towards movePoint, but does not modify movePoint
-        if (IsInDialogue) {
+        if (Player.IsInDialogue) {
             return;
         }
         
@@ -399,7 +393,7 @@ public class Cursor : MonoBehaviour {
     IEnumerator MovementNoise() {
         _movementNoise = true;
         while (true) {
-            _audioManager.PlaySFX(_audioClipMovementNoise);
+            _audioManager.PlaySFX(Constants.SfxMovement);
             yield return new WaitForSeconds(_movementNoiseInterval);
         }
     }

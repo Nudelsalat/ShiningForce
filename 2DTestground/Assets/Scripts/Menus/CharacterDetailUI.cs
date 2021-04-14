@@ -26,6 +26,7 @@ public class CharacterDetailUI : MonoBehaviour {
     private Animator _animatorGold;
 
     private Inventory _inventory;
+    private Portrait _portrait;
 
     private Sprite _blankSprite;
     private GameObject[] _itemList;
@@ -57,11 +58,15 @@ public class CharacterDetailUI : MonoBehaviour {
 
     void Start() {
         _inventory = Inventory.Instance;
+        _portrait = Portrait.Instance;
         transform.gameObject.SetActive(false);
     }
 
     public void LoadCharacterDetails(Character character) {
         OpenCharacterDetails();
+        if (character.PortraitSprite != null) {
+            _portrait.ShowPortrait(character.PortraitSprite);
+        }
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
         MemberInfo.transform.Find("Name").GetComponent<Text>().color =
             character.StatusEffects.HasFlag(EnumStatusEffect.dead)
@@ -187,6 +192,7 @@ public class CharacterDetailUI : MonoBehaviour {
         _animatorKills.SetBool("isOpen", false);
         _animatorGold.SetBool("isOpen", false);
         _animatorCharacterDetail.SetBool("isOpen", false);
+        _portrait.HidePortrait();
         if (this.isActiveAndEnabled) {
             StartCoroutine(WaitForTenthASecond());
         }

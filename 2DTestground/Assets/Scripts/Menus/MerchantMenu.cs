@@ -20,9 +20,6 @@ namespace Assets.Scripts.Menus {
         private RuntimeAnimatorController _animatorDealsButton;
         private RuntimeAnimatorController _animatorRepairButton;
 
-        private AudioClip _menuSwish;
-        private AudioClip _menuDing;
-
         private Dialogue _tempDialogue = new Dialogue {
             Name = "Itemtext",
             Sentences = new List<string>() {
@@ -75,9 +72,6 @@ namespace Assets.Scripts.Menus {
 
             _animatorObjectsForSale = ObjectsForSale.transform.GetComponent<Animator>();
             _animatorGold = Gold.transform.GetComponent<Animator>();
-
-            _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
-            _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
         }
 
         void Start() {
@@ -144,7 +138,7 @@ namespace Assets.Scripts.Menus {
             Gold.SetActive(true);
             transform.gameObject.SetActive(true);
 
-            _audioManager.PlaySFX(_menuSwish);
+            _audioManager.PlaySFX(Constants.SfxMenuSwish);
             _fourWayButtonMenu.InitializeButtons(_animatorBuyButton, _animatorSellButton, 
                 _animatorDealsButton, _animatorRepairButton, 
                 "Buy", "Sell", "Deals", "Repair");
@@ -505,12 +499,12 @@ namespace Assets.Scripts.Menus {
             } else {
                 _lastInputDirection = _inputDirection = currentDirection;
                 if (_inputDirection != DirectionType.none) {
-                    _audioManager.PlaySFX(_menuDing);
+                    _audioManager.PlaySFX(Constants.SfxMenuDing);
                 }
             }
 
             if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact")) {
-                _audioManager.PlaySFX(_menuSwish);
+                _audioManager.PlaySFX(Constants.SfxMenuSwish);
             }
 
         }

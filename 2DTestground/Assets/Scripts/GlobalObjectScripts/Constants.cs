@@ -13,6 +13,7 @@ public class Constants {
     public static string PrefabHeader = "SharedObjects/Prefab/UI/Header";
     public static string PrefabListCharacterObject = "SharedObjects/Prefab/UI/CharacterListObject";
     public static string PrefabPrefixAreaOfEffect = "SharedObjects/Prefab/Battle/AreaOfEffect/";
+    public static string PrefabExplosion = "SharedObjects/Prefab/Battle/Explosion";
 
     public static string ItemMedicalHerb = "SharedObjects/Items/Consumables/MedicalHerb";
     public static string ItemAntidote = "SharedObjects/Items/Consumables/Antidote";
@@ -78,13 +79,18 @@ public class Constants {
 
     public static string CharacterDwarf = "SharedObjects/Characters/Monsters/Dwarf";
 
-    public static string SoundItemPickup = "ShiningForce/sounds/ding";
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";
     public static string SoundNewPartyMember = "ShiningForce/sounds/victory";
     public static string SoundMovement = "ShiningForce/sounds/dwoowoo";
+    public static string SfxMovement = "movement";
     public static string SoundMenuSwish = "ShiningForce/sounds/swish1";
+    public static string SfxMenuSwish = "swish";
     public static string SoundMenuDing = "ShiningForce/sounds/ding";
+    public static string SfxMenuDing = "ding";
     public static string SoundError = "ShiningForce/sounds/error";
+    public static string SfxError = "error";
+    public static string SoundExplosion = "ShiningForce/sounds/smallexplosion";
+    public static string SfxExplosion = "explosion";
 
     public static string AudioMovement = "movement";
 

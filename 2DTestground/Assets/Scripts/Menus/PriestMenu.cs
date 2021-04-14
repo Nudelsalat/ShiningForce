@@ -20,9 +20,6 @@ namespace Assets.Scripts.Menus {
 
         private Animator _animatorGold;
 
-        private AudioClip _menuSwish;
-        private AudioClip _menuDing;
-
         private Dialogue _tempDialogue;
 
         private string _currentlyAnimatedButton;
@@ -73,9 +70,6 @@ namespace Assets.Scripts.Menus {
 
             Gold = GameObject.Find("Gold");
             _animatorGold = Gold.transform.GetComponent<Animator>();
-
-            _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
-            _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
         }
 
         void Start() {
@@ -134,7 +128,7 @@ namespace Assets.Scripts.Menus {
             transform.gameObject.SetActive(true);
             Gold.SetActive(true);
             Player.PlayerIsInMenu = EnumMenuType.priestMenu;
-            _audioManager.PlaySFX(_menuSwish);
+            _audioManager.PlaySFX(Constants.SfxMenuSwish);
             _party = _inventory.GetParty();
             _showUi = true;
             OpenPriestMenu();
@@ -371,12 +365,12 @@ namespace Assets.Scripts.Menus {
             } else {
                 _lastInputDirection = _inputDirection = currentDirection;
                 if (_inputDirection != DirectionType.none) {
-                    _audioManager.PlaySFX(_menuDing);
+                    _audioManager.PlaySFX(Constants.SfxMenuDing);
                 }
             }
 
             if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact")) {
-                _audioManager.PlaySFX(_menuSwish);
+                _audioManager.PlaySFX(Constants.SfxMenuSwish);
             }
         }
 

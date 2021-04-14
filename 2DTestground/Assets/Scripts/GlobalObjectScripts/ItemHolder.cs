@@ -46,6 +46,11 @@ public class ItemHolder : MonoBehaviour {
                 TriggerDialogue();
                 Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
                 RemoveItem();
+                if (audioClip != null) {
+                    AudioManager.Instance.PlaySFX(audioClip);
+                } else {
+                    AudioManager.Instance.PlaySFX(Constants.SfxMenuDing);
+                }
             } else {
                 TriggerDialogue();
             }
@@ -54,15 +59,11 @@ public class ItemHolder : MonoBehaviour {
 
     public void TriggerDialogue() {
         _dialogManager.StartDialogue(Dialogue);
-        if (audioClip != null) {
-            AudioManager.Instance.PlaySFX(audioClip);
-        }
     }
 
     public void RemoveItem() {
         _pickedUpItemStorage.AddToPickedUpList(SceneManager.GetActiveScene().name, ID);
         gameItem = null;
-        audioClip = null;
         Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
         Dialogue.Sentences.Add("Nothing here...");
         if (DespawnAfterUser) {

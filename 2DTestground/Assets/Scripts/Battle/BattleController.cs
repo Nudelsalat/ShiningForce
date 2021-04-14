@@ -222,6 +222,8 @@ namespace Assets.Scripts.Battle {
                         _currentBattleState = EnumBattleState.freeCursor;
                         break;
                     case EnumBattleState.characterDetails:
+                        Player.PlayerIsInMenu = EnumMenuType.none;
+                        _audioManager.PlaySFX(Constants.SfxMenuSwish);
                         _characterDetailUI.CloseCharacterDetailsUi();
                         _cursor.ClearControlUnit();
                         _currentBattleState = EnumBattleState.freeCursor;
@@ -243,12 +245,12 @@ namespace Assets.Scripts.Battle {
                     case EnumBattleState.unitSelected:
                         var collider2D = _currentUnit.GetComponent<Collider2D>();
                         if (collider2D.IsTouchingLayers(LayerMask.GetMask("Force", "Enemies"))) {
-                            _audioManager.PlaySFX(_error);
+                            _audioManager.PlaySFX(Constants.SfxError);
                             break;
                         }
 
-                        _audioManager.PlaySFX(_menuSwish);
-                        _cursor.PlayerIsInMenu = EnumMenuType.battleMenu;
+                        _audioManager.PlaySFX(Constants.SfxMenuSwish);
+                        Player.PlayerIsInMenu = EnumMenuType.battleMenu;
                         _fourWayButtonMenu.InitializeButtons(_animatorAttackButton, _animatorMagicButton,
                             _animatorStayButton, _animatorItemButton,
                             "Attack", "Magic", "Stay", "Item");
@@ -266,6 +268,8 @@ namespace Assets.Scripts.Battle {
                     case EnumBattleState.freeCursor:
                         if (_cursor.CheckIfCursorIsOverUnit(out var unit,
                             LayerMask.GetMask("Force", "Enemies"))) {
+                            Player.PlayerIsInMenu = EnumMenuType.battleMenu;
+                            _audioManager.PlaySFX(Constants.SfxMenuSwish);
                             _characterDetailUI.LoadCharacterDetails(unit.GetCharacter());
                             _currentBattleState = EnumBattleState.characterDetails;
                         }
@@ -305,7 +309,7 @@ namespace Assets.Scripts.Battle {
                         DestroyMovementSquareSprites();
                         _fourWayButtonMenu.CloseButtons();
                         _currentBattleState = EnumBattleState.freeCursor;
-                        _cursor.PlayerIsInMenu = EnumMenuType.none;
+                        Player.PlayerIsInMenu = EnumMenuType.none;
                         break;
                     case "Item":
                         _enumCurrentMenuType = EnumCurrentBattleMenu.item;
@@ -429,7 +433,7 @@ namespace Assets.Scripts.Battle {
 
                 _enumCurrentMenuType = EnumCurrentBattleMenu.none;
                 _cursor.ClearAttackArea();
-                _cursor.PlayerIsInMenu = EnumMenuType.none;
+                Player.PlayerIsInMenu = EnumMenuType.none;
                 _cursor.EndTurn();
             }
         }
@@ -562,7 +566,7 @@ namespace Assets.Scripts.Battle {
         private void CloseMenu() {
             _fourWayButtonMenu.CloseButtons();
             _currentBattleState = EnumBattleState.unitSelected;
-            _cursor.PlayerIsInMenu = EnumMenuType.none;
+            Player.PlayerIsInMenu = EnumMenuType.none;
         }
 
         private void SetNewTurnOrder() {
@@ -644,12 +648,12 @@ namespace Assets.Scripts.Battle {
             } else {
                 _lastInputDirection = _inputDirection = currentDirection;
                 if (_inputDirection != DirectionType.none) {
-                    _audioManager.PlaySFX(_menuDing);
+                    _audioManager.PlaySFX(Constants.SfxMenuDing);
                 }
             }
 
             if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact")) {
-                _audioManager.PlaySFX(_menuSwish);
+                _audioManager.PlaySFX(Constants.SfxMenuSwish);
             }
 
         }
