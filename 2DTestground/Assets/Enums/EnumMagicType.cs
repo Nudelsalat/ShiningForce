@@ -8,6 +8,8 @@ namespace Assets.Enums {
     public enum EnumMagicType {
         Damage,
         Heal,
-        Special
+        Special,
+        Buff,
+        Debuff
     }
 }

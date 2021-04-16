@@ -4,10 +4,15 @@ using Random = UnityEngine.Random;
 namespace Assets.Scripts.Battle {
     class BattleCalculator {
 
-        public int GetBaseDamageWeaponAttack(Unit attacker, Unit attacked, float landEffect) {
-            float attack = attacker.GetCharacter().CharStats.Attack.GetModifiedValue();
-            float defense = attacked.GetCharacter().CharStats.Defense.GetModifiedValue();
-            float maxDamage = (attack - defense) * (1f - (landEffect / 100));
+        public float GetMaxDamage(int attack, int defense, int landEffect) {
+            var result = (attack - defense) * (1f - ((float)landEffect / 100));
+            return result <= 0 ? 1 : result;
+        }
+
+        public int GetBaseDamageWeaponAttack(Unit attacker, Unit attacked, int landEffect) {
+            int attack = attacker.GetCharacter().CharStats.Attack.GetModifiedValue();
+            int defense = attacked.GetCharacter().CharStats.Defense.GetModifiedValue();
+            float maxDamage = GetMaxDamage(attack, defense, landEffect);
             float minDamage = maxDamage * 0.8f;
             var result = (int)Math.Round(Random.Range(minDamage, maxDamage), MidpointRounding.AwayFromZero);
             return result <= 0 ? 1 : result;

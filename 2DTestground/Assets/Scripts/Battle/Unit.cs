@@ -10,7 +10,7 @@ namespace Assets.Scripts.Battle {
         [SerializeField]
         private Character Character;
         
-        private Character _character;
+        protected Character _character;
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
         private BattleController _battleController;
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Battle {
         }
 #endif
 
-        void Awake() {
+        protected void Awake() {
             _character = Instantiate(Character);
             _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _character.AnimatorSprite;
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Battle {
             _spriteRenderer = this.GetComponent<SpriteRenderer>();
         }
 
-        void Start() {
+        protected void Start() {
             _battleController = BattleController.Instance;
             _quickInfoCurrentUnit = QuickInfoUi.Instance;
             _audioManager = AudioManager.Instance;
@@ -66,6 +66,8 @@ namespace Assets.Scripts.Battle {
         }
 
         public void KillUnit() {
+            gameObject.layer = 0;
+            gameObject.tag = "Untagged";
             _character.StatusEffects = EnumStatusEffect.dead;
             StartCoroutine(DestroyAnimation());
         }

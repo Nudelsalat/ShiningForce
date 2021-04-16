@@ -11,6 +11,8 @@ TagManager:
   - StairWarp
   - Item
   - Terrain
+  - Force
+  - Enemies
   layers:
   - Default
   - TransparentFX

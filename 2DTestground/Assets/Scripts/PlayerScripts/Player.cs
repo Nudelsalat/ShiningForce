@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public static bool IsInDialogue = false;
     public static bool InputDisabledInDialogue = false;
     public static bool InputDisabledInEvent = false;
+    public static bool InputDisabledAiBattle = false;
     public static EnumMenuType PlayerIsInMenu = EnumMenuType.none;
     public GameObject _interactionSelector;
     

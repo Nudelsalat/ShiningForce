@@ -99,4 +99,8 @@ public class Constants {
     public static Color Orange = new Color(1f, 0.6f, 0.6f);
     public static Color Violet = new Color(0.8f, 0.1f, 0.8f);
 
+    public static LayerMask LayerMaskForce = LayerMask.GetMask("Force");
+    public static LayerMask LayerMaskEnemies = LayerMask.GetMask("Enemies");
+
+
 }

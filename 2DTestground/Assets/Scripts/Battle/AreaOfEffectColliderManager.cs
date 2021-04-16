@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle {
-    class AreaOfEffectColliderManager : MonoBehaviour {
+    public class AreaOfEffectColliderManager : MonoBehaviour {
         private List<Collider2D> _triggerList = new List<Collider2D>();
         private LayerMask _layerMask;
 

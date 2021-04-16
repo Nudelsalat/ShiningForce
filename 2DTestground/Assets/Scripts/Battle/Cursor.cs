@@ -140,7 +140,12 @@ public class Cursor : MonoBehaviour {
         var colliderManager = _areaOfEffect.GetComponent<AreaOfEffectColliderManager>();
 
         if (colliderManager.name.Contains(Enum.GetName(typeof(EnumAreaOfEffect), EnumAreaOfEffect.AllAllies))) {
-            //TODO GET all allies of Unit -> via Battle Controller
+            if (layerMask == Constants.LayerMaskForce) {
+                return _battleController.GetForce();
+            }
+            else {
+                return _battleController.GetEnemies();
+            }
         }
         var colliderList = colliderManager.GetAllCurrentCollider(layerMask);
         var results = new List<Unit>();
@@ -185,24 +190,21 @@ public class Cursor : MonoBehaviour {
         var result = pathfinder.GetShortestPath();
         _setPath = new Queue<Vector3>(result);
         MoveSpeed = 20f;
+
+        //TODO REVISIT:
+        UnitReached = false;
     }
 
-    public void ReturnToPosition(List<GameObject> walkableSprites, Vector3 origPosition) {
-        var walkablePoints = new List<Vector3>();
-        if (walkableSprites == null) {
+    public void ReturnToPosition(List<Vector3> walkablePoints, Vector3 origPosition) {
+        if (walkablePoints == null || walkablePoints.Count == 0) {
             walkablePoints = null;
-        } else {
-            walkablePoints.AddRange(walkableSprites.Select(x => x.transform.position));
-            //cursor and unit has Offset...
-            walkablePoints = walkablePoints.Select(x => { x.y += 0.25f;
-                return x;
-            }).ToList();
-        }
-
+        } 
         var position = MovePoint.position;
         var pathfinder = new Pathfinder(walkablePoints, position,origPosition);
         var result = pathfinder.GetShortestPath();
-        _setPath = new Queue<Vector3>(result);
+        if (result != null) {
+            _setPath = new Queue<Vector3>(result);
+        }
         MoveSpeed = 20f;
         ClearControlUnit();
     }
@@ -243,7 +245,7 @@ public class Cursor : MonoBehaviour {
     }
 
     private void HandleInput() {
-        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent
+        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
             || Player.PlayerIsInMenu == EnumMenuType.pause || Player.PlayerIsInMenu == EnumMenuType.battleMenu) {
             _movement.x = _movement.y = 0;
             return;
@@ -380,14 +382,14 @@ public class Cursor : MonoBehaviour {
         }
     }
 
-    public int GetLandEffect() {
-        var test = _terrainTileMap.WorldToCell(MovePoint.position);
+    public int GetLandEffect(Vector3 point) {
+        var test = _terrainTileMap.WorldToCell(point);
         var sprite = _terrainTileMap.GetSprite(test);
         return TerrainEffects.GetLandEffect(sprite.name);
     }
 
     private void CheckTile() {
-        _landEffect.ShowLandEffect(GetLandEffect());
+        _landEffect.ShowLandEffect(GetLandEffect(MovePoint.position));
     }
 
     IEnumerator MovementNoise() {

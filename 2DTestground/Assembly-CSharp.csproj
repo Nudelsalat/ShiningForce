@@ -66,6 +66,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\ConvertStatsToMenuList.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\AiData.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DirectionType.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Stat.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Fadeout.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEventHolder.cs" />
     <Compile Include="Assets\Scripts\SceneManager\LevelManager.cs" />
+    <Compile Include="Assets\Enums\EnumAiType.cs" />
     <Compile Include="Assets\Scripts\TownAI\AddToPartyEvent.cs" />
     <Compile Include="Assets\Enums\EnumElementType.cs" />
     <Compile Include="Assets\Scripts\GameData\Chests\PickedUpItemStorage.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\CharacterSelector.cs" />
+    <Compile Include="Assets\Scripts\Battle\EnemyUnit.cs" />
     <Compile Include="Assets\Scripts\Menus\MemberInventoryUI.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\CameraScripts\OverviewCameraMovement.cs" />
@@ -176,6 +179,9 @@
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
+    <Compile Include="Assets\Scripts\Battle\Trigger\TriggerBase.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\AiController.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\AttackOption.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

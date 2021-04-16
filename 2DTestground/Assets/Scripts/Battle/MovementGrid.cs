@@ -150,6 +150,16 @@ namespace Assets.Scripts.Menus.Battle {
             return false;
         }
 
+        public Unit GetOccupyingOpponent(float x, float y, LayerMask opponentLayerMask) {
+            var collision = Physics2D.OverlapCircle(new Vector2(x, y), 0.2f, opponentLayerMask);
+            var unit = collision?.GetComponent<Unit>();
+            if (unit != null) {
+                Debug.Log($"GameObjectName: {collision.name}");
+                return unit;
+            }
+            return null;
+        }
+
         public LayerMask GetOpponentLayerMask(Unit currentUnit, bool reverse = false) {
             if (currentUnit.gameObject.layer == LayerMask.NameToLayer("Force")) {
                 return reverse ? LayerMask.GetMask("Force")  : LayerMask.GetMask("Enemies");

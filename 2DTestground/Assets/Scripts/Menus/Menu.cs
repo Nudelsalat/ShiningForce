@@ -145,7 +145,8 @@ public class Menu : MonoBehaviour
 
         
 
-        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
+        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent
+            || Player.InputDisabledAiBattle) {
             if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
                 && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
                 _dialogManager.DisplayNextSentence();

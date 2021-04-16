@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
+using Assets.Scripts.Battle.AI;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
@@ -30,6 +31,7 @@ namespace Assets.Scripts.Battle {
 
         private Tilemap _terrainTileMap;
         private readonly List<GameObject> _movementSquareSprites = new List<GameObject>();
+        private readonly List<Vector3> _movementSparesVector = new List<Vector3>();
 
 
         private EnumBattleState _currentBattleState;
@@ -37,9 +39,6 @@ namespace Assets.Scripts.Battle {
         private DirectionType _lastInputDirection;
         private EnumCurrentBattleMenu _enumCurrentMenuType = EnumCurrentBattleMenu.none;
         private EnumCurrentBattleMenu _previousMenuTypeState = EnumCurrentBattleMenu.none;
-        private AudioClip _menuDing;
-        private AudioClip _menuSwish;
-        private AudioClip _error;
 
         private MovementGrid _movementGrid;
         private Cursor _cursor;
@@ -51,6 +50,7 @@ namespace Assets.Scripts.Battle {
         private DialogManager _dialogManager;
         private BattleCalculator _battleCalculator;
         private CharacterDetailUI _characterDetailUI;
+        private AiController _aiController;
         private Inventory _inventory;
         private Menu _menu;
         private Magic _magicToAttack;
@@ -75,10 +75,6 @@ namespace Assets.Scripts.Battle {
             _animatorMagicButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonMagic);
             _animatorStayButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonStay);
             _animatorItemButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonItem);
-
-            _menuSwish = Resources.Load<AudioClip>(Constants.SoundMenuSwish);
-            _menuDing = Resources.Load<AudioClip>(Constants.SoundMenuDing);
-            _error = Resources.Load<AudioClip>(Constants.SoundError);
         }
 
         void Start() {
@@ -92,10 +88,10 @@ namespace Assets.Scripts.Battle {
             _characterDetailUI = CharacterDetailUI.Instance;
             _menu = Menu.Instance;
             _inventory = Inventory.Instance;
+            _aiController = AiController.Instance;
             _battleCalculator = new BattleCalculator();
             transform.gameObject.SetActive(false);
         }
-
 
         public void BeginBattle() {
             _menu.ObjectMenu.SetActive(false);
@@ -104,6 +100,7 @@ namespace Assets.Scripts.Battle {
 
             _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
             _movementGrid = new MovementGrid(_terrainTileMap);
+            _aiController.SetMovementGrid(_movementGrid);
             _terrainTileMap.color = Constants.Invisible;
             _cursor.BeginBattle(_terrainTileMap);
             IsActive = true;
@@ -120,7 +117,7 @@ namespace Assets.Scripts.Battle {
                 }
             }
             foreach (Transform child in enemies) {
-                var unit = child.GetComponent<Unit>();
+                var unit = child.GetComponent<EnemyUnit>();
                 if (unit != null) {
                     _enemies.Add(unit);
                 }
@@ -176,10 +173,20 @@ namespace Assets.Scripts.Battle {
             _originalPosition = _currentUnit.transform.position;
             _cursor.ReturnToUnit(_originalPosition);
             SetSelectedUnit(_currentUnit);
+            if (_currentUnit is EnemyUnit enemyUnit) {
+                _aiController.AiTurn(enemyUnit, _movementSparesVector);
+            }
+        }
+
+        public List<Unit> GetEnemies() {
+            return _enemies;
+        }
+        public List<Unit> GetForce() {
+            return _force;
         }
 
         void Update() {
-            if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent 
+            if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
                 || !_cursor.UnitReached || Player.PlayerIsInMenu == EnumMenuType.pause) {
                 return;
             }
@@ -217,7 +224,7 @@ namespace Assets.Scripts.Battle {
                         break;
                     case EnumBattleState.unitSelected:
                         DestroyMovementSquareSprites();
-                        _cursor.ReturnToPosition(_movementSquareSprites, _originalPosition);
+                        _cursor.ReturnToPosition(_movementSparesVector, _originalPosition);
                         _cursor.ClearControlUnit();
                         _currentBattleState = EnumBattleState.freeCursor;
                         break;
@@ -361,80 +368,13 @@ namespace Assets.Scripts.Battle {
                 }
 
                 //TODO add all into sequence, and process this sequence -> Or stop time for battle units or something...
-                var sentence = new List<string>();
                 // or target is confused?
-                var isReversedTargetSearch = _magicToAttack?.MagicType == EnumMagicType.Heal || 
-                                             _magicToAttack?.MagicType == EnumMagicType.Special;
+                var isReversedTargetSearch = _magicToAttack?.MagicType == EnumMagicType.Heal ||
+                                             _magicToAttack?.MagicType == EnumMagicType.Special ||
+                                             _magicToAttack?.MagicType == EnumMagicType.Buff;
                 var targets = _cursor.GetTargetsInAreaOfEffect(
                     _movementGrid.GetOpponentLayerMask(_currentUnit, isReversedTargetSearch));
-                var critString = "";
-
-                var damage = 1;
-                if (_magicToAttack != null) {
-                    _currentUnit.GetCharacter().CharStats.CurrentMp -= _magicToAttack.ManaCost[_magicLevelToAttack - 1];
-                    damage = _currentUnit.GetCharacter().IsPromoted
-                        ? (int) Math.Round(_magicToAttack.Damage[_magicLevelToAttack - 1] * 1.25f,
-                            MidpointRounding.AwayFromZero)
-                        : _magicToAttack.Damage[_magicLevelToAttack - 1];
-                }
-
-                foreach (var target in targets) {
-                    if(_magicToAttack == null) {
-                        damage = _battleCalculator.GetBaseDamageWeaponAttack(
-                            _currentUnit, target, _cursor.GetLandEffect());
-                    }
-
-                    var isCrit = _battleCalculator.RollForCrit(_currentUnit);
-                    critString = "";
-                    //TODO is spell heal or something different?
-                    //TODO is elemental resistance vulnerability?
-                    if (isCrit) {
-                        damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
-                        critString = "Critical hit!\n";
-                    }
-
-                    switch (_magicToAttack?.MagicType) { 
-                        case null:
-                        case EnumMagicType.Damage:
-                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
-                                         $"points of damage.");
-                            if (target.GetCharacter().CharStats.CurrentHp <= damage) {
-                                sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
-                                             $" was defeated!");
-                                target.GetCharacter().CharStats.CurrentHp = 0;
-                                RemoveUnitFromBattle(target);
-                                //TODO set to destroy. Give EXP if _current unit == force.
-                            } else {
-                                target.GetCharacter().CharStats.CurrentHp -= damage;
-                            }
-                            break;
-                        case EnumMagicType.Heal:
-                            var diff = target.GetCharacter().CharStats.MaxHp -
-                                       target.GetCharacter().CharStats.CurrentHp;
-                            if (diff <= damage) {
-                                target.GetCharacter().CharStats.CurrentHp = target.GetCharacter().CharStats.MaxHp;
-                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {diff} " +
-                                             $"points.");
-                            } else {
-                                target.GetCharacter().CharStats.CurrentHp += damage;
-                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {damage} " +
-                                             $"points.");
-                            }
-                            break;
-                        case EnumMagicType.Special:
-                            _magicToAttack.ExecuteMagicAtLevel(_currentUnit.GetCharacter(), 
-                                target.GetCharacter(), _magicLevelToAttack);
-                            break;
-                    }
-                    
-                }
-
-                _dialogManager.EvokeSentenceDialogue(sentence);
-
-                _enumCurrentMenuType = EnumCurrentBattleMenu.none;
-                _cursor.ClearAttackArea();
-                Player.PlayerIsInMenu = EnumMenuType.none;
-                _cursor.EndTurn();
+                ExecuteAttack(targets, _magicToAttack, _magicLevelToAttack);
             }
         }
 
@@ -479,6 +419,78 @@ namespace Assets.Scripts.Battle {
                 _fourWayMagicMenu.UnSetItemNameOrange();
                 _itemSelected = false;
             }
+        }
+
+        public void ExecuteAttack(List<Unit> targets, Magic magicToAttack, int magicLevelToAttack) {
+            var sentence = new List<string>();
+            var critString = "";
+
+            var damage = 1;
+            if (magicToAttack != null) {
+                _currentUnit.GetCharacter().CharStats.CurrentMp -= magicToAttack.ManaCost[magicLevelToAttack - 1];
+                damage = _currentUnit.GetCharacter().IsPromoted
+                    ? (int)Math.Round(magicToAttack.Damage[magicLevelToAttack - 1] * 1.25f,
+                        MidpointRounding.AwayFromZero)
+                    : magicToAttack.Damage[magicLevelToAttack - 1];
+            }
+
+            foreach (var target in targets) {
+                if (magicToAttack == null) {
+                    damage = _battleCalculator.GetBaseDamageWeaponAttack(
+                        _currentUnit, target, _cursor.GetLandEffect(_cursor.MovePoint.position));
+                }
+
+                var isCrit = _battleCalculator.RollForCrit(_currentUnit);
+                critString = "";
+                //TODO is spell heal or something different?
+                //TODO is elemental resistance vulnerability?
+                if (isCrit) {
+                    damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
+                    critString = "Critical hit!\n";
+                }
+
+                switch (magicToAttack?.MagicType) {
+                    case null:
+                    case EnumMagicType.Damage:
+                        sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
+                                     $"points of damage.");
+                        if (target.GetCharacter().CharStats.CurrentHp <= damage) {
+                            sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
+                                         $" was defeated!");
+                            target.GetCharacter().CharStats.CurrentHp = 0;
+                            RemoveUnitFromBattle(target);
+                            //TODO set to destroy. Give EXP if _current unit == force.
+                        } else {
+                            target.GetCharacter().CharStats.CurrentHp -= damage;
+                        }
+                        break;
+                    case EnumMagicType.Heal:
+                        var diff = target.GetCharacter().CharStats.MaxHp -
+                                   target.GetCharacter().CharStats.CurrentHp;
+                        if (diff <= damage) {
+                            target.GetCharacter().CharStats.CurrentHp = target.GetCharacter().CharStats.MaxHp;
+                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {diff} " +
+                                         $"points.");
+                        } else {
+                            target.GetCharacter().CharStats.CurrentHp += damage;
+                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {damage} " +
+                                         $"points.");
+                        }
+                        break;
+                    case EnumMagicType.Special:
+                        magicToAttack.ExecuteMagicAtLevel(_currentUnit.GetCharacter(),
+                            target.GetCharacter(), magicLevelToAttack);
+                        break;
+                }
+
+            }
+
+            _dialogManager.EvokeSentenceDialogue(sentence);
+
+            _enumCurrentMenuType = EnumCurrentBattleMenu.none;
+            _cursor.ClearAttackArea();
+            Player.PlayerIsInMenu = EnumMenuType.none;
+            _cursor.EndTurn();
         }
 
         private void HealWholeForce() {
@@ -612,10 +624,12 @@ namespace Assets.Scripts.Battle {
 
         private void ShowMovementSquareSprites(IEnumerable<Vector3Int> movementSquares) {
             _movementSquareSprites.Clear();
+            _movementSparesVector.Clear();
             var square = Resources.Load<GameObject>(Constants.PrefabMovementSquare);
             foreach (var movementSquare in movementSquares) {
                 _movementSquareSprites.Add(Instantiate(square,
                     new Vector3(movementSquare.x + .5f, movementSquare.y + .5f), Quaternion.identity));
+                _movementSparesVector.Add(new Vector3(movementSquare.x + .5f, movementSquare.y + .75f));
             }
         }
         private void DestroyMovementSquareSprites() {

@@ -21,14 +21,14 @@ MonoBehaviour:
   CharacterType: 17
   MovementType: 4
   CharStats:
-    Level: 1
+    Level: 2
     Exp: 0
     MaxHp: 10
     CurrentHp: 10
     MaxMp: 0
     CurrentMp: 0
     Attack:
-      _baseValue: 5
+      _baseValue: 12
     Defense:
       _baseValue: 5
     Agility:
