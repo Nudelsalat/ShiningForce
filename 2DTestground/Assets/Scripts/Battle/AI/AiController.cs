@@ -61,7 +61,7 @@ namespace Assets.Scripts.Battle.AI {
                             EndAiTurn();
                             return;
                         }
-                        _cursor.ReturnToPosition(_currentMovementSquares, (Vector3)_selectedAttackOption.GetAttackPosition());
+                        _cursor.ReturnToPosition(_currentMovementSquares, (Vector3)_selectedAttackOption.GetAttackPosition(), 8f);
                         StartCoroutine(WaitSeconds(0.75f, EnumAiState.MoveUnit));
                     }
                     break;
@@ -71,7 +71,11 @@ namespace Assets.Scripts.Battle.AI {
                             EndAiTurn();
                             return;
                         }
-                        _cursor.SelectNextTarget((Vector3) _selectedAttackOption.GetMainTargetPosition());
+
+                        _battleController.GenerateMovementSquaresForAction(_currentUnit.transform.position,
+                            _selectedAttackOption.GetAttackRange());
+                        _cursor.SetAttackArea((Vector3) _selectedAttackOption.GetMainTargetPosition(),
+                            _selectedAttackOption.GetAoe());
                         //TODO Menu stuff
                         StartCoroutine(WaitSeconds(0.75f, EnumAiState.SelectTarget));
                     }
@@ -98,9 +102,7 @@ namespace Assets.Scripts.Battle.AI {
             _currentMovementSquares = movementSquares;
             _currentUnit.CheckTrigger();
             _currentAiData = _currentUnit.GetAiData();
-
-            //TODO: cursor move and stuff...
-
+            
             ExecuteTurn();
         }
 
@@ -143,10 +145,15 @@ namespace Assets.Scripts.Battle.AI {
                     if (mana < _currentAiData.HealingMagic.ManaCost[0]) {
                         return false;
                     }
-                    var enemiesToHeal = _battleController.GetEnemies();
-                    if (enemiesToHeal.Exists(x =>
-                        x.GetCharacter().CharStats.CurrentHp <= x.GetCharacter().CharStats.MaxHp / 2)) {
-                        return true;
+
+                    SetUpMagicSpell(_currentAiData.HealingMagic);
+                    TryExecuteAttack(out var allAttackOptions);
+                    foreach (var attackOption in allAttackOptions) {
+                        if (attackOption.GetTargetList().Exists(x =>
+                            x.GetCharacter().CharStats.CurrentHp <= x.GetCharacter().CharStats.MaxHp / 2)) {
+                            ExecuteBestAttackOption(allAttackOptions);
+                            return true;
+                        }
                     }
                     return false;
                 case EnumAiType.Follow:
@@ -170,38 +177,43 @@ namespace Assets.Scripts.Battle.AI {
                     break;
                 case EnumAiType.InRangeAttack:
                     _magicToAttack = null;
-                    if (!TryExecuteAttack()) {
+                    if (TryExecuteAttack(out var allAttackOptions)) {
+                        ExecuteBestAttackOption(allAttackOptions);
+                    } else {
                         ExecuteAttackOption(null);
                     }
                     break;
                 case EnumAiType.Aggressive:
                     _magicToAttack = null;
-                    if (!TryExecuteAttack()) {
+                    if (TryExecuteAttack(out allAttackOptions)) {
+                        ExecuteBestAttackOption(allAttackOptions);
+                    } else {
                         MoveTowardsClosestTarget();
                     }
                     break;
                 case EnumAiType.InRangeMage:
-                    _magicToAttack = _currentAiData.DamageMagic;
-                    _magicLevelToAttack = _magicToAttack.CurrentLevel;
-                    while (_magicToAttack.ManaCost[_magicLevelToAttack - 1] > _currentCharacter.CharStats.CurrentMp 
-                           || _magicLevelToAttack <= 0) {
-                        _magicLevelToAttack--;
-                    }
-
-                    if (_magicLevelToAttack <= 0) {
-                        _magicToAttack = null;
-                    }
-                    if (!TryExecuteAttack()) {
+                    SetUpMagicSpell(_currentAiData.DamageMagic);
+                    if (TryExecuteAttack(out allAttackOptions)) {
+                        ExecuteBestAttackOption(allAttackOptions);
+                    } else {
                         ExecuteAttackOption(null);
                     }
-
-                    //TODO
                     break;
                 case EnumAiType.AggressiveMage:
-                    //TODO
+                    SetUpMagicSpell(_currentAiData.DamageMagic);
+                    if (TryExecuteAttack(out allAttackOptions)) {
+                        ExecuteBestAttackOption(allAttackOptions);
+                    } else {
+                        MoveTowardsClosestTarget();
+                    }
                     break;
                 case EnumAiType.Healer:
-                    //TODO
+                    SetUpMagicSpell(_currentAiData.HealingMagic);
+                    if (TryExecuteAttack(out allAttackOptions)) {
+                        ExecuteBestAttackOption(allAttackOptions);
+                    } else {
+                        ExecuteAi(EnumAiType.InRangeMage);
+                    }
                     break;
                 case EnumAiType.Follow:
                     //TODO
@@ -219,18 +231,24 @@ namespace Assets.Scripts.Battle.AI {
             }
         }
 
-        private bool TryExecuteAttack() {
+        private bool TryExecuteAttack(out List<AttackOption> attackOptions) {
             int attack;
             var elementType = EnumElementType.None;
             var fixedDamage = false;
             var aoe = EnumAreaOfEffect.Single;
             var attackRange = EnumAttackRange.Melee;
+            var target = _forceLayerMask;
+            EnumMagicType? magicType = null;
             if (_magicToAttack != null) {
                 fixedDamage = true;
                 attack = _magicToAttack.Damage[_magicLevelToAttack - 1];
                 elementType = _magicToAttack.ElementType;
                 aoe = _magicToAttack.AreaOfEffect[_magicLevelToAttack - 1];
                 attackRange = _magicToAttack.AttackRange[_magicLevelToAttack - 1];
+                if (_magicToAttack.MagicType == EnumMagicType.Heal || _magicToAttack.MagicType == EnumMagicType.Buff) {
+                    target = _enemyLayerMask;
+                }
+                magicType = _magicToAttack.MagicType;
             } else {
                 attack = _currentCharacter.CharStats.Attack.GetModifiedValue();
                 aoe = _currentCharacter.GetAttackAreaOfEffect();
@@ -258,10 +276,10 @@ namespace Assets.Scripts.Battle.AI {
                     if (attackOptionsDict.ContainsKey(vector3)) {
                         continue;
                     } 
-                    if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, _forceLayerMask)) {
-                        var targetList = GetAllTargetsInAreaOfEffect(vector3, aoe, _forceLayerMask);
+                    if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, target)) {
+                        var targetList = GetAllTargetsInAreaOfEffect(vector3, aoe, target);
                         var attackOption = new AttackOption(targetList, movementSquare, 
-                            vector3, attack, elementType, fixedDamage);
+                            vector3, attack, aoe, attackRange, elementType, fixedDamage, magicType);
                         attackOptionsDict.Add(vector3, attackOption);
                     } else {
                         attackOptionsDict.Add(vector3, null);
@@ -269,14 +287,8 @@ namespace Assets.Scripts.Battle.AI {
                 }
             }
 
-            var allAttackOptions = attackOptionsDict.Values.Where(x => x != null).ToList();
-            if (!allAttackOptions.Any()) {
-                return false;
-            }
-
-            var bestAttackOption = PickBestAttackOption(allAttackOptions);
-            ExecuteAttackOption(bestAttackOption);
-            return true;
+            attackOptions = attackOptionsDict.Values.Where(x => x != null).ToList();
+            return attackOptions.Any();
         }
 
         private void MoveTowardsClosestTarget() {
@@ -293,8 +305,7 @@ namespace Assets.Scripts.Battle.AI {
         private void ExecuteMoveTowardPoint(Vector3 point) {
             if (_currentMovementSquares.Contains(point)) {
                 if (!_movementGrid.IsOccupiedByOpponent(point.x, point.y, _enemyLayerMask)) {
-                    var attackOption = new AttackOption(null, point,
-                        null, 0, EnumElementType.None, false);
+                    var attackOption = new AttackOption(null, point, null, 0);
                     ExecuteAttackOption(attackOption);
                     return;
                 } else {
@@ -320,13 +331,17 @@ namespace Assets.Scripts.Battle.AI {
                 if (_currentMovementSquares.Contains(pointInPath) &&
                     !_movementGrid.IsOccupiedByOpponent(pointInPath.x, pointInPath.y, _enemyLayerMask)) {
 
-                    var attackOption = new AttackOption(null, pointInPath,
-                        null, 0, EnumElementType.None, false);
+                    var attackOption = new AttackOption(null, pointInPath,null, 0);
                     ExecuteAttackOption(attackOption);
                     return;
                 }
             }
             ExecuteAi(followUpAi);
+        }
+
+        private void ExecuteBestAttackOption(List<AttackOption> allAttackOptions) {
+            var bestAttackOption = PickBestAttackOption(allAttackOptions);
+            ExecuteAttackOption(bestAttackOption);
         }
 
         private void ExecuteAttackOption(AttackOption attackOption) {
@@ -351,6 +366,23 @@ namespace Assets.Scripts.Battle.AI {
             _state = EnumAiState.None;
             Player.InputDisabledAiBattle = false;
             _cursor.EndTurn();
+        }
+
+        private void SetUpMagicSpell(Magic spell) {
+            if (spell.IsEmpty()) {
+                _magicToAttack = null;
+                return;
+            }
+            _magicToAttack = spell;
+            _magicLevelToAttack = _magicToAttack.CurrentLevel;
+            while (_magicToAttack.ManaCost[_magicLevelToAttack - 1] > _currentCharacter.CharStats.CurrentMp
+                   || _magicLevelToAttack <= 0) {
+                _magicLevelToAttack--;
+            }
+
+            if (_magicLevelToAttack <= 0) {
+                _magicToAttack = null;
+            }
         }
 
         private List<Unit> GetAllTargetsInAreaOfEffect(Vector3 point, EnumAreaOfEffect aoe, LayerMask targetLayer) {

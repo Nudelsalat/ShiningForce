@@ -224,7 +224,7 @@ namespace Assets.Scripts.Battle {
                         break;
                     case EnumBattleState.unitSelected:
                         DestroyMovementSquareSprites();
-                        _cursor.ReturnToPosition(_movementSparesVector, _originalPosition);
+                        _cursor.ReturnToPosition(_movementSparesVector, _originalPosition, 20f);
                         _cursor.ClearControlUnit();
                         _currentBattleState = EnumBattleState.freeCursor;
                         break;
@@ -357,7 +357,6 @@ namespace Assets.Scripts.Battle {
                 }
                 _cursor.ClearAttackArea();
                 _cursor.SetControlUnit(_currentUnit);
-                DestroyMovementSquareSprites();
                 GenerateMovementSquaresForUnit();
             }
 
@@ -534,7 +533,6 @@ namespace Assets.Scripts.Battle {
             _llNodeCurrentTarget = _linkedListTargetUnits.First;
             _cursor.SetAttackArea(_llNodeCurrentTarget.Value, areaOfEffect);
             UpdateUnitDirectionToTarget();
-            DestroyMovementSquareSprites();
             GenerateMovementSquaresForAction(_currentUnit.transform.position, attackRange);
             return true;
         }
@@ -610,13 +608,15 @@ namespace Assets.Scripts.Battle {
         }
 
         private void GenerateMovementSquaresForUnit() {
+            DestroyMovementSquareSprites();
             var reachableSquares = _movementGrid.GetMovementPointsOfUnit(_currentUnit, _originalPosition).ToList();
             ShowMovementSquareSprites(reachableSquares);
             _cursor.SetMoveWithinBattleSquares();
             _currentUnit.ClearUnitFlicker();
         }
 
-        private void GenerateMovementSquaresForAction(Vector3 currentPosition, EnumAttackRange attackRange) {
+        public void GenerateMovementSquaresForAction(Vector3 currentPosition, EnumAttackRange attackRange) {
+            DestroyMovementSquareSprites();
             var reachableSquares = _movementGrid.GetMovementPointsAreaOfEffect(currentPosition, attackRange).ToList();
             ShowMovementSquareSprites(reachableSquares);
             _cursor.SetMoveWithinBattleSquares();

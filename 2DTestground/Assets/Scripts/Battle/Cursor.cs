@@ -192,11 +192,10 @@ public class Cursor : MonoBehaviour {
         _setPath = new Queue<Vector3>(result);
         MoveSpeed = 20f;
 
-        //TODO REVISIT:
         UnitReached = false;
     }
 
-    public void ReturnToPosition(List<Vector3> walkablePoints, Vector3 origPosition) {
+    public void ReturnToPosition(List<Vector3> walkablePoints, Vector3 origPosition, float movementSpeed) {
         if (walkablePoints == null || walkablePoints.Count == 0) {
             walkablePoints = null;
         } 
@@ -206,7 +205,7 @@ public class Cursor : MonoBehaviour {
         if (result != null) {
             _setPath = new Queue<Vector3>(result);
         }
-        MoveSpeed = 20f;
+        MoveSpeed = movementSpeed;
         ClearControlUnit();
     }
 
@@ -325,7 +324,7 @@ public class Cursor : MonoBehaviour {
 
     private bool DoPredefinedMovement() {
         if (_setPath != null && _setPath.Any()) {
-            _movementNoiseInterval = 0.1f;
+            _movementNoiseInterval = MoveSpeed < 10 ? 0.2f : 0.1f;
             var newPosition = _setPath.Dequeue();
             SetAnimationDirection(MovePoint.position, newPosition);
             MovePoint.position = newPosition;

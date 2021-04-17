@@ -24,7 +24,7 @@ MonoBehaviour:
     Level: 2
     Exp: 0
     MaxHp: 10
-    CurrentHp: 10
+    CurrentHp: 5
     MaxMp: 0
     CurrentMp: 0
     Attack:
