@@ -143,9 +143,12 @@
     <Compile Include="Assets\Enums\EnumAreaOfEffect.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionCallback.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\AiController.cs" />
     <Compile Include="Assets\Enums\EnumStatusEffect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Menus\Battle\BattleTrigger.cs" />
+    <Compile Include="Assets\Scripts\Battle\Trigger\TriggerBase.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\Tile.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\CharacterStatistics.cs" />
     <Compile Include="Assets\Enums\EnumMovementType.cs" />
     <Compile Include="Assets\Enums\EnumMagicType.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\AttackOption.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\SerializableCharacter.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\Menus\CharacterDetailUI.cs" />
@@ -173,15 +177,12 @@
     <Compile Include="Assets\Scripts\Dialog\Question.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleCalculator.cs" />
     <Compile Include="Assets\Scripts\Menus\MerchantMenu.cs" />
-    <Compile Include="Assets\Scripts\Battle\Pathfinder.cs" />
+    <Compile Include="Assets\Scripts\Battle\AI\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\EnumerationExtensions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
-    <Compile Include="Assets\Scripts\Battle\Trigger\TriggerBase.cs" />
-    <Compile Include="Assets\Scripts\Battle\AI\AiController.cs" />
-    <Compile Include="Assets\Scripts\Battle\AI\AttackOption.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
@@ -19,6 +20,17 @@ namespace Assets.Scripts.Battle {
 
 #if UNITY_EDITOR
         void OnValidate() {
+            // fix gridPosition
+            var position = transform.position;
+            if (position.x % 1 != 0.5) {
+                transform.position = new Vector3((int)position.x + 0.5f, position.y);
+            }
+            if (position.y % 1 != 0.75) {
+                if (position.x % 0.5f > 0.25f) {
+                    transform.position = new Vector3(position.x, (int)position.y + 0.75f);
+                }
+            }
+
             var sprite = GetComponent<SpriteRenderer>();
             var clip = Character.AnimatorSprite.animationClips[0];
             var binding = AnimationUtility.GetObjectReferenceCurveBindings(clip).FirstOrDefault();

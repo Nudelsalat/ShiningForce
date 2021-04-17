@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Enums;
-using Assets.Scripts.Battle;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Characters;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Assets.Scripts.Menus.Battle {
+namespace Assets.Scripts.Battle {
     public class MovementGrid {
 
         private List<Vector3Int> _movementGrid = new List<Vector3Int>();
@@ -16,9 +16,28 @@ namespace Assets.Scripts.Menus.Battle {
         private LayerMask _oppositeLayerMask;
         private EnumMovementType _currentUnitMovementType;
         private float _z;
+        private readonly List<Tuple<Vector3, string>> _tileMapDictionary = new List<Tuple<Vector3, string>>();
 
         public MovementGrid(Tilemap terrainTileMap) {
             _terrainTileMap = terrainTileMap;
+            _tileMapDictionary.Clear();
+            foreach (var pos in _terrainTileMap.cellBounds.allPositionsWithin) {
+                var worldPosition = _terrainTileMap.WorldToCell(new Vector3(pos.x, pos.y, pos.z));
+                var sprite = _terrainTileMap.GetSprite(worldPosition);
+                if (sprite == null) {
+                    continue;
+                }
+                _tileMapDictionary.Add(new Tuple<Vector3, string>(
+                    new Vector3(worldPosition.x+0.5f, worldPosition.y+0.75f), sprite.name));
+            }
+        }
+
+        public List<Vector3> GetWholeTerrainTileMapWithoutCertainSprites(List<string> spriteNames, LayerMask opponentLayerMask) {
+            var rejectList = _tileMapDictionary.Where(x => spriteNames.Contains(x.Item2));
+            var result = _tileMapDictionary.Except(rejectList);
+            result = result.Where(x => !IsOccupiedByOpponent(x.Item1.x, x.Item1.y, opponentLayerMask));
+            var vector3List = result.Select(x => x.Item1);
+            return vector3List.ToList();
         }
 
         public IEnumerable<Vector3Int> GetMovementPointsOfUnit(Unit currentUnit, Vector3 origPosition) {
@@ -175,6 +194,16 @@ namespace Assets.Scripts.Menus.Battle {
             var sprite = _terrainTileMap.GetSprite(worldPosition);
 
             float terrainCost = TerrainEffects.GetMovementCost(_currentUnitMovementType,
+                TerrainEffects.GetTerrainTypeByName(sprite.name));
+
+            return terrainCost;
+        }
+
+        public float GetMovementCost(float x, float y, EnumMovementType movementType) {
+            var worldPosition = _terrainTileMap.WorldToCell(new Vector3(x, y, _z));
+            var sprite = _terrainTileMap.GetSprite(worldPosition);
+
+            float terrainCost = TerrainEffects.GetMovementCost(movementType,
                 TerrainEffects.GetTerrainTypeByName(sprite.name));
 
             return terrainCost;

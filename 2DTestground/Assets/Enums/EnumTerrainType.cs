@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.GameData {
     public enum EnumTerrainType {
-        block,
-        desert,
-        forest,
-        grass,
-        hill,
-        hover,
-        plain,
-        road,
-        sky,
-        water,
+        Block,
+        Desert,
+        Forest,
+        Grass,
+        Hill,
+        Hover,
+        Plain,
+        Road,
+        Sky,
+        Water,
     }
 }

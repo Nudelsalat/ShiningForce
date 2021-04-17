@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.Battle;
+using Assets.Scripts.Battle.AI;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;

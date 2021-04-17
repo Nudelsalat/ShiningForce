@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354664c837fd3b47a9d2a9af1414bcf, type: 3}
+  m_Name: Mage
+  m_EditorClassIdentifier: 
+  Id: 1
+  Name: 
+  IsPromoted: 0
+  PortraitSprite: {fileID: 0}
+  AnimatorSprite: {fileID: 0}
+  ClassType: 0
+  CharacterType: 0
+  MovementType: 0
+  CharStats:
+    Level: 1
+    Exp: 0
+    MaxHp: 10
+    CurrentHp: 10
+    MaxMp: 0
+    CurrentMp: 0
+    Attack:
+      _baseValue: 5
+    Defense:
+      _baseValue: 5
+    Agility:
+      _baseValue: 5
+    Movement:
+      _baseValue: 5
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  CharacterInventory:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0

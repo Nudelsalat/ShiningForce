@@ -275,7 +275,7 @@ public class DialogManager : MonoBehaviour {
         Player.IsInDialogue = false;
         DialogActive = false;
 
-        if (_dialogue.FollowUpEvent != null) {
+        if (_dialogue?.FollowUpEvent != null) {
             _dialogue.FollowUpEvent.Invoke("EventTrigger", 0);
         }
     }

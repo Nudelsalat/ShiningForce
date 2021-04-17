@@ -6,8 +6,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Enums;
+using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.Menus.Battle;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle.AI {
@@ -106,7 +108,7 @@ namespace Assets.Scripts.Battle.AI {
             if (CheckPreconditions(_currentAiData.PrimaryAiType)) {
                 ExecuteAi(_currentAiData.PrimaryAiType);
             } else if (CheckPreconditions(_currentAiData.SecondaryAiType)) {
-                ExecuteAi(_currentAiData.PrimaryAiType);
+                ExecuteAi(_currentAiData.SecondaryAiType);
             } else {
                 _battleController.NextUnit();
             }
@@ -168,21 +170,31 @@ namespace Assets.Scripts.Battle.AI {
                     break;
                 case EnumAiType.InRangeAttack:
                     _magicToAttack = null;
-                    if (!TryExecuteAttack(_currentCharacter.CharStats.Attack.GetModifiedValue(),
-                        EnumElementType.None, false)) {
+                    if (!TryExecuteAttack()) {
                         ExecuteAttackOption(null);
                     }
                     break;
                 case EnumAiType.Aggressive:
                     _magicToAttack = null;
-                    if (!TryExecuteAttack(_currentCharacter.CharStats.Attack.GetModifiedValue(), 
-                        EnumElementType.None, false)) {
-                        ExecuteAttackOption(null);
-                        //MoveTowardsClosestTarget();
+                    if (!TryExecuteAttack()) {
+                        MoveTowardsClosestTarget();
                     }
-                    //TODO
                     break;
                 case EnumAiType.InRangeMage:
+                    _magicToAttack = _currentAiData.DamageMagic;
+                    _magicLevelToAttack = _magicToAttack.CurrentLevel;
+                    while (_magicToAttack.ManaCost[_magicLevelToAttack - 1] > _currentCharacter.CharStats.CurrentMp 
+                           || _magicLevelToAttack <= 0) {
+                        _magicLevelToAttack--;
+                    }
+
+                    if (_magicLevelToAttack <= 0) {
+                        _magicToAttack = null;
+                    }
+                    if (!TryExecuteAttack()) {
+                        ExecuteAttackOption(null);
+                    }
+
                     //TODO
                     break;
                 case EnumAiType.AggressiveMage:
@@ -207,7 +219,23 @@ namespace Assets.Scripts.Battle.AI {
             }
         }
 
-        private bool TryExecuteAttack(int attack, EnumElementType elementType, bool fixedDamage) {
+        private bool TryExecuteAttack() {
+            int attack;
+            var elementType = EnumElementType.None;
+            var fixedDamage = false;
+            var aoe = EnumAreaOfEffect.Single;
+            var attackRange = EnumAttackRange.Melee;
+            if (_magicToAttack != null) {
+                fixedDamage = true;
+                attack = _magicToAttack.Damage[_magicLevelToAttack - 1];
+                elementType = _magicToAttack.ElementType;
+                aoe = _magicToAttack.AreaOfEffect[_magicLevelToAttack - 1];
+                attackRange = _magicToAttack.AttackRange[_magicLevelToAttack - 1];
+            } else {
+                attack = _currentCharacter.CharStats.Attack.GetModifiedValue();
+                aoe = _currentCharacter.GetAttackAreaOfEffect();
+                attackRange = _currentCharacter.GetAttackRange();
+            }
             var attackOptionsDict = new Dictionary<Vector3, AttackOption>();
             foreach (var movementSquare in _currentMovementSquares) {
                 // This square is occupied by another unit.
@@ -217,7 +245,7 @@ namespace Assets.Scripts.Battle.AI {
                     continue;
                 }
                 var moveOption = _movementGrid.GetMovementPointsAreaOfEffect(
-                    movementSquare, _currentCharacter.GetAttackRange()).ToList();
+                    movementSquare, attackRange).ToList();
                 var moveOption2 = moveOption.Select(x => {
                     var vector3 = new Vector3 {
                         x = x.x + 0.5f,
@@ -231,8 +259,7 @@ namespace Assets.Scripts.Battle.AI {
                         continue;
                     } 
                     if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, _forceLayerMask)) {
-                        var targetList = GetAllTargetsInAreaOfEffect(vector3, 
-                            _currentCharacter.GetAttackAreaOfEffect(), _forceLayerMask);
+                        var targetList = GetAllTargetsInAreaOfEffect(vector3, aoe, _forceLayerMask);
                         var attackOption = new AttackOption(targetList, movementSquare, 
                             vector3, attack, elementType, fixedDamage);
                         attackOptionsDict.Add(vector3, attackOption);
@@ -253,23 +280,53 @@ namespace Assets.Scripts.Battle.AI {
         }
 
         private void MoveTowardsClosestTarget() {
-            //TODO :-> is this target reachable, with the movement of the current unit?
+            var movementTyp = _currentCharacter.MovementType;
+            var tilesNotToUse = TerrainEffects.GetImpassableTerrainNameOfMovementType(movementTyp);
+            var listOfUsableSquares = _movementGrid.GetWholeTerrainTileMapWithoutCertainSprites(tilesNotToUse, 0);
+            var pathfinder = new Pathfinder(listOfUsableSquares, _currentUnit.transform.position, _forceLayerMask,
+                _movementGrid, movementTyp);
+            ExecuteShortestPathAi(pathfinder, EnumAiType.Idle);
         }
 
+        // Try to get to point with the most direct way, ignoring landEffects
+        // if path is blocked, AI switches to aggressive attack mode.
         private void ExecuteMoveTowardPoint(Vector3 point) {
             if (_currentMovementSquares.Contains(point)) {
-                _cursor.ReturnToPosition(_currentMovementSquares, point);
+                if (!_movementGrid.IsOccupiedByOpponent(point.x, point.y, _enemyLayerMask)) {
+                    var attackOption = new AttackOption(null, point,
+                        null, 0, EnumElementType.None, false);
+                    ExecuteAttackOption(attackOption);
+                    return;
+                } else {
+                    ExecuteAi(EnumAiType.InRangeAttack);
+                }
+            }
+            var movementTyp = _currentCharacter.MovementType;
+            var tilesNotToUse = TerrainEffects.GetImpassableTerrainNameOfMovementType(movementTyp);
+            var listOfUsableSquares = _movementGrid.GetWholeTerrainTileMapWithoutCertainSprites(tilesNotToUse, _forceLayerMask);
+            var pathfinder = new Pathfinder(listOfUsableSquares, _currentUnit.transform.position, point,
+                _movementGrid, movementTyp);
+            ExecuteShortestPathAi(pathfinder, EnumAiType.Aggressive);
+        }
+
+        private void ExecuteShortestPathAi(Pathfinder pathfinder, EnumAiType followUpAi) {
+            var shortestPath = pathfinder.GetShortestPath();
+            if (shortestPath == null) {
+                ExecuteAi(followUpAi);
                 return;
             }
+            shortestPath.Reverse();
+            foreach (var pointInPath in shortestPath) {
+                if (_currentMovementSquares.Contains(pointInPath) &&
+                    !_movementGrid.IsOccupiedByOpponent(pointInPath.x, pointInPath.y, _enemyLayerMask)) {
 
-            var closestPoint = _currentMovementSquares.Aggregate(
-                (first, second) => Math.Abs(first.x - point.x) + Math.Abs(first.y - point.y) <
-                                   Math.Abs(second.x - point.x) + Math.Abs(second.y - point.y)
-                    ? first
-                    : second);
-
-            var attackOption = new AttackOption(null, closestPoint, null, 0, EnumElementType.None, false);
-            ExecuteAttackOption(attackOption);
+                    var attackOption = new AttackOption(null, pointInPath,
+                        null, 0, EnumElementType.None, false);
+                    ExecuteAttackOption(attackOption);
+                    return;
+                }
+            }
+            ExecuteAi(followUpAi);
         }
 
         private void ExecuteAttackOption(AttackOption attackOption) {
