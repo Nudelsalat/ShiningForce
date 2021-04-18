@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.GameData.Characters;
@@ -104,6 +105,22 @@ public class Character : ScriptableObject {
         CharStats.CurrentHp = CharStats.MaxHp;
         CharStats.CurrentMp = CharStats.MaxMp;
     }
+
+    public List<string> AddExp(int expToAdd) {
+        var sentencesToReturn = new List<string>();
+        sentencesToReturn.Add($"{Name.AddColor(Constants.Orange)} gained {expToAdd} EXP.");
+        if (!CharStats.AddExp(expToAdd)) {
+            return sentencesToReturn;
+        }
+        var sentences = CharStats.LevelUp();
+        sentencesToReturn.Add($"{Name.AddColor(Constants.Orange)} reached level {CharStats.Level}");
+        sentencesToReturn.Add(sentences);
+
+        //TODO LEVEL UP MAGIC
+
+        return sentencesToReturn;
+    }
+
 }
 [Serializable]
 public class Tuple<T1, T2> : IEquatable<Tuple<T1,T2>> {

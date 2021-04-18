@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Enums;
+using Assets.Scripts.GameData.Magic;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle.AI {
@@ -17,12 +18,15 @@ namespace Assets.Scripts.Battle.AI {
         private EnumAttackRange _attackRange;
         private readonly bool _isFixedDamage;
         private readonly EnumMagicType? _magicType;
+        private readonly Magic _magic;
+        private readonly int _magicAttackLevel;
 
         private readonly BattleCalculator _battleController = new BattleCalculator();
 
         public AttackOption(List<Unit> listTargets, Vector3? attackPosition, Vector3? targetPosition, int attack, 
-            EnumAreaOfEffect aoe = EnumAreaOfEffect.Single, EnumAttackRange attackRange = EnumAttackRange.Melee, 
-            EnumElementType elementType = EnumElementType.None, bool isFixedDamage = false, EnumMagicType? magicType = null) {
+            Magic magicAttack = null, int magicAttackLevel = 0, EnumAreaOfEffect aoe = EnumAreaOfEffect.Single, 
+            EnumAttackRange attackRange = EnumAttackRange.Melee, EnumElementType elementType = EnumElementType.None, 
+            bool isFixedDamage = false, EnumMagicType? magicType = null) {
             _listTargets = listTargets;
             _positionFromWhichToAttack = attackPosition;
             _targetPosition = targetPosition;
@@ -30,6 +34,8 @@ namespace Assets.Scripts.Battle.AI {
             _elementType = elementType;
             _areaOfEffect = aoe;
             _magicType = magicType;
+            _magic = magicAttack;
+            _magicAttackLevel = magicAttackLevel;
             _attackRange = attackRange;
             _isFixedDamage = isFixedDamage;
         }
@@ -65,6 +71,14 @@ namespace Assets.Scripts.Battle.AI {
 
         public EnumAttackRange GetAttackRange() {
             return _attackRange;
+        }
+
+        public Magic GetMagic() {
+            return _magic;
+        }
+
+        public int GetMagicLevel() {
+            return _magicAttackLevel;
         }
 
         private float GetHealScore() {

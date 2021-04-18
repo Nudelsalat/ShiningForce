@@ -32,13 +32,14 @@ namespace Assets.Scripts.Battle {
         private Tilemap _terrainTileMap;
         private readonly List<GameObject> _movementSquareSprites = new List<GameObject>();
         private readonly List<Vector3> _movementSparesVector = new List<Vector3>();
-
-
+        
         private EnumBattleState _currentBattleState;
         private DirectionType _inputDirection;
         private DirectionType _lastInputDirection;
         private EnumCurrentBattleMenu _enumCurrentMenuType = EnumCurrentBattleMenu.none;
         private EnumCurrentBattleMenu _previousMenuTypeState = EnumCurrentBattleMenu.none;
+
+        private LayerMask _layerMaskForce;
 
         private MovementGrid _movementGrid;
         private Cursor _cursor;
@@ -75,6 +76,7 @@ namespace Assets.Scripts.Battle {
             _animatorMagicButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonMagic);
             _animatorStayButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonStay);
             _animatorItemButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonItem);
+            _layerMaskForce = Constants.LayerMaskForce;
         }
 
         void Start() {
@@ -160,7 +162,6 @@ namespace Assets.Scripts.Battle {
             //TODO CHECK win condition. (here?)
             //TODO also check for events, like respawn, other events
 
-            //TODO remove player agency if AI
             if (_turnOrder.Count <= 0) {
                 SetNewTurnOrder();
             }
@@ -175,6 +176,8 @@ namespace Assets.Scripts.Battle {
             SetSelectedUnit(_currentUnit);
             if (_currentUnit is EnemyUnit enemyUnit) {
                 _aiController.AiTurn(enemyUnit, _movementSparesVector);
+            } else if (_currentUnit.GetCharacter().StatusEffects.HasFlag(EnumStatusEffect.confused)) {
+                _aiController.ConfusedTurn(_currentUnit, _movementSparesVector);
             }
         }
 
@@ -366,11 +369,10 @@ namespace Assets.Scripts.Battle {
                     return;
                 }
 
-                //TODO add all into sequence, and process this sequence -> Or stop time for battle units or something...
-                // or target is confused?
                 var isReversedTargetSearch = _magicToAttack?.MagicType == EnumMagicType.Heal ||
                                              _magicToAttack?.MagicType == EnumMagicType.Special ||
                                              _magicToAttack?.MagicType == EnumMagicType.Buff;
+
                 var targets = _cursor.GetTargetsInAreaOfEffect(
                     _movementGrid.GetOpponentLayerMask(_currentUnit, isReversedTargetSearch));
                 ExecuteAttack(targets, _magicToAttack, _magicLevelToAttack);
@@ -422,7 +424,6 @@ namespace Assets.Scripts.Battle {
 
         public void ExecuteAttack(List<Unit> targets, Magic magicToAttack, int magicLevelToAttack) {
             var sentence = new List<string>();
-            var critString = "";
 
             var damage = 1;
             if (magicToAttack != null) {
@@ -433,14 +434,17 @@ namespace Assets.Scripts.Battle {
                     : magicToAttack.Damage[magicLevelToAttack - 1];
             }
 
+            var expScore = 1;
             foreach (var target in targets) {
+                var levelDifference = _currentUnit.GetCharacter().CharStats.Level - target.GetCharacter().CharStats.Level;
+                var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
                 if (magicToAttack == null) {
                     damage = _battleCalculator.GetBaseDamageWeaponAttack(
                         _currentUnit, target, _cursor.GetLandEffect(_cursor.MovePoint.position));
                 }
 
                 var isCrit = _battleCalculator.RollForCrit(_currentUnit);
-                critString = "";
+                var critString = "";
                 //TODO is spell heal or something different?
                 //TODO is elemental resistance vulnerability?
                 if (isCrit) {
@@ -458,30 +462,39 @@ namespace Assets.Scripts.Battle {
                                          $" was defeated!");
                             target.GetCharacter().CharStats.CurrentHp = 0;
                             RemoveUnitFromBattle(target);
-                            //TODO set to destroy. Give EXP if _current unit == force.
+                            expScore += (int)((expBase * (float)damage / target.GetCharacter().CharStats.MaxHp) + expBase);
                         } else {
                             target.GetCharacter().CharStats.CurrentHp -= damage;
+                            expScore += (int)(expBase * (float)damage / target.GetCharacter().CharStats.MaxHp);
                         }
                         break;
                     case EnumMagicType.Heal:
                         var diff = target.GetCharacter().CharStats.MaxHp -
                                    target.GetCharacter().CharStats.CurrentHp;
-                        if (diff <= damage) {
-                            target.GetCharacter().CharStats.CurrentHp = target.GetCharacter().CharStats.MaxHp;
-                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {diff} " +
-                                         $"points.");
-                        } else {
-                            target.GetCharacter().CharStats.CurrentHp += damage;
-                            sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {damage} " +
-                                         $"points.");
-                        }
+                        var pointsToHeal = diff < damage ? diff : damage;
+                       
+                        target.GetCharacter().CharStats.CurrentHp += pointsToHeal;
+                        sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
+                                     $"points.");
+                        var expPoints = 50 * (float)pointsToHeal / target.GetCharacter().CharStats.MaxHp;
+                        expScore = 10 > (int)expPoints ? 10 : (int)expPoints;
+                        
                         break;
                     case EnumMagicType.Special:
+                    case EnumMagicType.Buff:
+                    case EnumMagicType.Debuff:
+                        expScore += 5;
                         magicToAttack.ExecuteMagicAtLevel(_currentUnit.GetCharacter(),
                             target.GetCharacter(), magicLevelToAttack);
                         break;
                 }
+            }
+            if (expScore >= 50) {
+                expScore = 49;
+            }
 
+            if(_layerMaskForce == (_layerMaskForce | (1 << _currentUnit.gameObject.layer))) {
+                sentence.AddRange(_currentUnit.GetCharacter().AddExp(expScore));
             }
 
             _dialogManager.EvokeSentenceDialogue(sentence);

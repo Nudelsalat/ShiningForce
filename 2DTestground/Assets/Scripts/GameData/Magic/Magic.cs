@@ -22,8 +22,6 @@ namespace Assets.Scripts.GameData.Magic {
         public bool IsEmpty() {
             return SpellName.Equals("");
         }
-        // TODO: how to deal with different levels? -> Enable flag?
-        // MP cost? 
 
         public virtual void ExecuteMagicAtLevel(Character caster, Character target, int magicLevel) {
 

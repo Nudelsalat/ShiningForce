@@ -2,22 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Enums;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Magic;
-using Assets.Scripts.Menus.Battle;
-using UnityEditorInternal;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Battle.AI {
     public class AiController : MonoBehaviour {
         public static AiController Instance;
 
         private AiData _currentAiData;
-        private EnemyUnit _currentUnit;
+        private Unit _currentUnit;
         private Character _currentCharacter;
         private List<Vector3> _currentMovementSquares;
 
@@ -76,14 +72,14 @@ namespace Assets.Scripts.Battle.AI {
                             _selectedAttackOption.GetAttackRange());
                         _cursor.SetAttackArea((Vector3) _selectedAttackOption.GetMainTargetPosition(),
                             _selectedAttackOption.GetAoe());
-                        //TODO Menu stuff
                         StartCoroutine(WaitSeconds(0.75f, EnumAiState.SelectTarget));
                     }
                     break;
                 case EnumAiState.SelectTarget:
                     _state = EnumAiState.None;
                     Player.InputDisabledAiBattle = false;
-                    _battleController.ExecuteAttack(_selectedAttackOption.GetTargetList(), _magicToAttack, _magicLevelToAttack);
+                    _battleController.ExecuteAttack(_selectedAttackOption.GetTargetList(), _selectedAttackOption.GetMagic(),
+                        _selectedAttackOption.GetMagicLevel());
                     EndAiTurn();
                     break;
                 case EnumAiState.ExecuteAction:
@@ -99,10 +95,30 @@ namespace Assets.Scripts.Battle.AI {
             Player.InputDisabledAiBattle = true;
             _currentUnit = unit;
             _currentCharacter = unit.GetCharacter();
+            unit.CheckTrigger();
+            _currentAiData = unit.GetAiData();
             _currentMovementSquares = movementSquares;
-            _currentUnit.CheckTrigger();
-            _currentAiData = _currentUnit.GetAiData();
-            
+
+            if (_currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.confused)) {
+                SetConfusedRandomizedBehaviour();
+            }
+
+            ExecuteTurn();
+        }
+
+        public void ConfusedTurn(Unit unit, List<Vector3> movementSquares) {
+           
+            Player.InputDisabledAiBattle = true;
+            _currentUnit = unit;
+            _currentCharacter = unit.GetCharacter();
+            _currentMovementSquares = movementSquares;
+            _currentAiData = new AiData();
+            _currentAiData.SetCharacter(_currentCharacter);
+
+            if (_currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.confused)) {
+                SetConfusedRandomizedBehaviour();
+            }
+
             ExecuteTurn();
         }
 
@@ -121,24 +137,16 @@ namespace Assets.Scripts.Battle.AI {
                 case EnumAiType.Idle:
                 case EnumAiType.InRangeAttack:
                 case EnumAiType.Aggressive:
+                case EnumAiType.InRangeMage:
+                case EnumAiType.AggressiveMage:
+                case EnumAiType.InRangeDebuff:
                     return true;
                 case EnumAiType.Patrole:
                     //TODO....
                     return false;
-                case EnumAiType.InRangeMage:
-                case EnumAiType.AggressiveMage:
-                    var damageMagic = _currentAiData.DamageMagic;
-                    if (damageMagic.IsEmpty()) {
-                        return false;
-                    }
-                    var manaForDamage = _currentUnit.GetCharacter().CharStats.CurrentMp;
-                    if (manaForDamage < _currentAiData.DamageMagic.ManaCost[0]) {
-                        return false;
-                    }
-                    return true;
                 case EnumAiType.Healer:
                     var healMagic = _currentAiData.HealingMagic;
-                    if (healMagic.IsEmpty()) {
+                    if (healMagic == null || healMagic.IsEmpty()) {
                         return false;
                     }
                     var mana = _currentUnit.GetCharacter().CharStats.CurrentMp;
@@ -150,7 +158,7 @@ namespace Assets.Scripts.Battle.AI {
                     TryExecuteAttack(out var allAttackOptions);
                     foreach (var attackOption in allAttackOptions) {
                         if (attackOption.GetTargetList().Exists(x =>
-                            x.GetCharacter().CharStats.CurrentHp <= x.GetCharacter().CharStats.MaxHp / 2)) {
+                            x.GetCharacter().CharStats.CurrentHp <= x.GetCharacter().CharStats.MaxHp * 0.75f)) {
                             ExecuteBestAttackOption(allAttackOptions);
                             return true;
                         }
@@ -168,6 +176,7 @@ namespace Assets.Scripts.Battle.AI {
         }
 
         private void ExecuteAi(EnumAiType aiType) {
+            var atLeastOneOption = false;
             switch (aiType) {
                 case EnumAiType.Idle:
                     ExecuteAttackOption(null);
@@ -193,18 +202,38 @@ namespace Assets.Scripts.Battle.AI {
                     break;
                 case EnumAiType.InRangeMage:
                     SetUpMagicSpell(_currentAiData.DamageMagic);
-                    if (TryExecuteAttack(out allAttackOptions)) {
-                        ExecuteBestAttackOption(allAttackOptions);
+                    atLeastOneOption = TryExecuteAttack(out var allMagicAttackOptions);
+                    _magicToAttack = null;
+                    atLeastOneOption = TryExecuteAttack(out var allPhysicalAttackOptions) || atLeastOneOption;
+                    if (atLeastOneOption) {
+                        allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
+                        ExecuteBestAttackOption(allPhysicalAttackOptions);
                     } else {
                         ExecuteAttackOption(null);
                     }
                     break;
                 case EnumAiType.AggressiveMage:
                     SetUpMagicSpell(_currentAiData.DamageMagic);
-                    if (TryExecuteAttack(out allAttackOptions)) {
-                        ExecuteBestAttackOption(allAttackOptions);
+                    atLeastOneOption = TryExecuteAttack(out allMagicAttackOptions);
+                    _magicToAttack = null;
+                    atLeastOneOption = TryExecuteAttack(out allPhysicalAttackOptions) || atLeastOneOption;
+                    if (atLeastOneOption) {
+                        allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
+                        ExecuteBestAttackOption(allPhysicalAttackOptions);
                     } else {
                         MoveTowardsClosestTarget();
+                    }
+                    break;
+                case EnumAiType.InRangeDebuff:
+                    SetUpMagicSpell(_currentAiData.StatusEffectMagic);
+                    atLeastOneOption = TryExecuteAttack(out allMagicAttackOptions);
+                    _magicToAttack = null;
+                    atLeastOneOption = TryExecuteAttack(out allPhysicalAttackOptions) || atLeastOneOption;
+                    if (atLeastOneOption) {
+                        allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
+                        ExecuteBestAttackOption(allPhysicalAttackOptions);
+                    } else {
+                        ExecuteAttackOption(null);
                     }
                     break;
                 case EnumAiType.Healer:
@@ -254,6 +283,12 @@ namespace Assets.Scripts.Battle.AI {
                 aoe = _currentCharacter.GetAttackAreaOfEffect();
                 attackRange = _currentCharacter.GetAttackRange();
             }
+
+            if (_currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.confused) 
+                && _enemyLayerMask == (_enemyLayerMask | (1 << _currentUnit.gameObject.layer))) {
+                target = target == _enemyLayerMask ? _forceLayerMask : _enemyLayerMask;
+            }
+
             var attackOptionsDict = new Dictionary<Vector3, AttackOption>();
             foreach (var movementSquare in _currentMovementSquares) {
                 // This square is occupied by another unit.
@@ -279,7 +314,8 @@ namespace Assets.Scripts.Battle.AI {
                     if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, target)) {
                         var targetList = GetAllTargetsInAreaOfEffect(vector3, aoe, target);
                         var attackOption = new AttackOption(targetList, movementSquare, 
-                            vector3, attack, aoe, attackRange, elementType, fixedDamage, magicType);
+                            vector3, attack, _magicToAttack, _magicLevelToAttack, 
+                            aoe, attackRange, elementType, fixedDamage, magicType);
                         attackOptionsDict.Add(vector3, attackOption);
                     } else {
                         attackOptionsDict.Add(vector3, null);
@@ -369,19 +405,40 @@ namespace Assets.Scripts.Battle.AI {
         }
 
         private void SetUpMagicSpell(Magic spell) {
-            if (spell.IsEmpty()) {
+            if (spell == null || spell.IsEmpty()) {
                 _magicToAttack = null;
                 return;
             }
             _magicToAttack = spell;
             _magicLevelToAttack = _magicToAttack.CurrentLevel;
-            while (_magicToAttack.ManaCost[_magicLevelToAttack - 1] > _currentCharacter.CharStats.CurrentMp
-                   || _magicLevelToAttack <= 0) {
+            while (_magicLevelToAttack > 0 && 
+                   _magicToAttack.ManaCost[_magicLevelToAttack - 1] > _currentCharacter.CharStats.CurrentMp) {
                 _magicLevelToAttack--;
             }
 
             if (_magicLevelToAttack <= 0) {
                 _magicToAttack = null;
+            }
+        }
+
+        private void SetConfusedRandomizedBehaviour() {
+            var diceRoll = Random.Range(1, 101);
+            switch (diceRoll) {
+                case int n when (n >= 75):
+                    _currentAiData.PrimaryAiType = EnumAiType.InRangeMage;
+                    _currentAiData.SecondaryAiType = EnumAiType.InRangeAttack;
+                    break;
+                case int n when (75 > n && n >= 50):
+                    _currentAiData.PrimaryAiType = EnumAiType.InRangeDebuff;
+                    _currentAiData.SecondaryAiType = EnumAiType.InRangeAttack;
+                    break;
+                case int n when (50 > n && n >= 25):
+                    _currentAiData.PrimaryAiType = EnumAiType.Healer;
+                    _currentAiData.SecondaryAiType = EnumAiType.Idle;
+                    break;
+                case int n when (25 > n && n > 0):
+                    _currentAiData.PrimaryAiType = EnumAiType.Idle;
+                    break;
             }
         }
 

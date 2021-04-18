@@ -15,6 +15,14 @@ public class Stat {
         _baseValue = baseValue;
     }
 
+    public int LevelUp() {
+        var increase = 0;
+        //TODO Calculat chance iguess?
+        increase = 1;
+        _baseValue += increase;
+        return increase;
+    }
+
     public int GetBaseValue() {
         return _baseValue;
     }

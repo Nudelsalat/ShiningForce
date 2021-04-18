@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +43,50 @@ public class CharacterStatistics {
         Movement = movement;
         Exp = exp;
     }
+
+    public bool AddExp(int exp) {
+        Exp += exp;
+        if (Exp < 100) {
+            return false;
+        }
+        Exp -= 100;
+        return true;
+    }
+
+    public string LevelUp() {
+        Level += 1;
+        //TODO ACTUAL LEVEL UP:
+        var sentence = "";
+
+        var attackIncrease = Attack.LevelUp();
+        var defenseIncrease = Defense.LevelUp();
+        var agilityIncrease = Agility.LevelUp();
+        var hpIncrease = 2;
+        var mpIncrease = 2;
+        //var movementIncrease = Movement.LevelUp();
+        if (attackIncrease > 0) {
+            sentence += $"ATTACK increased by {attackIncrease}\n";
+        }
+        if (attackIncrease > 0) {
+            sentence += $"DEFENSE increased by {defenseIncrease}\n";
+        }
+        if (attackIncrease > 0) {
+            sentence += $"AGILITY increased by {agilityIncrease}\n";
+        }
+        if (hpIncrease > 0) {
+            sentence += $"HP increased by {hpIncrease}\n";
+            MaxHp += hpIncrease;
+            CurrentHp += hpIncrease;
+        }
+        if (mpIncrease > 0) {
+            sentence += $"HP increased by {mpIncrease}\n";
+            MaxMp += mpIncrease;
+            CurrentMp += mpIncrease;
+        }
+
+        return sentence;
+    }
+
 
     public void Equip(Equipment equipment) {
         if (equipment == null) {

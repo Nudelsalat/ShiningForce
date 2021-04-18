@@ -172,7 +172,6 @@ namespace Assets.Scripts.Menus {
                         break;
                     case "Repair":
                         _enumCurrentMenuType = EnumCurrentMerchantMenu.repair;
-                        //TODO
                         OpenRepairMenu();
                         _fourWayButtonMenu.CloseButtons();
                         break;
