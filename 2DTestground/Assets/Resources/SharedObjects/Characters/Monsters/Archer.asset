@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354664c837fd3b47a9d2a9af1414bcf, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Galam Archer
+  IsPromoted: 0
+  PortraitSprite: {fileID: 0}
+  AnimatorSprite: {fileID: 9100000, guid: 4ac651526a78c1147b02096911971bb9, type: 2}
+  ClassType: 30
+  CharacterType: 17
+  MovementType: 4
+  CharStats:
+    Level: 3
+    Exp: 0
+    MaxHp: 15
+    CurrentHp: 15
+    MaxMp: 0
+    CurrentMp: 0
+    Attack:
+      _baseValue: 5
+    Defense:
+      _baseValue: 10
+    Agility:
+      _baseValue: 5
+    Movement:
+      _baseValue: 5
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  CharacterInventory:
+  - item1: {fileID: 11400000, guid: c1a5f684f034fa9469addae07e1f101d, type: 2}
+    item2: 1
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0

@@ -19,11 +19,12 @@ MonoBehaviour:
     type: 3}
   PositionInInventory: -1
   EnumItemType: 1
-  AttackModifier: 0
+  AttackModifier: 7
   DefenseModifier: 0
   AgilityModifier: 0
   MovementModifier: 0
   EquipmentForClass: 020000001000000011000000
   EquipmentType: 0
   AttackRange: 2
+  AreaOfEffect: 0
   IsEquipped: 0
