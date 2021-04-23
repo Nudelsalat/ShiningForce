@@ -54,7 +54,7 @@ namespace Assets.Scripts.Battle.AI {
                 case EnumAiState.MoveCursorToUnit:
                     if (_cursor.UnitReached && !Player.IsInDialogue) {
                         if (_selectedAttackOption?.GetAttackPosition() == null) {
-                            EndAiTurn();
+                            StartCoroutine(WaitSeconds(0.75f, EnumAiState.ExecuteAction));
                             return;
                         }
                         _cursor.ReturnToPosition(_currentMovementSquares, (Vector3)_selectedAttackOption.GetAttackPosition(), 8f);
@@ -80,9 +80,11 @@ namespace Assets.Scripts.Battle.AI {
                     Player.InputDisabledAiBattle = false;
                     _battleController.ExecuteAttack(_selectedAttackOption.GetTargetList(), _selectedAttackOption.GetMagic(),
                         _selectedAttackOption.GetMagicLevel());
-                    EndAiTurn();
+                    //ExecuteAttack does already end the turn
+                    _state = EnumAiState.None;
                     break;
                 case EnumAiState.ExecuteAction:
+                    EndAiTurn();
                     break;
             }
         }
@@ -274,7 +276,7 @@ namespace Assets.Scripts.Battle.AI {
                 elementType = _magicToAttack.ElementType;
                 aoe = _magicToAttack.AreaOfEffect[_magicLevelToAttack - 1];
                 attackRange = _magicToAttack.AttackRange[_magicLevelToAttack - 1];
-                if (_magicToAttack.MagicType == EnumMagicType.Heal || _magicToAttack.MagicType == EnumMagicType.Buff) {
+                if (_battleController.IsReverseTarget(_magicToAttack)) {
                     target = _enemyLayerMask;
                 }
                 magicType = _magicToAttack.MagicType;

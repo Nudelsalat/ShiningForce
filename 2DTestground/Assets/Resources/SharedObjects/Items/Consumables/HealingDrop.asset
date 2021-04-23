@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f1eb1c28e286349ac4e01a0b130296, type: 3}
+  m_Name: HealingDrop
+  m_EditorClassIdentifier: 
+  ItemName: Healing Drop
+  Price: 300
+  IsUnique: 0
+  ItemSprite: {fileID: 8550261646804675138, guid: 0e3d7f9811d80574693048be27c1a0b9,
+    type: 3}
+  PositionInInventory: -1
+  EnumItemType: 0
+  RestoreType: 0
+  StatusEffectsToCure: 
+  AmountToRestore: 15
+  Magic: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
+  MagicLevel: 3

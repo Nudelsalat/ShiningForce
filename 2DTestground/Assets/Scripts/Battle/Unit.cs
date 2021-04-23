@@ -20,16 +20,7 @@ namespace Assets.Scripts.Battle {
 
 #if UNITY_EDITOR
         void OnValidate() {
-            // fix gridPosition
-            var position = transform.position;
-            if (position.x % 1 != 0.5) {
-                transform.position = new Vector3((int)position.x + 0.5f, position.y);
-            }
-            if (position.y % 1 != 0.75) {
-                if (position.x % 0.5f > 0.25f) {
-                    transform.position = new Vector3(position.x, (int)position.y + 0.75f);
-                }
-            }
+            FixGridPosition();
 
             var sprite = GetComponent<SpriteRenderer>();
             var clip = Character.AnimatorSprite.animationClips[0];
@@ -45,12 +36,22 @@ namespace Assets.Scripts.Battle {
             _animator.runtimeAnimatorController = _character.AnimatorSprite;
             _animator.SetInteger("moveDirection", 2);
             _spriteRenderer = this.GetComponent<SpriteRenderer>();
+            FixGridPosition();
         }
 
         protected void Start() {
             _battleController = BattleController.Instance;
             _quickInfoCurrentUnit = QuickInfoUi.Instance;
             _audioManager = AudioManager.Instance;
+        }
+
+        private void FixGridPosition() {
+            // fix gridPosition
+            var position = transform.position;
+            var x = position.x >= 0 ? (int) position.x + 0.5f : (int)position.x - 0.5f;
+            var y = position.y >= 0 ? (int) position.y + 0.75f : (int)position.y - 0.25f;
+            transform.position = new Vector3(x, y);
+           
         }
 
         public Character GetCharacter() {

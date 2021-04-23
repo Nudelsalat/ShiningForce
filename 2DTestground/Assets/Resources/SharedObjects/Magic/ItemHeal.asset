@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef0fbc430bbcdc46ae1048e4f9b0cd7, type: 3}
+  m_Name: ItemHeal
+  m_EditorClassIdentifier: 
+  SpellName: ItemHeal
+  SpellSprite: {fileID: 1427642529252005379, guid: 0f3180743aedaab4393bc7b33b4edf3e,
+    type: 3}
+  CurrentLevel: 1
+  PositionInInventory: -1
+  MaxLevel: 4
+  AttackRange: 01000000010000000100000001000000
+  AreaOfEffect: 00000000000000000000000000000000
+  MagicType: 1
+  ElementType: 0
+  Damage: 0a000000140000001e000000fa000000
+  ManaCost: 00000000000000000000000000000000

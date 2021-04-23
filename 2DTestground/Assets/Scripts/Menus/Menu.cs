@@ -176,7 +176,7 @@ public class Menu : MonoBehaviour
         }
     }
     #endregion
-
+    
     #region CharacterSelection
 
     private void HandleCharacterSelectionMenu() {
@@ -318,17 +318,17 @@ public class Menu : MonoBehaviour
                         CloseMagicMenu();
                         OpenMainButtonMenu();
                     }
-
                     break;
             }
         }
     }
 
+    #endregion
+
     private void RemoveCurrentItem() {
         _firstSelectedPartyMember.RemoveItem(_firstSelectedItem);
         LoadInventory(_party[_currentListItemSelected]);
         _characterSelector.LoadCharacterList(_party,null,_currentListItemSelected);
-
     }
 
     private void HandleInventoryMenu() {
@@ -372,7 +372,7 @@ public class Menu : MonoBehaviour
             _memberInventoryUI.SelectObject(_inputDirection);
             if (Input.GetButtonUp("Interact") && !Player.IsInDialogue) {
                 var selectedItem = _memberInventoryUI.GetSelectedGameItem();
-                if (_firstSelectedItem == null && !selectedItem.IsSet()) {
+                if (_firstSelectedItem == null && selectedItem.IsEmpty()) {
                     _dialogManager.EvokeSingleSentenceDialogue("Select an Item first ...");
                     return;
                 }
@@ -429,7 +429,7 @@ public class Menu : MonoBehaviour
 
     private bool TryUseItemOnCharacter(PartyMember selectedPartyMember) {
         var itemToUse = (Consumable) _firstSelectedItem;
-        return itemToUse.TryUseItem(selectedPartyMember);
+        return itemToUse.TryUseItem(selectedPartyMember, selectedPartyMember);
     }
 
     private void HandleGiveMenu(GameItem selectedItem) {
@@ -449,7 +449,7 @@ public class Menu : MonoBehaviour
             _secondSelectedItem = selectedItem;
 
             var sentence = "";
-            if (!selectedItem.IsSet()) {
+            if (selectedItem.IsEmpty()) {
                 sentence = $"Gave {_firstSelectedPartyMember.Name.AddColor(Constants.Orange)}'s {_firstSelectedItem.ItemName.AddColor(Color.green)} " +
                            $"to {_secondSelectedPartyMember.Name.AddColor(Constants.Orange)}";
             } else {
@@ -541,8 +541,6 @@ public class Menu : MonoBehaviour
         _itemsToTradeOne.sprite = _blankSprite;
         _itemsToTradeTwo.sprite = _blankSprite;
     }
-
-    #endregion
 
     private void HandleMainMenu() {
         _currentlyAnimatedButton = _fourWayButtonMenu.SetDirection(_inputDirection);

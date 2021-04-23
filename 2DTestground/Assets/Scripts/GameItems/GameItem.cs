@@ -12,8 +12,8 @@ public class GameItem : ScriptableObject {
     public DirectionType PositionInInventory = DirectionType.none;
     public EnumItemType EnumItemType = EnumItemType.none;
 
-    public bool IsSet() {
-        return EnumItemType != EnumItemType.none;
+    public bool IsEmpty() {
+        return EnumItemType == EnumItemType.none;
     }
 
     protected GameItem() {

@@ -20,8 +20,6 @@ namespace Assets.Scripts.Menus.Battle {
         private Magic[] _magicList;
         private GameItem _currentSelectedGameItem;
         private Magic _currentSelectedMagic;
-        private Character _partyMember;
-        private bool _isEquipment;
         private bool _showInventory;
         private int _currentSelectedMagicLevel;
 
@@ -51,53 +49,23 @@ namespace Assets.Scripts.Menus.Battle {
 
         public void LoadMemberInventory(Character character) {
             OpenButtons();
+            _currentSelectedMagic = null;
             var gameItems = character.GetInventory();
 
-            _isEquipment = false;
-            _partyMember = null;
             _gameItemList = gameItems;
             for (int i = 0; i < gameItems.Length; i++) {
                 var itemSprite = gameItems[i].ItemSprite;
                 _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite != null ? itemSprite : _blankSprite;
-
                 _gameItemList[i].PositionInInventory = (DirectionType) i;
-
-                _itemList[i].transform.Find("ItemName").gameObject.GetComponent<Text>().text = gameItems[i].ItemName;
-
-                if (gameItems[i] is Equipment equipment && equipment.IsEquipped) {
-                    _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Visible;
-                }
-                else {
-                    _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color =
-                        Constants.Invisible;
-                }
             }
             SelectObject(DirectionType.up);
         }
-
-        public void LoadMemberEquipmentInventory(Character member) {
-            OpenButtons();
-            
-            _currentSelectedItem.transform.Find("ItemName").gameObject.SetActive(true);
-            _partyMember = member;
-            _isEquipment = true;
-            _gameItemList = member?.GetInventory();
-
-            for (int i = 0; i < _gameItemList.Length; i++) {
-                var itemSprite = _gameItemList[i].ItemSprite;
-                _itemList[i].gameObject.GetComponent<Image>().sprite = itemSprite != null ? itemSprite : _blankSprite;
-                _itemList[i].transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
-            }
-
-            SelectObject(_currentSelectedGameItem != null ? _currentSelectedGameItem.PositionInInventory : 0);
-        }
-
+        
         public void LoadMemberMagic(Character character) {
             OpenButtons();
+            _currentSelectedGameItem = null;
             var gameItems = character.GetMagic();
 
-            _isEquipment = false;
-            _partyMember = null;
             _magicList = gameItems;
             for (int i = 0; i < gameItems.Length; i++) {
                 var itemSprite = gameItems[i].SpellSprite;
@@ -106,6 +74,16 @@ namespace Assets.Scripts.Menus.Battle {
                 _magicList[i].PositionInInventory = (DirectionType) i;
             }
             SelectMagic(DirectionType.up);
+        }
+
+        public void ReloadSelection() {
+            if (_currentSelectedGameItem) {
+                SetCurrentSelectedItem(_currentSelectedItem, _currentSelectedGameItem);
+            }
+
+            if (_currentSelectedMagic) {
+                SetCurrentSelectedMagic(_currentSelectedItem, _currentSelectedMagic);
+            }
         }
 
         public void SelectObject(DirectionType direction) {
@@ -185,11 +163,6 @@ namespace Assets.Scripts.Menus.Battle {
                 .text = $"MP {_currentSelectedMagic.ManaCost[_currentSelectedMagicLevel - 1]}";
         }
 
-        public void UnselectObject() {
-            _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
-            _currentSelectedItem.transform.Find("ItemName").GetComponent<Text>().color = Color.white;
-        }
-
         public GameItem GetSelectedGameItem() {
             return _currentSelectedGameItem;
         }
@@ -217,17 +190,33 @@ namespace Assets.Scripts.Menus.Battle {
         }
 
         private void SetCurrentSelectedItem(GameObject selectedGameObject, GameItem selectedItem) {
+            if (selectedItem.IsEmpty()) {
+                return;
+            }
             if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
                 _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
+            }
+            CurrentSelectedItemLabel.transform.Find("ItemName").gameObject.GetComponent<Text>()
+                .text = selectedItem.ItemName;
+
+            for (int j = 1; j <= 4; j++) {
+                var spawnPoint = CurrentSelectedItemLabel.transform.Find("SpellLevel/" + j.ToString());
+                foreach (Transform child in spawnPoint.transform) {
+                    Destroy(child.gameObject);
+                }
+            }
+            var mpCostText = CurrentSelectedItemLabel.transform.Find("MPCost").gameObject.GetComponent<Text>();
+            if (selectedItem is Equipment equipment && equipment.IsEquipped) {
+                mpCostText.text = $"EQUIPPED";
+                mpCostText.color = Constants.Orange;
+            } else {
+                mpCostText.text = "";
+                mpCostText.color = Constants.Visible;
             }
 
             _currentSelectedItem = selectedGameObject;
             selectedGameObject.transform.GetComponent<Image>().color = Constants.Orange;
             _currentSelectedGameItem = selectedItem;
-
-            if (_isEquipment) {
-                LoadEquipmentStats();
-            }
         }
 
         private void SetCurrentSelectedMagic(GameObject selectedGameObject, Magic selectedMagic) {
@@ -259,57 +248,17 @@ namespace Assets.Scripts.Menus.Battle {
                     }
                 }
             }
-            CurrentSelectedItemLabel.transform.Find("MPCost").gameObject.GetComponent<Text>()
-                .text = $"MP {selectedMagic.ManaCost[selectedMagic.CurrentLevel - 1]}";
-            
+
+            var mpCostText = CurrentSelectedItemLabel.transform.Find("MPCost").gameObject.GetComponent<Text>();
+            mpCostText.text = $"MP {selectedMagic.ManaCost[selectedMagic.CurrentLevel - 1]}";
+            mpCostText.color = Constants.Visible;
 
             _currentSelectedMagicLevel = selectedMagic.CurrentLevel;
             _currentSelectedItem = selectedGameObject;
             selectedGameObject.transform.GetComponent<Image>().color = Constants.Orange;
             _currentSelectedMagic = selectedMagic;
         }
-
-        private void LoadEquipmentStats() {
-            Equipment newEquipment = null;
-            Equipment oldEquipment = null;
-            if (_currentSelectedGameItem is Equipment equipment) {
-                newEquipment = equipment;
-                oldEquipment = _partyMember.GetCurrentEquipment(equipment.EquipmentType);
-
-                var text = CurrentSelectedItemLabel.transform.Find("ItemName").GetComponent<Text>();
-                text.text = _currentSelectedGameItem.ItemName;
-                text.color = Constants.Visible;
-
-
-                CurrentSelectedItemLabel.transform.Find("Equipped").gameObject.GetComponent<Image>().color =
-                    equipment.IsEquipped ? Constants.Visible : Constants.Invisible;
-
-            }
-            else {
-                CurrentSelectedItemLabel.transform.Find("Equipped").gameObject.GetComponent<Image>().color =
-                    Constants.Invisible;
-                var text = CurrentSelectedItemLabel.transform.Find("ItemName").GetComponent<Text>();
-                text.text = "Select Equipment";
-                text.color = Color.red;
-            }
-
-            _itemList[0].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-                "ATTACK" + _partyMember.CharStats.CalculateNewAttack(newEquipment, oldEquipment).ToString().PadLeft(6);
-
-            _itemList[1].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-                "DEFENSE" + _partyMember.CharStats.CalculateNewDefense(newEquipment, oldEquipment).ToString()
-                    .PadLeft(5);
-
-            _itemList[2].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-                "AGILITY" + _partyMember.CharStats.CalculateNewAgility(newEquipment, oldEquipment).ToString()
-                    .PadLeft(5);
-
-            _itemList[3].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-                "MOVEMENT" + _partyMember.CharStats.CalculateNewMovement(newEquipment, oldEquipment).ToString()
-                    .PadLeft(4);
-
-        }
-
+        
         IEnumerator WaitForTenthASecond() {
             yield return new WaitForSeconds(0.1f);
             if (!_showInventory) {

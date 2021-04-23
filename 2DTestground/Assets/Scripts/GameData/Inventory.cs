@@ -104,7 +104,7 @@ public sealed class Inventory {
     }
     public bool TryAddGameItemToPartyMember(PartyMember partyMember, GameItem item) {
         for(int i = 0; i < 4; i++) {
-            if (!partyMember.GetInventory()[i].IsSet()) {
+            if (partyMember.GetInventory()[i].IsEmpty()) {
                 item.PositionInInventory = (DirectionType) i;
                 partyMember.GetInventory()[i] = item;
                 return true;

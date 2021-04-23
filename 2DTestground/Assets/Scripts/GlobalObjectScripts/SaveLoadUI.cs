@@ -36,9 +36,10 @@ class SaveLoadUI :MonoBehaviour {
 
         Vector3 position = new Vector3(data.Position[0], data.Position[1], data.Position[2]);
         var player = GameObject.Find("Player");
-        var movePoint = GameObject.Find("MovePoint");
+        var movePoint = GameObject.Find("movePoint");
         var mainCamera = GameObject.Find("Main Camera");
-        player.transform.position = movePoint.transform.position = position;
+        player.transform.position = position;
+        movePoint.transform.position = position;
         mainCamera.transform.position = new Vector3(position.x, position.y, mainCamera.transform.position.z);
 
         var partyList = new List<PartyMember>();

@@ -235,7 +235,7 @@ namespace Assets.Scripts.Menus {
             if (Input.GetButtonUp("Interact")) {
                 var inventory = selectedMember.GetInventory();
                 for (int i = 0; i < 4; i++) {
-                    if (inventory[i].IsSet()) {
+                    if (!inventory[i].IsEmpty()) {
                         continue;
                     }
                     
@@ -293,7 +293,7 @@ namespace Assets.Scripts.Menus {
         }
 
         private void TrySellSelectedItem(GameItem selectedItem) {
-            if (!selectedItem.IsSet()) {
+            if (selectedItem.IsEmpty()) {
                 _dialogManager.EvokeSingleSentenceDialogue("Please select an item to sell...");
             }
 

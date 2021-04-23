@@ -76,8 +76,9 @@ namespace Assets.Scripts.EditorScripts {
             return -1;
         }
 
+        /*
         public void LateUpdate() {
-            //_spriteRenderer.sprite = _sprite;
+            _spriteRenderer.sprite = _sprite;
         }
 
         public void UpdateCharacterTexture() {
@@ -90,5 +91,6 @@ namespace Assets.Scripts.EditorScripts {
 
             _sprite.name = tempName;
         }
+        */
     }
 }

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Antidote
   Price: 20
+  IsUnique: 0
   ItemSprite: {fileID: -8275941207053336697, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
   PositionInInventory: -1
   EnumItemType: 0
-  RestoreType: 2
-  StatusEffectsToCure: 01000000
-  AmountToRestore: 0
+  Magic: {fileID: 11400000, guid: 7ed50877bb2377348ab1278e287939b5, type: 2}
+  MagicLevel: 1

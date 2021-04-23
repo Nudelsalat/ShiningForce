@@ -10,6 +10,9 @@ namespace Assets.Enums {
         Heal,
         Special,
         Buff,
-        Debuff
+        Debuff,
+        RestoreMP,
+        RestoreBoth,
+        Cure
     }
 }

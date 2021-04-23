@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Fairy Tear
   Price: 300
+  IsUnique: 0
   ItemSprite: {fileID: -6667363313952836740, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
   PositionInInventory: -1
@@ -21,3 +22,5 @@ MonoBehaviour:
   RestoreType: 1
   StatusEffectsToCure: 
   AmountToRestore: 20
+  Magic: {fileID: 11400000, guid: b14199803220daf41b86d85c7d097f6a, type: 2}
+  MagicLevel: 2

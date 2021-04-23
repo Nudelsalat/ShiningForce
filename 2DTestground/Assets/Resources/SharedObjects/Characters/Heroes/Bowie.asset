@@ -44,7 +44,7 @@ MonoBehaviour:
     item2: 0
   - item1: {fileID: 11400000, guid: e54790970a0e95143a7dbf3625186494, type: 2}
     item2: 1
-  - item1: {fileID: 0}
+  - item1: {fileID: 11400000, guid: 0bf6ae881a6ebef48a54e07f90576bbd, type: 2}
     item2: 0
   - item1: {fileID: 0}
     item2: 0
