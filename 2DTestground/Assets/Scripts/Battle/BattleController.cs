@@ -47,12 +47,14 @@ namespace Assets.Scripts.Battle {
 
         private LayerMask _layerMaskForce;
 
+        private Transform _healthBars;
         private MovementGrid _movementGrid;
         private Cursor _cursor;
         private Player _player;
         private OverviewCameraMovement _overviewCameraMovment;
         private FourWayButtonMenu _fourWayButtonMenu;
         private FourWayMagicMenu _fourWayMagicMenu;
+        private QuickStats _quickStats;
         private AudioManager _audioManager;
         private DialogManager _dialogManager;
         private BattleCalculator _battleCalculator;
@@ -84,11 +86,12 @@ namespace Assets.Scripts.Battle {
             _animatorStayButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonStay);
             _animatorItemButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonItem);
 
-
             _animatorUseButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonUse);
             _animatorGiveButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonGive);
             _animatorDropButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonDrop);
             _animatorEquipButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonEquip);
+
+            _healthBars = transform.Find("HealthBars").GetComponent<Transform>();
 
             _layerMaskForce = Constants.LayerMaskForce;
         }
@@ -105,8 +108,11 @@ namespace Assets.Scripts.Battle {
             _menu = Menu.Instance;
             _inventory = Inventory.Instance;
             _aiController = AiController.Instance;
+            _quickStats = QuickStats.Instance;
             _battleCalculator = new BattleCalculator();
+
             transform.gameObject.SetActive(false);
+            _healthBars.gameObject.SetActive(false);
         }
 
         public void BeginBattle() {
@@ -139,6 +145,7 @@ namespace Assets.Scripts.Battle {
                 }
             }
 
+            CreateAndAssignQuickHealthBars();
             LoadPartyMembersAsForce();
             SetNewTurnOrder();
             NextUnit();
@@ -207,7 +214,15 @@ namespace Assets.Scripts.Battle {
         void Update() {
             if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
                 || !_cursor.UnitReached || Player.PlayerIsInMenu == EnumMenuType.pause) {
+                _healthBars.gameObject.SetActive(false);
                 return;
+            }
+
+            if (Input.GetButtonDown("Special")) {
+                _healthBars.gameObject.SetActive(true);
+            }
+            if (Input.GetButtonUp("Special")) {
+                _healthBars.gameObject.SetActive(false);
             }
 
             if (_currentBattleState == EnumBattleState.unitMenu) {
@@ -329,6 +344,7 @@ namespace Assets.Scripts.Battle {
                         break;
                     case "Equip":
                         _currentItemMenu = EnumCurrentMenu.equip;
+                        _quickStats.ShowQuickInfo(_currentUnit.GetCharacter(), _currentUnit.GetCharacter().GetInventory()[0]);
                         break;
                 }
                 _fourWayMagicMenu.LoadMemberInventory(_currentUnit.GetCharacter());
@@ -510,7 +526,11 @@ namespace Assets.Scripts.Battle {
                 if (selectedItem is Consumable consumable) {
                     GenerateMovementSquaresForAction(_currentUnit.transform.position, consumable.Magic.AttackRange[consumable.MagicLevel-1]);
                 }
+            } else if (_inputDirection != DirectionType.none && _currentItemMenu == EnumCurrentMenu.equip) {
+                var selectedItem = _fourWayMagicMenu.GetSelectedGameItem();
+                _quickStats.ShowQuickInfo(_currentUnit.GetCharacter(), selectedItem);
             }
+
             if (Input.GetButtonUp("Interact")) {
                 _selectedItem = _fourWayMagicMenu.GetSelectedGameItem();
                 if (_selectedItem.IsEmpty()) {
@@ -534,6 +554,8 @@ namespace Assets.Scripts.Battle {
                         }
                         break;
                     case EnumCurrentMenu.give:
+                        //TODO: don't use the "attack" mechanic for that...
+                        //TODO: save first item for swap logic
                         if (TryInitializeAttack(EnumAttackRange.Melee, EnumAreaOfEffect.Single, true)) {
                             _fourWayMagicMenu.CloseButtons();
                             _enumCurrentMenuType = EnumCurrentBattleMenu.attack;
@@ -557,14 +579,14 @@ namespace Assets.Scripts.Battle {
                                     _dialogManager.EvokeSingleSentenceDialogue(
                                         $"{equipment.ItemName.AddColor(Color.green)} successfully unequipped.");
                                     _fourWayMagicMenu.ReloadSelection();
-                                    //TODO Stat-window change
+                                    _quickStats.ShowQuickInfo(character, equipment);
                                 } else {
                                     character.CharStats.Equip(equipment);
                                     character.CharStats.UnEquip(oldEquipment);
                                     _dialogManager.EvokeSingleSentenceDialogue(
                                         $"{equipment.ItemName.AddColor(Color.green)} successfully equipped.");
                                     _fourWayMagicMenu.ReloadSelection();
-                                    //TODO Stat-window change
+                                    _quickStats.ShowQuickInfo(character, equipment);
                                 }
                             }
                             _dialogManager.EvokeSingleSentenceDialogue(
@@ -582,6 +604,7 @@ namespace Assets.Scripts.Battle {
 
             if (Input.GetButtonUp("Back")) {
                 DestroyMovementSquareSprites();
+                _quickStats.CloseQuickInfo();
                 _currentItemMenu = EnumCurrentMenu.none;
                 _fourWayMagicMenu.CloseButtons();
                 _fourWayButtonMenu.OpenButtons();
@@ -593,100 +616,105 @@ namespace Assets.Scripts.Battle {
             var expScore = 1;
             var damage = 1;
 
-            switch (_previousMenuTypeState) {
-                case EnumCurrentBattleMenu.item:
-                    if (!ExecuteItem(targets, out expScore)) {
-                        return;
+            if (_previousMenuTypeState == EnumCurrentBattleMenu.item) {
+                if (!ExecuteItem(targets, out expScore)) {
+                    return;
+                }
+            } else if (magicToAttack != null && !magicToAttack.IsEmpty()) {
+                _currentUnit.GetCharacter().CharStats.CurrentMp -= magicToAttack.ManaCost[magicLevelToAttack - 1];
+                damage = _currentUnit.GetCharacter().IsPromoted
+                    ? (int) Math.Round(magicToAttack.Damage[magicLevelToAttack - 1] * 1.25f,
+                        MidpointRounding.AwayFromZero)
+                    : magicToAttack.Damage[magicLevelToAttack - 1];
+
+                foreach (var target in targets) {
+                    var levelDifference = _currentUnit.GetCharacter().CharStats.Level -
+                                          target.GetCharacter().CharStats.Level;
+                    var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
+
+                    var isCrit = _battleCalculator.RollForCrit(_currentUnit);
+                    var critString = "";
+                    //TODO is elemental resistance vulnerability?
+                    if (isCrit) {
+                        damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
+                        critString = "Critical hit!\n";
                     }
-                    break;
-                case EnumCurrentBattleMenu.magic:
-                    _currentUnit.GetCharacter().CharStats.CurrentMp -= magicToAttack.ManaCost[magicLevelToAttack - 1]; 
-                    damage = _currentUnit.GetCharacter().IsPromoted
-                        ? (int)Math.Round(magicToAttack.Damage[magicLevelToAttack - 1] * 1.25f,
-                            MidpointRounding.AwayFromZero)
-                        : magicToAttack.Damage[magicLevelToAttack - 1];
+
+                    switch (magicToAttack.MagicType) {
+                        case EnumMagicType.Damage:
+                            sentence.Add(
+                                $"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
+                                $"points of damage.");
+                            if (target.GetCharacter().CharStats.CurrentHp <= damage) {
+                                sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
+                                             $" was defeated!");
+                                target.GetCharacter().CharStats.CurrentHp = 0;
+                                RemoveUnitFromBattle(target);
+                                expScore += (int) ((expBase * (float) damage / target.GetCharacter().CharStats.MaxHp) +
+                                                   expBase);
+                            }
+                            else {
+                                target.GetCharacter().CharStats.CurrentHp -= damage;
+                                expScore += (int) (expBase * (float) damage / target.GetCharacter().CharStats.MaxHp);
+                            }
+
+                            break;
+                        case EnumMagicType.Heal:
+                            var diff = target.GetCharacter().CharStats.MaxHp -
+                                       target.GetCharacter().CharStats.CurrentHp;
+                            var pointsToHeal = diff < damage ? diff : damage;
+
+                            target.GetCharacter().CharStats.CurrentHp += pointsToHeal;
+                            sentence.Add(
+                                $"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
+                                $"points.");
+                            var expPoints = 50 * (float) pointsToHeal / target.GetCharacter().CharStats.MaxHp;
+                            expScore = 10 > (int) expPoints ? 10 : (int) expPoints;
+
+                            break;
+                        case EnumMagicType.Special:
+                        case EnumMagicType.Buff:
+                        case EnumMagicType.Debuff:
+                            expScore += 5;
+                            magicToAttack.ExecuteMagicAtLevel(_currentUnit.GetCharacter(),
+                                target.GetCharacter(), magicLevelToAttack);
+                            break;
+                    }
+                }
+            } else { 
+                //TODO REFACTOR
+                foreach (var target in targets) {
+                    var levelDifference = _currentUnit.GetCharacter().CharStats.Level -
+                                          target.GetCharacter().CharStats.Level;
+                    var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
+                    damage = _battleCalculator.GetBaseDamageWeaponAttack(
+                            _currentUnit, target, _cursor.GetLandEffect(_cursor.MovePoint.position));
                     
-                    foreach (var target in targets) {
-                        var levelDifference = _currentUnit.GetCharacter().CharStats.Level - target.GetCharacter().CharStats.Level;
-                        var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
-                        
-                        var isCrit = _battleCalculator.RollForCrit(_currentUnit);
-                        var critString = "";
-                        //TODO is elemental resistance vulnerability?
-                        if (isCrit) {
-                            damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
-                            critString = "Critical hit!\n";
-                        }
 
-                        switch (magicToAttack.MagicType) {
-                            case EnumMagicType.Damage:
-                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
-                                             $"points of damage.");
-                                if (target.GetCharacter().CharStats.CurrentHp <= damage) {
-                                    sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
-                                                 $" was defeated!");
-                                    target.GetCharacter().CharStats.CurrentHp = 0;
-                                    RemoveUnitFromBattle(target);
-                                    expScore += (int)((expBase * (float)damage / target.GetCharacter().CharStats.MaxHp) + expBase);
-                                } else {
-                                    target.GetCharacter().CharStats.CurrentHp -= damage;
-                                    expScore += (int)(expBase * (float)damage / target.GetCharacter().CharStats.MaxHp);
-                                }
-                                break;
-                            case EnumMagicType.Heal:
-                                var diff = target.GetCharacter().CharStats.MaxHp -
-                                           target.GetCharacter().CharStats.CurrentHp;
-                                var pointsToHeal = diff < damage ? diff : damage;
-
-                                target.GetCharacter().CharStats.CurrentHp += pointsToHeal;
-                                sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
-                                             $"points.");
-                                var expPoints = 50 * (float)pointsToHeal / target.GetCharacter().CharStats.MaxHp;
-                                expScore = 10 > (int)expPoints ? 10 : (int)expPoints;
-
-                                break;
-                            case EnumMagicType.Special:
-                            case EnumMagicType.Buff:
-                            case EnumMagicType.Debuff:
-                                expScore += 5;
-                                magicToAttack.ExecuteMagicAtLevel(_currentUnit.GetCharacter(),
-                                    target.GetCharacter(), magicLevelToAttack);
-                                break;
-                        }
+                    var isCrit = _battleCalculator.RollForCrit(_currentUnit);
+                    var critString = "";
+                    //TODO is elemental resistance vulnerability?
+                    if (isCrit) {
+                        damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
+                        critString = "Critical hit!\n";
                     }
-                    break;
-                case EnumCurrentBattleMenu.none:
-                case EnumCurrentBattleMenu.attack:
-                    foreach (var target in targets) {
-                        var levelDifference = _currentUnit.GetCharacter().CharStats.Level -
-                                              target.GetCharacter().CharStats.Level;
-                        var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
-                        if (magicToAttack == null) {
-                            damage = _battleCalculator.GetBaseDamageWeaponAttack(
-                                _currentUnit, target, _cursor.GetLandEffect(_cursor.MovePoint.position));
-                        }
 
-                        var isCrit = _battleCalculator.RollForCrit(_currentUnit);
-                        var critString = "";
-                        //TODO is elemental resistance vulnerability?
-                        if (isCrit) {
-                            damage = _battleCalculator.GetCritDamage(_currentUnit, damage);
-                            critString = "Critical hit!\n";
-                        }
-                        sentence.Add($"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
-                                     $"points of damage.");
-                        if (target.GetCharacter().CharStats.CurrentHp <= damage) {
-                            sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
-                                         $" was defeated!");
-                            target.GetCharacter().CharStats.CurrentHp = 0;
-                            RemoveUnitFromBattle(target);
-                            expScore += (int)((expBase * (float)damage / target.GetCharacter().CharStats.MaxHp) + expBase);
-                        } else {
-                            target.GetCharacter().CharStats.CurrentHp -= damage;
-                            expScore += (int)(expBase * (float)damage / target.GetCharacter().CharStats.MaxHp);
-                        }
+                    sentence.Add(
+                        $"{critString}{target.GetCharacter().Name.AddColor(Constants.Orange)} suffered {damage} " +
+                        $"points of damage.");
+                    if (target.GetCharacter().CharStats.CurrentHp <= damage) {
+                        sentence.Add($"{target.GetCharacter().Name.AddColor(Constants.Orange)}" +
+                                     $" was defeated!");
+                        target.GetCharacter().CharStats.CurrentHp = 0;
+                        RemoveUnitFromBattle(target);
+                        expScore += (int) ((expBase * (float) damage / target.GetCharacter().CharStats.MaxHp) +
+                                           expBase);
                     }
-                    break;
+                    else {
+                        target.GetCharacter().CharStats.CurrentHp -= damage;
+                        expScore += (int) (expBase * (float) damage / target.GetCharacter().CharStats.MaxHp);
+                    }
+                }
             }
             
             if (expScore >= 50) {
@@ -898,6 +926,19 @@ namespace Assets.Scripts.Battle {
                    magic.MagicType == EnumMagicType.Cure ||
                    magic.MagicType == EnumMagicType.RestoreMP ||
                    magic.MagicType == EnumMagicType.RestoreBoth;
+        }
+
+        private void CreateAndAssignQuickHealthBars() {
+            foreach (var enemy in _enemies) {
+                var healthBar = Instantiate(Resources.Load<HealthbarTracker>(Constants.PrefabQuickHealthBar));
+                healthBar.transform.SetParent(_healthBars);
+                healthBar.SetTarget(enemy);
+            }
+            foreach (var forceUnit in _force) {
+                var healthBar = Instantiate(Resources.Load<HealthbarTracker>(Constants.PrefabQuickHealthBar));
+                healthBar.transform.SetParent(_healthBars);
+                healthBar.SetTarget(forceUnit);
+            }
         }
 
         private void GetInputDirection() {
