@@ -50,6 +50,7 @@ namespace Assets.Scripts.Menus.Battle {
         public void LoadMemberInventory(Character character) {
             OpenButtons();
             _currentSelectedMagic = null;
+            _currentSelectedGameItem = null;
             var gameItems = character.GetInventory();
 
             _gameItemList = gameItems;
@@ -64,6 +65,7 @@ namespace Assets.Scripts.Menus.Battle {
         public void LoadMemberMagic(Character character) {
             OpenButtons();
             _currentSelectedGameItem = null;
+            _currentSelectedMagic = null;
             var gameItems = character.GetMagic();
 
             _magicList = gameItems;
@@ -190,9 +192,6 @@ namespace Assets.Scripts.Menus.Battle {
         }
 
         private void SetCurrentSelectedItem(GameObject selectedGameObject, GameItem selectedItem) {
-            if (selectedItem.IsEmpty()) {
-                return;
-            }
             if (_currentSelectedItem != null && _currentSelectedItem != selectedGameObject) {
                 _currentSelectedItem.transform.GetComponent<Image>().color = Color.white;
             }

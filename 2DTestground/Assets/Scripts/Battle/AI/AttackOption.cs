@@ -81,6 +81,14 @@ namespace Assets.Scripts.Battle.AI {
             return _magicAttackLevel;
         }
 
+        public EnumCurrentBattleMenu GetAttackType() {
+            if (_magic == null || _magic.IsEmpty()) {
+                return EnumCurrentBattleMenu.attack;
+            } else {
+                return EnumCurrentBattleMenu.magic;
+            }
+        }
+
         private float GetHealScore() {
             var score = 0f;
             foreach (var target in _listTargets) {

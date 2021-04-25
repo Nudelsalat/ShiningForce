@@ -5,6 +5,7 @@ using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Battle {
     public class Unit : MonoBehaviour {
@@ -43,6 +44,9 @@ namespace Assets.Scripts.Battle {
             _battleController = BattleController.Instance;
             _quickInfoCurrentUnit = QuickInfoUi.Instance;
             _audioManager = AudioManager.Instance;
+
+            var delay = Random.Range(0, 2f);
+            StartCoroutine(DelayedAnimation(delay));
         }
 
         private void FixGridPosition() {
@@ -61,6 +65,12 @@ namespace Assets.Scripts.Battle {
         public void SetCharacter(Character character) {
             _character = character;
             _animator.runtimeAnimatorController = _character.AnimatorSprite;
+            var delay = Random.Range(0, 2f);
+            StartCoroutine(DelayedAnimation(delay));
+        }
+
+        public void SetHackCharacter(Character character) {
+            _character = character;
         }
 
         public void SetAnimatorDirection(DirectionType direction) {
@@ -121,6 +131,15 @@ namespace Assets.Scripts.Battle {
             
             Destroy(explosion);
             Destroy(gameObject);
+        }
+
+
+        // The delay coroutine
+        IEnumerator DelayedAnimation(float randomDelay) {
+            yield return new WaitForSeconds(randomDelay);
+            _animator.SetInteger("moveDirection", 0);
+            yield return null;
+            _animator.SetInteger("moveDirection", 2);
         }
 
         IEnumerator FlickerAnimator() {

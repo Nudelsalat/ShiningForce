@@ -24,7 +24,7 @@ MonoBehaviour:
   CharStats:
     Level: 4
     Exp: 0
-    MaxHp: 13
+    MaxHp: 300
     CurrentHp: 13
     MaxMp: 13
     CurrentMp: 13

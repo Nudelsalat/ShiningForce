@@ -15,11 +15,11 @@ C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-58770
+60569
 Successfully changed project path to: C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 62.94 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 61.65 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Resources/UnitySubsystems
@@ -35,357 +35,647 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56924
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56764
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002435 seconds.
+Registered in 0.003569 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 59.10 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 53.33 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.616 seconds
+- Completed reload, in  1.401 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002628 seconds.
+Registered in 0.001242 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 68.92 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 52.63 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.354 seconds
+- Completed reload, in  1.144 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 1.05 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.78 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1988 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 104.4 MB.
 System memory in use after: 104.5 MB.
 
 Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 2455.
-Total: 2.395700 ms (FindLiveObjects: 0.385500 ms CreateObjectMapping: 0.173600 ms MarkObjects: 1.802100 ms  DeleteObjects: 0.033000 ms)
+Total: 2.644700 ms (FindLiveObjects: 0.273900 ms CreateObjectMapping: 0.137900 ms MarkObjects: 2.186300 ms  DeleteObjects: 0.044900 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/Canvas.prefab
-  artifactKey: Guid(33256033194f97f44a4fcdff4816eaf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/Canvas.prefab using Guid(33256033194f97f44a4fcdff4816eaf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a3c06dfd9dc46e846109569cde15fe7') in 0.148213 seconds
-  Import took 0.158457 seconds .
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/galamKnight.controller
+  artifactKey: Guid(03cc68acde66d4844b7b61aec6bed4c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/galamKnight.controller using Guid(03cc68acde66d4844b7b61aec6bed4c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1710a9a679e4edc5fe81d69eeb02039c') in 0.050562 seconds
+  Import took 0.054820 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.895639 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f76094c245f5f106495eaae75df700a') in 0.014507 seconds
-  Import took 0.019838 seconds .
+  Time since last request: 10.298791 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf 1.controller
+  artifactKey: Guid(b44c11db2c05e0f41aaf688907820b53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf 1.controller using Guid(b44c11db2c05e0f41aaf688907820b53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4265538ceeaa2ffdbb8219c504db6552') in 0.011929 seconds
+  Import took 0.016004 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 11.140703 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4674cd61a46d11f2f1e57f8355a13066') in 0.006690 seconds
-  Import took 0.011771 seconds .
+  Time since last request: 6.063368 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage.controller
+  artifactKey: Guid(b44c11db2c05e0f41aaf688907820b53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage.controller using Guid(b44c11db2c05e0f41aaf688907820b53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95229f0be4ec7c680d176427afbf0fa8') in 0.012917 seconds
+  Import took 0.016634 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 16.888513 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e763875a8e4e66a38a5df7e05a1305da') in 0.010685 seconds
-  Import took 0.016478 seconds .
+  Time since last request: 19.795114 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_down 1.anim
+  artifactKey: Guid(feeca5bb19d2314488fcb28748416fc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_down 1.anim using Guid(feeca5bb19d2314488fcb28748416fc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2fdf859199582550b8879516e2f8c516') in 0.012704 seconds
+  Import took 0.016524 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 15.878295 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9a44bb119d71a91f94f7614110be50a9') in 0.007278 seconds
-  Import took 0.011885 seconds .
+  Time since last request: 14.295198 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_down.anim
+  artifactKey: Guid(feeca5bb19d2314488fcb28748416fc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_down.anim using Guid(feeca5bb19d2314488fcb28748416fc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eff879b1a819438166e3e11e1fee3d9f') in 0.009902 seconds
+  Import took 0.014191 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 3.484072 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dae021611686f40aa2e3e601fe3535df') in 0.007801 seconds
-  Import took 0.013121 seconds .
+  Time since last request: 0.970356 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_left 1.anim
+  artifactKey: Guid(087cce0ab836a28488221225183719bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_left 1.anim using Guid(087cce0ab836a28488221225183719bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30b35038d7ac16631b36bb1dcdc21062') in 0.009671 seconds
+  Import took 0.013915 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 7.719123 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/HealthBar 7.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '414ca4dffed3e59fe76e77544272aa0a') in 0.006755 seconds
-  Import took 0.012495 seconds .
+  Time since last request: 6.408953 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_left.anim
+  artifactKey: Guid(087cce0ab836a28488221225183719bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_left.anim using Guid(087cce0ab836a28488221225183719bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07c92039cd6a934667f61bab0a1b1ace') in 0.010813 seconds
+  Import took 0.015810 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 18.109368 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/Qui.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/Qui.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '51863731d520ec174970a1436a4d13bc') in 0.015563 seconds
-  Import took 0.022411 seconds .
+  Time since last request: 2.905574 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_right 1.anim
+  artifactKey: Guid(8549c3c189ca1b24c999f4d3aea46560) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_right 1.anim using Guid(8549c3c189ca1b24c999f4d3aea46560) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee9c0ee78b70458c6effcd596481c5e4') in 0.009502 seconds
+  Import took 0.013858 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 14.266048 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/QuickHealthBar.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/QuickHealthBar.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16ee73ddb973cf90dce1a1f50c7ad6dd') in 0.027539 seconds
-  Import took 0.035989 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001268 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.52 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.149 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.89 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.2 MB.
-System memory in use after: 103.4 MB.
-
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2460.
-Total: 2.142800 ms (FindLiveObjects: 0.241700 ms CreateObjectMapping: 0.104900 ms MarkObjects: 1.763300 ms  DeleteObjects: 0.031700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001375 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.205 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.14 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2463.
-Total: 2.116200 ms (FindLiveObjects: 0.244400 ms CreateObjectMapping: 0.089600 ms MarkObjects: 1.761000 ms  DeleteObjects: 0.019600 ms)
+  Time since last request: 7.017090 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_right.anim
+  artifactKey: Guid(8549c3c189ca1b24c999f4d3aea46560) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_right.anim using Guid(8549c3c189ca1b24c999f4d3aea46560) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c04d942ab9239fd525840c56af9d679a') in 0.010595 seconds
+  Import took 0.014775 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 625.436205 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/QuickHealthBar.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/QuickHealthBar.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94d46a8241e2f29beb185cdfe2564e12') in 0.052058 seconds
-  Import took 0.059428 seconds .
+  Time since last request: 0.876066 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_up 1.anim
+  artifactKey: Guid(768e4f1901e194b4d92d5e3f433fa5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/dwarf_up 1.anim using Guid(768e4f1901e194b4d92d5e3f433fa5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce194a682553b96e4f87795fa4c7682a') in 0.011278 seconds
+  Import took 0.017367 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.949359 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_up.anim
+  artifactKey: Guid(768e4f1901e194b4d92d5e3f433fa5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/mage_up.anim using Guid(768e4f1901e194b4d92d5e3f433fa5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6faafa2cc82a6a93737f86f6de158ac9') in 0.009428 seconds
+  Import took 0.013933 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 82.215162 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4c6b6ffae8cd270d00b3ed21bd683549') in 0.107636 seconds
+  Import took 0.113133 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000308 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp
+  artifactKey: Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp using Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c76a8715cf8df32d277dfe3a2d5216a8') in 0.019232 seconds
+  Import took 0.022754 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 20.351501 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f4bf69413fd6fd98b4136243f7cb441') in 0.015807 seconds
+  Import took 0.019881 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 13.284293 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'adb7ae66fbac175c0c6b55defab231d5') in 0.016803 seconds
+  Import took 0.021167 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.928205 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d198bc29c487aceb67b9e65f6f1cbfb') in 0.007270 seconds
+  Import took 0.010835 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002934 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d198bc29c487aceb67b9e65f6f1cbfb') in 0.008391 seconds
+  Import took 0.012960 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.813674 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '240b7c44ccb7c3d60ba777fa7eda4014') in 0.016460 seconds
+  Import took 0.021005 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.849732 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebd5fff26a6546f0dcfdaa17b5890b5e') in 0.011326 seconds
+  Import took 0.017858 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001252 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebd5fff26a6546f0dcfdaa17b5890b5e') in 0.011450 seconds
+  Import took 0.018970 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 30.730515 seconds.
+  path: Assets/Resources/ShiningForce/images/field/Blueknight.bmp
+  artifactKey: Guid(4df716b4126436944b414136bddae360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/Blueknight.bmp using Guid(4df716b4126436944b414136bddae360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '203b2335191b360b6f0c7f0d8ee6d755') in 0.033211 seconds
+  Import took 0.038848 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000503 seconds.
+  path: Assets/Resources/ShiningForce/images/field/Greenknight.bmp
+  artifactKey: Guid(d4eb897f3a224044a8dc728cea156aa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/Greenknight.bmp using Guid(d4eb897f3a224044a8dc728cea156aa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7b143e99f27814fca6580efd860476c') in 0.031637 seconds
+  Import took 0.035686 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000484 seconds.
+  path: Assets/Resources/ShiningForce/images/field/woman.bmp
+  artifactKey: Guid(08d899f9f59cd0446876a69f4e619764) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/woman.bmp using Guid(08d899f9f59cd0446876a69f4e619764) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02d6bbca48ff15ddf015d11e23060c82') in 0.038061 seconds
+  Import took 0.041838 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000373 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sickking.bmp
+  artifactKey: Guid(1d88267dfa102374087934b932cdf439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sickking.bmp using Guid(1d88267dfa102374087934b932cdf439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7731a3415e78091bb798341a8a8e864f') in 0.035291 seconds
+  Import took 0.040642 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000443 seconds.
+  path: Assets/Resources/ShiningForce/images/field/Goldenknight.bmp
+  artifactKey: Guid(4df9745e8aa8c0f4e96b3287aa651e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/Goldenknight.bmp using Guid(4df9745e8aa8c0f4e96b3287aa651e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5bcd38b660bd770cba2939192f67b3b7') in 0.032300 seconds
+  Import took 0.035771 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000347 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfratthief.bmp
+  artifactKey: Guid(c930e66f227b7224abc5c209193a09a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfratthief.bmp using Guid(c930e66f227b7224abc5c209193a09a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd60b908a7386f689795545f936a98049') in 0.030342 seconds
+  Import took 0.035357 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000342 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfhealer.bmp
+  artifactKey: Guid(35b03125b6bdfce448b0d9d4cf68a1e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfhealer.bmp using Guid(35b03125b6bdfce448b0d9d4cf68a1e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6a3a55b4047b66e2d8927500282149f') in 0.033960 seconds
+  Import took 0.037864 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000315 seconds.
+  path: Assets/Resources/ShiningForce/images/field/knight.bmp
+  artifactKey: Guid(65d91a7e39276bc459ad87827bfdbf93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/knight.bmp using Guid(65d91a7e39276bc459ad87827bfdbf93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '883e1fe6b5bab577eb354d05fc24a097') in 0.028105 seconds
+  Import took 0.031994 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000326 seconds.
+  path: Assets/Resources/ShiningForce/images/field/enemyarcher.bmp
+  artifactKey: Guid(934e72a51ea576b42b41206f2e669b2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/enemyarcher.bmp using Guid(934e72a51ea576b42b41206f2e669b2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e557fde3115adc7329b2432c26ab25b1') in 0.031736 seconds
+  Import took 0.037364 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000409 seconds.
+  path: Assets/Resources/ShiningForce/images/field/oldman.bmp
+  artifactKey: Guid(d3b4b13fdabeb8e4ca8fde4beb7bc827) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/oldman.bmp using Guid(d3b4b13fdabeb8e4ca8fde4beb7bc827) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b86ff9916d167507dacafcbe2b2026c') in 0.029667 seconds
+  Import took 0.034729 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000336 seconds.
+  path: Assets/Resources/ShiningForce/images/field/chicken.bmp
+  artifactKey: Guid(16a197d7c129d494ab77d9bd2ca6b2f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/chicken.bmp using Guid(16a197d7c129d494ab77d9bd2ca6b2f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ea25fddb3adde37b8cb952391a7f86e') in 0.028313 seconds
+  Import took 0.032700 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000364 seconds.
+  path: Assets/Resources/ShiningForce/images/field/towndwarf.bmp
+  artifactKey: Guid(270b349a28b5b2246a7ab345ff3dead3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/towndwarf.bmp using Guid(270b349a28b5b2246a7ab345ff3dead3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad0fe99a0a61b1e6f1dd6d1731105e8d') in 0.030662 seconds
+  Import took 0.035023 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000382 seconds.
+  path: Assets/Resources/ShiningForce/images/field/elf1.bmp
+  artifactKey: Guid(f50b3c27cc177a74d96bbc261c2999eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/elf1.bmp using Guid(f50b3c27cc177a74d96bbc261c2999eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b9c12f4e89f332d82535ac4b42861a5') in 0.029378 seconds
+  Import took 0.034239 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000313 seconds.
+  path: Assets/Resources/ShiningForce/images/field/king.bmp
+  artifactKey: Guid(cf58d9434bf4c0a44a70a9de00a0b7e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/king.bmp using Guid(cf58d9434bf4c0a44a70a9de00a0b7e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34f8a3a027282cba2a698b37b0e4a8e8') in 0.027678 seconds
+  Import took 0.032198 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000341 seconds.
+  path: Assets/Resources/ShiningForce/images/field/princess.bmp
+  artifactKey: Guid(c2847a1a2aa8eb04dafbeb5aa4d65855) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/princess.bmp using Guid(c2847a1a2aa8eb04dafbeb5aa4d65855) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43af9240d2af17184450691ec27b3c89') in 0.031749 seconds
+  Import took 0.036207 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000417 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfbowcentaur.bmp
+  artifactKey: Guid(12d6704c02ea2d24880e32855925a587) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfbowcentaur.bmp using Guid(12d6704c02ea2d24880e32855925a587) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '09fb3c474b65e4615a1991383025a604') in 0.038616 seconds
+  Import took 0.043743 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000374 seconds.
+  path: Assets/Resources/ShiningForce/images/field/merchant.bmp
+  artifactKey: Guid(e523cf7e356f6314da811e5db82b2d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/merchant.bmp using Guid(e523cf7e356f6314da811e5db82b2d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a6599284a1f570d92e93a405deb620f7') in 0.032086 seconds
+  Import took 0.037112 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000299 seconds.
+  path: Assets/Resources/ShiningForce/images/field/wizard.bmp
+  artifactKey: Guid(d4a502539d62ba24aafa4957e377df5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/wizard.bmp using Guid(d4a502539d62ba24aafa4957e377df5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11112cc49e4ddad39c92c8922abcabde') in 0.032361 seconds
+  Import took 0.036908 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000305 seconds.
+  path: Assets/Resources/ShiningForce/images/field/elf2.bmp
+  artifactKey: Guid(8832d67d1af6db14e953e44a57914bbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/elf2.bmp using Guid(8832d67d1af6db14e953e44a57914bbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9debb02b7b2541fee2c75aad89f4c663') in 0.033070 seconds
+  Import took 0.037880 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000606 seconds.
+  path: Assets/Resources/ShiningForce/images/field/darkdwarf.bmp
+  artifactKey: Guid(4c45d13b991d9ce4990e806a5c345749) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/darkdwarf.bmp using Guid(4c45d13b991d9ce4990e806a5c345749) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41dbade17b10631d50ba3e0e5c971953') in 0.032885 seconds
+  Import took 0.036955 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000312 seconds.
+  path: Assets/Resources/ShiningForce/images/field/cat.bmp
+  artifactKey: Guid(c5da0224ddcf3004caac479f263c9131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/cat.bmp using Guid(c5da0224ddcf3004caac479f263c9131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d0fd712424450b99c91f32a420c0706') in 0.032645 seconds
+  Import took 0.037487 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000289 seconds.
+  path: Assets/Resources/ShiningForce/images/field/galamknight.bmp
+  artifactKey: Guid(054f217269c04584f86fb8b13614382a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/galamknight.bmp using Guid(054f217269c04584f86fb8b13614382a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60e5f56dc6a0401d813f653235056e6a') in 0.028894 seconds
+  Import took 0.032786 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000304 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp
+  artifactKey: Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp using Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c099ddc54b5adf1793d010fdb3a571b') in 0.009743 seconds
+  Import took 0.014939 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000283 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfsdmn.bmp
+  artifactKey: Guid(14276959166b6ed4da25d14638deffdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfsdmn.bmp using Guid(14276959166b6ed4da25d14638deffdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cde86b326772afff95869ba8f6075ee8') in 0.029996 seconds
+  Import took 0.034135 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000261 seconds.
+  path: Assets/Resources/ShiningForce/images/field/GreenSoldier.bmp
+  artifactKey: Guid(84d8e0174794a5945882c8ddc7416f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/GreenSoldier.bmp using Guid(84d8e0174794a5945882c8ddc7416f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b0421edd0ae6dbb2eda2e2866274f59') in 0.030890 seconds
+  Import took 0.035507 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000274 seconds.
+  path: Assets/Resources/ShiningForce/images/field/chancelor.bmp
+  artifactKey: Guid(424dc365e24371f4ab2e7bda4e24a021) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/chancelor.bmp using Guid(424dc365e24371f4ab2e7bda4e24a021) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '742580dcd1de2501be04319f88439290') in 0.028878 seconds
+  Import took 0.033536 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000242 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfdwarf.bmp
+  artifactKey: Guid(2f4a4cca594791148ba92a27dce7b8c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfdwarf.bmp using Guid(2f4a4cca594791148ba92a27dce7b8c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd16e9f12a688e04e0ddfe4ee6ecfc27d') in 0.025226 seconds
+  Import took 0.029083 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000278 seconds.
+  path: Assets/Resources/ShiningForce/images/field/townwoman.bmp
+  artifactKey: Guid(3a79ba6f6c0b30d4d8c0cd44a2917f92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/townwoman.bmp using Guid(3a79ba6f6c0b30d4d8c0cd44a2917f92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21b7c6572e583ab2971fa027ac842427') in 0.026487 seconds
+  Import took 0.029927 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000254 seconds.
+  path: Assets/Resources/ShiningForce/images/field/Eaglebird.bmp
+  artifactKey: Guid(f7c2b6f0eee14f64eb6a25cb1da742b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/Eaglebird.bmp using Guid(f7c2b6f0eee14f64eb6a25cb1da742b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d0358677741117cb01bacbba2ade9ef') in 0.025224 seconds
+  Import took 0.029353 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000285 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfelfmage.bmp
+  artifactKey: Guid(d4271046028d38d41b6ad0ae9e2f702c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfelfmage.bmp using Guid(d4271046028d38d41b6ad0ae9e2f702c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '454bb6645a85e180216754088bb8a7cb') in 0.028953 seconds
+  Import took 0.033266 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000300 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfhero.bmp
+  artifactKey: Guid(08bb4dbe6f79958409cf2e68d0ffa738) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfhero.bmp using Guid(08bb4dbe6f79958409cf2e68d0ffa738) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7abb0e2c9b977708f8f88e2482d9573f') in 0.026411 seconds
+  Import took 0.031785 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000298 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfwolfman.bmp
+  artifactKey: Guid(12c8b9abc1031cc44954df92d5077c9c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfwolfman.bmp using Guid(12c8b9abc1031cc44954df92d5077c9c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db7d24306046a189371de0118059164b') in 0.029708 seconds
+  Import took 0.033966 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000509 seconds.
+  path: Assets/Resources/ShiningForce/images/field/duck.bmp
+  artifactKey: Guid(fd9e6aadc07190642b6424d8c6f463f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/duck.bmp using Guid(fd9e6aadc07190642b6424d8c6f463f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0dc3c16141311c2e49369b87022133e3') in 0.027333 seconds
+  Import took 0.032253 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000374 seconds.
+  path: Assets/Resources/ShiningForce/images/field/warrior.bmp
+  artifactKey: Guid(0585014bd519ea94ab90d38f72c1597a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/warrior.bmp using Guid(0585014bd519ea94ab90d38f72c1597a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f31ed7818586ca01d1f39962c8c5f02c') in 0.028549 seconds
+  Import took 0.033180 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000431 seconds.
+  path: Assets/Resources/ShiningForce/images/field/girl.bmp
+  artifactKey: Guid(05f4bf5dbf2d7bc4db1ad5ead044a8a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/girl.bmp using Guid(05f4bf5dbf2d7bc4db1ad5ead044a8a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08cccbc51c3aa4f218c4bfe3d65ee0ec') in 0.027274 seconds
+  Import took 0.031247 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000549 seconds.
+  path: Assets/Resources/ShiningForce/images/field/townman.bmp
+  artifactKey: Guid(70c1f09c0b538174796f72ac1a634883) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/townman.bmp using Guid(70c1f09c0b538174796f72ac1a634883) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f5a4731d66a13570d9934a45973e118') in 0.028265 seconds
+  Import took 0.032827 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000391 seconds.
+  path: Assets/Resources/ShiningForce/images/field/Redsoldier.bmp
+  artifactKey: Guid(b59f7ab3c6b31ca478ecedcf0a101440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/Redsoldier.bmp using Guid(b59f7ab3c6b31ca478ecedcf0a101440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb356926aa81d3bb8a711dd32dfd6a37') in 0.028579 seconds
+  Import took 0.034058 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000436 seconds.
+  path: Assets/Resources/ShiningForce/images/field/enemyarcher_colorPalettes.bmp
+  artifactKey: Guid(22e3c1d572007a0468249bf1b4babf0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/enemyarcher_colorPalettes.bmp using Guid(22e3c1d572007a0468249bf1b4babf0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '472efc738f50b1f0809390024eac62c8') in 0.014694 seconds
+  Import took 0.018479 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000308 seconds.
+  path: Assets/Resources/ShiningForce/images/field/boy.bmp
+  artifactKey: Guid(619f4bae55aa01d409e3a0961115bd06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/boy.bmp using Guid(619f4bae55aa01d409e3a0961115bd06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e56bb1708f579af7d793eb78c194527') in 0.028838 seconds
+  Import took 0.032583 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000346 seconds.
+  path: Assets/Resources/ShiningForce/images/field/soldier.bmp
+  artifactKey: Guid(326dcd13a875bfd41b9554c050b84733) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/soldier.bmp using Guid(326dcd13a875bfd41b9554c050b84733) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '012bd46fa0fcbfd4a465d9d9fd1bca0b') in 0.029902 seconds
+  Import took 0.034284 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000356 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sailor.bmp
+  artifactKey: Guid(7d904d34e753a2644a06ec49f1a99414) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sailor.bmp using Guid(7d904d34e753a2644a06ec49f1a99414) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44f5a7ef7a9b70e5a260ef4ce48bf740') in 0.026804 seconds
+  Import took 0.031411 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000438 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfcentaur_p.bmp
+  artifactKey: Guid(83af628b03138d74ca150ce82ec63a5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfcentaur_p.bmp using Guid(83af628b03138d74ca150ce82ec63a5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '581e0a17d334b090bcc2ea0a39763f18') in 0.032655 seconds
+  Import took 0.037164 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000347 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfcentaur.bmp
+  artifactKey: Guid(cdc91f9f90d875241a846f7dd9bfd0ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfcentaur.bmp using Guid(cdc91f9f90d875241a846f7dd9bfd0ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e3503b3f65d985a5f7557af304881446') in 0.031439 seconds
+  Import took 0.035103 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000400 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfphnk.bmp
+  artifactKey: Guid(2997bf3ca264de84cb3fda63198aec32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfphnk.bmp using Guid(2997bf3ca264de84cb3fda63198aec32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bbfe486a041eebcbfbfb93f1dc5c5ca4') in 0.031669 seconds
+  Import took 0.035892 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000445 seconds.
+  path: Assets/Resources/ShiningForce/images/field/priest.bmp
+  artifactKey: Guid(a6784355d5934c3489ba3cb953e04c96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/priest.bmp using Guid(a6784355d5934c3489ba3cb953e04c96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be893656086b34220876dacc7b74f0df') in 0.030540 seconds
+  Import took 0.034895 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000337 seconds.
+  path: Assets/Resources/ShiningForce/images/field/Zombie.bmp
+  artifactKey: Guid(85dd25121a903ea4a9d92e8b41734dd5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/Zombie.bmp using Guid(85dd25121a903ea4a9d92e8b41734dd5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed7ffc01065838c1d21a7664d626af0c') in 0.029910 seconds
+  Import took 0.034416 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000318 seconds.
+  path: Assets/Resources/ShiningForce/images/field/townelder.bmp
+  artifactKey: Guid(b29f843a271580c49b9d105f4c61c9ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/townelder.bmp using Guid(b29f843a271580c49b9d105f4c61c9ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2a050c217968bc7a2e9175f63fd8c93') in 0.027495 seconds
+  Import took 0.032385 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000494 seconds.
+  path: Assets/Resources/ShiningForce/images/field/sfbird.bmp
+  artifactKey: Guid(2dc01f833d763e94786ec9d2a3e8673b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/sfbird.bmp using Guid(2dc01f833d763e94786ec9d2a3e8673b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f85b4ab869959641d79a054f6db45f67') in 0.030948 seconds
+  Import took 0.034510 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000394 seconds.
+  path: Assets/Resources/ShiningForce/images/field/greenmaid.bmp
+  artifactKey: Guid(5ce48431947e64742b02d70cb5291330) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/greenmaid.bmp using Guid(5ce48431947e64742b02d70cb5291330) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08a14ad0ff71bd2cb928bef4067e0e8f') in 0.027345 seconds
+  Import took 0.031670 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.133063 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp
+  artifactKey: Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp using Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '421d95e8b6f67ed26fa9ff5401a9603b') in 0.011775 seconds
+  Import took 0.016802 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.013404 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp
+  artifactKey: Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp using Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6231ef0a94d0c478cbcf891ab99ad81d') in 0.010078 seconds
+  Import took 0.014323 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.055511 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp
+  artifactKey: Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage_colorPalettes.bmp using Guid(e5bd1124288097c4184c0f3a4ccee142) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6231ef0a94d0c478cbcf891ab99ad81d') in 0.010143 seconds
+  Import took 0.014716 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.614041 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97814e9633bfb9ce55cfd80738407d55') in 0.012358 seconds
+  Import took 0.017224 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 30.684330 seconds.
+  path: Assets/Resources/ShiningForce/images/field/mage.bmp
+  artifactKey: Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/field/mage.bmp using Guid(ab56fe770291bb84c97e515ad469c1f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39c8740144c51df7b559b77cc0583634') in 0.030117 seconds
+  Import took 0.036921 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 97.876163 seconds.
+  path: Assets/Resources/SharedObjects/Characters/Monsters/Mage.asset
+  artifactKey: Guid(a6137388c78633d4c9fa823a4bef9572) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Characters/Monsters/Mage.asset using Guid(a6137388c78633d4c9fa823a4bef9572) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c14ef48599d235aaf09bb14864b58460') in 0.049820 seconds
+  Import took 0.055606 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.001548 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.51 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.139 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.85 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2466.
-Total: 2.502600 ms (FindLiveObjects: 0.355000 ms CreateObjectMapping: 0.114800 ms MarkObjects: 2.007600 ms  DeleteObjects: 0.022300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002049 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.51 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.195 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2469.
-Total: 4.285200 ms (FindLiveObjects: 0.282000 ms CreateObjectMapping: 0.146700 ms MarkObjects: 3.828700 ms  DeleteObjects: 0.026100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002111 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.83 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.648 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.06 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2472.
-Total: 3.770100 ms (FindLiveObjects: 0.351700 ms CreateObjectMapping: 0.248900 ms MarkObjects: 3.146200 ms  DeleteObjects: 0.020800 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001354 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.61 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.711 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2475.
-Total: 4.871200 ms (FindLiveObjects: 0.450600 ms CreateObjectMapping: 0.214700 ms MarkObjects: 4.145500 ms  DeleteObjects: 0.057100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001365 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.236 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.02 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2478.
-Total: 2.391300 ms (FindLiveObjects: 0.237500 ms CreateObjectMapping: 0.095200 ms MarkObjects: 2.037600 ms  DeleteObjects: 0.019500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001255 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.58 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.642 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.88 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2481.
-Total: 2.258000 ms (FindLiveObjects: 0.242500 ms CreateObjectMapping: 0.101200 ms MarkObjects: 1.893400 ms  DeleteObjects: 0.019500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001315 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.50 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.221 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.86 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2484.
-Total: 2.170600 ms (FindLiveObjects: 0.212900 ms CreateObjectMapping: 0.092200 ms MarkObjects: 1.844700 ms  DeleteObjects: 0.019300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001396 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.90 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.710 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.23 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2487.
-Total: 3.799700 ms (FindLiveObjects: 0.746800 ms CreateObjectMapping: 0.652800 ms MarkObjects: 2.375200 ms  DeleteObjects: 0.022700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001911 seconds.
+Registered in 0.001236 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.75 ms, found 1 plugins.
@@ -394,116 +684,47 @@ Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.390 seconds
+- Completed reload, in  1.120 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.55 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.86 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
+Unloading 1966 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 107.0 MB.
+System memory in use after: 107.1 MB.
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2490.
-Total: 2.067100 ms (FindLiveObjects: 0.226300 ms CreateObjectMapping: 0.087200 ms MarkObjects: 1.732500 ms  DeleteObjects: 0.019900 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2481.
+Total: 2.037700 ms (FindLiveObjects: 0.234300 ms CreateObjectMapping: 0.090300 ms MarkObjects: 1.692900 ms  DeleteObjects: 0.019000 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.001213 seconds.
+Registered in 0.001264 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.60 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.45 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.198 seconds
+- Completed reload, in  1.041 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.32 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.80 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
+System memory in use before: 106.9 MB.
+System memory in use after: 107.0 MB.
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2493.
-Total: 2.131300 ms (FindLiveObjects: 0.234200 ms CreateObjectMapping: 0.104200 ms MarkObjects: 1.770900 ms  DeleteObjects: 0.020400 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2484.
+Total: 2.072400 ms (FindLiveObjects: 0.220300 ms CreateObjectMapping: 0.094700 ms MarkObjects: 1.736700 ms  DeleteObjects: 0.019600 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002078 seconds.
+Registered in 0.001309 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.49 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.178 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.85 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2496.
-Total: 4.815100 ms (FindLiveObjects: 0.464400 ms CreateObjectMapping: 0.198300 ms MarkObjects: 4.120600 ms  DeleteObjects: 0.029100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001200 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.87 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.146 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.65 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2499.
-Total: 2.142700 ms (FindLiveObjects: 0.262600 ms CreateObjectMapping: 0.090100 ms MarkObjects: 1.769600 ms  DeleteObjects: 0.018600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001275 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.54 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.175 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.67 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2502.
-Total: 2.317700 ms (FindLiveObjects: 0.235000 ms CreateObjectMapping: 0.090600 ms MarkObjects: 1.969200 ms  DeleteObjects: 0.021500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002017 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.47 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.73 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
@@ -511,35 +732,59 @@ RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
 - Completed reload, in  1.140 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.88 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.84 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
+System memory in use before: 107.0 MB.
+System memory in use after: 107.1 MB.
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2505.
-Total: 2.477000 ms (FindLiveObjects: 0.322800 ms CreateObjectMapping: 0.108300 ms MarkObjects: 2.023600 ms  DeleteObjects: 0.020700 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2487.
+Total: 2.117800 ms (FindLiveObjects: 0.233500 ms CreateObjectMapping: 0.097100 ms MarkObjects: 1.763100 ms  DeleteObjects: 0.022500 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002756 seconds.
+Registered in 0.001435 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.88 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.746 seconds
+- Completed reload, in  1.658 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.25 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.92 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.4 MB.
-System memory in use after: 103.5 MB.
+System memory in use before: 107.0 MB.
+System memory in use after: 107.1 MB.
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2508.
-Total: 4.106700 ms (FindLiveObjects: 0.541500 ms CreateObjectMapping: 0.240700 ms MarkObjects: 3.300400 ms  DeleteObjects: 0.021800 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2490.
+Total: 3.990300 ms (FindLiveObjects: 0.428600 ms CreateObjectMapping: 0.163400 ms MarkObjects: 3.365400 ms  DeleteObjects: 0.030800 ms)
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001203 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.79 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.131 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.80 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 107.0 MB.
+System memory in use after: 107.1 MB.
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2493.
+Total: 2.069200 ms (FindLiveObjects: 0.209600 ms CreateObjectMapping: 0.088700 ms MarkObjects: 1.748900 ms  DeleteObjects: 0.020600 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

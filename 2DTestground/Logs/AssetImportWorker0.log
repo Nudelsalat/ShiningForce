@@ -15,11 +15,11 @@ C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-59406
+57030
 Successfully changed project path to: C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 60.05 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 63.22 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Resources/UnitySubsystems
@@ -35,148 +35,298 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56572
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56808
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003822 seconds.
+Registered in 0.003624 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 56.86 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 60.75 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.510 seconds
+- Completed reload, in  1.868 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.001763 seconds.
+Registered in 0.001346 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 58.60 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 48.63 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.301 seconds
+- Completed reload, in  1.318 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.88 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.09 seconds
+Refreshing native plugins compatible for Editor in 0.81 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1988 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 104.4 MB.
 System memory in use after: 104.5 MB.
 
 Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 2455.
-Total: 2.060800 ms (FindLiveObjects: 0.221200 ms CreateObjectMapping: 0.094500 ms MarkObjects: 1.703200 ms  DeleteObjects: 0.040800 ms)
+Total: 2.089700 ms (FindLiveObjects: 0.246400 ms CreateObjectMapping: 0.095500 ms MarkObjects: 1.709500 ms  DeleteObjects: 0.036700 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/Canvas.prefab
-  artifactKey: Guid(33256033194f97f44a4fcdff4816eaf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/Canvas.prefab using Guid(33256033194f97f44a4fcdff4816eaf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cbc6c18193bd263680b4ba6e91336a30') in 0.135856 seconds
-  Import took 0.143012 seconds .
+  path: Assets/Resources/SharedObjects/Items/Consumables/Antidote.asset
+  artifactKey: Guid(c37e18a1fe55abd42b61cfa7729b914e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/Antidote.asset using Guid(c37e18a1fe55abd42b61cfa7729b914e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f82e7fef522c4430a674bb6b7a49230') in 0.058436 seconds
+  Import took 0.064060 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.883794 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Ui/QuickHealthBar.prefab
-  artifactKey: Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Ui/QuickHealthBar.prefab using Guid(294f25f7136e437408d18b0ca065472f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6872784f96183c68838f548b79b29fe8') in 0.007872 seconds
-  Import took 0.012958 seconds .
+  Time since last request: 68.953440 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb 1.asset
+  artifactKey: Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb 1.asset using Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ef77f5279b92bac1e2511679027581b') in 0.010994 seconds
+  Import took 0.015886 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.228175 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb 1.asset
+  artifactKey: Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb 1.asset using Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8b6b9028605a92252c87c3429e9b9aa') in 0.004705 seconds
+  Import took 0.009868 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001349 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb 1.asset
+  artifactKey: Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb 1.asset using Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8b6b9028605a92252c87c3429e9b9aa') in 0.005794 seconds
+  Import took 0.012008 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.261143 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/AngelWing.asset
+  artifactKey: Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/AngelWing.asset using Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bf9c05bb3a785994296fb0e5383def5d') in 0.015958 seconds
+  Import took 0.023015 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.919775 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/AngelWing.asset
+  artifactKey: Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/AngelWing.asset using Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1d990b82851467d0d5e06510516f07e') in 0.009226 seconds
+  Import took 0.015312 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.051797 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/AngelWing.asset
+  artifactKey: Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/AngelWing.asset using Guid(9aa75b223f1cfec4882f319a0aeb6415) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1d990b82851467d0d5e06510516f07e') in 0.009729 seconds
+  Import took 0.015624 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 29.704005 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb.asset
+  artifactKey: Guid(7a2af82a4f284dd46b25fd524bad1133) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb.asset using Guid(7a2af82a4f284dd46b25fd524bad1133) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '67779720257d0caf1c754525b584eb99') in 0.011040 seconds
+  Import took 0.015641 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.046255 seconds.
+  path: Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb.asset
+  artifactKey: Guid(7a2af82a4f284dd46b25fd524bad1133) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Items/Consumables/MedicalHerb.asset using Guid(7a2af82a4f284dd46b25fd524bad1133) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '67779720257d0caf1c754525b584eb99') in 0.006053 seconds
+  Import took 0.012427 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 35.305883 seconds.
+  path: Assets/Resources/SharedObjects/Characters/Heroes/Jaha.asset
+  artifactKey: Guid(7532fcb6da4cc08459193b1cf21464a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Characters/Heroes/Jaha.asset using Guid(7532fcb6da4cc08459193b1cf21464a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdb7d4590e6d8cfaf6a32a614a883d5a') in 0.055642 seconds
+  Import took 0.060696 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002039 seconds.
+Registered in 0.001211 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.82 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.47 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.782 seconds
+- Completed reload, in  1.058 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.91 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.15 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.2 MB.
-System memory in use after: 103.3 MB.
+Unloading 1968 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.0 MB.
+System memory in use after: 104.1 MB.
 
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2460.
-Total: 4.468600 ms (FindLiveObjects: 0.448900 ms CreateObjectMapping: 0.261900 ms MarkObjects: 3.722300 ms  DeleteObjects: 0.032800 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2472.
+Total: 3.256400 ms (FindLiveObjects: 0.243800 ms CreateObjectMapping: 0.099400 ms MarkObjects: 2.884000 ms  DeleteObjects: 0.027700 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.001534 seconds.
+Registered in 0.001402 seconds.
 Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.49 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.174 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.25 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.2 MB.
-System memory in use after: 103.4 MB.
+The file 'MemoryStream' is corrupted! Remove it and launch unity again!
+[Position out of bounds!]
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2463.
-Total: 2.804600 ms (FindLiveObjects: 0.356300 ms CreateObjectMapping: 0.156500 ms MarkObjects: 2.219500 ms  DeleteObjects: 0.070400 ms)
+Fatal Error! The file 'MemoryStream' is corrupted! Remove it and launch unity again!
+[Position out of bounds!]
 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001934 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.62 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.842 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.02 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
+Crash!!!
+SymInit: Symbol-SearchPath: 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Mono;.;C:\Users\markus.leitner\Unity\ShiningForce\2DTestground;C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor;C:\WINDOWS;C:\WINDOWS\system32;SRV*C:\websymbols*http://msdl.microsoft.com/download/symbols;', symOptions: 534, UserName: 'Markus.Leitner'
+OS-Version: 10.0.0
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\Unity.exe:Unity.exe (00007FF629CC0000), size: 134467584 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2020.3.0.46406
+C:\WINDOWS\SYSTEM32\ntdll.dll:ntdll.dll (00007FF9D6970000), size: 2052096 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\WINDOWS\System32\KERNEL32.DLL:KERNEL32.DLL (00007FF9D59F0000), size: 774144 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\WINDOWS\System32\KERNELBASE.dll:KERNELBASE.dll (00007FF9D42E0000), size: 2916352 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\System32\CRYPT32.dll:CRYPT32.dll (00007FF9D4180000), size: 1437696 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\System32\ucrtbase.dll:ucrtbase.dll (00007FF9D4760000), size: 1048576 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.789
+C:\WINDOWS\System32\USER32.dll:USER32.dll (00007FF9D5740000), size: 1703936 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\System32\win32u.dll:win32u.dll (00007FF9D4660000), size: 139264 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\libfbxsdk.dll:libfbxsdk.dll (00007FF957FF0000), size: 8974336 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2020.0.0.0
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\optix.6.0.0.dll:optix.6.0.0.dll (00007FF9C4C50000), size: 208896 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 6.0.0.0
+C:\WINDOWS\System32\GDI32.dll:GDI32.dll (00007FF9D4AB0000), size: 172032 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\WINDOWS\System32\gdi32full.dll:gdi32full.dll (00007FF9D48C0000), size: 1093632 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\OpenImageDenoise.dll:OpenImageDenoise.dll (00007FF946EF0000), size: 43806720 (result: 0), SymType: '-deferred-', PDB: ''
+C:\WINDOWS\System32\msvcp_win.dll:msvcp_win.dll (00007FF9D40E0000), size: 643072 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.789
+C:\WINDOWS\System32\ADVAPI32.dll:ADVAPI32.dll (00007FF9D6860000), size: 704512 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.610
+C:\WINDOWS\System32\msvcrt.dll:msvcrt.dll (00007FF9D4EE0000), size: 647168 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 7.0.19041.546
+C:\WINDOWS\System32\sechost.dll:sechost.dll (00007FF9D6690000), size: 634880 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\System32\RPCRT4.dll:RPCRT4.dll (00007FF9D6560000), size: 1224704 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\umbraoptimizer64.dll:umbraoptimizer64.dll (00007FF996790000), size: 1306624 (result: 0), SymType: '-deferred-', PDB: ''
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\FreeImage.dll:FreeImage.dll (0000000180000000), size: 6414336 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 3.18.0.0
+C:\WINDOWS\System32\SHELL32.dll:SHELL32.dll (00007FF9D5E10000), size: 7610368 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\System32\WS2_32.dll:WS2_32.dll (00007FF9D4C00000), size: 438272 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\System32\WLDAP32.dll:WLDAP32.dll (00007FF9D4E20000), size: 352256 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\System32\SHLWAPI.dll:SHLWAPI.dll (00007FF9D6800000), size: 348160 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\ispc_texcomp.dll:ispc_texcomp.dll (00007FF95EEC0000), size: 1609728 (result: 0), SymType: '-deferred-', PDB: ''
+C:\WINDOWS\System32\Normaliz.dll:Normaliz.dll (00007FF9D5720000), size: 32768 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\System32\ole32.dll:ole32.dll (00007FF9D5530000), size: 1220608 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\WinPixEventRuntime.dll:WinPixEventRuntime.dll (00007FF9CDD20000), size: 45056 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 1.0.1812.6001
+C:\WINDOWS\System32\combase.dll:combase.dll (00007FF9D5AB0000), size: 3493888 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\WINDOWS\System32\IMM32.dll:IMM32.dll (00007FF9D4A80000), size: 196608 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\System32\SETUPAPI.dll:SETUPAPI.dll (00007FF9D50C0000), size: 4624384 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\System32\cfgmgr32.dll:cfgmgr32.dll (00007FF9D4710000), size: 319488 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\tbb.dll:tbb.dll (00007FF9C4630000), size: 413696 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2017.0.2016.1004
+C:\WINDOWS\SYSTEM32\VCRUNTIME140.dll:VCRUNTIME140.dll (00007FF9CAF30000), size: 106496 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 14.28.29913.0
+C:\WINDOWS\System32\bcrypt.dll:bcrypt.dll (00007FF9D40B0000), size: 159744 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.662
+C:\WINDOWS\System32\OLEAUT32.dll:OLEAUT32.dll (00007FF9D6730000), size: 839680 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.804
+C:\WINDOWS\System32\WINTRUST.dll:WINTRUST.dll (00007FF9D4860000), size: 393216 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.804
+C:\WINDOWS\SYSTEM32\OPENGL32.dll:OPENGL32.dll (00007FF9B7FC0000), size: 1204224 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\WINDOWS\SYSTEM32\GLU32.dll:GLU32.dll (00007FF9B7F90000), size: 180224 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\SYSTEM32\MSVCP140.dll:MSVCP140.dll (00007FF9C9180000), size: 577536 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 14.28.29913.0
+C:\WINDOWS\SYSTEM32\CRYPTBASE.DLL:CRYPTBASE.DLL (00007FF9D39B0000), size: 49152 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL:IPHLPAPI.DLL (00007FF9D34F0000), size: 241664 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\MSVCP120.dll:MSVCP120.dll (00007FF9AA040000), size: 679936 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 12.0.40660.0
+C:\WINDOWS\SYSTEM32\MSVCR120.dll:MSVCR120.dll (00007FF9B9B50000), size: 978944 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 12.0.40660.0
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\RadeonImageFilters.dll:RadeonImageFilters.dll (00007FF959FB0000), size: 2535424 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 1.5.1.0
+C:\WINDOWS\SYSTEM32\WINMM.dll:WINMM.dll (00007FF9BD8B0000), size: 159744 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\HID.DLL:HID.DLL (00007FF9D2820000), size: 53248 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\WINHTTP.dll:WINHTTP.dll (00007FF9D3100000), size: 1093632 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\SYSTEM32\VERSION.dll:VERSION.dll (00007FF9BF9E0000), size: 40960 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\WSOCK32.dll:WSOCK32.dll (00007FF9B9B40000), size: 36864 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.1
+C:\WINDOWS\SYSTEM32\VCRUNTIME140_1.dll:VCRUNTIME140_1.dll (00007FF9C9150000), size: 49152 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 14.28.29913.0
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\SketchUpAPI.dll:SketchUpAPI.dll (00007FF957760000), size: 8978432 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 19.0.753.0
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\SketchUpCommonPreferences.dll:SketchUpCommonPreferences.dll (00007FF9BB120000), size: 483328 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 19.0.753.20342
+C:\WINDOWS\SYSTEM32\Secur32.dll:Secur32.dll (00007FF9BE680000), size: 49152 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\SSPICLI.DLL:SSPICLI.DLL (00007FF9D3F70000), size: 200704 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\OpenRL.dll:OpenRL.dll (000001B05D000000), size: 12779520 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 1.5.0.2907
+C:\WINDOWS\SYSTEM32\MSVCP100.dll:MSVCP100.dll (000000005C080000), size: 622592 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.40219.325
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\embree.dll:embree.dll (00007FF954C00000), size: 16711680 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2.14.0.0
+C:\WINDOWS\SYSTEM32\MSVCR100.dll:MSVCR100.dll (000000005C120000), size: 860160 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.40219.325
+C:\WINDOWS\SYSTEM32\MSWSOCK.DLL:MSWSOCK.DLL (00007FF9D3830000), size: 434176 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\OpenRL_pthread.dll:OpenRL_pthread.dll (000001B05DC50000), size: 61440 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2.9.0.0
+C:\WINDOWS\SYSTEM32\MSASN1.dll:MSASN1.dll (00007FF9D3CA0000), size: 73728 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\kernel.appcore.dll:kernel.appcore.dll (00007FF9D2830000), size: 73728 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\System32\bcryptPrimitives.dll:bcryptPrimitives.dll (00007FF9D4690000), size: 524288 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.662
+C:\WINDOWS\system32\uxtheme.dll:uxtheme.dll (00007FF9CE340000), size: 647168 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\WINDOWS\System32\shcore.dll:shcore.dll (00007FF9D49D0000), size: 712704 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\WINDOWS\SYSTEM32\windows.storage.dll:windows.storage.dll (00007FF9D1F60000), size: 7933952 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\SYSTEM32\Wldp.dll:Wldp.dll (00007FF9D3A50000), size: 180224 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.662
+C:\WINDOWS\SYSTEM32\profapi.dll:profapi.dll (00007FF9D3FF0000), size: 126976 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\System32\clbcatq.dll:clbcatq.dll (00007FF9D5660000), size: 692224 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2001.12.10941.16384
+C:\WINDOWS\System32\netprofm.dll:netprofm.dll (00007FF9C9110000), size: 253952 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\System32\npmproxy.dll:npmproxy.dll (00007FF9BF950000), size: 65536 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.906
+C:\WINDOWS\System32\NSI.dll:NSI.dll (00007FF9D5710000), size: 32768 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.610
+C:\WINDOWS\SYSTEM32\dhcpcsvc6.DLL:dhcpcsvc6.DLL (00007FF9C85B0000), size: 94208 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\dhcpcsvc.DLL:dhcpcsvc.DLL (00007FF9C8510000), size: 118784 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\DNSAPI.dll:DNSAPI.dll (00007FF9D3530000), size: 835584 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\WINDOWS\System32\fwpuclnt.dll:fwpuclnt.dll (00007FF9C8FE0000), size: 520192 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\Windows\System32\rasadhlp.dll:rasadhlp.dll (00007FF9C82D0000), size: 40960 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\d3d11.dll:d3d11.dll (00007FF9CC780000), size: 2506752 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\WINDOWS\SYSTEM32\dxgi.dll:dxgi.dll (00007FF9D2970000), size: 995328 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\WINDOWS\System32\DriverStore\FileRepository\ki125190.inf_amd64_f8e6a73bc07f6aa7\igd10iumd64.dll:igd10iumd64.dll (00007FF9C5AE0000), size: 24420352 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 22.20.16.4836
+C:\WINDOWS\SYSTEM32\ncrypt.dll:ncrypt.dll (00007FF9D3B90000), size: 159744 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.662
+C:\WINDOWS\SYSTEM32\NTASN1.dll:NTASN1.dll (00007FF9D3B50000), size: 241664 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\System32\DriverStore\FileRepository\ki125190.inf_amd64_f8e6a73bc07f6aa7\igc64.dll:igc64.dll (00007FF9C2660000), size: 23117824 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 22.20.16.4836
+C:\WINDOWS\SYSTEM32\dxcore.dll:dxcore.dll (00007FF9C51E0000), size: 241664 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\system32\wbem\wbemprox.dll:wbemprox.dll (00007FF9BF9F0000), size: 69632 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\SYSTEM32\wbemcomn.dll:wbemcomn.dll (00007FF9C3F70000), size: 606208 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\system32\wbem\wbemsvc.dll:wbemsvc.dll (00007FF9BEA80000), size: 81920 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.844
+C:\WINDOWS\system32\wbem\fastprox.dll:fastprox.dll (00007FF9BED50000), size: 1093632 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\WINDOWS\SYSTEM32\amsi.dll:amsi.dll (00007FF9BDFA0000), size: 102400 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\WINDOWS\SYSTEM32\USERENV.dll:USERENV.dll (00007FF9D3FB0000), size: 188416 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.572
+C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2103.7-0\MpOav.dll:MpOav.dll (00007FF9BDEB0000), size: 503808 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 4.18.2103.7
+C:\WINDOWS\SYSTEM32\opencl.dll:opencl.dll (00007FF958C20000), size: 552960 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2.2.1.0
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\radeonrays.dll:radeonrays.dll (00007FF953370000), size: 552960 (result: 0), SymType: '-deferred-', PDB: ''
+C:\Program Files\Unity\Hub\Editor\2019.4.17f1\Editor\Data\MonoBleedingEdge\EmbedRuntime\mono-2.0-bdwgc.dll:mono-2.0-bdwgc.dll (00007FF94CBD0000), size: 7790592 (result: 0), SymType: '-deferred-', PDB: ''
+C:\WINDOWS\System32\PSAPI.DLL:PSAPI.DLL (00007FF9D5730000), size: 32768 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.546
+C:\ProgramData\Microsoft\VisualStudio\Setup\x64\Microsoft.VisualStudio.Setup.Configuration.Native.dll:Microsoft.VisualStudio.Setup.Configuration.Native.dll (00007FF9A22B0000), size: 327680 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2.7.3111.17308
+C:\WINDOWS\SYSTEM32\PROPSYS.dll:PROPSYS.dll (00007FF9CE3E0000), size: 1011712 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 7.0.19041.867
+C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.844_none_ca00b6081b84eb1d\comctl32.dll:comctl32.dll (00007FF9BCCE0000), size: 2727936 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 6.10.19041.844
+C:\WINDOWS\SYSTEM32\WindowsCodecs.dll:WindowsCodecs.dll (00007FF9C5920000), size: 1785856 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.928
+C:\Windows\System32\thumbcache.dll:thumbcache.dll (00007FF9937F0000), size: 417792 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.746
+C:\WINDOWS\SYSTEM32\dbghelp.dll:dbghelp.dll (00007FF9D1D50000), size: 1982464 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.19041.867
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2466.
-Total: 2.859900 ms (FindLiveObjects: 0.255300 ms CreateObjectMapping: 0.118000 ms MarkObjects: 2.462100 ms  DeleteObjects: 0.022300 ms)
+========== OUTPUTTING STACK TRACE ==================
 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001644 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.86 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  2.249 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.47 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.3 MB.
-System memory in use after: 103.4 MB.
+0x00007FF9D4314B59 (KERNELBASE) RaiseException
+0x00007FF62C3C800D (Unity) EditorMonoConsole::LogToConsoleImplementation
+0x00007FF62C3C8F5A (Unity) EditorMonoConsole::LogToConsoleImplementation
+0x00007FF62DF7C61E (Unity) DebugStringToFilePostprocessedStacktrace
+0x00007FF62DF7BBCF (Unity) DebugStringToFile
+0x00007FF62B1CFCCE (Unity) CachedReader::OutOfBoundsError
+0x00007FF62B1D4214 (Unity) CachedReader::UpdateReadCache
+0x00007FF629F29FF5 (Unity) TransferPPtr<StreamedBinaryRead>
+0x00007FF62B8600FB (Unity) TransferField_NonArray<StreamedBinaryRead,Converter_UnityEngineObject>
+0x00007FF62B885652 (Unity) Transfer_UnityEngineObject<StreamedBinaryRead,0>
+0x00007FF62A0BE946 (Unity) ExecuteSerializationCommands<ConfigSettingsRead>
+0x00007FF62B32AF03 (Unity) TransferScriptingObject<StreamedBinaryRead,0>
+0x00007FF62B346A5C (Unity) SerializableManagedRefTransfer::TransferBinaryInstanceOnly
+0x00007FF62B326458 (Unity) SerializableManagedRefTransfer::RestoreBackupImpl<SerializableManagedRefBackupGenerator>
+0x00007FF62B3262FB (Unity) SerializableManagedRefTransfer::RestoreBackup<SerializableManagedRefBackupGenerator>
+0x00007FF62B8AABED (Unity) SerializableManagedRefsUtilities::RestoreBackups
+0x00007FF62B7EE970 (Unity) MonoManager::EndReloadAssembly
+0x00007FF62B7F5859 (Unity) MonoManager::ReloadAssembly
+0x00007FF62CB941E1 (Unity) LoadDomainAndUserAssemblies
+0x00007FF62CB9468E (Unity) LoadUserAssemblies
+0x00007FF62CFC70B8 (Unity) <lambda_79a3ebc38cb5166d44d10a16a21fca24>::operator()
+0x00007FF62D092132 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007FF62D094290 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007FF62D097A1E (Unity) asio::io_service::run
+0x00007FF62D00DC10 (Unity) RunAssetImportWorkerClientV2
+0x00007FF62D00DC60 (Unity) RunAssetImporterV2
+0x00007FF62C51FED6 (Unity) Application::InitializeProject
+0x00007FF62CE9A372 (Unity) WinMain
+0x00007FF62ED0F436 (Unity) __scrt_common_main_seh
+0x00007FF9D5A07034 (KERNEL32) BaseThreadInitThunk
+0x00007FF9D69C2651 (ntdll) RtlUserThreadStart
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2469.
-Total: 3.223300 ms (FindLiveObjects: 0.493500 ms CreateObjectMapping: 0.307000 ms MarkObjects: 2.399600 ms  DeleteObjects: 0.019500 ms)
+========== END OF STACKTRACE ===========
 
+A crash has been intercepted by the crash handler. For call stack and other details, see the latest crash report generated in:
+ * C:/Users/MARKUS~1.LEI/AppData/Local/Temp/Unity/Editor/Crashes

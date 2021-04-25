@@ -79,7 +79,7 @@ namespace Assets.Scripts.Battle.AI {
                     _state = EnumAiState.None;
                     Player.InputDisabledAiBattle = false;
                     _battleController.ExecuteAttack(_selectedAttackOption.GetTargetList(), _selectedAttackOption.GetMagic(),
-                        _selectedAttackOption.GetMagicLevel());
+                        _selectedAttackOption.GetMagicLevel(), _selectedAttackOption.GetAttackType());
                     //ExecuteAttack does already end the turn
                     _state = EnumAiState.None;
                     break;

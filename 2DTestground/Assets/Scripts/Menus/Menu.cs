@@ -429,7 +429,9 @@ public class Menu : MonoBehaviour
 
     private bool TryUseItemOnCharacter(PartyMember selectedPartyMember) {
         var itemToUse = (Consumable) _firstSelectedItem;
-        return itemToUse.TryUseItem(selectedPartyMember, selectedPartyMember);
+        var memberAsUnit = new Unit();
+        memberAsUnit.SetHackCharacter(selectedPartyMember);
+        return itemToUse.TryUseItem(memberAsUnit, new List<Unit>() { memberAsUnit }, false);
     }
 
     private void HandleGiveMenu(GameItem selectedItem) {

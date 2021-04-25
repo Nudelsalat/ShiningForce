@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Galam Mage
   IsPromoted: 0
   PortraitSprite: {fileID: 0}
-  AnimatorSprite: {fileID: 9100000, guid: 4ac651526a78c1147b02096911971bb9, type: 2}
+  AnimatorSprite: {fileID: 9100000, guid: b44c11db2c05e0f41aaf688907820b53, type: 2}
   ClassType: 4
   CharacterType: 17
   MovementType: 4
