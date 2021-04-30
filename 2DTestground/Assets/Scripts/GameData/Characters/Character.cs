@@ -102,8 +102,8 @@ public class Character : ScriptableObject {
     }
 
     public void FullyHeal() {
-        CharStats.CurrentHp = CharStats.MaxHp;
-        CharStats.CurrentMp = CharStats.MaxMp;
+        CharStats.CurrentHp = CharStats.MaxHp();
+        CharStats.CurrentMp = CharStats.MaxMp();
     }
 
     public List<string> AddExp(int expToAdd) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Enums;
 using UnityEngine;
 
 [System.Serializable]
@@ -15,7 +16,7 @@ public class Stat {
         _baseValue = baseValue;
     }
 
-    public int LevelUp() {
+    public int LevelUp(int min, int max, EnumStatGrowth growth) {
         var increase = 0;
         //TODO Calculat chance iguess?
         increase = 1;

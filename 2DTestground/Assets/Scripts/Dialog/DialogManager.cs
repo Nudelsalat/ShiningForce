@@ -89,6 +89,11 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void EvokeSingleSentenceDialogue(string sentence) {
+        if (Player.IsInDialogue) {
+            var replacedSentence = ReplaceNameVariables(sentence);
+            _sentences.Enqueue(replacedSentence);
+            return;
+        }
         var dialogue = new Dialogue {
             Sentences = new List<string>() {sentence},
             Name = "singleSentence",
@@ -98,6 +103,13 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void EvokeSentenceDialogue(List<string> sentence) {
+        if (Player.IsInDialogue) {
+            foreach (string newSentence in sentence) {
+                var replacedSentence = ReplaceNameVariables(newSentence);
+                _sentences.Enqueue(replacedSentence);
+            }
+            return;
+        }
         var dialogue = new Dialogue {
             Sentences = sentence,
             Name = "singleSentence",

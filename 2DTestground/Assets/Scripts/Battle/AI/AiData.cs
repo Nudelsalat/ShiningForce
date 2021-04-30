@@ -17,6 +17,8 @@ namespace Assets.Scripts.Battle.AI {
         public Magic HealingMagic;
         public Magic StatusEffectMagic;
 
+        public float PercentChance = 0.5f;
+
         public EnumAiType PrimaryAiType;
         public EnumAiType SecondaryAiType;
 

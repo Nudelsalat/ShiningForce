@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354664c837fd3b47a9d2a9af1414bcf, type: 3}
+  m_Name: Cleric
+  m_EditorClassIdentifier: 
+  Id: 3
+  Name: Cleric
+  IsPromoted: 0
+  PortraitSprite: {fileID: 0}
+  AnimatorSprite: {fileID: 9100000, guid: b44c11db2c05e0f41aaf688907820b53, type: 2}
+  ClassType: 4
+  CharacterType: 17
+  MovementType: 4
+  CharStats:
+    Level: 3
+    Exp: 0
+    CurrentHp: 15
+    CurrentMp: 7
+    Hp:
+      _baseValue: 15
+    Mp:
+      _baseValue: 7
+    Attack:
+      _baseValue: 18
+    Defense:
+      _baseValue: 11
+    Agility:
+      _baseValue: 13
+    Movement:
+      _baseValue: 5
+    MinLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    MaxLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    AttackGrowth: 0
+    DefenseGrowth: 0
+    AgilityGrowth: 0
+    HpGrowth: 0
+    MpGrowth: 0
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  CharacterInventory:
+  - item1: {fileID: 11400000, guid: 53ef62d4a4b2e47489b893cd2838caaa, type: 2}
+    item2: 1
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
+    item2: 1
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0

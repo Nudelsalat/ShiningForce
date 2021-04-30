@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +10,23 @@ using UnityEngine.UI;
 public class CharacterStatistics {
     public int Level;
     public int Exp;
-    public int MaxHp;
     public int CurrentHp;
-    public int MaxMp;
     public int CurrentMp;
+    public Stat Hp;
+    public Stat Mp;
     public Stat Attack;
     public Stat Defense;
     public Stat Agility;
     public Stat Movement;
+
+    public BaseStats MinLevelStats;
+    public BaseStats MaxLevelStats;
+    public EnumStatGrowth AttackGrowth;
+    public EnumStatGrowth DefenseGrowth;
+    public EnumStatGrowth AgilityGrowth;
+    public EnumStatGrowth HpGrowth;
+    public EnumStatGrowth MpGrowth;
+
     public int Kills = 0;
     public int Defeats = 0;
 
@@ -24,24 +34,36 @@ public class CharacterStatistics {
     public CharacterStatistics() {
         Level = 1;
         Exp = 0;
-        MaxHp = CurrentHp = 10;
-        MaxMp = CurrentMp = 0;
+        CurrentHp = 10;
+        CurrentMp = 0;
+        Hp = new Stat(10);
+        Mp = new Stat(0);
         Attack = new Stat(5);
         Defense = new Stat(5);
         Agility = new Stat(5);
         Movement = new Stat(5);
     }
 
-    public CharacterStatistics(int level, int maxHp, int maxMp, Stat attack, Stat defense, Stat agility, Stat movement,
+    public CharacterStatistics(int level, Stat maxHp, Stat maxMp, Stat attack, Stat defense, Stat agility, Stat movement,
         int exp = 0) {
         Level = level;
-        MaxHp = CurrentHp = maxHp;
-        MaxMp = CurrentMp = maxMp;
+        Hp = maxHp;
+        Mp = maxMp;
+        CurrentHp = Hp.GetModifiedValue();
+        CurrentMp = Mp.GetModifiedValue();
         Attack = attack;
         Defense = defense;
         Agility = agility;
         Movement = movement;
         Exp = exp;
+    }
+
+    public int MaxHp() {
+        return Hp.GetModifiedValue();
+    }
+
+    public int MaxMp() {
+        return Mp.GetModifiedValue();
     }
 
     public bool AddExp(int exp) {
@@ -58,11 +80,11 @@ public class CharacterStatistics {
         //TODO ACTUAL LEVEL UP:
         var sentence = "";
 
-        var attackIncrease = Attack.LevelUp();
-        var defenseIncrease = Defense.LevelUp();
-        var agilityIncrease = Agility.LevelUp();
-        var hpIncrease = 2;
-        var mpIncrease = 2;
+        var attackIncrease = Attack.LevelUp(MinLevelStats.Attack, MaxLevelStats.Attack, AttackGrowth);
+        var defenseIncrease = Defense.LevelUp(MinLevelStats.Defense, MaxLevelStats.Defense, DefenseGrowth);
+        var agilityIncrease = Agility.LevelUp(MinLevelStats.Agility, MaxLevelStats.Agility, AgilityGrowth);
+        var hpIncrease = Agility.LevelUp(MinLevelStats.Hp, MaxLevelStats.Hp, HpGrowth);
+        var mpIncrease = Agility.LevelUp(MinLevelStats.Mp, MaxLevelStats.Mp, MpGrowth);
         //var movementIncrease = Movement.LevelUp();
         if (attackIncrease > 0) {
             sentence += $"ATTACK increased by {attackIncrease}\n";
@@ -75,12 +97,10 @@ public class CharacterStatistics {
         }
         if (hpIncrease > 0) {
             sentence += $"HP increased by {hpIncrease}\n";
-            MaxHp += hpIncrease;
             CurrentHp += hpIncrease;
         }
         if (mpIncrease > 0) {
             sentence += $"HP increased by {mpIncrease}\n";
-            MaxMp += mpIncrease;
             CurrentMp += mpIncrease;
         }
 
@@ -156,6 +176,8 @@ public class CharacterStatistics {
     }
 
     public void ClearModifiers() {
+        Hp.ClearModifier();
+        Mp.ClearModifier();
         Movement.ClearModifier();
         Attack.ClearModifier();
         Defense.ClearModifier();

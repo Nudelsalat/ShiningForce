@@ -100,7 +100,6 @@ namespace Assets.Scripts.Battle.AI {
             unit.CheckTrigger();
             _currentAiData = unit.GetAiData();
             _currentMovementSquares = movementSquares;
-
             if (_currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.confused)) {
                 SetConfusedRandomizedBehaviour();
             }
@@ -109,7 +108,6 @@ namespace Assets.Scripts.Battle.AI {
         }
 
         public void ConfusedTurn(Unit unit, List<Vector3> movementSquares) {
-           
             Player.InputDisabledAiBattle = true;
             _currentUnit = unit;
             _currentCharacter = unit.GetCharacter();
@@ -160,7 +158,7 @@ namespace Assets.Scripts.Battle.AI {
                     TryExecuteAttack(out var allAttackOptions);
                     foreach (var attackOption in allAttackOptions) {
                         if (attackOption.GetTargetList().Exists(x =>
-                            x.GetCharacter().CharStats.CurrentHp <= x.GetCharacter().CharStats.MaxHp * 0.75f)) {
+                            x.GetCharacter().CharStats.CurrentHp <= x.GetCharacter().CharStats.MaxHp() * _currentAiData.PercentChance)) {
                             ExecuteBestAttackOption(allAttackOptions);
                             return true;
                         }
@@ -170,6 +168,8 @@ namespace Assets.Scripts.Battle.AI {
                 case EnumAiType.MoveTowardTarget:
                     return _currentAiData.TargetUnit != null;
                 case EnumAiType.MoveTowardPoint:
+                    return _currentAiData.TargetPoint != null;
+                case EnumAiType.MoveTowardTargetBerserk:
                     return _currentAiData.TargetPoint != null;
                 default:
                     Debug.LogError("Unknown AiType! return preconditions not met.");
@@ -190,18 +190,18 @@ namespace Assets.Scripts.Battle.AI {
                     _magicToAttack = null;
                     if (TryExecuteAttack(out var allAttackOptions)) {
                         ExecuteBestAttackOption(allAttackOptions);
-                    } else {
-                        ExecuteAttackOption(null);
-                    }
+                        return;
+                    } 
                     break;
                 case EnumAiType.Aggressive:
                     _magicToAttack = null;
                     if (TryExecuteAttack(out allAttackOptions)) {
                         ExecuteBestAttackOption(allAttackOptions);
+                        return;
                     } else {
                         MoveTowardsClosestTarget();
+                        return;
                     }
-                    break;
                 case EnumAiType.InRangeMage:
                     SetUpMagicSpell(_currentAiData.DamageMagic);
                     atLeastOneOption = TryExecuteAttack(out var allMagicAttackOptions);
@@ -210,9 +210,8 @@ namespace Assets.Scripts.Battle.AI {
                     if (atLeastOneOption) {
                         allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
                         ExecuteBestAttackOption(allPhysicalAttackOptions);
-                    } else {
-                        ExecuteAttackOption(null);
-                    }
+                        return;
+                    } 
                     break;
                 case EnumAiType.AggressiveMage:
                     SetUpMagicSpell(_currentAiData.DamageMagic);
@@ -222,10 +221,11 @@ namespace Assets.Scripts.Battle.AI {
                     if (atLeastOneOption) {
                         allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
                         ExecuteBestAttackOption(allPhysicalAttackOptions);
+                        return;
                     } else {
                         MoveTowardsClosestTarget();
+                        return;
                     }
-                    break;
                 case EnumAiType.InRangeDebuff:
                     SetUpMagicSpell(_currentAiData.StatusEffectMagic);
                     atLeastOneOption = TryExecuteAttack(out allMagicAttackOptions);
@@ -234,31 +234,66 @@ namespace Assets.Scripts.Battle.AI {
                     if (atLeastOneOption) {
                         allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
                         ExecuteBestAttackOption(allPhysicalAttackOptions);
-                    } else {
-                        ExecuteAttackOption(null);
-                    }
+                        return;
+                    } 
                     break;
                 case EnumAiType.Healer:
                     SetUpMagicSpell(_currentAiData.HealingMagic);
                     if (TryExecuteAttack(out allAttackOptions)) {
                         ExecuteBestAttackOption(allAttackOptions);
-                    } else {
-                        ExecuteAi(EnumAiType.InRangeMage);
-                    }
+                        return;
+                    } 
                     break;
                 case EnumAiType.Follow:
-                    //TODO
+                    //Use follow target as Secondary action.
+                    if (_currentAiData.TargetUnit) {
+                        ExecuteMoveTowardPoint(_currentAiData.TargetUnit.transform.position);
+                        return;
+                    } 
                     break;
                 case EnumAiType.MoveTowardPoint:
+                    //Use moveToward Point as Secondary action...
                     if (_currentAiData.TargetPoint != null) {
                         ExecuteMoveTowardPoint((Vector3) _currentAiData.TargetPoint);
+                        return;
                     }
                     break;
                 case EnumAiType.MoveTowardTarget:
-                    //TODO
-                    break;
+                    SetUpMagicSpell(_currentAiData.DamageMagic);
+                    atLeastOneOption = TryExecuteAttack(out allMagicAttackOptions);
+                    _magicToAttack = null;
+                    atLeastOneOption = TryExecuteAttack(out allPhysicalAttackOptions) || atLeastOneOption;
+                    if (atLeastOneOption) {
+                        allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
+                        var targetReachable = allPhysicalAttackOptions.Where(x => x.GetTargetList().Contains(_currentAiData.TargetUnit)).ToList();
+                        ExecuteBestAttackOption(targetReachable.Count > 0 ? targetReachable : allPhysicalAttackOptions);
+                        return;
+                    } else {
+                        ExecuteMoveTowardPoint(_currentAiData.TargetUnit.transform.position);
+                        return;
+                    }
+                case EnumAiType.MoveTowardTargetBerserk:
+                    // will try to get to target, even if other targets are next to berserker unit
+                    SetUpMagicSpell(_currentAiData.DamageMagic);
+                    TryExecuteAttack(out allMagicAttackOptions);
+                    _magicToAttack = null;
+                    TryExecuteAttack(out allPhysicalAttackOptions);
+                    allPhysicalAttackOptions.AddRange(allMagicAttackOptions);
+                    allPhysicalAttackOptions = allPhysicalAttackOptions.Where(x => x.GetTargetList().Contains(_currentAiData.TargetUnit)).ToList();
+                    if (allPhysicalAttackOptions.Count > 0) {
+                        ExecuteBestAttackOption(allPhysicalAttackOptions);
+                        return;
+                    } else {
+                        ExecuteMoveTowardPoint(_currentAiData.TargetUnit.transform.position);
+                        return;
+                    }
                 default:
                     throw new ArgumentOutOfRangeException(nameof(aiType), aiType, null);
+            }
+            if (aiType != _currentAiData.SecondaryAiType) {
+                ExecuteAi(_currentAiData.SecondaryAiType);
+            } else {
+                ExecuteAttackOption(null);
             }
         }
 
@@ -338,7 +373,7 @@ namespace Assets.Scripts.Battle.AI {
             ExecuteShortestPathAi(pathfinder, EnumAiType.Idle);
         }
 
-        // Try to get to point with the most direct way, ignoring landEffects
+        // Try to get to point with the most direct way, calculating landEffects
         // if path is blocked, AI switches to aggressive attack mode.
         private void ExecuteMoveTowardPoint(Vector3 point) {
             if (_currentMovementSquares.Contains(point)) {
@@ -353,6 +388,10 @@ namespace Assets.Scripts.Battle.AI {
             var movementTyp = _currentCharacter.MovementType;
             var tilesNotToUse = TerrainEffects.GetImpassableTerrainNameOfMovementType(movementTyp);
             var listOfUsableSquares = _movementGrid.GetWholeTerrainTileMapWithoutCertainSprites(tilesNotToUse, _forceLayerMask);
+            if (!listOfUsableSquares.Contains(point)) {
+                //If you want to get to a specific target, add that point to have a change to find a path.
+                listOfUsableSquares.Add(point);
+            }
             var pathfinder = new Pathfinder(listOfUsableSquares, _currentUnit.transform.position, point,
                 _movementGrid, movementTyp);
             ExecuteShortestPathAi(pathfinder, EnumAiType.Aggressive);

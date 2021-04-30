@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Enums;
 using UnityEngine;
 using Assets.Scripts.GameData.Characters;
 

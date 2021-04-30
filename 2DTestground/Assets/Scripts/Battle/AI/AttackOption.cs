@@ -93,11 +93,11 @@ namespace Assets.Scripts.Battle.AI {
             var score = 0f;
             foreach (var target in _listTargets) {
                 var charStats = target.GetCharacter().CharStats;
-                var hpDiff = charStats.MaxHp - charStats.CurrentHp;
+                var hpDiff = charStats.MaxHp() - charStats.CurrentHp;
                 if (hpDiff < _attack) {
-                    score += (float)hpDiff / charStats.MaxHp;
+                    score += (float)hpDiff / charStats.MaxHp();
                 } else {
-                    score += (float)_attack / charStats.MaxHp;
+                    score += (float)_attack / charStats.MaxHp();
                 }
             }
             return score;
@@ -112,7 +112,7 @@ namespace Assets.Scripts.Battle.AI {
                 if (damage >= target.GetCharacter().CharStats.CurrentHp) {
                     score += 100;
                 }
-                score += damage / target.GetCharacter().CharStats.MaxHp;
+                score += damage / target.GetCharacter().CharStats.MaxHp();
             }
             return score;
         }
@@ -123,7 +123,7 @@ namespace Assets.Scripts.Battle.AI {
                 if (_attack >= target.GetCharacter().CharStats.CurrentHp) {
                     score += 100;
                 }
-                score += (float)_attack / target.GetCharacter().CharStats.MaxHp;
+                score += (float)_attack / target.GetCharacter().CharStats.MaxHp();
             }
             return score;
         }

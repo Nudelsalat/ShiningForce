@@ -36,7 +36,7 @@ class Consumable : GameItem {
             var toRestore = 0;
             switch (Magic.MagicType) {
                 case EnumMagicType.Heal:
-                    toRestore = usedOnCharacter.CharStats.MaxHp - usedOnCharacter.CharStats.CurrentHp;
+                    toRestore = usedOnCharacter.CharStats.MaxHp() - usedOnCharacter.CharStats.CurrentHp;
                     if (toRestore == 0) {
                         sentences.Add($"{usedOnCharacter.Name.AddColor(Constants.Orange)} does not need any healing!");
                     } else {
@@ -44,7 +44,7 @@ class Consumable : GameItem {
                     }
                     break;
                 case EnumMagicType.RestoreMP:
-                    toRestore = usedOnCharacter.CharStats.MaxMp - usedOnCharacter.CharStats.CurrentMp;
+                    toRestore = usedOnCharacter.CharStats.MaxMp() - usedOnCharacter.CharStats.CurrentMp;
                     if (toRestore == 0) {
                         sentences.Add($"{usedOnCharacter.Name.AddColor(Constants.Orange)} has full MP!");
                     }
@@ -54,8 +54,8 @@ class Consumable : GameItem {
 
                     break;
                 case EnumMagicType.RestoreBoth:
-                    if (usedOnCharacter.CharStats.MaxHp == usedOnCharacter.CharStats.CurrentHp &&
-                        usedOnCharacter.CharStats.MaxMp == usedOnCharacter.CharStats.CurrentMp) {
+                    if (usedOnCharacter.CharStats.MaxHp() == usedOnCharacter.CharStats.CurrentHp &&
+                        usedOnCharacter.CharStats.MaxMp() == usedOnCharacter.CharStats.CurrentMp) {
                         sentences.Add($"{usedOnCharacter.Name.AddColor(Constants.Orange)} does not need any healing!");
                         return false;
                     }

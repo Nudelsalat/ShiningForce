@@ -23,10 +23,12 @@ MonoBehaviour:
   CharStats:
     Level: 3
     Exp: 0
-    MaxHp: 15
     CurrentHp: 15
-    MaxMp: 0
     CurrentMp: 0
+    Hp:
+      _baseValue: 15
+    Mp:
+      _baseValue: 0
     Attack:
       _baseValue: 5
     Defense:
@@ -35,6 +37,23 @@ MonoBehaviour:
       _baseValue: 5
     Movement:
       _baseValue: 5
+    MinLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    MaxLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    AttackGrowth: 0
+    DefenseGrowth: 0
+    AgilityGrowth: 0
+    HpGrowth: 0
+    MpGrowth: 0
     Kills: 0
     Defeats: 0
   StatusEffects: 0

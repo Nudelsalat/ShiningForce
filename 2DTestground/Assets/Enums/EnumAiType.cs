@@ -17,5 +17,6 @@ namespace Assets.Enums {
         Follow = 8,
         MoveTowardPoint = 9,
         MoveTowardTarget = 10,
+        MoveTowardTargetBerserk = 11,
     }
 }

@@ -62,8 +62,8 @@ namespace Assets.Scripts.Menus.Battle {
         public void ShowQuickInfo(Character character, GameItem newItem) {
             OpenUi();
 
-            var currentMaxHp = character.CharStats.MaxHp;
-            var currentMaxMp = character.CharStats.MaxMp;
+            var currentMaxHp = character.CharStats.MaxHp();
+            var currentMaxMp = character.CharStats.MaxMp();
             var currentAttack = character.CharStats.Attack.GetModifiedValue();
             var currentDefense = character.CharStats.Defense.GetModifiedValue();
             var currentAgility = character.CharStats.Agility.GetModifiedValue();

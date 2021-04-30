@@ -20,6 +20,8 @@ namespace Assets.Scripts.Battle {
         public Unit TargetUnit;
         // For move toward command
         public GameObject TargetPoint;
+        // Used for healer when to heal, or chance AI
+        public float PercentChance = 0.5f;
         // This Ai Type is the first go to behaviour
         public EnumAiType InitialAiTypePrimary;
         // This Ai Type is a fallback behaviour if primary does not meet precondition
@@ -44,6 +46,7 @@ namespace Assets.Scripts.Battle {
 
             _aiData.TargetUnit = TargetUnit;
             _aiData.TargetPoint = TargetPoint?.transform.position;
+            _aiData.PercentChance = PercentChance;
         }
 
         public void CheckTrigger() {

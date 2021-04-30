@@ -25,7 +25,7 @@ public class HealthbarTracker : MonoBehaviour
             wantedPos.y += 40;
             transform.position = wantedPos;
             var character = _target.GetCharacter();
-            _slider.value = (float) character.CharStats.CurrentHp / (float) character.CharStats.MaxHp;
+            _slider.value = (float) character.CharStats.CurrentHp / (float) character.CharStats.MaxHp();
         }
     }
 

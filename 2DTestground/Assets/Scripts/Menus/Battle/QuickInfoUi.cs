@@ -66,9 +66,9 @@ public class QuickInfoUi : MonoBehaviour
     public void ShowQuickInfo(Character character) {
         OpenUi();
         var stats = character.CharStats;
-        float maxValue = stats.MaxHp > stats.MaxMp
-            ? stats.MaxHp
-            : stats.MaxMp;
+        float maxValue = stats.MaxHp() > stats.MaxMp()
+            ? stats.MaxHp()
+            : stats.MaxMp();
         maxValue *= _uiSizePerPoint;
 
         if (maxValue >= _uiMaxSize) {
@@ -84,8 +84,8 @@ public class QuickInfoUi : MonoBehaviour
         _mpContainerRectTransform.sizeDelta =
             new Vector2(maxValue, _mpContainerRectTransform.rect.height);
 
-        var healthBarSize = (stats.MaxHp * _uiSizePerPoint > 530) ? 530 : stats.MaxHp * _uiSizePerPoint;
-        var mpBarSize = (stats.MaxMp * _uiSizePerPoint > 530) ? 530 : stats.MaxMp * _uiSizePerPoint;
+        var healthBarSize = (stats.MaxHp() * _uiSizePerPoint > 530) ? 530 : stats.MaxHp() * _uiSizePerPoint;
+        var mpBarSize = (stats.MaxMp() * _uiSizePerPoint > 530) ? 530 : stats.MaxMp() * _uiSizePerPoint;
         _hpRectTransform.sizeDelta = new Vector2(healthBarSize, _hpRectTransform.rect.height);
         _mpRectTransform.sizeDelta = new Vector2(mpBarSize, _mpRectTransform.rect.height);
 
@@ -93,17 +93,17 @@ public class QuickInfoUi : MonoBehaviour
         _charTypeLevel.text = $"{Enum.GetName(typeof(EnumClassType),character.ClassType)}{stats.Level}";
 
         _currentHP.text = stats.CurrentHp <= 999 ? stats.CurrentHp.ToString() : "???";
-        _maxHP.text = stats.MaxHp <= 999 ? stats.MaxHp.ToString() : "???";
+        _maxHP.text = stats.MaxHp() <= 999 ? stats.MaxHp().ToString() : "???";
         _currentMP.text = stats.CurrentMp <= 999 ? stats.CurrentMp.ToString() : "???";
-        _maxMP.text = stats.MaxMp <= 999 ? stats.MaxMp.ToString() : "???";
+        _maxMP.text = stats.MaxMp() <= 999 ? stats.MaxMp().ToString() : "???";
 
         SettingSliders(stats);
 
     }
 
     private void SettingSliders(CharacterStatistics stats) {
-        var lowerHpValue = stats.MaxHp <= 100 ? stats.MaxHp : 100;
-        var lowerMpValue = stats.MaxMp <= 100 ? stats.MaxMp : 100;
+        var lowerHpValue = stats.MaxHp() <= 100 ? stats.MaxHp() : 100;
+        var lowerMpValue = stats.MaxMp() <= 100 ? stats.MaxMp() : 100;
 
         foreach (Transform child in _hpSliders) {
             child.GetComponent<Slider>().value = 0;
@@ -135,7 +135,7 @@ public class QuickInfoUi : MonoBehaviour
         }
 
 
-        if (stats.MaxMp <= 0) {
+        if (stats.MaxMp() <= 0) {
             return;
         }
         if (stats.CurrentMp <= 100) {

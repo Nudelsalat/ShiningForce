@@ -765,11 +765,11 @@ namespace Assets.Scripts.Battle {
                                  $" was defeated!");
                     target.CharStats.CurrentHp = 0;
                     RemoveUnitFromBattle(targetUnit);
-                    expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp) +
+                    expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
                                       expBase);
                 } else {
                     target.CharStats.CurrentHp -= damage;
-                    expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp);
+                    expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp());
                 }
             }
 

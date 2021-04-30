@@ -14,7 +14,6 @@ namespace Assets.Scripts.GameData.Magic {
         public Sprite SpellSprite;
         public int CurrentLevel = 1;
         public DirectionType PositionInInventory;
-        public int MaxLevel = 4;
         public EnumAttackRange[] AttackRange = new EnumAttackRange[4];
         public EnumAreaOfEffect[] AreaOfEffect = new EnumAreaOfEffect[4];
         public EnumMagicType MagicType;
@@ -34,6 +33,7 @@ namespace Assets.Scripts.GameData.Magic {
             _battleCalculator = new BattleCalculator();
             var caster = casterUnit.GetCharacter();
             var damage = Damage[magicLevel-1];
+            damage = casterUnit.GetCharacter().IsPromoted ? (int)(damage * 1.25) : damage;
             var expScore = 0;
             var sentence = new List<string>();
             foreach (var targetUnit in targets) {
@@ -59,16 +59,16 @@ namespace Assets.Scripts.GameData.Magic {
                                          $" was defeated!");
                             target.CharStats.CurrentHp = 0;
                             BattleController.Instance.RemoveUnitFromBattle(targetUnit);
-                            expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp) +
+                            expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
                                               expBase);
                         } else {
                             target.CharStats.CurrentHp -= damage;
-                            expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp);
+                            expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp());
                         }
 
                         break;
                     case EnumMagicType.Heal:
-                        var diff = target.CharStats.MaxHp -
+                        var diff = target.CharStats.MaxHp() -
                                    target.CharStats.CurrentHp;
                         var pointsToHeal = diff < damage ? diff : damage;
 
@@ -76,11 +76,11 @@ namespace Assets.Scripts.GameData.Magic {
                         sentence.Add(
                             $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
                             $"points.");
-                        var expPoints = 25 * (float)pointsToHeal / target.CharStats.MaxHp;
+                        var expPoints = 25 * (float)pointsToHeal / target.CharStats.MaxHp();
                         expScore += (int) expPoints;
                         break;
                     case EnumMagicType.RestoreMP:
-                        diff = target.CharStats.MaxMp -
+                        diff = target.CharStats.MaxMp() -
                                    target.CharStats.CurrentMp;
                         pointsToHeal = diff < damage ? diff : damage;
                         target.CharStats.CurrentMp += damage;
@@ -88,11 +88,11 @@ namespace Assets.Scripts.GameData.Magic {
                             $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
                             $"points.");
 
-                        expPoints = 25 * (float)pointsToHeal / target.CharStats.MaxMp;
+                        expPoints = 25 * (float)pointsToHeal / target.CharStats.MaxMp();
                         expScore += (int)expPoints;
                         break;
                     case EnumMagicType.RestoreBoth:
-                        diff = target.CharStats.MaxHp -
+                        diff = target.CharStats.MaxHp() -
                                    target.CharStats.CurrentHp;
                         pointsToHeal = diff < damage ? diff : damage;
 
@@ -100,10 +100,10 @@ namespace Assets.Scripts.GameData.Magic {
                         sentence.Add(
                             $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
                             $"points.");
-                        expPoints = 12 * (float)pointsToHeal / target.CharStats.MaxHp;
+                        expPoints = 12 * (float)pointsToHeal / target.CharStats.MaxHp();
                         expScore += (int)expPoints;
 
-                        diff = target.CharStats.MaxMp -
+                        diff = target.CharStats.MaxMp() -
                                target.CharStats.CurrentMp;
                         pointsToHeal = diff < damage ? diff : damage;
                         target.CharStats.CurrentMp += damage;
@@ -111,7 +111,7 @@ namespace Assets.Scripts.GameData.Magic {
                             $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
                             $"points.");
 
-                        expPoints = 12 * (float)pointsToHeal / target.CharStats.MaxMp;
+                        expPoints = 12 * (float)pointsToHeal / target.CharStats.MaxMp();
                         expScore += (int)expPoints;
                         break;
                     case EnumMagicType.Cure:

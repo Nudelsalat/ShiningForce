@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Enums;
 using Assets.Scripts.GameData.Characters;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
