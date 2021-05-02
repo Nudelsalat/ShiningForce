@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.Battle.AI;
+using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
@@ -323,7 +324,7 @@ namespace Assets.Scripts.Battle {
                             LayerMask.GetMask("Force", "Enemies"))) {
                             Player.PlayerIsInMenu = EnumMenuType.battleMenu;
                             _audioManager.PlaySFX(Constants.SfxMenuSwish);
-                            _characterDetailUI.LoadCharacterDetails(unit.GetCharacter());
+                            _characterDetailUI.LoadCharacterDetails(unit.GetCharacter(), unit.GetTexture2D());
                             _currentBattleState = EnumBattleState.characterDetails;
                         }
                         break;

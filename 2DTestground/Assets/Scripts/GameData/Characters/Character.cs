@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
-using Assets.Scripts.GameData.Characters;
 using Assets.Scripts.GameData.Magic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -14,7 +13,9 @@ public class Character : ScriptableObject {
     public string Name;
     public bool IsPromoted;
     public Sprite PortraitSprite;
-    public RuntimeAnimatorController AnimatorSprite;
+    public RuntimeAnimatorController AnimatorSprite; 
+    public Texture2D ColorPalette;
+    public int SkinId;
 
     public EnumClassType ClassType = EnumClassType.SDMN;
     public EnumCharacterType CharacterType;

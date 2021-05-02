@@ -2,7 +2,7 @@ Shader "Custom/SwapTwo" {
      Properties
      {
          [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
-         _MainTex2 ("_MainTex2", 2D) = "white" {} 
+         _MainTex2 ("_MainTex2", 2D) = "transparent" {} 
          _Color ("Tint", Color) = (1,1,1,1)
          [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
      }

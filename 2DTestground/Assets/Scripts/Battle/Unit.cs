@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
 using UnityEditor;
@@ -21,7 +22,10 @@ namespace Assets.Scripts.Battle {
 
 #if UNITY_EDITOR
         void OnValidate() {
+            _character = Instantiate(Character);
+            _spriteRenderer = this.GetComponent<SpriteRenderer>();
             FixGridPosition();
+            DoColorSwap();
 
             var sprite = GetComponent<SpriteRenderer>();
             var clip = Character.AnimatorSprite.animationClips[0];
@@ -38,6 +42,7 @@ namespace Assets.Scripts.Battle {
             _animator.SetInteger("moveDirection", 2);
             _spriteRenderer = this.GetComponent<SpriteRenderer>();
             FixGridPosition();
+            DoColorSwap();
         }
 
         protected void Start() {
@@ -55,10 +60,35 @@ namespace Assets.Scripts.Battle {
             var x = position.x >= 0 ? (int) position.x + 0.5f : (int)position.x - 0.5f;
             var y = position.y >= 0 ? (int) position.y + 0.75f : (int)position.y - 0.25f;
             transform.position = new Vector3(x, y);
-           
+
         }
 
-        public Character GetCharacter() {
+        private void DoColorSwap() {
+            var texture2D = GetTexture2D();
+            if (!texture2D) {
+                return;
+            }
+            var _swapShader = Shader.Find("Custom/SwapTwo");
+
+            var _newMat = new Material(_swapShader);
+            _spriteRenderer.sharedMaterial = _newMat;
+            _spriteRenderer.sharedMaterial.SetTexture("_MainTex2", texture2D);
+
+        }
+
+        public Texture2D GetTexture2D() {
+            if (_character.ColorPalette == null) {
+                return null;
+            }
+            var colorPalette = _character.ColorPalette;
+            var skinId = _character.SkinId;
+            if (colorPalette == null || colorPalette.height - 1 <= skinId) {
+                return null;
+            }
+            return PaletteSwapNoShader.CopyTexture2D(_spriteRenderer.sprite.texture, colorPalette, skinId);
+        }
+
+    public Character GetCharacter() {
             return _character;
         }
 

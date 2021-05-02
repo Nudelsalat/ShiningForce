@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Assets.Scripts.EditorScripts;
 using Assets.Scripts.Menus;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +30,8 @@ public class CharacterDetailUI : MonoBehaviour {
     private Inventory _inventory;
     private Portrait _portrait;
 
+    private Texture2D _texture2D;
+    private Image _image;
     private Sprite _blankSprite;
     private GameObject[] _itemList;
     private GameObject[] _magicList;
@@ -54,6 +58,7 @@ public class CharacterDetailUI : MonoBehaviour {
         _animatorCharacterDetail = transform.Find("BigWindow").GetComponent<Animator>();
         _animatorKills = transform.Find("Kills").GetComponent<Animator>();
         _animatorGold = Gold.GetComponent<Animator>();
+        _image = Kills.transform.Find("KillsDefeats/Sprite").GetComponent<Image>();
     }
 
     void Start() {
@@ -62,7 +67,8 @@ public class CharacterDetailUI : MonoBehaviour {
         transform.gameObject.SetActive(false);
     }
 
-    public void LoadCharacterDetails(Character character) {
+    public void LoadCharacterDetails(Character character, Texture2D texture2D = null) {
+        _texture2D = texture2D;
         OpenCharacterDetails();
         if (character.PortraitSprite != null) {
             _portrait.ShowPortrait(character.PortraitSprite);
@@ -107,6 +113,7 @@ public class CharacterDetailUI : MonoBehaviour {
         var spriteAnimator = Kills.transform.Find("KillsDefeats/Sprite").GetComponent<Animator>();
         spriteAnimator.runtimeAnimatorController = character.AnimatorSprite;
         spriteAnimator.SetInteger("moveDirection", 2);
+
 
         var charInventory = character.GetInventory();
         var charMagic = character.GetMagic();
@@ -178,6 +185,14 @@ public class CharacterDetailUI : MonoBehaviour {
             }
         }
     }
+
+    void LateUpdate() {
+        if (_texture2D == null) {
+            return;
+        }
+        _image.sprite = Sprite.Create(_texture2D, _image.sprite.rect, _image.sprite.pivot);
+    }
+
 
     private void OpenCharacterDetails() {
         transform.gameObject.SetActive(true);
