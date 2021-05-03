@@ -6,6 +6,8 @@ using Debug = UnityEngine.Debug;
 
 [CreateAssetMenu(fileName = "GameItem", menuName = "Inventory/Equipment")]
 public class Equipment : GameItem {
+    public int HpModifier;
+    public int MpModifier;
     public int AttackModifier;
     public int DefenseModifier;
     public int AgilityModifier;

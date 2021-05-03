@@ -76,23 +76,23 @@ public class CharacterStatistics {
     }
 
     public string LevelUp() {
-        Level += 1;
-        //TODO ACTUAL LEVEL UP:
         var sentence = "";
 
-        var attackIncrease = Attack.LevelUp(MinLevelStats.Attack, MaxLevelStats.Attack, AttackGrowth);
-        var defenseIncrease = Defense.LevelUp(MinLevelStats.Defense, MaxLevelStats.Defense, DefenseGrowth);
-        var agilityIncrease = Agility.LevelUp(MinLevelStats.Agility, MaxLevelStats.Agility, AgilityGrowth);
-        var hpIncrease = Agility.LevelUp(MinLevelStats.Hp, MaxLevelStats.Hp, HpGrowth);
-        var mpIncrease = Agility.LevelUp(MinLevelStats.Mp, MaxLevelStats.Mp, MpGrowth);
-        //var movementIncrease = Movement.LevelUp();
+        var attackIncrease = Attack.LevelUp(MinLevelStats.Attack, MaxLevelStats.Attack, Level, AttackGrowth);
+        var defenseIncrease = Defense.LevelUp(MinLevelStats.Defense, MaxLevelStats.Defense, Level, DefenseGrowth);
+        var agilityIncrease = Agility.LevelUp(MinLevelStats.Agility, MaxLevelStats.Agility, Level, AgilityGrowth);
+        var hpIncrease = Hp.LevelUp(MinLevelStats.Hp, MaxLevelStats.Hp, Level, HpGrowth);
+        var mpIncrease = Mp.LevelUp(MinLevelStats.Mp, MaxLevelStats.Mp, Level, MpGrowth);
+
+        Level += 1;
+
         if (attackIncrease > 0) {
             sentence += $"ATTACK increased by {attackIncrease}\n";
         }
-        if (attackIncrease > 0) {
+        if (defenseIncrease > 0) {
             sentence += $"DEFENSE increased by {defenseIncrease}\n";
         }
-        if (attackIncrease > 0) {
+        if (agilityIncrease > 0) {
             sentence += $"AGILITY increased by {agilityIncrease}\n";
         }
         if (hpIncrease > 0) {
@@ -113,6 +113,8 @@ public class CharacterStatistics {
             return;
         }
         equipment.IsEquipped = true;
+        Hp.AddModifiert(equipment.HpModifier);
+        Mp.AddModifiert(equipment.MpModifier);
         Attack.AddModifiert(equipment.AttackModifier);
         Defense.AddModifiert(equipment.DefenseModifier);
         Agility.AddModifiert(equipment.AgilityModifier);
@@ -124,11 +126,35 @@ public class CharacterStatistics {
             return;
         }
         equipment.IsEquipped = false;
+        Hp.RemoveModifier(equipment.HpModifier);
+        Mp.RemoveModifier(equipment.MpModifier);
         Attack.RemoveModifier(equipment.AttackModifier);
         Defense.RemoveModifier(equipment.DefenseModifier);
         Agility.RemoveModifier(equipment.AgilityModifier);
         Movement.RemoveModifier(equipment.MovementModifier);
     }
+
+
+    public int CalculateNewHp(Equipment newEquipment, Equipment oldEquipment) {
+        if (newEquipment == null) {
+            return Hp.GetModifiedValue();
+        }
+        if (oldEquipment != null) {
+            return Hp.GetModifiedValue() + newEquipment.HpModifier - oldEquipment.HpModifier;
+        }
+        return Hp.GetModifiedValue() + newEquipment.HpModifier;
+    }
+
+    public int CalculateNewMp(Equipment newEquipment, Equipment oldEquipment) {
+        if (newEquipment == null) {
+            return Mp.GetModifiedValue();
+        }
+        if (oldEquipment != null) {
+            return Mp.GetModifiedValue() + newEquipment.MpModifier - oldEquipment.MpModifier;
+        }
+        return Mp.GetModifiedValue() + newEquipment.MpModifier;
+    }
+
 
     public int CalculateNewAttack(Equipment newEquipment, Equipment oldEquipment) {
         if (newEquipment == null) {
@@ -139,6 +165,7 @@ public class CharacterStatistics {
         }
         return Attack.GetModifiedValue() + newEquipment.AttackModifier;
     }
+
     public int CalculateNewDefense(Equipment newEquipment, Equipment oldEquipment) {
         if (newEquipment == null) {
             return Defense.GetModifiedValue();

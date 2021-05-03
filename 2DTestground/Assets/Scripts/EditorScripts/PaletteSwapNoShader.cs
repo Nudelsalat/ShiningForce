@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
-using Assets.Scripts.Battle;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.EditorScripts {
 
@@ -19,7 +11,7 @@ namespace Assets.Scripts.EditorScripts {
             var newColors = colorPalette.GetPixels(0, paletteValue, colorPalette.width, 1);
             //Create a new Texture2D, which will be the copy.
             Texture2D texture = new Texture2D(copiedTexture.width, copiedTexture.height) {
-                filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp, alphaIsTransparency = true, 
+                filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp
             };
 
 

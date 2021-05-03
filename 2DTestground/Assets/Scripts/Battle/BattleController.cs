@@ -637,10 +637,11 @@ namespace Assets.Scripts.Battle {
                                     _fourWayMagicMenu.ReloadSelection();
                                     _quickStats.ShowQuickInfo(character, equipment);
                                 }
+                            } else {
+                                _dialogManager.EvokeSingleSentenceDialogue(
+                                    $"{character.Name.AddColor(Constants.Orange)} cannot equip " +
+                                    $"{equipment.ItemName.AddColor(Color.green)}");
                             }
-                            _dialogManager.EvokeSingleSentenceDialogue(
-                                $"{character.Name.AddColor(Constants.Orange)} cannot equip " +
-                                $"{equipment.ItemName.AddColor(Color.green)}");
                         } else {
                             _dialogManager.EvokeSingleSentenceDialogue(
                                 $"{_selectedItem.ItemName.AddColor(Color.green)} is not an Equipment");

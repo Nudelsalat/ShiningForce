@@ -524,10 +524,11 @@ public class Menu : MonoBehaviour
                 }
                 _memberInventoryUI.LoadMemberEquipmentInventory(_firstSelectedPartyMember);
                 _characterSelector.LoadCharacterList(_party, null, _currentListItemSelected);
+            } else {
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    $"{_firstSelectedPartyMember.Name} cannot equip " +
+                    $"{itemToEquip.ItemName.AddColor(Color.green)}");
             }
-            _dialogManager.EvokeSingleSentenceDialogue(
-                $"{_firstSelectedPartyMember.Name} cannot equip " +
-                $"{itemToEquip.ItemName.AddColor(Color.green)}");
         } else {
             _dialogManager.EvokeSingleSentenceDialogue(
                 $"{itemToEquip.ItemName.AddColor(Color.green)} is not an Equipment");

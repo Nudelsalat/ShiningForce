@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using Assets.Scripts.EditorScripts;
 using Assets.Scripts.Menus;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -19,6 +19,8 @@ MonoBehaviour:
     type: 3}
   PositionInInventory: -1
   EnumItemType: 1
+  HpModifier: 10
+  MpModifier: 10
   AttackModifier: 20
   DefenseModifier: 20
   AgilityModifier: 10

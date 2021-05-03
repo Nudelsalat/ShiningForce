@@ -89,73 +89,109 @@ namespace Assets.Scripts.Menus.Battle {
             _newMovement.text = currentMovement.ToString();
             _newMovement.color = Constants.Visible;
 
-            if (newItem is Equipment newEquipment) {
-                var currentEquipment = character.GetCurrentEquipment(newEquipment.EquipmentType);
+            if (!(newItem is Equipment newEquipment)) {
+                return;
+            }
+            if (newEquipment.EquipmentForClass.All(x => x != character.ClassType)) {
+                return;
+            }
+            var currentEquipment = character.GetCurrentEquipment(newEquipment.EquipmentType);
 
-                if (currentEquipment == newItem) {
-                    if (newEquipment.AttackModifier > 0) {
-                        _newAttack.text = (currentAttack - newEquipment.AttackModifier).ToString();
-                        _newAttack.color = Color.red;
-                    }
+            if (currentEquipment == newItem) {
+                if (newEquipment.HpModifier > 0) {
+                    _newMaxHp.text = (currentMaxHp - newEquipment.HpModifier).ToString();
+                    _newMaxHp.color = Color.red;
+                }
 
-                    if (newEquipment.DefenseModifier > 0) {
-                        _newDefense.text = (currentDefense - newEquipment.DefenseModifier).ToString();
-                        _newDefense.color = Color.red;
-                    }
+                if (newEquipment.MpModifier > 0) {
+                    _newMaxMp.text = (currentMaxMp - newEquipment.MpModifier).ToString();
+                    _newMaxMp.color = Color.red;
+                }
 
-                    if (newEquipment.AgilityModifier > 0) {
-                        _newAgility.text = (currentAgility - newEquipment.AgilityModifier).ToString();
-                        _newAgility.color = Color.red;
-                    }
+                if (newEquipment.AttackModifier > 0) {
+                    _newAttack.text = (currentAttack - newEquipment.AttackModifier).ToString();
+                    _newAttack.color = Color.red;
+                }
 
-                    if (newEquipment.MovementModifier > 0) {
-                        _newMovement.text = (currentMovement - newEquipment.MovementModifier).ToString();
-                        _newMovement.color = Color.red;
-                    }
-                } else if (currentEquipment == null) {
-                    if (newEquipment.AttackModifier > 0) {
-                        _newAttack.text = (currentAttack + newEquipment.AttackModifier).ToString();
-                        _newAttack.color = Color.green;
-                    }
+                if (newEquipment.DefenseModifier > 0) {
+                    _newDefense.text = (currentDefense - newEquipment.DefenseModifier).ToString();
+                    _newDefense.color = Color.red;
+                }
 
-                    if (newEquipment.DefenseModifier > 0) {
-                        _newDefense.text = (currentDefense + newEquipment.DefenseModifier).ToString();
-                        _newDefense.color = Color.green;
-                    }
+                if (newEquipment.AgilityModifier > 0) {
+                    _newAgility.text = (currentAgility - newEquipment.AgilityModifier).ToString();
+                    _newAgility.color = Color.red;
+                }
 
-                    if (newEquipment.AgilityModifier > 0) {
-                        _newAgility.text = (currentAgility + newEquipment.AgilityModifier).ToString();
-                        _newAgility.color = Color.green;
-                    }
+                if (newEquipment.MovementModifier > 0) {
+                    _newMovement.text = (currentMovement - newEquipment.MovementModifier).ToString();
+                    _newMovement.color = Color.red;
+                }
+            } else if (currentEquipment == null) {
+                if (newEquipment.HpModifier > 0) {
+                    _newMaxHp.text = (currentMaxHp + newEquipment.HpModifier).ToString();
+                    _newMaxHp.color = Color.green;
+                }
 
-                    if (newEquipment.MovementModifier > 0) {
-                        _newMovement.text = (currentMovement + newEquipment.MovementModifier).ToString();
-                        _newMovement.color = Color.green;
-                    }
-                } else {
-                    var newAttack = newEquipment.AttackModifier - currentEquipment.AttackModifier;
-                    if (newAttack != 0) {
-                        _newAttack.text = (currentAttack + newAttack).ToString();
-                        _newAttack.color = newAttack > 0 ? Color.green : Color.red;
-                    }
+                if (newEquipment.MpModifier > 0) {
+                    _newMaxMp.text = (currentMaxMp + newEquipment.MpModifier).ToString();
+                    _newMaxMp.color = Color.green;
+                }
 
-                    var newDefense = newEquipment.DefenseModifier - currentEquipment.DefenseModifier;
-                    if (newDefense != 0) {
-                        _newDefense.text = (currentDefense + newDefense).ToString();
-                        _newDefense.color = newDefense > 0 ? Color.green : Color.red;
-                    }
+                if (newEquipment.AttackModifier > 0) {
+                    _newAttack.text = (currentAttack + newEquipment.AttackModifier).ToString();
+                    _newAttack.color = Color.green;
+                }
 
-                    var newAgility = newEquipment.AgilityModifier - currentEquipment.AgilityModifier;
-                    if (newAgility != 0) {
-                        _newAgility.text = (currentAgility + newAgility).ToString();
-                        _newAgility.color = newAgility > 0 ? Color.green : Color.red;
-                    }
+                if (newEquipment.DefenseModifier > 0) {
+                    _newDefense.text = (currentDefense + newEquipment.DefenseModifier).ToString();
+                    _newDefense.color = Color.green;
+                }
 
-                    var newMovement = newEquipment.MovementModifier - currentEquipment.MovementModifier;
-                    if (newMovement != 0) {
-                        _newMovement.text = (currentMovement + newMovement).ToString();
-                        _newMovement.color = newMovement > 0 ? Color.green : Color.red;
-                    }
+                if (newEquipment.AgilityModifier > 0) {
+                    _newAgility.text = (currentAgility + newEquipment.AgilityModifier).ToString();
+                    _newAgility.color = Color.green;
+                }
+
+                if (newEquipment.MovementModifier > 0) {
+                    _newMovement.text = (currentMovement + newEquipment.MovementModifier).ToString();
+                    _newMovement.color = Color.green;
+                }
+            } else {
+                var newHp = newEquipment.HpModifier - currentEquipment.HpModifier;
+                if (newHp != 0) {
+                    _newMaxHp.text = (currentMaxHp + newHp).ToString();
+                    _newMaxHp.color = newHp > 0 ? Color.green : Color.red;
+                }
+
+                var newMp = newEquipment.MpModifier - currentEquipment.MpModifier;
+                if (newMp != 0) {
+                    _newMaxMp.text = (currentMaxMp + newMp).ToString();
+                    _newMaxMp.color = newMp > 0 ? Color.green : Color.red;
+                }
+
+                var newAttack = newEquipment.AttackModifier - currentEquipment.AttackModifier;
+                if (newAttack != 0) {
+                    _newAttack.text = (currentAttack + newAttack).ToString();
+                    _newAttack.color = newAttack > 0 ? Color.green : Color.red;
+                }
+
+                var newDefense = newEquipment.DefenseModifier - currentEquipment.DefenseModifier;
+                if (newDefense != 0) {
+                    _newDefense.text = (currentDefense + newDefense).ToString();
+                    _newDefense.color = newDefense > 0 ? Color.green : Color.red;
+                }
+
+                var newAgility = newEquipment.AgilityModifier - currentEquipment.AgilityModifier;
+                if (newAgility != 0) {
+                    _newAgility.text = (currentAgility + newAgility).ToString();
+                    _newAgility.color = newAgility > 0 ? Color.green : Color.red;
+                }
+
+                var newMovement = newEquipment.MovementModifier - currentEquipment.MovementModifier;
+                if (newMovement != 0) {
+                    _newMovement.text = (currentMovement + newMovement).ToString();
+                    _newMovement.color = newMovement > 0 ? Color.green : Color.red;
                 }
             }
         }

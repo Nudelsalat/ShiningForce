@@ -1,9 +1,11 @@
 ﻿
 using System.Collections;
+using System.Linq;
 using System.Reflection;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.Menus;
+using Assets.Scripts.Menus.Battle;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +29,7 @@ public class MemberInventoryUI : MonoBehaviour{
     private Character _partyMember;
     private bool _isEquipment;
     private bool _showInventory;
+    private QuickStats _quickStats;
 
     public static MemberInventoryUI Instance;
 
@@ -48,12 +51,14 @@ public class MemberInventoryUI : MonoBehaviour{
     }
 
     void Start() {
+        _quickStats = QuickStats.Instance;
         _currentSelectedItem = TopItem;
         transform.gameObject.SetActive(false);
     }
 
     public void LoadMemberInventory(Character character) {
         OpenInventory();
+        _quickStats.CloseQuickInfo();
 
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, character.StatusEffects);
@@ -82,6 +87,7 @@ public class MemberInventoryUI : MonoBehaviour{
     }
     public void LoadMemberEquipmentInventory(Character member) {
         OpenInventory();
+        _quickStats.CloseQuickInfo();
 
         StatusEffectDisplayer.Instance.SetAllStatusEffectsOfCharacter(
             StatusEffects, member.StatusEffects);
@@ -177,6 +183,7 @@ public class MemberInventoryUI : MonoBehaviour{
     }
 
     public void CloseInventory() {
+        _quickStats.CloseQuickInfo();
         _inventoryAnimator.SetBool("inventoryIsOpen", false);
         _showInventory = false;
         if (this.isActiveAndEnabled) {
@@ -202,7 +209,7 @@ public class MemberInventoryUI : MonoBehaviour{
 
         if (_isEquipment) {
             LoadEquipmentStats();
-        }
+        } 
     }
     
     private void SetCurrentSelectedMagic(GameObject selectedGameObject, Magic selectedMagic) {
@@ -214,18 +221,10 @@ public class MemberInventoryUI : MonoBehaviour{
         selectedGameObject.transform.GetComponent<Image>().color = Constants.Orange;
         selectedGameObject.transform.Find("ItemName").GetComponent<Text>().color = _isEquipment ? Constants.Visible : Constants.Orange;
         _currentSelectedMagic = selectedMagic;
-
-        if (_isEquipment) {
-            LoadEquipmentStats();
-        }
     }
 
     private void LoadEquipmentStats() {
-        Equipment newEquipment = null;
-        Equipment oldEquipment = null;
         if (_currentSelectedGameItem is Equipment equipment) {
-            newEquipment = equipment;
-            oldEquipment = _partyMember.GetCurrentEquipment(equipment.EquipmentType);
 
             var text = CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>();
             text.text = _currentSelectedGameItem.ItemName;
@@ -234,26 +233,16 @@ public class MemberInventoryUI : MonoBehaviour{
 
             CurrentSelectedItem.transform.Find("Equipped").gameObject.GetComponent<Image>().color =
                 equipment.IsEquipped ? Constants.Visible : Constants.Invisible;
-            
+            if (equipment.EquipmentForClass.Any(x => x == _partyMember.ClassType)) {
+                _quickStats.ShowQuickInfo(_partyMember, equipment);
+            }
         } else {
             CurrentSelectedItem.transform.Find("Equipped").gameObject.GetComponent<Image>().color = Constants.Invisible;
             var text = CurrentSelectedItem.transform.Find("ItemName").GetComponent<Text>();
             text.text = "Select Equipment";
             text.color = Color.red;
+            _quickStats.CloseQuickInfo();
         }
-
-        _itemList[0].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-            "ATTACK" + _partyMember.CharStats.CalculateNewAttack(newEquipment, oldEquipment).ToString().PadLeft(6);
-
-        _itemList[1].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-            "DEFENSE" + _partyMember.CharStats.CalculateNewDefense(newEquipment, oldEquipment).ToString().PadLeft(5);
-
-        _itemList[2].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-            "AGILITY" + _partyMember.CharStats.CalculateNewAgility(newEquipment, oldEquipment).ToString().PadLeft(5);
-
-        _itemList[3].transform.Find("ItemName").gameObject.GetComponent<Text>().text =
-            "MOVEMENT" + _partyMember.CharStats.CalculateNewMovement(newEquipment, oldEquipment).ToString().PadLeft(4);
-
     }
 
     IEnumerator WaitForTenthASecond() {
