@@ -8,7 +8,7 @@ using Assets.Scripts.GameData.Magic;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle.AI {
-    class AttackOption {
+    public class AttackOption {
         private readonly List<Unit> _listTargets;
         private readonly Vector3? _positionFromWhichToAttack;
         private readonly Vector3? _targetPosition;

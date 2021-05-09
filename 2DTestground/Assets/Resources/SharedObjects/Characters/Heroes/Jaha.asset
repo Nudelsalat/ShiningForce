@@ -18,6 +18,8 @@ MonoBehaviour:
   PortraitSprite: {fileID: -5627607277695456536, guid: 0a8ffeab11ee328449de20b6e254325a,
     type: 3}
   AnimatorSprite: {fileID: 9100000, guid: 88e92e446e7ef5f44be723dd1eafe959, type: 2}
+  ColorPalette: {fileID: 0}
+  SkinId: 0
   ClassType: 3
   CharacterType: 3
   MovementType: 4
@@ -45,16 +47,16 @@ MonoBehaviour:
       Defense: 7
       Agility: 4
     MaxLevelStats:
-      Hp: 0
+      Hp: 41
       Mp: 0
-      Attack: 0
-      Defense: 0
-      Agility: 0
+      Attack: 37
+      Defense: 45
+      Agility: 28
+    HpGrowth: 1
+    MpGrowth: 0
     AttackGrowth: 0
     DefenseGrowth: 0
     AgilityGrowth: 0
-    HpGrowth: 0
-    MpGrowth: 0
     Kills: 0
     Defeats: 0
   StatusEffects: 0

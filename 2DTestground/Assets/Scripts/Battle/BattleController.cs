@@ -63,6 +63,7 @@ namespace Assets.Scripts.Battle {
         private CharacterDetailUI _characterDetailUI;
         private AiController _aiController;
         private Inventory _inventory;
+        private BattleAnimation _battleAnimation;
         private Menu _menu;
         private Magic _magicToAttack;
         private GameItem _selectedItem;
@@ -113,6 +114,7 @@ namespace Assets.Scripts.Battle {
             _inventory = Inventory.Instance;
             _aiController = AiController.Instance;
             _quickStats = QuickStats.Instance;
+            _battleAnimation = BattleAnimation.Instance;
             _battleCalculator = new BattleCalculator();
 
             transform.gameObject.SetActive(false);
@@ -674,6 +676,8 @@ namespace Assets.Scripts.Battle {
             var sentence = new List<string>();
             var expScore = 0;
 
+            //TODO EVERYTHING
+            _battleAnimation.DoAttackAnimation(_currentUnit,targets,null,null,null,true);
             switch (attackType) {
                 case EnumCurrentBattleMenu.item:
                     if (ExecuteItem(targets)) {

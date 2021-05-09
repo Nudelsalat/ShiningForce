@@ -41,22 +41,22 @@ MonoBehaviour:
     Movement:
       _baseValue: 5
     MinLevelStats:
-      Hp: 13
-      Mp: 13
-      Attack: 6
-      Defense: 7
-      Agility: 10
+      Hp: 10
+      Mp: 7
+      Attack: 4
+      Defense: 4
+      Agility: 6
     MaxLevelStats:
-      Hp: 0
-      Mp: 0
-      Attack: 0
-      Defense: 0
-      Agility: 0
+      Hp: 35
+      Mp: 54
+      Attack: 18
+      Defense: 26
+      Agility: 42
+    HpGrowth: 0
+    MpGrowth: 1
     AttackGrowth: 0
     DefenseGrowth: 0
     AgilityGrowth: 0
-    HpGrowth: 0
-    MpGrowth: 0
     Kills: 0
     Defeats: 0
   StatusEffects: 0

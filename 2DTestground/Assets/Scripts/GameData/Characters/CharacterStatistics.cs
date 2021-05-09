@@ -21,11 +21,11 @@ public class CharacterStatistics {
 
     public BaseStats MinLevelStats;
     public BaseStats MaxLevelStats;
+    public EnumStatGrowth HpGrowth;
+    public EnumStatGrowth MpGrowth;
     public EnumStatGrowth AttackGrowth;
     public EnumStatGrowth DefenseGrowth;
     public EnumStatGrowth AgilityGrowth;
-    public EnumStatGrowth HpGrowth;
-    public EnumStatGrowth MpGrowth;
 
     public int Kills = 0;
     public int Defeats = 0;

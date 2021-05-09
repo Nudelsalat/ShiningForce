@@ -48,15 +48,15 @@ MonoBehaviour:
       Agility: 4
     MaxLevelStats:
       Hp: 58
-      Mp: 20
+      Mp: 22
       Attack: 40
-      Defense: 40
-      Agility: 20
+      Defense: 36
+      Agility: 32
     AttackGrowth: 0
     DefenseGrowth: 0
-    AgilityGrowth: 0
+    AgilityGrowth: 1
     HpGrowth: 0
-    MpGrowth: 0
+    MpGrowth: 1
     Kills: 0
     Defeats: 0
   StatusEffects: 0
