@@ -15,11 +15,11 @@ C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-59729
+65171
 Successfully changed project path to: C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 C:/Users/markus.leitner/Unity/ShiningForce/2DTestground
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 60.06 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 69.32 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Resources/UnitySubsystems
@@ -35,774 +35,273 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56680
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56492
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003036 seconds.
+Registered in 0.002756 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 59.44 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 56.58 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.581 seconds
+- Completed reload, in  1.642 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.001533 seconds.
+Registered in 0.001296 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 66.20 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 62.28 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.509 seconds
+- Completed reload, in  1.355 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.18 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1993 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 105.1 MB.
 System memory in use after: 105.2 MB.
 
 Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 2463.
-Total: 2.097200 ms (FindLiveObjects: 0.220100 ms CreateObjectMapping: 0.084500 ms MarkObjects: 1.762900 ms  DeleteObjects: 0.028400 ms)
+Total: 2.231500 ms (FindLiveObjects: 0.271900 ms CreateObjectMapping: 0.118600 ms MarkObjects: 1.801400 ms  DeleteObjects: 0.037900 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Sarah 1.prefab
-  artifactKey: Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Sarah 1.prefab using Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad62f62bf4775fdcee9a2671b4282a78') in 0.112141 seconds
-  Import took 0.118741 seconds .
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd0d1fce65d39fc8320bdbab640649c8') in 0.147705 seconds
+  Import took 0.151856 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 8.144318 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Jaha.prefab
-  artifactKey: Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Jaha.prefab using Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1907aba3441d18aba8fbf1e1792d8fd8') in 0.013105 seconds
-  Import took 0.017172 seconds .
+  Time since last request: 6.384691 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/archer_down 1.anim
+  artifactKey: Guid(a5e4b6bbd5e14674e8827bbd04648d60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/archer_down 1.anim using Guid(a5e4b6bbd5e14674e8827bbd04648d60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1fb0fb3ac60b3ce4063245ec4d9c1e6') in 0.022423 seconds
+  Import took 0.028258 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 24.301379 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah.controller
-  artifactKey: Guid(a5d501914e6917e4eae0d1db3cbfe5a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah.controller using Guid(a5d501914e6917e4eae0d1db3cbfe5a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6809b1dae15cdc0193d67b97852f897') in 0.009556 seconds
-  Import took 0.014022 seconds .
+  Time since last request: 0.008724 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_field/Monsters/archer_down 1.anim
+  artifactKey: Guid(a5e4b6bbd5e14674e8827bbd04648d60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_field/Monsters/archer_down 1.anim using Guid(a5e4b6bbd5e14674e8827bbd04648d60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1fb0fb3ac60b3ce4063245ec4d9c1e6') in 0.006255 seconds
+  Import took 0.012258 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.005035 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah.controller
-  artifactKey: Guid(a5d501914e6917e4eae0d1db3cbfe5a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah.controller using Guid(a5d501914e6917e4eae0d1db3cbfe5a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6809b1dae15cdc0193d67b97852f897') in 0.005544 seconds
-  Import took 0.009259 seconds .
+  Time since last request: 37.061683 seconds.
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66a4b0448635fdc062a866ec330e18c9') in 0.024384 seconds
+  Import took 0.032497 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 3.694251 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah 1.controller
-  artifactKey: Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah 1.controller using Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60e8fe311cf4468aa4b1609caf2816cd') in 0.006678 seconds
-  Import took 0.012085 seconds .
+  Time since last request: 15.134318 seconds.
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ae2cf50be9078dee248ff550a353a8b') in 0.040497 seconds
+  Import took 0.046220 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.004787 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah 1.controller
-  artifactKey: Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah 1.controller using Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60e8fe311cf4468aa4b1609caf2816cd') in 0.006055 seconds
-  Import took 0.010095 seconds .
+  Time since last request: 22.028846 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer 1.controller
+  artifactKey: Guid(7c92dd0922de23141b4747d3f4f27b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer 1.controller using Guid(7c92dd0922de23141b4747d3f4f27b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f149877ef895eb9ef9b1ca2105b18dd8') in 0.017837 seconds
+  Import took 0.023967 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 5.385950 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha.controller
-  artifactKey: Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha.controller using Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '671c2cc5c6f7d671dcb7bff738494e70') in 0.008006 seconds
-  Import took 0.012072 seconds .
+  Time since last request: 4.284730 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage.controller
+  artifactKey: Guid(7c92dd0922de23141b4747d3f4f27b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage.controller using Guid(7c92dd0922de23141b4747d3f4f27b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dec3e0ea468a53ecc95cff0639b01c50') in 0.009188 seconds
+  Import took 0.015162 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.467024 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim
-  artifactKey: Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim using Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2e93bc6743cc6fae65934cc84b82881') in 0.011764 seconds
-  Import took 0.015343 seconds .
+  Time since last request: 0.004912 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage.controller
+  artifactKey: Guid(7c92dd0922de23141b4747d3f4f27b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage.controller using Guid(7c92dd0922de23141b4747d3f4f27b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dec3e0ea468a53ecc95cff0639b01c50') in 0.007817 seconds
+  Import took 0.014430 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.005948 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim
-  artifactKey: Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim using Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2e93bc6743cc6fae65934cc84b82881') in 0.005061 seconds
-  Import took 0.008985 seconds .
+  Time since last request: 0.348137 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack.anim
+  artifactKey: Guid(fe29d9ef0b9fe3e458d24985af1709e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack.anim using Guid(fe29d9ef0b9fe3e458d24985af1709e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e2e7ef10687801fbccca0096d2887389') in 0.007431 seconds
+  Import took 0.016826 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 8.952619 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Attack.anim
-  artifactKey: Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Attack.anim using Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7f9bdc9e17640173f3f166a0fb41165') in 0.012352 seconds
-  Import took 0.017796 seconds .
+  Time since last request: 0.008814 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack.anim
+  artifactKey: Guid(fe29d9ef0b9fe3e458d24985af1709e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack.anim using Guid(fe29d9ef0b9fe3e458d24985af1709e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e2e7ef10687801fbccca0096d2887389') in 0.014034 seconds
+  Import took 0.020146 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.010513 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Attack.anim
-  artifactKey: Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Attack.anim using Guid(b7ef206dc736c224fae9bb857283c686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7f9bdc9e17640173f3f166a0fb41165') in 0.006626 seconds
-  Import took 0.011193 seconds .
+  Time since last request: 0.732265 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack 1.anim
+  artifactKey: Guid(9f9771cbf5f60e7438a28852d6a65b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack 1.anim using Guid(9f9771cbf5f60e7438a28852d6a65b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98c0a55769ec91b135e65e795eee9917') in 0.011238 seconds
+  Import took 0.016418 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.002148 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Dodge 1.anim
-  artifactKey: Guid(361c45a28d158e94e86a86480999aa84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Dodge 1.anim using Guid(361c45a28d158e94e86a86480999aa84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0292356c823f8c74585f20c88b525f8') in 0.012487 seconds
-  Import took 0.017190 seconds .
+  Time since last request: 0.005185 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack 1.anim
+  artifactKey: Guid(9f9771cbf5f60e7438a28852d6a65b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Attack 1.anim using Guid(9f9771cbf5f60e7438a28852d6a65b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98c0a55769ec91b135e65e795eee9917') in 0.005975 seconds
+  Import took 0.012410 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.004378 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Dodge 1.anim
-  artifactKey: Guid(361c45a28d158e94e86a86480999aa84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Dodge 1.anim using Guid(361c45a28d158e94e86a86480999aa84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0292356c823f8c74585f20c88b525f8') in 0.004475 seconds
-  Import took 0.010430 seconds .
+  Time since last request: 6.627205 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Attack.anim
+  artifactKey: Guid(9f9771cbf5f60e7438a28852d6a65b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Attack.anim using Guid(9f9771cbf5f60e7438a28852d6a65b23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '907d2f1ae6dd413e316fffc22441a17d') in 0.013772 seconds
+  Import took 0.020495 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 9.375234 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Dodge.anim
-  artifactKey: Guid(361c45a28d158e94e86a86480999aa84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Dodge.anim using Guid(361c45a28d158e94e86a86480999aa84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70bbc774d245203b0764e8086714e8eb') in 0.010788 seconds
-  Import took 0.017016 seconds .
+  Time since last request: 0.746524 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Dodge.anim
+  artifactKey: Guid(97615a056086a5546973bf9f169dfe0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Dodge.anim using Guid(97615a056086a5546973bf9f169dfe0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b299d924c99f710b79b09eb56f4cd720') in 0.008840 seconds
+  Import took 0.015897 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.956874 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle 1.anim
-  artifactKey: Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle 1.anim using Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5daa8a113546079d31b03654828b74b2') in 0.012989 seconds
-  Import took 0.017640 seconds .
+  Time since last request: 0.539483 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Dodge 1.anim
+  artifactKey: Guid(32cf351cf46ec384f86e9fd610e184a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Dodge 1.anim using Guid(32cf351cf46ec384f86e9fd610e184a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b617123c4e691bd7c8bbb9d88d450f2f') in 0.014527 seconds
+  Import took 0.020300 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.005158 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle 1.anim
-  artifactKey: Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle 1.anim using Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5daa8a113546079d31b03654828b74b2') in 0.003645 seconds
-  Import took 0.009397 seconds .
+  Time since last request: 0.019335 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Dodge 1.anim
+  artifactKey: Guid(32cf351cf46ec384f86e9fd610e184a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Dodge 1.anim using Guid(32cf351cf46ec384f86e9fd610e184a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b617123c4e691bd7c8bbb9d88d450f2f') in 0.012869 seconds
+  Import took 0.017660 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 6.801719 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Idle.anim
-  artifactKey: Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Idle.anim using Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc8d77dad493263d6bc832590f3c7108') in 0.009873 seconds
-  Import took 0.015685 seconds .
+  Time since last request: 7.353924 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Dodge.anim
+  artifactKey: Guid(32cf351cf46ec384f86e9fd610e184a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Dodge.anim using Guid(32cf351cf46ec384f86e9fd610e184a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1a8789970b397c08d88a1805e0130aa') in 0.015039 seconds
+  Import took 0.019527 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.008610 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Idle.anim
-  artifactKey: Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Idle.anim using Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc8d77dad493263d6bc832590f3c7108') in 0.005964 seconds
-  Import took 0.010367 seconds .
+  Time since last request: 0.689983 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Idle 1.anim
+  artifactKey: Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Idle 1.anim using Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc3847d0026a44bf7f10809292a92692') in 0.011078 seconds
+  Import took 0.015655 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.776485 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Idle.anim
-  artifactKey: Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha_Idle.anim using Guid(8984263f11d444a4aabad42ad228b80e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '070670312b784b498e1305a53e1b9b7b') in 0.005071 seconds
-  Import took 0.009056 seconds .
+  Time since last request: 0.010827 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Idle 1.anim
+  artifactKey: Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Archer_Idle 1.anim using Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc3847d0026a44bf7f10809292a92692') in 0.006077 seconds
+  Import took 0.010678 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 71.619479 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha.controller
-  artifactKey: Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha.controller using Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b743e0b7990e304219ba6a1a381e37a') in 0.006822 seconds
-  Import took 0.014049 seconds .
+  Time since last request: 7.767823 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Idle.anim
+  artifactKey: Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Idle.anim using Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16a09fb7e8f8c97fb3a91203f20f7348') in 0.012030 seconds
+  Import took 0.017171 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.020032 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Jaha.controller
-  artifactKey: Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Jaha.controller using Guid(59c56920d8412c547a174083a43cfd17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b743e0b7990e304219ba6a1a381e37a') in 0.010627 seconds
-  Import took 0.017494 seconds .
+  Time since last request: 0.011059 seconds.
+  path: Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Idle.anim
+  artifactKey: Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/Animations_battle/Enemies/Mage_Idle.anim using Guid(bc4ea71b7ff1e2a4a81c194667219c57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16a09fb7e8f8c97fb3a91203f20f7348') in 0.004604 seconds
+  Import took 0.009894 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 89.348047 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Jaha.prefab
-  artifactKey: Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Jaha.prefab using Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea52eae2bbd105ab80cdcb6f7733f440') in 0.006050 seconds
-  Import took 0.012034 seconds .
+  Time since last request: 19.625747 seconds.
+  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Enemies/Dwarf 1.prefab
+  artifactKey: Guid(af6a370070ed4064c9ffc89e140496a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Enemies/Dwarf 1.prefab using Guid(af6a370070ed4064c9ffc89e140496a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6bda6f41480e28cb30ae8d53d7d011b4') in 0.021966 seconds
+  Import took 0.027168 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.604468 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Jaha.prefab
-  artifactKey: Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Jaha.prefab using Guid(a9d073532db57db45944eca93f27bc6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4417b755019d586553fc7ed905d2f716') in 0.006494 seconds
-  Import took 0.012561 seconds .
+  Time since last request: 3.328667 seconds.
+  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Enemies/Mage.prefab
+  artifactKey: Guid(af6a370070ed4064c9ffc89e140496a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Enemies/Mage.prefab using Guid(af6a370070ed4064c9ffc89e140496a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de76720ac40cf822ed8a5e2efea344a6') in 0.008769 seconds
+  Import took 0.013646 seconds .
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001261 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.48 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.152 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.87 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1968 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.6 MB.
-System memory in use after: 103.7 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2466.
-Total: 2.170600 ms (FindLiveObjects: 0.207300 ms CreateObjectMapping: 0.080500 ms MarkObjects: 1.863100 ms  DeleteObjects: 0.018400 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 476.218076 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Sarah 1.prefab
-  artifactKey: Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Sarah 1.prefab using Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2fd81575983b4caf1754b0800bac0c45') in 0.046754 seconds
-  Import took 0.051010 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003304 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Sarah 1.prefab
-  artifactKey: Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Sarah 1.prefab using Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2fd81575983b4caf1754b0800bac0c45') in 0.014748 seconds
-  Import took 0.019736 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.628709 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade.prefab
-  artifactKey: Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade.prefab using Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3eaa143f557311f6096c07a76e9b62e5') in 0.010899 seconds
-  Import took 0.017389 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 14.319840 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah 1.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah 1.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5641178174efe706a0a8e62afd35b9be') in 0.010020 seconds
-  Import took 0.015342 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.568833 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0dbb9710c832e4f3657206ca82a507b') in 0.005152 seconds
-  Import took 0.009708 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001720 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0dbb9710c832e4f3657206ca82a507b') in 0.005102 seconds
-  Import took 0.011511 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.111471 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim
-  artifactKey: Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim using Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '25637259a10457b4273187f9acd62b01') in 0.005634 seconds
-  Import took 0.012545 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.013935 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim
-  artifactKey: Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack 1.anim using Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '25637259a10457b4273187f9acd62b01') in 0.006171 seconds
-  Import took 0.013881 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.474102 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack.anim
-  artifactKey: Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack.anim using Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80c5283c9a28826cf0fbf61efe7334b8') in 0.011306 seconds
-  Import took 0.016483 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.654723 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Dodge 1.anim
-  artifactKey: Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Dodge 1.anim using Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6efb904e82a04936e092b6e8dddc2250') in 0.003932 seconds
-  Import took 0.010017 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 8.751512 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge.anim
-  artifactKey: Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge.anim using Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da781b5a98aef9d2c98daebe298b9aee') in 0.016013 seconds
-  Import took 0.020678 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003456 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge.anim
-  artifactKey: Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge.anim using Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da781b5a98aef9d2c98daebe298b9aee') in 0.006693 seconds
-  Import took 0.012817 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.744392 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle 1.anim
-  artifactKey: Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle 1.anim using Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '58981049e3a60fd6600e38b39d981bd6') in 0.004612 seconds
-  Import took 0.010323 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.650024 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim
-  artifactKey: Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim using Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49fe9e8b547a27cccf44a27ddd2d1c44') in 0.009876 seconds
-  Import took 0.016051 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.002893 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim
-  artifactKey: Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim using Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49fe9e8b547a27cccf44a27ddd2d1c44') in 0.003402 seconds
-  Import took 0.007457 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.711506 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim
-  artifactKey: Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim using Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '623f5a12a71ec32d12bd5214dbf2a938') in 0.004185 seconds
-  Import took 0.009927 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 10.515052 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69f735443014ed81b5838ebf2ecdace5') in 0.006035 seconds
-  Import took 0.009767 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.002241 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69f735443014ed81b5838ebf2ecdace5') in 0.005654 seconds
-  Import took 0.011175 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001878 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.270 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.57 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1968 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.6 MB.
-System memory in use after: 103.7 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2469.
-Total: 2.025200 ms (FindLiveObjects: 0.225000 ms CreateObjectMapping: 0.093700 ms MarkObjects: 1.686500 ms  DeleteObjects: 0.018800 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 669.580727 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade.prefab
-  artifactKey: Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade.prefab using Guid(6b5eef171dc2b0b4bbe2e0978ca4839a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bddf96a3a4184b025a59a5abdad9d3e') in 0.038709 seconds
-  Import took 0.044475 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.651552 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade 1.prefab
-  artifactKey: Guid(db24697bf1e32924e9a5c79a699d4609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade 1.prefab using Guid(db24697bf1e32924e9a5c79a699d4609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0b036a52bdc74263c9db2a28e7a88651') in 0.012679 seconds
-  Import took 0.016829 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.434600 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Kazin.prefab
-  artifactKey: Guid(db24697bf1e32924e9a5c79a699d4609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Kazin.prefab using Guid(db24697bf1e32924e9a5c79a699d4609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5efb27e54fb14fc5c79e126fd2ba5880') in 0.018251 seconds
-  Import took 0.023823 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.663685 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '441a141715da81fa5fca50fe5e1caf81') in 0.007047 seconds
-  Import took 0.011699 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.006100 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller
-  artifactKey: Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade.controller using Guid(776d9e4d8c3470542ae08509d16e49f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '441a141715da81fa5fca50fe5e1caf81') in 0.005713 seconds
-  Import took 0.009540 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.465677 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle.anim
-  artifactKey: Guid(908a5e562b186cc4fa25805de7a1443c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle.anim using Guid(908a5e562b186cc4fa25805de7a1443c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b01121952541ba4d4e8f003d5ad1f111') in 0.009709 seconds
-  Import took 0.013276 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.007165 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle.anim
-  artifactKey: Guid(908a5e562b186cc4fa25805de7a1443c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Idle.anim using Guid(908a5e562b186cc4fa25805de7a1443c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b01121952541ba4d4e8f003d5ad1f111') in 0.004422 seconds
-  Import took 0.009779 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.467832 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller
-  artifactKey: Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller using Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '503289ec4a796ed866a885ed5bb6b90b') in 0.006300 seconds
-  Import took 0.010269 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.005852 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller
-  artifactKey: Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller using Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '503289ec4a796ed866a885ed5bb6b90b') in 0.006065 seconds
-  Import took 0.009865 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.350927 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Kazin.controller
-  artifactKey: Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Kazin.controller using Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afe18827b394f93f77fbef43c0834c6e') in 0.005590 seconds
-  Import took 0.011995 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.006603 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Kazin.controller
-  artifactKey: Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Kazin.controller using Guid(9f6670f498990e643a9b68e74b31b80f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afe18827b394f93f77fbef43c0834c6e') in 0.006610 seconds
-  Import took 0.010840 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.323524 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim
-  artifactKey: Guid(dd0a9b05e0df1d84cb5ddf53c9050c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim using Guid(dd0a9b05e0df1d84cb5ddf53c9050c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a5f8c499d181d8a617751df76dfe8ca') in 0.011431 seconds
-  Import took 0.015310 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.011942 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim
-  artifactKey: Guid(dd0a9b05e0df1d84cb5ddf53c9050c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim using Guid(dd0a9b05e0df1d84cb5ddf53c9050c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a5f8c499d181d8a617751df76dfe8ca') in 0.003902 seconds
-  Import took 0.007927 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 10.333405 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Kazin_Attack.anim
-  artifactKey: Guid(dd0a9b05e0df1d84cb5ddf53c9050c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Kazin_Attack.anim using Guid(dd0a9b05e0df1d84cb5ddf53c9050c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1733687ef70442baff534dab775ac52b') in 0.014072 seconds
-  Import took 0.018596 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.214440 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge 1.anim
-  artifactKey: Guid(f4fba3c2b7e3b2448a8b60c8ae0bac74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge 1.anim using Guid(f4fba3c2b7e3b2448a8b60c8ae0bac74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e09eb8df44acdb6321dd415cb8eea2a') in 0.010306 seconds
-  Import took 0.015744 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.010646 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge 1.anim
-  artifactKey: Guid(f4fba3c2b7e3b2448a8b60c8ae0bac74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge 1.anim using Guid(f4fba3c2b7e3b2448a8b60c8ae0bac74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e09eb8df44acdb6321dd415cb8eea2a') in 0.005489 seconds
-  Import took 0.010695 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 10.788017 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Kazin_Dodge.anim
-  artifactKey: Guid(f4fba3c2b7e3b2448a8b60c8ae0bac74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Kazin_Dodge.anim using Guid(f4fba3c2b7e3b2448a8b60c8ae0bac74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65dd55112d6ed59f87f016f5e6118272') in 0.009927 seconds
-  Import took 0.016057 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.021307 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle 1.anim
-  artifactKey: Guid(9096692dd61a37842951252a06e41a60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle 1.anim using Guid(9096692dd61a37842951252a06e41a60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b75bd832742f1c7258ff5e4932e57c57') in 0.011210 seconds
-  Import took 0.018310 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.009361 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle 1.anim
-  artifactKey: Guid(9096692dd61a37842951252a06e41a60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle 1.anim using Guid(9096692dd61a37842951252a06e41a60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b75bd832742f1c7258ff5e4932e57c57') in 0.007039 seconds
-  Import took 0.011373 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 12.706920 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Kazin_Idle.anim
-  artifactKey: Guid(9096692dd61a37842951252a06e41a60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Kazin_Idle.anim using Guid(9096692dd61a37842951252a06e41a60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96ae9dcf97aa62ec0099ffc4d014f08c') in 0.010947 seconds
-  Import took 0.019355 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.510531 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim
-  artifactKey: Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle.anim using Guid(50fbacc8201932c41aee12ce2b6876f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72967390fae6203910415a4c85a4a47e') in 0.005789 seconds
-  Import took 0.011308 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.760281 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge.anim
-  artifactKey: Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge.anim using Guid(274db980ff16b1f4d82853d8152a4a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fba1415ea568b9c408886017a0e8371e') in 0.003377 seconds
-  Import took 0.007214 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.221606 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack.anim
-  artifactKey: Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack.anim using Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62146963c025fe2827e4d67b22c28fb6') in 0.011493 seconds
-  Import took 0.015908 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.014867 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack.anim
-  artifactKey: Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack.anim using Guid(1013c522db43e7b4da753f157c2c1ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62146963c025fe2827e4d67b22c28fb6') in 0.005217 seconds
-  Import took 0.010322 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.740080 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack.anim
-  artifactKey: Guid(6898e5ebb4bf7d347abc10cd049487e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Sarah_Attack.anim using Guid(6898e5ebb4bf7d347abc10cd049487e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b3e41d93b093b2ba8407be038d34868') in 0.004788 seconds
-  Import took 0.009118 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 173.478905 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Kazin.prefab
-  artifactKey: Guid(db24697bf1e32924e9a5c79a699d4609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Kazin.prefab using Guid(db24697bf1e32924e9a5c79a699d4609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '594cfc3062750bb772975a714b3341a0') in 0.013257 seconds
-  Import took 0.017739 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 650.150171 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade 1.prefab
-  artifactKey: Guid(0021572e1adf96647b87c2bf1d053fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade 1.prefab using Guid(0021572e1adf96647b87c2bf1d053fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca97b37386f3e5c5c6fc0f0f4ee69032') in 0.006474 seconds
-  Import took 0.013671 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000891 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade 1.prefab
-  artifactKey: Guid(0021572e1adf96647b87c2bf1d053fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/Slade 1.prefab using Guid(0021572e1adf96647b87c2bf1d053fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca97b37386f3e5c5c6fc0f0f4ee69032') in 0.004869 seconds
-  Import took 0.009383 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.245132 seconds.
-  path: Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/May.prefab
-  artifactKey: Guid(0021572e1adf96647b87c2bf1d053fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/SharedObjects/Prefab/Battle/Animations/Heroes/May.prefab using Guid(0021572e1adf96647b87c2bf1d053fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3aa9feaf5c59698c739c89a41c81fdba') in 0.013549 seconds
-  Import took 0.017710 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 29.832985 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller
-  artifactKey: Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller using Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ca43cb13cdd493cef3addb40c4b2d80') in 0.006465 seconds
-  Import took 0.012596 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.004142 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller
-  artifactKey: Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade 1.controller using Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ca43cb13cdd493cef3addb40c4b2d80') in 0.008006 seconds
-  Import took 0.012654 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.710675 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May.controller
-  artifactKey: Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May.controller using Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '172e2a573d0d96b9b848debfe9c35ad5') in 0.009132 seconds
-  Import took 0.014637 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003736 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May.controller
-  artifactKey: Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May.controller using Guid(0bdb6d28952f33c48af2fa880682f899) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '172e2a573d0d96b9b848debfe9c35ad5') in 0.007186 seconds
-  Import took 0.011633 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.306402 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim
-  artifactKey: Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim using Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '51defeec880348fe55033aea45597501') in 0.010507 seconds
-  Import took 0.015295 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.014876 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim
-  artifactKey: Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Attack 1.anim using Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '51defeec880348fe55033aea45597501') in 0.003992 seconds
-  Import took 0.009172 seconds .
-
-========================================================================
 Received Import Request.
-  Time since last request: 10.823498 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May_Attack.anim
-  artifactKey: Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May_Attack.anim using Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7f7f005b53a45b6119e701525636784') in 0.013474 seconds
-  Import took 0.017831 seconds .
+  Time since last request: 169.805982 seconds.
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7990d16688eb43e650d3f76dbaf203a5') in 0.032988 seconds
+  Import took 0.041371 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.009663 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May_Attack.anim
-  artifactKey: Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May_Attack.anim using Guid(bfb0d8d66b3668a48bfbbdb280738423) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7f7f005b53a45b6119e701525636784') in 0.004112 seconds
-  Import took 0.010106 seconds .
+  Time since last request: 0.009068 seconds.
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7990d16688eb43e650d3f76dbaf203a5') in 0.028438 seconds
+  Import took 0.033682 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.757483 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge 1.anim
-  artifactKey: Guid(b13677573f37ae442ae775decbd1864d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Dodge 1.anim using Guid(b13677573f37ae442ae775decbd1864d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ef202db3334a064d780e0783aede586') in 0.004046 seconds
-  Import took 0.010033 seconds .
+  Time since last request: 52.703724 seconds.
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e668557f6d596f4735931793157f2a21') in 0.035970 seconds
+  Import took 0.042276 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 11.145619 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May_Dodge.anim
-  artifactKey: Guid(b13677573f37ae442ae775decbd1864d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May_Dodge.anim using Guid(b13677573f37ae442ae775decbd1864d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '582159b6ef55bc7383043b47dd762851') in 0.011681 seconds
-  Import took 0.017803 seconds .
+  Time since last request: 0.012215 seconds.
+  path: Assets/Resources/ShiningForce/images/battle/Mage.png
+  artifactKey: Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/ShiningForce/images/battle/Mage.png using Guid(aad00c23de3d0084c80edd13ff852347) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e668557f6d596f4735931793157f2a21') in 0.027215 seconds
+  Import took 0.033886 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.006437 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May_Dodge.anim
-  artifactKey: Guid(b13677573f37ae442ae775decbd1864d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May_Dodge.anim using Guid(b13677573f37ae442ae775decbd1864d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '582159b6ef55bc7383043b47dd762851') in 0.005476 seconds
-  Import took 0.009782 seconds .
+  Time since last request: 70.597137 seconds.
+  path: Assets/Resources/SharedObjects/Characters/Monsters/Mage.asset
+  artifactKey: Guid(a6137388c78633d4c9fa823a4bef9572) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Characters/Monsters/Mage.asset using Guid(a6137388c78633d4c9fa823a4bef9572) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'abd197ad270894afb9924e978f6d82c8') in 0.050678 seconds
+  Import took 0.057001 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.653366 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle 1.anim
-  artifactKey: Guid(3b10a2f131d75c04d8664bdd93d4a57e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/Slade_Idle 1.anim using Guid(3b10a2f131d75c04d8664bdd93d4a57e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d7bda9b5b55fa91ebec8f2349ddf178') in 0.003654 seconds
-  Import took 0.007437 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.993295 seconds.
-  path: Assets/Resources/ShiningForce/images/Animations_battle/May_Idle.anim
-  artifactKey: Guid(3b10a2f131d75c04d8664bdd93d4a57e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/ShiningForce/images/Animations_battle/May_Idle.anim using Guid(3b10a2f131d75c04d8664bdd93d4a57e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72c9ef09c154a53080b30aa923d2a079') in 0.009375 seconds
-  Import took 0.014485 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001619 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.63 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.415 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.73 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1968 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.7 MB.
-System memory in use after: 103.8 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2472.
-Total: 2.351100 ms (FindLiveObjects: 0.379100 ms CreateObjectMapping: 0.161600 ms MarkObjects: 1.789700 ms  DeleteObjects: 0.019400 ms)
+  Time since last request: 0.009964 seconds.
+  path: Assets/Resources/SharedObjects/Characters/Monsters/Mage.asset
+  artifactKey: Guid(a6137388c78633d4c9fa823a4bef9572) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/SharedObjects/Characters/Monsters/Mage.asset using Guid(a6137388c78633d4c9fa823a4bef9572) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'abd197ad270894afb9924e978f6d82c8') in 0.011374 seconds
+  Import took 0.017197 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

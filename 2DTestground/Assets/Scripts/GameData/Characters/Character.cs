@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.GameData.Magic;
+using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -13,7 +14,9 @@ public class Character : ScriptableObject {
     public string Name;
     public bool IsPromoted;
     public Sprite PortraitSprite;
-    public RuntimeAnimatorController AnimatorSprite; 
+    public RuntimeAnimatorController AnimatorSprite;
+    [SerializeField]
+    private string _pathToBattleAnimationPrefab;
     public Texture2D ColorPalette;
     public int SkinId;
 
@@ -100,6 +103,10 @@ public class Character : ScriptableObject {
             return EnumAreaOfEffect.Single;
         }
         return weapon.AreaOfEffect;
+    }
+
+    public string GetBattleAnimationPath() {
+        return string.IsNullOrEmpty(_pathToBattleAnimationPrefab) ? "SharedObjects/Prefab/Battle/Animations/Enemies/Dwarf" : _pathToBattleAnimationPrefab;
     }
 
     public void FullyHeal() {

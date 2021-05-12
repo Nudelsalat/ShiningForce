@@ -17,8 +17,12 @@ MonoBehaviour:
   IsUnique: 0
   ItemSprite: {fileID: -3577356395667621445, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
+  BattleSprite: {fileID: -6916311590010854094, guid: 072670e976d40464f847062df5c44844,
+    type: 3}
   PositionInInventory: -1
   EnumItemType: 1
+  HpModifier: 0
+  MpModifier: 0
   AttackModifier: 7
   DefenseModifier: 0
   AgilityModifier: 0

@@ -18,6 +18,7 @@ MonoBehaviour:
   PortraitSprite: {fileID: -6915668844638259881, guid: 70fc8153363e7c146b61ea2cba3abcf9,
     type: 3}
   AnimatorSprite: {fileID: 9100000, guid: f3e08218b5dd17145a685a5df1b3436d, type: 2}
+  _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Heroes/Kazin
   ColorPalette: {fileID: 0}
   SkinId: 0
   ClassType: 4
@@ -63,8 +64,8 @@ MonoBehaviour:
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 7a2af82a4f284dd46b25fd524bad1133, type: 2}
     item2: 0
-  - item1: {fileID: 0}
-    item2: 0
+  - item1: {fileID: 11400000, guid: 53ef62d4a4b2e47489b893cd2838caaa, type: 2}
+    item2: 1
   - item1: {fileID: 0}
     item2: 0
   - item1: {fileID: 0}

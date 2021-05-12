@@ -17,16 +17,21 @@ MonoBehaviour:
   IsPromoted: 0
   PortraitSprite: {fileID: 0}
   AnimatorSprite: {fileID: 9100000, guid: fa29aa2a090b0bb468e5710e54035d09, type: 2}
+  _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Dwarf
+  ColorPalette: {fileID: 0}
+  SkinId: 0
   ClassType: 30
   CharacterType: 17
   MovementType: 4
   CharStats:
     Level: 2
     Exp: 0
-    MaxHp: 10
     CurrentHp: 5
-    MaxMp: 0
     CurrentMp: 0
+    Hp:
+      _baseValue: 10
+    Mp:
+      _baseValue: 0
     Attack:
       _baseValue: 12
     Defense:
@@ -35,6 +40,23 @@ MonoBehaviour:
       _baseValue: 5
     Movement:
       _baseValue: 5
+    MinLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    MaxLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    HpGrowth: 0
+    MpGrowth: 0
+    AttackGrowth: 0
+    DefenseGrowth: 0
+    AgilityGrowth: 0
     Kills: 0
     Defeats: 0
   StatusEffects: 0

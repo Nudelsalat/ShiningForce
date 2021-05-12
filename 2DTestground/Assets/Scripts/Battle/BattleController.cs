@@ -63,7 +63,7 @@ namespace Assets.Scripts.Battle {
         private CharacterDetailUI _characterDetailUI;
         private AiController _aiController;
         private Inventory _inventory;
-        private BattleAnimation _battleAnimation;
+        private BattleAnimationUi _battleAnimation;
         private Menu _menu;
         private Magic _magicToAttack;
         private GameItem _selectedItem;
@@ -114,7 +114,7 @@ namespace Assets.Scripts.Battle {
             _inventory = Inventory.Instance;
             _aiController = AiController.Instance;
             _quickStats = QuickStats.Instance;
-            _battleAnimation = BattleAnimation.Instance;
+            _battleAnimation = BattleAnimationUi.Instance;
             _battleCalculator = new BattleCalculator();
 
             transform.gameObject.SetActive(false);

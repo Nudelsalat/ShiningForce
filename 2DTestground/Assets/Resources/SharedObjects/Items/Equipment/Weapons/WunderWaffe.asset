@@ -17,6 +17,8 @@ MonoBehaviour:
   IsUnique: 1
   ItemSprite: {fileID: -9150330332852655256, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
+  BattleSprite: {fileID: -1007106662416126401, guid: 8b860c15204b514438cc415d0d557735,
+    type: 3}
   PositionInInventory: -1
   EnumItemType: 1
   HpModifier: 10

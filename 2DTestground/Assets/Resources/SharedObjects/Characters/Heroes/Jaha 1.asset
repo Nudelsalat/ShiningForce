@@ -18,6 +18,9 @@ MonoBehaviour:
   PortraitSprite: {fileID: -5627607277695456536, guid: 0a8ffeab11ee328449de20b6e254325a,
     type: 3}
   AnimatorSprite: {fileID: 9100000, guid: 88e92e446e7ef5f44be723dd1eafe959, type: 2}
+  _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Heroes/Jaha
+  ColorPalette: {fileID: 0}
+  SkinId: 0
   ClassType: 3
   CharacterType: 3
   MovementType: 4
@@ -50,11 +53,11 @@ MonoBehaviour:
       Attack: 0
       Defense: 0
       Agility: 0
+    HpGrowth: 0
+    MpGrowth: 0
     AttackGrowth: 0
     DefenseGrowth: 0
     AgilityGrowth: 0
-    HpGrowth: 0
-    MpGrowth: 0
     Kills: 0
     Defeats: 0
   StatusEffects: 0

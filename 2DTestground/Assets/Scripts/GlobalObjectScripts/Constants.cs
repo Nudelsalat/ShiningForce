@@ -16,6 +16,8 @@ public class Constants {
     public static string PrefabPrefixAreaOfEffect = "SharedObjects/Prefab/Battle/AreaOfEffect/";
     public static string PrefabExplosion = "SharedObjects/Prefab/Battle/Explosion";
 
+    public static string DefaultBattleAnimation = "SharedObjects/Prefab/Battle/Dwarf";
+
     public static string ItemMedicalHerb = "SharedObjects/Items/Consumables/MedicalHerb";
     public static string ItemAntidote = "SharedObjects/Items/Consumables/Antidote";
     public static string ItemHealingSeed = "SharedObjects/Items/Consumables/HealingSeed";

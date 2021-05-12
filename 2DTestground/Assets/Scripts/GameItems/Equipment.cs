@@ -17,6 +17,7 @@ public class Equipment : GameItem {
     public EnumEquipmentType EquipmentType;
     public EnumAttackRange AttackRange;
     public EnumAreaOfEffect AreaOfEffect;
+    public Sprite BattleSprite;
 
     public bool IsEquipped = false;
 

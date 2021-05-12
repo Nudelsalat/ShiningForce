@@ -17,8 +17,12 @@ MonoBehaviour:
   IsUnique: 0
   ItemSprite: {fileID: 1025100286011669249, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
+  BattleSprite: {fileID: 8405443454145897809, guid: 095e0ce7daa00a94abbb5c7a2e263a88,
+    type: 3}
   PositionInInventory: -1
   EnumItemType: 1
+  HpModifier: 0
+  MpModifier: 0
   AttackModifier: 5
   DefenseModifier: 0
   AgilityModifier: 0
@@ -26,4 +30,5 @@ MonoBehaviour:
   EquipmentForClass: 0c0000000b0000001b0000000800000000000000
   EquipmentType: 0
   AttackRange: 3
+  AreaOfEffect: 0
   IsEquipped: 0
