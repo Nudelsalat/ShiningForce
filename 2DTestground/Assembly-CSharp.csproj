@@ -73,6 +73,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Menus\MemberOverviewUI.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\StartPoint.cs" />
+    <Compile Include="Assets\Enums\EnumElementalResistanceWeakness.cs" />
     <Compile Include="Assets\Scripts\Dialog\QuestionFollowUpEvent.cs" />
     <Compile Include="Assets\Scripts\Dialog\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\Scripts\GameData\Inventory.cs" />
     <Compile Include="Assets\Scripts\Menus\Battle\QuickInfoUi.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\Character.cs" />
+    <Compile Include="Assets\Enums\EnumChance.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\DestroyOnCollision.cs" />
     <Compile Include="Assets\Scripts\GlobalObjectScripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />
+    <Compile Include="Assets\Scripts\Menus\Battle\AttackPhase.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

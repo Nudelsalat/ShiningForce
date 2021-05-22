@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Assets.Scripts.Battle;
 using Assets.Scripts.Menus;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,25 +10,33 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour {
     public GameObject DialogBox;
     public GameObject DialogueTriangle;
+    public Text DialogText;
+    public GameObject BattleDialogBox;
+    public GameObject BattleDialogueTriangle;
+    public Text BattleDialogText;
+
     public GameObject YesNoBox;
 
-    public Animator AnimatorDialogue;
-    public Animator AnimatorPortrait;
     public Animator AnimatorYes;
     public Animator AnimatorNo;
 
-
-    //public Text DialogText;
-    public Text DialogText;
     public bool DialogActive;
-    
-    //private Queue<string> _sentences;
+
+    private Animator _animatorDialogue;
+    private Animator _animatorBattleDialogue;
+
+    private Animator _currentDialogueAnimator;
+    private GameObject _dialogBox;
+    private GameObject _dialogueTriangle;
+    private Text _dialogText;
+
     private Queue<string> _sentences;
     private bool _hasPortrait;
     private Dialogue _dialogue;
     private Inventory _inventory;
     private Portrait _portrait;
     public static AudioManager _audioManager;
+    public static BattleController _battleController;
 
     private bool _isInQuestion = false;
     private bool _selectedAnswer = true;
@@ -43,10 +52,16 @@ public class DialogManager : MonoBehaviour {
         } else {
             Instance = this;
         }
+
+        _animatorDialogue = DialogBox.GetComponent<Animator>();
+        _animatorBattleDialogue = BattleDialogBox.GetComponent<Animator>();
+
         _sentences = new Queue<string>();
         DialogueTriangle.SetActive(false);
-        YesNoBox.SetActive(false);
         DialogBox.SetActive(false);
+        BattleDialogueTriangle.SetActive(false);
+        BattleDialogBox.SetActive(false);
+        YesNoBox.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -54,6 +69,7 @@ public class DialogManager : MonoBehaviour {
         _inventory = Inventory.Instance;
         _portrait = Portrait.Instance;
         _audioManager = AudioManager.Instance;
+        _battleController = BattleController.Instance;
     }
 
     void Update() {
@@ -123,6 +139,18 @@ public class DialogManager : MonoBehaviour {
             return;
         }
 
+        if (_battleController.IsActive) {
+            _dialogBox = BattleDialogBox;
+            _dialogueTriangle = BattleDialogueTriangle;
+            _dialogText = BattleDialogText;
+            _currentDialogueAnimator = _animatorBattleDialogue;
+        } else {
+            _dialogBox = DialogBox;
+            _dialogueTriangle = DialogueTriangle;
+            _dialogText = DialogText;
+            _currentDialogueAnimator = _animatorDialogue;
+        }
+
         SelectVoice(dialogue.VoicePitch);
 
         _dialogue = dialogue;
@@ -140,14 +168,14 @@ public class DialogManager : MonoBehaviour {
             _portrait.ShowPortrait(dialogue.Portrait);
         }
 
-        DialogBox.SetActive(true);
-        AnimatorDialogue.SetBool("dialogueBoxIsOpen", true);
+        _dialogBox.SetActive(true);
+        _currentDialogueAnimator.SetBool("dialogueBoxIsOpen", true);
         DisplayNextSentence();
         Player.IsInDialogue = true;
     }
 
     public void DisplayNextSentence() {
-        DialogueTriangle.SetActive(false);
+        _dialogueTriangle.SetActive(false);
         if (_sentences.Count == 0) {
             Debug.Log("EndDialogue");
             EndDialogue();
@@ -186,16 +214,16 @@ public class DialogManager : MonoBehaviour {
     }
 
     private void EndDialogue(bool result) {
-        AnimatorDialogue.SetBool("dialogueBoxIsOpen", false);
+        _currentDialogueAnimator.SetBool("dialogueBoxIsOpen", false);
         if (_hasPortrait) {
-            AnimatorPortrait.SetBool("portraitIsOpen", false);
+            _portrait.HidePortrait();
         }
         StartCoroutine(WaitForQuaterSec(result));
     }
     private void EndDialogue() {
-        AnimatorDialogue.SetBool("dialogueBoxIsOpen", false);
+        _currentDialogueAnimator.SetBool("dialogueBoxIsOpen", false);
         if (_hasPortrait) {
-            AnimatorPortrait.SetBool("portraitIsOpen", false);
+            _portrait.HidePortrait();
         }
         StartCoroutine(WaitForQuaterSec());
     }
@@ -211,7 +239,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     IEnumerator TypeSentence(string sentence) {
-        DialogText.text = "";
+        _dialogText.text = "";
         Player.InputDisabledInDialogue = true;
         var stringBuilder = new StringBuilder();
         var styleTagEncountered = false;
@@ -227,21 +255,21 @@ public class DialogManager : MonoBehaviour {
                 }
 
                 if (closingBraketCount == 2) {
-                    DialogText.text += stringBuilder;
+                    _dialogText.text += stringBuilder;
                     closingBraketCount = 0;
                     styleTagEncountered = false;
                     stringBuilder.Clear();
                     yield return null;
                 }
             } else {
-                DialogText.text += letter;
+                _dialogText.text += letter;
                 yield return null;
             }
         }
 
         _audioManager.Stop(_voicePitch);
 
-        DialogueTriangle.SetActive(true);
+        _dialogueTriangle.SetActive(true);
         
         if (_sentences.Count == 0 && _dialogue is Question question) {
             AskQuestionYesNo(question);
@@ -258,7 +286,7 @@ public class DialogManager : MonoBehaviour {
         }
         yield return new WaitForSeconds(0.1f);
 
-        DialogBox.SetActive(false);
+        _dialogBox.SetActive(false);
         if (_hasPortrait) {
             _portrait.HidePortrait();
             _hasPortrait = false;
@@ -279,7 +307,7 @@ public class DialogManager : MonoBehaviour {
 
         yield return new WaitForSeconds(0.1f);
 
-        DialogBox.SetActive(false);
+        _dialogBox.SetActive(false);
         if (_hasPortrait) {
             _portrait.HidePortrait();
             _hasPortrait = false;

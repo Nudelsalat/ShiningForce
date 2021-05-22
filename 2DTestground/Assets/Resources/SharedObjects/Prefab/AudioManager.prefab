@@ -123,6 +123,18 @@ MonoBehaviour:
     Volume: 1
     Pitch: 1
     AudioSource: {fileID: 0}
+  - Name: heroattack
+    AudioClip: {fileID: 8300000, guid: 1f655887ab946ba42a2b61c11d1365ca, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: enemyattack
+    AudioClip: {fileID: 8300000, guid: 7bf14ccbc16065f498f4b03d3afde377, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
 --- !u!82 &5132189992590852579
 AudioSource:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class AddToPartyEvent : MonoBehaviour {
             VoicePitch = EnumVoicePitch.none
         });
         AudioManager.Instance.PauseAll();
-        var duration = AudioManager.Instance.Play("victory", false);
+        var duration = AudioManager.Instance.Play(Constants.SoundNewPartyMember, false);
         yield return new WaitForSecondsRealtime(duration - 3);
         Player.InputDisabledInEvent = false;
         AudioManager.Instance.UnPauseAll();

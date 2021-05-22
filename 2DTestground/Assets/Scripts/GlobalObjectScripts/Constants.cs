@@ -83,7 +83,11 @@ public class Constants {
     public static string CharacterDwarf = "SharedObjects/Characters/Monsters/Dwarf";
 
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";
-    public static string SoundNewPartyMember = "ShiningForce/sounds/victory";
+    public static string SoundNewPartyMember = "victory";
+    public static string SoundForceAttack = "heroattack";
+    public static string SoundEnemyAttack = "enemyattack";
+    public static string SoundBossAttack = "enemyattack";
+
     public static string SoundMovement = "ShiningForce/sounds/dwoowoo";
     public static string SfxMovement = "movement";
     public static string SoundMenuSwish = "ShiningForce/sounds/swish1";
@@ -94,6 +98,7 @@ public class Constants {
     public static string SfxError = "error";
     public static string SoundExplosion = "ShiningForce/sounds/smallexplosion";
     public static string SfxExplosion = "explosion";
+
 
     public static string AudioMovement = "movement";
 

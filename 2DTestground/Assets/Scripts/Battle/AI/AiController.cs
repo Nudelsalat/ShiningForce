@@ -78,8 +78,7 @@ namespace Assets.Scripts.Battle.AI {
                 case EnumAiState.SelectTarget:
                     _state = EnumAiState.None;
                     Player.InputDisabledAiBattle = false;
-                    _battleController.ExecuteAttack(_selectedAttackOption.GetTargetList(), _selectedAttackOption.GetMagic(),
-                        _selectedAttackOption.GetMagicLevel(), _selectedAttackOption.GetAttackType());
+                    _battleController.ExecuteAttack(_selectedAttackOption, _selectedAttackOption.GetAttackType());
                     //ExecuteAttack does already end the turn
                     _state = EnumAiState.None;
                     break;
@@ -128,7 +127,7 @@ namespace Assets.Scripts.Battle.AI {
             } else if (CheckPreconditions(_currentAiData.SecondaryAiType)) {
                 ExecuteAi(_currentAiData.SecondaryAiType);
             } else {
-                _battleController.NextUnit();
+                _battleController.SetNextUnit();
             }
         }
 
@@ -299,16 +298,12 @@ namespace Assets.Scripts.Battle.AI {
 
         private bool TryExecuteAttack(out List<AttackOption> attackOptions) {
             int attack;
-            var elementType = EnumElementType.None;
-            var fixedDamage = false;
             var aoe = EnumAreaOfEffect.Single;
             var attackRange = EnumAttackRange.Melee;
             var target = _forceLayerMask;
             EnumMagicType? magicType = null;
             if (_magicToAttack != null) {
-                fixedDamage = true;
                 attack = _magicToAttack.Damage[_magicLevelToAttack - 1];
-                elementType = _magicToAttack.ElementType;
                 aoe = _magicToAttack.AreaOfEffect[_magicLevelToAttack - 1];
                 attackRange = _magicToAttack.AttackRange[_magicLevelToAttack - 1];
                 if (_battleController.IsReverseTarget(_magicToAttack)) {
@@ -352,7 +347,7 @@ namespace Assets.Scripts.Battle.AI {
                         var targetList = GetAllTargetsInAreaOfEffect(vector3, aoe, target);
                         var attackOption = new AttackOption(targetList, movementSquare, 
                             vector3, attack, _magicToAttack, _magicLevelToAttack, 
-                            aoe, attackRange, elementType, fixedDamage, magicType);
+                            aoe, attackRange);
                         attackOptionsDict.Add(vector3, attackOption);
                     } else {
                         attackOptionsDict.Add(vector3, null);

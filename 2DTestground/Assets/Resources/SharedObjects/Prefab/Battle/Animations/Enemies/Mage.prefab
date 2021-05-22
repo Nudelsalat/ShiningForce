@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1055651798100831724, guid: 626b86331d610de469ded6465ce34e6b,
+  m_Sprite: {fileID: -7285376162372006033, guid: aad00c23de3d0084c80edd13ff852347,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 2231959619469264703}
   - component: {fileID: 5193170815707620342}
   m_Layer: 5
-  m_Name: Dwarf
+  m_Name: Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +199,7 @@ Animator:
   m_GameObject: {fileID: 8017791968111400882}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b479da6f7abadcc4db3ddfc10c3331e7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7c92dd0922de23141b4747d3f4f27b29, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

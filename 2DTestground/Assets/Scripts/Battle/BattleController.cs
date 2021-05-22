@@ -59,11 +59,10 @@ namespace Assets.Scripts.Battle {
         private QuickStats _quickStats;
         private AudioManager _audioManager;
         private DialogManager _dialogManager;
-        private BattleCalculator _battleCalculator;
         private CharacterDetailUI _characterDetailUI;
         private AiController _aiController;
         private Inventory _inventory;
-        private BattleAnimationUi _battleAnimation;
+        private AttackPhase _attackPhase;
         private Menu _menu;
         private Magic _magicToAttack;
         private GameItem _selectedItem;
@@ -72,6 +71,7 @@ namespace Assets.Scripts.Battle {
 
         private bool _magicSelected = false;
         private bool _battleHasEnded = false;
+        private bool _nextUnit = false;
 
         public static BattleController Instance;
 
@@ -114,8 +114,7 @@ namespace Assets.Scripts.Battle {
             _inventory = Inventory.Instance;
             _aiController = AiController.Instance;
             _quickStats = QuickStats.Instance;
-            _battleAnimation = BattleAnimationUi.Instance;
-            _battleCalculator = new BattleCalculator();
+            _attackPhase = AttackPhase.Instance;
 
             transform.gameObject.SetActive(false);
             _healthBars.gameObject.SetActive(false);
@@ -164,7 +163,10 @@ namespace Assets.Scripts.Battle {
 
         private void EndBattle() {
             HealWholeForce();
+            _nextUnit = false;
+            Player.InputDisabledAiBattle = false;
 
+            BattleAnimationUi.Instance.EndAttackAnimation();
             _turnOrder.Clear();
             _force.Clear();
             _enemies.Clear();
@@ -186,7 +188,12 @@ namespace Assets.Scripts.Battle {
             return _currentUnit;
         }
 
-        public void NextUnit() {
+        public void SetNextUnit() {
+            _nextUnit = true;
+        }
+
+        private void NextUnit() {
+            _nextUnit = false;
             _currentUnit?.SetAnimatorDirection(DirectionType.down);
             _enumCurrentMenuType = EnumCurrentBattleMenu.none;
             _previousMenuTypeState = EnumCurrentBattleMenu.none;
@@ -229,9 +236,13 @@ namespace Assets.Scripts.Battle {
 
         void Update() {
             if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
-                || !_cursor.UnitReached || Player.PlayerIsInMenu == EnumMenuType.pause) {
+                || Player.InputDisabledInAttackPhase || !_cursor.UnitReached || Player.PlayerIsInMenu == EnumMenuType.pause) {
                 _healthBars.gameObject.SetActive(false);
                 return;
+            }
+
+            if (_nextUnit) {
+                NextUnit();
             }
 
             if (Input.GetButtonDown("Special")) {
@@ -326,7 +337,7 @@ namespace Assets.Scripts.Battle {
                             LayerMask.GetMask("Force", "Enemies"))) {
                             Player.PlayerIsInMenu = EnumMenuType.battleMenu;
                             _audioManager.PlaySFX(Constants.SfxMenuSwish);
-                            _characterDetailUI.LoadCharacterDetails(unit.GetCharacter(), unit.GetTexture2D());
+                            _characterDetailUI.LoadCharacterDetails(unit.GetCharacter(), unit.GetFieldAnimationTexture2D());
                             _currentBattleState = EnumBattleState.characterDetails;
                         }
                         break;
@@ -476,7 +487,9 @@ namespace Assets.Scripts.Battle {
 
                 var targets = _cursor.GetTargetsInAreaOfEffect(
                     _movementGrid.GetOpponentLayerMask(_currentUnit, isReversedTargetSearch));
-                ExecuteAttack(targets, _magicToAttack, _magicLevelToAttack, _previousMenuTypeState);
+
+                var attackOption = new AttackOption(targets, null, null, 0, _magicToAttack, _magicLevelToAttack);
+                ExecuteAttack(attackOption, _previousMenuTypeState);
             }
         }
 
@@ -672,115 +685,15 @@ namespace Assets.Scripts.Battle {
             }
         }
 
-        public void ExecuteAttack(List<Unit> targets, Magic magicToAttack, int magicLevelToAttack, EnumCurrentBattleMenu attackType) {
-            var sentence = new List<string>();
-            var expScore = 0;
-
-            //TODO EVERYTHING
-            _battleAnimation.DoAttackAnimation(_currentUnit,targets,null,null,null,true);
-            switch (attackType) {
-                case EnumCurrentBattleMenu.item:
-                    if (ExecuteItem(targets)) {
-                        expScore = targets.Count * 5;
-                    } else {
-                        return;
-                    }
-                    break;
-                case EnumCurrentBattleMenu.magic:
-                    expScore = magicToAttack.ExecuteMagicAtLevel(_currentUnit, targets, magicLevelToAttack);
-                    _currentUnit.GetCharacter().CharStats.CurrentMp -= magicToAttack.ManaCost[magicLevelToAttack - 1];
-                    if (magicToAttack.MagicType == EnumMagicType.Heal && magicToAttack.MagicType ==
-                                                                      EnumMagicType.RestoreBoth
-                                                                      && magicToAttack.MagicType ==
-                                                                      EnumMagicType.RestoreMP) {
-                        expScore = expScore < 10 ? 10 : expScore;
-                    }
-                    break;
-                case EnumCurrentBattleMenu.attack:
-                case EnumCurrentBattleMenu.none:
-                    expScore = ExecuteRegularAttack(targets);
-                    break;
-            }
-            
-            if (expScore >= 50) {
-                expScore = 49;
-            } else if (expScore <= 0) {
-                expScore = 1;
-            }
-
-            if(_layerMaskForce == (_layerMaskForce | (1 << _currentUnit.gameObject.layer))) {
-                sentence.AddRange(_currentUnit.GetCharacter().AddExp(expScore));
-            }
-
-            _dialogManager.EvokeSentenceDialogue(sentence);
+        public void ExecuteAttack(AttackOption attackOption, EnumCurrentBattleMenu attackType) {
+            _previousMenuTypeState = attackType;
+            var itemName = attackType == EnumCurrentBattleMenu.item ? _selectedItem.ItemName : "";
+            _attackPhase.ExecuteAttackPhase(attackType, attackOption, _currentUnit, itemName, false);
 
             _enumCurrentMenuType = EnumCurrentBattleMenu.none;
             _cursor.ClearAttackArea();
             Player.PlayerIsInMenu = EnumMenuType.none;
             _cursor.EndTurn();
-        }
-
-        private bool ExecuteItem(List<Unit> targets) {
-            switch (_currentItemMenu) {
-                case EnumCurrentMenu.use:
-                    if (_selectedItem is Consumable consumable) {
-                        if (!consumable.TryUseItem(_currentUnit, targets)) {
-                            return false;
-                        }
-                        _currentUnit.GetCharacter().RemoveItem(_selectedItem);
-                        return true;
-                    }
-                    break;
-                case EnumCurrentMenu.give:
-                case EnumCurrentMenu.drop:
-                case EnumCurrentMenu.equip:
-                    Debug.LogWarning("_currentItemMenu = equip within method 'ExecuteItem', should NOT be reached");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            return false;
-        }
-
-        private int ExecuteRegularAttack(List<Unit> targets) {
-            var expScore = 0;
-            var sentence = new List<string>();
-            var currentChar = _currentUnit.GetCharacter();
-            foreach (var targetUnit in targets) {
-                var target = targetUnit.GetCharacter();
-                var levelDifference = currentChar.CharStats.Level -
-                                      target.CharStats.Level;
-                var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
-                var damage = _battleCalculator.GetBaseDamageWeaponAttack(
-                    currentChar, target, _cursor.GetLandEffect(_cursor.MovePoint.position));
-
-
-                var isCrit = _battleCalculator.RollForCrit(currentChar);
-                var critString = "";
-                //TODO is elemental resistance vulnerability?
-                if (isCrit) {
-                    damage = _battleCalculator.GetCritDamage(currentChar, damage);
-                    critString = "Critical hit!\n";
-                }
-
-                sentence.Add(
-                    $"{critString}{target.Name.AddColor(Constants.Orange)} suffered {damage} " +
-                    $"points of damage.");
-                if (target.CharStats.CurrentHp <= damage) {
-                    sentence.Add($"{target.Name.AddColor(Constants.Orange)}" +
-                                 $" was defeated!");
-                    target.CharStats.CurrentHp = 0;
-                    RemoveUnitFromBattle(targetUnit);
-                    expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
-                                      expBase);
-                } else {
-                    target.CharStats.CurrentHp -= damage;
-                    expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp());
-                }
-            }
-
-            _dialogManager.EvokeSentenceDialogue(sentence);
-            return expScore;
         }
 
         private void HealWholeForce() {

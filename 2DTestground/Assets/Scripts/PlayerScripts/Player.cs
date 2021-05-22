@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public static bool InputDisabledInDialogue = false;
     public static bool InputDisabledInEvent = false;
     public static bool InputDisabledAiBattle = false;
+    public static bool InputDisabledInAttackPhase = false;
     public static EnumMenuType PlayerIsInMenu = EnumMenuType.none;
     public GameObject _interactionSelector;
     
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour
     }
 
     private void HandleInput() {
-        if (InputDisabledInDialogue || InputDisabledInEvent || PlayerIsInMenu != EnumMenuType.none) {
+        if (InputDisabledInDialogue || InputDisabledInEvent || InputDisabledInAttackPhase || PlayerIsInMenu != EnumMenuType.none) {
             _movement.x = _movement.y = 0;
             return;
         } else if (IsInDialogue) {

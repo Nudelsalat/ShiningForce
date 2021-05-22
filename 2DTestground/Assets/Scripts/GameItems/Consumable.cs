@@ -23,7 +23,12 @@ class Consumable : GameItem {
         if (!CheckIfUsefull(usedOnCharacter, usedInBattle)) {
             return false;
         }
-        Magic.ExecuteMagicAtLevel(user, usedOnCharacter, MagicLevel);
+
+        // TODO: refactor, move Use-item logic outside of battle to the menu
+        if (usedInBattle == false) {
+            Magic.ExecuteMagicAtLevel(user, usedOnCharacter, MagicLevel);
+        }
+
         return true;
     }
 

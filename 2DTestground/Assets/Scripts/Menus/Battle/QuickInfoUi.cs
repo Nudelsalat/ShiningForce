@@ -14,6 +14,8 @@ public class QuickInfoUi : MonoBehaviour
     private Text _charName;
     private Text _charTypeLevel;
 
+    private Character _currentChar;
+
     private RectTransform _hpRectTransform;
     private RectTransform _hpContainerRectTransform;
     private RectTransform _mpRectTransform;
@@ -65,6 +67,7 @@ public class QuickInfoUi : MonoBehaviour
 
     public void ShowQuickInfo(Character character) {
         OpenUi();
+        _currentChar = character;
         var stats = character.CharStats;
         float maxValue = stats.MaxHp() > stats.MaxMp()
             ? stats.MaxHp()
@@ -99,6 +102,10 @@ public class QuickInfoUi : MonoBehaviour
 
         SettingSliders(stats);
 
+    }
+
+    public void UpdateInfo() {
+        ShowQuickInfo(_currentChar);
     }
 
     private void SettingSliders(CharacterStatistics stats) {

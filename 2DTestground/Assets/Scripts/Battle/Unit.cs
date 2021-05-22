@@ -64,7 +64,7 @@ namespace Assets.Scripts.Battle {
         }
 
         private void DoColorSwap() {
-            var texture2D = GetTexture2D();
+            var texture2D = GetFieldAnimationTexture2D();
             if (!texture2D) {
                 return;
             }
@@ -76,11 +76,11 @@ namespace Assets.Scripts.Battle {
 
         }
 
-        public Texture2D GetTexture2D() {
-            if (_character.ColorPalette == null) {
+        public Texture2D GetFieldAnimationTexture2D() {
+            if (_character.ColorPaletteFieldAnimation == null) {
                 return null;
             }
-            var colorPalette = _character.ColorPalette;
+            var colorPalette = _character.ColorPaletteFieldAnimation;
             var skinId = _character.SkinId;
             if (colorPalette == null || colorPalette.height - 1 <= skinId) {
                 return null;
@@ -88,7 +88,7 @@ namespace Assets.Scripts.Battle {
             return PaletteSwapNoShader.CopyTexture2D(_spriteRenderer.sprite.texture, colorPalette, skinId);
         }
 
-    public Character GetCharacter() {
+        public Character GetCharacter() {
             return _character;
         }
 

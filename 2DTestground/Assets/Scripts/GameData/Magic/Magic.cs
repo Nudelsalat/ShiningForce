@@ -20,6 +20,7 @@ namespace Assets.Scripts.GameData.Magic {
         public EnumElementType ElementType;
         public int[] Damage = new int[4];
         public int[] ManaCost = new int[4];
+        public RuntimeAnimatorController[] SpellAnimatorController = new RuntimeAnimatorController[4];
 
         private DialogManager _dialogManager;
         private BattleCalculator _battleCalculator;

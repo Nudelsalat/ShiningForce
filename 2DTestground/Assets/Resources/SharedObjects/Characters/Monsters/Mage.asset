@@ -18,7 +18,10 @@ MonoBehaviour:
   PortraitSprite: {fileID: 0}
   AnimatorSprite: {fileID: 9100000, guid: b44c11db2c05e0f41aaf688907820b53, type: 2}
   _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Mage
-  ColorPalette: {fileID: 2800000, guid: e5bd1124288097c4184c0f3a4ccee142, type: 3}
+  ColorPaletteFieldAnimation: {fileID: 2800000, guid: e5bd1124288097c4184c0f3a4ccee142,
+    type: 3}
+  ColorPaletteBattleAnimation: {fileID: 2800000, guid: 6d14b045e0300f545b16f13f48ca8268,
+    type: 3}
   SkinId: 2
   ClassType: 4
   CharacterType: 17

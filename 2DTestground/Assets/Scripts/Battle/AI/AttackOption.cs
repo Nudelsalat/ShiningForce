@@ -13,11 +13,8 @@ namespace Assets.Scripts.Battle.AI {
         private readonly Vector3? _positionFromWhichToAttack;
         private readonly Vector3? _targetPosition;
         private readonly int _attack;
-        private EnumElementType _elementType;
-        private EnumAreaOfEffect _areaOfEffect;
-        private EnumAttackRange _attackRange;
-        private readonly bool _isFixedDamage;
-        private readonly EnumMagicType? _magicType;
+        private readonly EnumAreaOfEffect _areaOfEffect;
+        private readonly EnumAttackRange _attackRange;
         private readonly Magic _magic;
         private readonly int _magicAttackLevel;
 
@@ -25,33 +22,71 @@ namespace Assets.Scripts.Battle.AI {
 
         public AttackOption(List<Unit> listTargets, Vector3? attackPosition, Vector3? targetPosition, int attack, 
             Magic magicAttack = null, int magicAttackLevel = 0, EnumAreaOfEffect aoe = EnumAreaOfEffect.Single, 
-            EnumAttackRange attackRange = EnumAttackRange.Melee, EnumElementType elementType = EnumElementType.None, 
-            bool isFixedDamage = false, EnumMagicType? magicType = null) {
+            EnumAttackRange attackRange = EnumAttackRange.Melee) {
             _listTargets = listTargets;
             _positionFromWhichToAttack = attackPosition;
             _targetPosition = targetPosition;
             _attack = attack;
-            _elementType = elementType;
             _areaOfEffect = aoe;
-            _magicType = magicType;
             _magic = magicAttack;
             _magicAttackLevel = magicAttackLevel;
             _attackRange = attackRange;
-            _isFixedDamage = isFixedDamage;
         }
 
         public float GetScore() {
-            if (_magicType == EnumMagicType.Heal) {
-                return GetHealScore();
+            var result = 0f;
+            var magicType = _magic?.MagicType;
+            if (magicType == EnumMagicType.Heal || magicType == EnumMagicType.RestoreBoth) {
+                result += GetHealScore();
             }
-            if (_magicType == EnumMagicType.Debuff || _magicType == EnumMagicType.Buff) {
-                return 5 * _listTargets.Count();
+            if (magicType == EnumMagicType.RestoreMP || magicType == EnumMagicType.RestoreBoth) {
+                result += GetRestoreMpScore();
             }
-            if (_isFixedDamage) {
-                //TODO: multiply if elementalWeakness
-                return GetFixedDamageScore();
+            if (magicType == EnumMagicType.Debuff || magicType == EnumMagicType.Buff || magicType == EnumMagicType.Special) {
+                result += (5 * _listTargets.Count());
             }
-            return GetDamageScore();
+            if (magicType == EnumMagicType.Cure) {
+                var statusEffectsToCure = new List<EnumStatusEffect>();
+                int count = 0;
+                switch (_magicAttackLevel) {
+                    case 1:
+                        statusEffectsToCure.Add(EnumStatusEffect.poisoned);
+                        break;
+                    case 2:
+                        statusEffectsToCure.Add(EnumStatusEffect.poisoned);
+                        statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                        break;
+                    case 3:
+                        statusEffectsToCure.Add(EnumStatusEffect.poisoned);
+                        statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                        statusEffectsToCure.Add(EnumStatusEffect.confused);
+                        break;
+                    case 4:
+                        statusEffectsToCure.Add(EnumStatusEffect.poisoned);
+                        statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                        statusEffectsToCure.Add(EnumStatusEffect.confused);
+                        statusEffectsToCure.Add(EnumStatusEffect.paralyzed);
+                        break;
+                }
+                
+                foreach (var target in _listTargets) {
+                    var character = target.GetCharacter();
+                    foreach (var statusEffect in statusEffectsToCure) {
+                        if (character.StatusEffects.HasFlag(statusEffect)) {
+                            count++;
+                        }
+                    }
+                }
+                result += (5 * count);
+            }
+            if (magicType == EnumMagicType.Damage) {
+                result += GetMagicDamageScore();
+            }
+            if (magicType == null) {
+                result += GetDamageScore();
+            }
+
+            return result;
         }
 
         public Vector3? GetAttackPosition() {
@@ -103,6 +138,20 @@ namespace Assets.Scripts.Battle.AI {
             return score;
         }
 
+        private float GetRestoreMpScore() {
+            var score = 0f;
+            foreach (var target in _listTargets) {
+                var charStats = target.GetCharacter().CharStats;
+                var mpDiff = charStats.MaxMp() - charStats.CurrentMp;
+                if (mpDiff < _attack) {
+                    score += (float)mpDiff / charStats.MaxMp();
+                } else {
+                    score += (float)_attack / charStats.MaxMp();
+                }
+            }
+            return score;
+        }
+
         private float GetDamageScore() {
             var score = 0f;
             foreach (var target in _listTargets) {
@@ -117,8 +166,9 @@ namespace Assets.Scripts.Battle.AI {
             return score;
         }
 
-        private float GetFixedDamageScore() {
+        private float GetMagicDamageScore() {
             var score = 0f;
+            //TODO Elemental calc, promotion calc and level calc?
             foreach (var target in _listTargets) {
                 if (_attack >= target.GetCharacter().CharStats.CurrentHp) {
                     score += 100;

@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Battle;
 using Assets.Scripts.Battle.AI;
+using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Menus.Battle {
     public class BattleAnimationUi : MonoBehaviour {
@@ -16,17 +19,23 @@ namespace Assets.Scripts.Menus.Battle {
         private Image _platformImage;
         private Transform _forceUnitSpawn;
         private Transform _enemyUnitSpawn;
+        private Animator _spellAnimator;
 
         private Animator _targetAnimator;
         private Animator _attackerAnimator;
 
-        private AudioManager _audioManager;
-        private BattleController _battleController;
         private QuickInfoUi _quickInfo;
         private QuickInfoUiTarget _quickInfoUiTarget;
 
-        private bool _showUi;
-        private EnumAiState _state;
+        private GameObject _spawnedAttacker;
+        private GameObject _spawnedTarget;
+        private Image _attackImage;
+        private Image _targetImage;
+        private Texture2D _attackerTexture2D;
+        private Texture2D _targetTexture2D;
+
+        private bool _isAttackerForceUnit;
+        private bool _unitsAreOpponents;
 
         public static BattleAnimationUi Instance;
 
@@ -42,79 +51,125 @@ namespace Assets.Scripts.Menus.Battle {
             _platformImage = transform.Find("Force/Platform").GetComponent<Image>();
             _forceUnitSpawn = transform.Find("Force/Character").GetComponent<Transform>();
             _enemyUnitSpawn = transform.Find("Enemy/Character").GetComponent<Transform>();
-            
+            _spellAnimator = transform.Find("SpellAnimator").GetComponent<Animator>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            _audioManager = AudioManager.Instance;
-            _battleController = BattleController.Instance;
             _quickInfo = QuickInfoUi.Instance;
             _quickInfoUiTarget = QuickInfoUiTarget.Instance;
-
             gameObject.SetActive(false);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            switch (_state) {
-                case EnumAiState.None:
-                    break;
-                case EnumAiState.MoveCursorToUnit:
-                    _attackerAnimator.SetInteger("Animation",(int)EnumAttackAnimations.Attack);
-                    var randomness = Random.Range(0, 2);
-                    if (randomness <= 0) {
-                        _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Dodge);
-                    }
-                    StartCoroutine(WaitSeconds(1, EnumAiState.MoveUnit));
-                    break;
-                case EnumAiState.MoveUnit:
-                    _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
-                    _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
-                    StartCoroutine(WaitSeconds(1, EnumAiState.ExecuteAction));
-                    break;
-                case EnumAiState.SelectTarget:
-                    break;
-                case EnumAiState.ExecuteAction:
-                    EndAttackAnimation();
-                    break;
+        void LateUpdate() {
+            if (_targetTexture2D != null) {
+                _targetImage.sprite = Sprite.Create(_targetTexture2D, _targetImage.sprite.rect, _targetImage.sprite.pivot);
+            }
+            if (_attackerTexture2D != null) {
+                _attackImage.sprite = Sprite.Create(_attackerTexture2D, _attackImage.sprite.rect, _attackImage.sprite.pivot);
             }
         }
 
-        public void DoAttackAnimation(Unit attacker, List<Unit> targets, Image background, Image platform, 
-            AttackOption attackOption, bool forceAttack) {
-
-            Player.InputDisabledAiBattle = true;
+        public void Load(bool isAttackerForceUnit, bool unitsAreOpponents, Unit attacker, Unit target) {
             gameObject.SetActive(true);
-            var firstTarget = targets.First();
+            _spellAnimator.runtimeAnimatorController = null;
+            FlipToNormal(_enemyUnitSpawn);
+            FlipToNormal(_forceUnitSpawn);
+            var targetPrefab = Resources.Load<GameObject>(target.GetCharacter().GetBattleAnimationPath());
+            var attackerPrefab = Resources.Load<GameObject>(attacker.GetCharacter().GetBattleAnimationPath());
+
+            _isAttackerForceUnit = isAttackerForceUnit;
+            _unitsAreOpponents = unitsAreOpponents;
+            _spawnedTarget = Instantiate(targetPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            _spawnedAttacker = Instantiate(attackerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            _attackImage = _spawnedAttacker.transform.Find("Character").GetComponent<Image>();
+            _targetImage = _spawnedTarget.transform.Find("Character").GetComponent<Image>();
+            if (isAttackerForceUnit) {
                 _quickInfo.ShowQuickInfo(attacker.GetCharacter());
-                _quickInfoUiTarget.ShowQuickInfo(firstTarget.GetCharacter());
-                var targetPrefab = Resources.Load<GameObject>(firstTarget.GetCharacter().GetBattleAnimationPath());
-                var attackerPrefab = Resources.Load<GameObject>(attacker.GetCharacter().GetBattleAnimationPath());
+                _quickInfoUiTarget.ShowQuickInfo(target.GetCharacter());
+                _spawnedAttacker.transform.SetParent(_forceUnitSpawn, false);
+                _spawnedTarget.transform.SetParent(_enemyUnitSpawn, false);
+            } else {
+                _quickInfo.ShowQuickInfo(target.GetCharacter());
+                _quickInfoUiTarget.ShowQuickInfo(attacker.GetCharacter());
+                _spawnedTarget.transform.SetParent(_forceUnitSpawn, false);
+                _spawnedAttacker.transform.SetParent(_enemyUnitSpawn, false);
+            }
 
-                var spawnedTarget = Instantiate(targetPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                var spawnedAttacker = Instantiate(attackerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                if (attacker.GetCharacter().CharacterType != EnumCharacterType.monster) {
-                    spawnedAttacker.transform.SetParent(_forceUnitSpawn, false);
-                    spawnedTarget.transform.SetParent(_enemyUnitSpawn, false);
+            SetWeapon(_spawnedAttacker, attacker.GetCharacter());
+            SetWeapon(_spawnedTarget, target.GetCharacter());
+            SetTexture2D(_attackImage, attacker.GetCharacter(), out _attackerTexture2D);
+            SetTexture2D(_targetImage, target.GetCharacter(), out _targetTexture2D);
+
+            _attackerAnimator = _spawnedAttacker.GetComponent<Animator>();
+            _targetAnimator = _spawnedTarget.GetComponent<Animator>();
+            _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
+            _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
+
+            if (!unitsAreOpponents) {
+                Flip(isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn);
+            }
+
+            StartCoroutine(DelayedUpdate(0.1f));
+        }
+
+        public void DoAttackAnimation(bool isDodge, bool isKill, RuntimeAnimatorController spellAnimatorController) {
+            if (spellAnimatorController != null) {
+                _spellAnimator.runtimeAnimatorController = spellAnimatorController;
+                _spellAnimator.SetInteger("spellAnimation", 0);
+            }
+            _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Attack);
+            if (isDodge) {
+                _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Dodge);
+            } else {
+                //TODO Damage wiggle
+            }
+            StartCoroutine(DelayedUpdate(0.5f));
+        }
+
+        public void DoCounterAnimation(bool isDodge, bool isKill) {
+            _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Attack);
+            if (isDodge) {
+                _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Dodge);
+            } else {
+                //TODO Damage wiggle
+            }
+            StartCoroutine(DelayedUpdate(0.5f));
+        }
+
+        public void Transition(Unit nextTarget) {
+            //TODO transition
+            if (_isAttackerForceUnit) {
+                foreach (Transform transform in _enemyUnitSpawn) {
+                    Destroy(transform.gameObject);
                 }
-                else {
-                    spawnedTarget.transform.SetParent(_forceUnitSpawn, false);
-                    spawnedAttacker.transform.SetParent(_enemyUnitSpawn, false);
+                _quickInfoUiTarget.ShowQuickInfo(nextTarget.GetCharacter());
+            } else {
+                foreach (Transform transform in _forceUnitSpawn) {
+                    Destroy(transform.gameObject);
                 }
+                _quickInfo.ShowQuickInfo(nextTarget.GetCharacter());
+            }
+            var targetPrefab = Resources.Load<GameObject>(nextTarget.GetCharacter().GetBattleAnimationPath());
+            _spawnedTarget = Instantiate(targetPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            _targetImage = _spawnedTarget.transform.Find("Character").GetComponent<Image>();
+            if (_isAttackerForceUnit) {
+                _spawnedTarget.transform.SetParent(_enemyUnitSpawn, false);
+            } else {
+                _spawnedTarget.transform.SetParent(_forceUnitSpawn, false);
+            }
 
-                _attackerAnimator = spawnedAttacker.GetComponent<Animator>();
-                _targetAnimator = spawnedTarget.GetComponent<Animator>();
-                _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
-                _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
+            SetWeapon(_spawnedTarget, nextTarget.GetCharacter());
+            SetTexture2D(_targetImage, nextTarget.GetCharacter(), out _targetTexture2D);
 
-                SetWeapon(spawnedAttacker, attacker.GetCharacter());
-                SetWeapon(spawnedTarget, firstTarget.GetCharacter());
+            _targetAnimator = _spawnedTarget.GetComponent<Animator>();
+            _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
 
-            StartCoroutine(WaitSeconds(1, EnumAiState.MoveCursorToUnit));
-
+            if (!_unitsAreOpponents) {
+                Flip(_isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn);
+            }
+            StartCoroutine(DelayedUpdate(0.1f));
         }
 
         public void EndAttackAnimation() {
@@ -124,9 +179,9 @@ namespace Assets.Scripts.Menus.Battle {
             foreach (Transform transform in _enemyUnitSpawn) {
                 Destroy(transform.gameObject);
             }
-
+            _quickInfo.CloseQuickInfo();
+            _quickInfoUiTarget.CloseQuickInfo();
             gameObject.SetActive(false);
-            Player.InputDisabledAiBattle = false;
         }
 
         private void SetWeapon(GameObject battleAnimation, Character character) {
@@ -156,10 +211,35 @@ namespace Assets.Scripts.Menus.Battle {
             }
         }
 
-        IEnumerator WaitSeconds(float seconds, EnumAiState nextState) {
-            _state = EnumAiState.None;
+        private void SetTexture2D(Image battleImage, Character character, out Texture2D target) {
+            if (character.ColorPaletteBattleAnimation == null) {
+                target = null;
+                return;
+            }
+            var colorPalette = character.ColorPaletteBattleAnimation;
+            var skinId = character.SkinId;
+            if (colorPalette == null || colorPalette.height - 1 <= skinId) {
+                target = null;
+                return;
+            }
+            target = PaletteSwapNoShader.CopyTexture2D(battleImage.sprite.texture, colorPalette, skinId);
+        }
+        
+        private void FlipToNormal(Transform transform) {
+            var scale = transform.localScale;
+            scale.x = Math.Abs(scale.x);
+            transform.localScale = scale;
+        }
+        private void Flip(Transform transform) {
+            var scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
+
+        IEnumerator DelayedUpdate(float seconds) {
             yield return new WaitForSeconds(seconds);
-            _state = nextState;
+            _quickInfo.UpdateInfo();
+            _quickInfoUiTarget.UpdateInfo();
         }
     }
 }

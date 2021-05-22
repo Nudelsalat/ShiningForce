@@ -7,4 +7,5 @@ using Assets.Scripts.Battle.AI;
 
 
 public class Monster : Character {
+    public int Gold = 50;
 }

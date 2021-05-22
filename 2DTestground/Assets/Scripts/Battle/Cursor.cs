@@ -239,14 +239,14 @@ public class Cursor : MonoBehaviour {
         if (_endTurn) {
             _endTurn = false;
             _currentUnit?.ClearUnitFlicker();
-            _battleController.NextUnit();
+            _battleController.SetNextUnit();
         }
         _currentUnit = null;
     }
 
     private void HandleInput() {
         if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
-            || Player.PlayerIsInMenu == EnumMenuType.pause || Player.PlayerIsInMenu == EnumMenuType.battleMenu) {
+            || Player.InputDisabledInAttackPhase || Player.PlayerIsInMenu == EnumMenuType.pause || Player.PlayerIsInMenu == EnumMenuType.battleMenu) {
             _movement.x = _movement.y = 0;
             return;
         } else if (Player.IsInDialogue) {

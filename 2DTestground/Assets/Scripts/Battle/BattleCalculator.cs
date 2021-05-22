@@ -1,4 +1,6 @@
 ﻿using System;
+using Assets.Enums;
+using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Battle {
@@ -18,19 +20,105 @@ namespace Assets.Scripts.Battle {
             return result <= 0 ? 1 : result;
         }
 
+        public bool RollForDodge(Character attacker, Character target) {
+            var dodgeEnum = target.DodgeBaseChance;
+            if (target.MovementType == EnumMovementType.fly || target.MovementType == EnumMovementType.floating) {
+                if (attacker.MovementType != EnumMovementType.fly ||
+                    attacker.MovementType != EnumMovementType.floating) {
+                    if (attacker.GetAttackRange() == EnumAttackRange.Melee ||
+                        attacker.GetAttackRange() == EnumAttackRange.Spear) {
+                        dodgeEnum = EnumChance.OneIn8;
+                    }
+                }
+            }
+            var baseDodge = ConvertEnumChanceIntoFloat(dodgeEnum);
+            var diffAgility = target.CharStats.Agility.GetModifiedValue() - attacker.CharStats.Agility.GetModifiedValue();
+            var dodgeChance = baseDodge + (diffAgility / 100f); //diff equals added %
+            var dodgeRoll = Random.Range(0f, 1f);
+            return dodgeRoll <= dodgeChance;
+        }
+
+        public bool RollForDoubleAttack(Character attacker) {
+            var doubleChance = ConvertEnumChanceIntoFloat(attacker.DoubleAttackChance);
+            var doubleRoll = Random.Range(0f, 1f);
+            return doubleRoll <= doubleChance;
+        }
+
         public bool RollForCrit(Character attacker) {
-            //TODO CRITICAL HITS attacker.Character.CharStats.CritChance
-            var critChance = 12f;
-            var critRole = Random.Range(0, 100);
+            var critChance = ConvertEnumChanceIntoFloat(attacker.CritChance);
+            var critRole = Random.Range(0f, 1f);
             return critRole <= critChance;
         }
 
         public int GetCritDamage(Character attacker, int baseDamage) {
-            //TODO attacker.Character.CharStats.CritMultiplier
-            var critMuliplier = 1.25f;
+            var critMuliplier = attacker.CritDamageMultiplier;
             var result = baseDamage * critMuliplier;
             return (int)Math.Round(result, MidpointRounding.AwayFromZero);
         }
 
+        public bool RollForCounter(Character counter, int spacesApart) {
+            if (!IsCounterPossible(counter.GetAttackRange(), spacesApart)) {
+                return false;
+            }
+
+            var counterChance = ConvertEnumChanceIntoFloat(counter.CounterChance);
+            var counterRole = Random.Range(0f, 1f);
+            return counterRole <= counterChance;
+        }
+
+        private float ConvertEnumChanceIntoFloat(EnumChance enumChance) {
+            float chance;
+            switch (enumChance) {
+                case EnumChance.OneIn32:
+                    chance = 0.03125f;
+                    break;
+                case EnumChance.OneIn16:
+                    chance = 0.0625f;
+                    break;
+                case EnumChance.OneIn8:
+                    chance = 0.125f;
+                    break;
+                case EnumChance.OneIn4:
+                    chance = 0.25f;
+                    break;
+                case EnumChance.OneIn2:
+                    chance = 0.5f;
+                    break;
+                case EnumChance.Always:
+                    chance = 1f;
+                    break;
+                case EnumChance.Never:
+                    chance = -1f;
+                    break;
+                default:
+                    chance = -1f;
+                    break;
+            }
+
+            return chance;
+        }
+
+        private bool IsCounterPossible(EnumAttackRange range1, int spacesApart) {
+            switch (spacesApart) {
+                case 0:
+                    return false;
+                case 1:
+                    return range1 != EnumAttackRange.ShortBow && range1 != EnumAttackRange.LongBow;
+                case 2:
+                    return range1 == EnumAttackRange.ShortBow || range1 == EnumAttackRange.LongBow ||
+                           range1 == EnumAttackRange.Spear || range1 == EnumAttackRange.Range3 ||
+                           range1 == EnumAttackRange.Range4 || range1 == EnumAttackRange.Range5;
+
+                case 3:
+                    return range1 == EnumAttackRange.LongBow || range1 == EnumAttackRange.Range3 ||
+                           range1 == EnumAttackRange.Range4 || range1 == EnumAttackRange.Range5;
+                case 4:
+                    return range1 == EnumAttackRange.Range4 || range1 == EnumAttackRange.Range5;
+                case 5:
+                    return range1 == EnumAttackRange.Range5;
+                default:
+                    return false;
+            }
+        }
     }
 }

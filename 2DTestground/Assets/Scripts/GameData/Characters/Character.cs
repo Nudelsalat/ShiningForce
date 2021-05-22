@@ -12,12 +12,14 @@ using Object = UnityEngine.Object;
 public class Character : ScriptableObject {
     public int Id;
     public string Name;
+    public bool IsForce;
     public bool IsPromoted;
     public Sprite PortraitSprite;
     public RuntimeAnimatorController AnimatorSprite;
     [SerializeField]
     private string _pathToBattleAnimationPrefab;
-    public Texture2D ColorPalette;
+    public Texture2D ColorPaletteFieldAnimation;
+    public Texture2D ColorPaletteBattleAnimation;
     public int SkinId;
 
     public EnumClassType ClassType = EnumClassType.SDMN;
@@ -25,6 +27,14 @@ public class Character : ScriptableObject {
     public EnumMovementType MovementType;
     public CharacterStatistics CharStats;
     public EnumStatusEffect StatusEffects = EnumStatusEffect.none;
+    public EnumStatusEffect StatusImmunities = EnumStatusEffect.none;
+    public EnumElementalResistanceWeakness ElementalWeakness = EnumElementalResistanceWeakness.none;
+    public EnumElementalResistanceWeakness ElementalResistance = EnumElementalResistanceWeakness.none;
+    public float CritDamageMultiplier = 1.25f;
+    public EnumChance CritChance = EnumChance.OneIn16;
+    public EnumChance CounterChance = EnumChance.OneIn32;
+    public EnumChance DoubleAttackChance = EnumChance.OneIn32;
+    public EnumChance DodgeBaseChance = EnumChance.OneIn32;
 
     [SerializeField]
     private Tuple<GameItem, bool>[] CharacterInventory = new Tuple<GameItem, bool>[4];

@@ -18,7 +18,9 @@ MonoBehaviour:
   PortraitSprite: {fileID: 0}
   AnimatorSprite: {fileID: 9100000, guid: 4ac651526a78c1147b02096911971bb9, type: 2}
   _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Archer
-  ColorPalette: {fileID: 2800000, guid: 22e3c1d572007a0468249bf1b4babf0c, type: 3}
+  ColorPaletteFieldAnimation: {fileID: 2800000, guid: 22e3c1d572007a0468249bf1b4babf0c,
+    type: 3}
+  ColorPaletteBattleAnimation: {fileID: 0}
   SkinId: 1
   ClassType: 30
   CharacterType: 17
