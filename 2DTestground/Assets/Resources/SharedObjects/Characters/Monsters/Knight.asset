@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Name: Galam Knight
+  IsForce: 0
   IsPromoted: 0
   PortraitSprite: {fileID: 0}
   AnimatorSprite: {fileID: 9100000, guid: 03cc68acde66d4844b7b61aec6bed4c6, type: 2}
   _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Knight
-  ColorPalette: {fileID: 0}
+  ColorPaletteFieldAnimation: {fileID: 0}
+  ColorPaletteBattleAnimation: {fileID: 0}
   SkinId: 0
   ClassType: 2
   CharacterType: 17
@@ -60,6 +62,14 @@ MonoBehaviour:
     Kills: 0
     Defeats: 0
   StatusEffects: 0
+  StatusImmunities: 0
+  ElementalWeakness: 0
+  ElementalResistance: 0
+  CritDamageMultiplier: 1.25
+  CritChance: 2
+  CounterChance: 1
+  DoubleAttackChance: 1
+  DodgeBaseChance: 1
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 9757f1d3fb913e245863dc1cbf6df595, type: 2}
     item2: 1

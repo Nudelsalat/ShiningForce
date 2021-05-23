@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public class Constants {
+
+    public static string PrefabSpellPrefix = "SharedObjects/Prefab/Battle/Animations/Spells/";
     public static string PrefabBuyItem = "SharedObjects/Prefab/UI/BuyItem";
     public static string PrefabHealthBar = "SharedObjects/Prefab/UI/HealthBar";
     public static string PrefabQuickHealthBar = "SharedObjects/Prefab/UI/QuickHealthBar";

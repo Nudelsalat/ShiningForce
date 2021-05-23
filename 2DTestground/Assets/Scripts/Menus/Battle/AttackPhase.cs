@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 using Assets.Enums;
 using Assets.Scripts.Battle;
 using Assets.Scripts.Battle.AI;
-using Assets.Scripts.GameData;
 using Assets.Scripts.HelperScripts;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using Random = Unity.Mathematics.Random;
 
 namespace Assets.Scripts.Menus.Battle {
     public class AttackPhase : MonoBehaviour {
@@ -28,7 +25,7 @@ namespace Assets.Scripts.Menus.Battle {
         private bool _doubleAttack = false;
         private string _currentAudioFile;
         private string _itemName;
-        private RuntimeAnimatorController _spellAnimation;
+        private string _spellAnimationPath;
 
         private readonly List<string> _sentences = new List<string>();
         private int _exp;
@@ -106,7 +103,7 @@ namespace Assets.Scripts.Menus.Battle {
                         isDodge = _battleCalculator.RollForDodge(_attacker.GetCharacter(), _nextTarget.GetCharacter());
                     }
                     if (isDodge) {
-                        _battleAnimationUi.DoAttackAnimation(isDodge, false, null);
+                        _battleAnimationUi.DoAttackAnimation(isDodge, false, _spellAnimationPath, _attackOption.GetMagic()?.MagicType);
                         _sentences.Add($"{_nextTarget.GetCharacter().Name.AddColor(Constants.Orange)} dodged the attack!");
                         _followUpState = EnumAttackPhase.CheckCounter;
                         StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
@@ -114,16 +111,17 @@ namespace Assets.Scripts.Menus.Battle {
                     }
                     _exp += ExecuteAttack();
                     var isKilled = _unitsKilled.Contains(_nextTarget);
-                    _battleAnimationUi.DoAttackAnimation(false, isKilled, _spellAnimation);
+                    _battleAnimationUi.DoAttackAnimation(false, isKilled, _spellAnimationPath,  _attackOption.GetMagic()?.MagicType);
                     _followUpState = isKilled ? EnumAttackPhase.GetNextTarget : EnumAttackPhase.CheckCounter;
                     StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
                     break;
 
                 case EnumAttackPhase.CheckCounter:
                     if (_attackType == EnumCurrentBattleMenu.magic || _attackType == EnumCurrentBattleMenu.item) {
-                        StartCoroutine(WaitSeconds(1, EnumAttackPhase.GetNextTarget));
+                        _state = EnumAttackPhase.GetNextTarget;
                         break;
                     }
+                    _battleAnimationUi.StopAttackAnimation();
                     var spacesApart = GetSpacesApart(_attacker, _nextTarget);
                     if (_battleCalculator.RollForCounter(_nextTarget.GetCharacter(), spacesApart)) {
                         _sentences.Add($"Counterattack!");
@@ -162,6 +160,7 @@ namespace Assets.Scripts.Menus.Battle {
                     _battleAnimationUi.DoCounterAnimation(false, isKilled);
                     if (isKilled) {
                         _followUpState = EnumAttackPhase.EndAttackPhase;
+                        _battleAnimationUi.StopAttackAnimation();
                     }
                     _followUpState = EnumAttackPhase.CheckCounter;
                     StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
@@ -171,6 +170,7 @@ namespace Assets.Scripts.Menus.Battle {
                     if (_attackType == EnumCurrentBattleMenu.magic || _attackType == EnumCurrentBattleMenu.item) {
                         _state = EnumAttackPhase.GetNextTarget;
                     }
+                    _battleAnimationUi.StopAttackAnimation();
                     if (_battleCalculator.RollForDoubleAttack(_attacker.GetCharacter())) {
                         _doubleAttack = true;
                         _sentences.Add($"Second Attack!");
@@ -187,11 +187,15 @@ namespace Assets.Scripts.Menus.Battle {
                         _state = EnumAttackPhase.Transition;
                     } else {
                         _state = EnumAttackPhase.EndAttackPhase;
+                        _battleAnimationUi.StopAttackAnimation();
                     }
                     break;
 
                 case EnumAttackPhase.Transition:
-                    _battleAnimationUi.Transition(_nextTarget);
+                    if (_attackType != EnumCurrentBattleMenu.magic && _attackType != EnumCurrentBattleMenu.item) {
+                        _battleAnimationUi.StopAttackAnimation();
+                    }
+                    _battleAnimationUi.Transition(_nextTarget, _nextTarget == _attacker);
                     StartCoroutine(WaitSeconds(1, EnumAttackPhase.AttackAnimation));
                     break;
 
@@ -213,6 +217,9 @@ namespace Assets.Scripts.Menus.Battle {
                         _exp = 49;
                     } else if (_exp <= 0) {
                         _exp = 1;
+                    } else if (_attackType == EnumCurrentBattleMenu.magic &&
+                               _attackOption.GetMagic().MagicType == EnumMagicType.Heal && _exp < 10) {
+                        _exp = 10;
                     }
                     if (_isAttackerForceUnit) {
                         _sentences.AddRange(_attacker.GetCharacter().AddExp(_exp));
@@ -223,7 +230,7 @@ namespace Assets.Scripts.Menus.Battle {
                     }
                     _dialogManager.EvokeSentenceDialogue(_sentences);
                     _sentences.Clear();
-                    StartCoroutine(WaitSeconds(0.1f, EnumAttackPhase.DoEndAttackPhase));
+                    StartCoroutine(WaitSeconds(1f, EnumAttackPhase.DoEndAttackPhase));
                     break;
                 case EnumAttackPhase.DoEndAttackPhase:
                     _state = EnumAttackPhase.None;
@@ -237,6 +244,8 @@ namespace Assets.Scripts.Menus.Battle {
             Player.InputDisabledInAttackPhase = true;
             gameObject.SetActive(true);
             _unitsKilled.Clear();
+            _exp = 0;
+            _gold = 0;
 
             _attackOption = attackOption;
             _itemName = itemName;
@@ -244,11 +253,12 @@ namespace Assets.Scripts.Menus.Battle {
             _attackType = attackType;
             _targetQueue = new Queue<Unit>(attackOption.GetTargetList());
             _attacker = attacker;
-            _spellAnimation = null;
+            _spellAnimationPath = "";
 
             if (_attackType == EnumCurrentBattleMenu.magic || _attackType == EnumCurrentBattleMenu.item) {
                 var magic = attackOption.GetMagic();
-                _spellAnimation = magic.SpellAnimatorController[attackOption.GetMagicLevel()];
+                var spellLevel = attackOption.GetMagicLevel();
+                _spellAnimationPath = $"{Constants.PrefabSpellPrefix}{magic.SpellName}/{magic.SpellName}{spellLevel}";
             }
 
             _currentAudioFile = bossAttack ? Constants.SoundBossAttack :
@@ -299,13 +309,14 @@ namespace Assets.Scripts.Menus.Battle {
                                   target.CharStats.Level;
             var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
 
-            var isCrit = _battleCalculator.RollForCrit(caster);
             var critString = "";
+            /*
+            var isCrit = _battleCalculator.RollForCrit(caster);
             //TODO is elemental resistance vulnerability?
             if (isCrit) {
                 damage = _battleCalculator.GetCritDamage(caster, damage);
                 critString = "Critical hit!\n";
-            }
+            }*/
 
             switch (_attackOption.GetMagic().MagicType) {
                 case EnumMagicType.Damage:
@@ -359,7 +370,7 @@ namespace Assets.Scripts.Menus.Battle {
                     _sentences.Add(
                         $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
                         $"points.");
-                    expPoints = 12 * (float) pointsToHeal / target.CharStats.MaxHp();
+                    expPoints = 13 * (float) pointsToHeal / target.CharStats.MaxHp();
                     expScore += (int) expPoints;
 
                     diff = target.CharStats.MaxMp() -
@@ -370,7 +381,7 @@ namespace Assets.Scripts.Menus.Battle {
                         $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
                         $"points.");
 
-                    expPoints = 12 * (float) pointsToHeal / target.CharStats.MaxMp();
+                    expPoints = 13 * (float) pointsToHeal / target.CharStats.MaxMp();
                     expScore += (int) expPoints;
                     break;
                 case EnumMagicType.Cure:

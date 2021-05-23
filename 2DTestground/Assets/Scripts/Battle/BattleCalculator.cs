@@ -1,6 +1,6 @@
 ﻿using System;
 using Assets.Enums;
-using Unity.Mathematics;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Battle {
@@ -35,18 +35,21 @@ namespace Assets.Scripts.Battle {
             var diffAgility = target.CharStats.Agility.GetModifiedValue() - attacker.CharStats.Agility.GetModifiedValue();
             var dodgeChance = baseDodge + (diffAgility / 100f); //diff equals added %
             var dodgeRoll = Random.Range(0f, 1f);
+            Debug.Log($"DodgeChance: {dodgeChance}, DodgeRoll: {dodgeRoll}");
             return dodgeRoll <= dodgeChance;
         }
 
         public bool RollForDoubleAttack(Character attacker) {
             var doubleChance = ConvertEnumChanceIntoFloat(attacker.DoubleAttackChance);
             var doubleRoll = Random.Range(0f, 1f);
+            Debug.Log($"doubleChance: {doubleChance}, doubleRoll: {doubleRoll}");
             return doubleRoll <= doubleChance;
         }
 
         public bool RollForCrit(Character attacker) {
             var critChance = ConvertEnumChanceIntoFloat(attacker.CritChance);
             var critRole = Random.Range(0f, 1f);
+            Debug.Log($"critChance: {critChance}, critRole: {critRole}");
             return critRole <= critChance;
         }
 
@@ -62,8 +65,9 @@ namespace Assets.Scripts.Battle {
             }
 
             var counterChance = ConvertEnumChanceIntoFloat(counter.CounterChance);
-            var counterRole = Random.Range(0f, 1f);
-            return counterRole <= counterChance;
+            var counterRoll = Random.Range(0f, 1f);
+            Debug.Log($"counterChance: {counterChance}, counterRoll: {counterRoll}");
+            return counterRoll <= counterChance;
         }
 
         private float ConvertEnumChanceIntoFloat(EnumChance enumChance) {

@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d354664c837fd3b47a9d2a9af1414bcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 27837ca4f7179e745a6d7184f77a4c72, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
   Id: 0
   Name: Galam Archer
+  IsForce: 0
   IsPromoted: 0
   PortraitSprite: {fileID: 0}
   AnimatorSprite: {fileID: 9100000, guid: 4ac651526a78c1147b02096911971bb9, type: 2}
@@ -26,18 +27,18 @@ MonoBehaviour:
   CharacterType: 17
   MovementType: 4
   CharStats:
-    Level: 3
+    Level: 1
     Exp: 0
-    CurrentHp: 15
+    CurrentHp: 10
     CurrentMp: 0
     Hp:
-      _baseValue: 15
+      _baseValue: 10
     Mp:
       _baseValue: 0
     Attack:
       _baseValue: 5
     Defense:
-      _baseValue: 10
+      _baseValue: 5
     Agility:
       _baseValue: 5
     Movement:
@@ -62,6 +63,14 @@ MonoBehaviour:
     Kills: 0
     Defeats: 0
   StatusEffects: 0
+  StatusImmunities: 0
+  ElementalWeakness: 0
+  ElementalResistance: 0
+  CritDamageMultiplier: 1.5
+  CritChance: 2
+  CounterChance: 1
+  DoubleAttackChance: 1
+  DodgeBaseChance: 1
   CharacterInventory:
   - item1: {fileID: 11400000, guid: c1a5f684f034fa9469addae07e1f101d, type: 2}
     item2: 1
@@ -80,3 +89,4 @@ MonoBehaviour:
     item2: 0
   - item1: {fileID: 0}
     item2: 0
+  Gold: 50

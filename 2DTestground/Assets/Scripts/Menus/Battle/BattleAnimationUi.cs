@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using Assets.Enums;
 using Assets.Scripts.Battle;
-using Assets.Scripts.Battle.AI;
+using Assets.Scripts.CameraScripts;
 using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData;
-using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -14,13 +14,16 @@ using Random = UnityEngine.Random;
 namespace Assets.Scripts.Menus.Battle {
     public class BattleAnimationUi : MonoBehaviour {
 
+        public Texture2D _dissolveTexture2D;
+
         private Image _backgroundImage;
         private Image _blackVoid;
         private Image _platformImage;
         private Transform _forceUnitSpawn;
         private Transform _enemyUnitSpawn;
-        private Animator _spellAnimator;
+        private Transform _spellSpawn;
 
+        private Animator _spellAnimator;
         private Animator _targetAnimator;
         private Animator _attackerAnimator;
 
@@ -36,6 +39,7 @@ namespace Assets.Scripts.Menus.Battle {
 
         private bool _isAttackerForceUnit;
         private bool _unitsAreOpponents;
+        private bool _spellIsTriggered;
 
         public static BattleAnimationUi Instance;
 
@@ -51,7 +55,7 @@ namespace Assets.Scripts.Menus.Battle {
             _platformImage = transform.Find("Force/Platform").GetComponent<Image>();
             _forceUnitSpawn = transform.Find("Force/Character").GetComponent<Transform>();
             _enemyUnitSpawn = transform.Find("Enemy/Character").GetComponent<Transform>();
-            _spellAnimator = transform.Find("SpellAnimator").GetComponent<Animator>();
+            _spellSpawn = transform.Find("SpellAnimator").GetComponent<Transform>();
         }
 
         // Start is called before the first frame update
@@ -73,37 +77,18 @@ namespace Assets.Scripts.Menus.Battle {
 
         public void Load(bool isAttackerForceUnit, bool unitsAreOpponents, Unit attacker, Unit target) {
             gameObject.SetActive(true);
-            _spellAnimator.runtimeAnimatorController = null;
+            _spellAnimator = null;
+            _spellIsTriggered = false;
             FlipToNormal(_enemyUnitSpawn);
             FlipToNormal(_forceUnitSpawn);
-            var targetPrefab = Resources.Load<GameObject>(target.GetCharacter().GetBattleAnimationPath());
-            var attackerPrefab = Resources.Load<GameObject>(attacker.GetCharacter().GetBattleAnimationPath());
+            FlipToNormal(_spellSpawn);
 
             _isAttackerForceUnit = isAttackerForceUnit;
             _unitsAreOpponents = unitsAreOpponents;
-            _spawnedTarget = Instantiate(targetPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            _spawnedAttacker = Instantiate(attackerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            _attackImage = _spawnedAttacker.transform.Find("Character").GetComponent<Image>();
-            _targetImage = _spawnedTarget.transform.Find("Character").GetComponent<Image>();
-            if (isAttackerForceUnit) {
-                _quickInfo.ShowQuickInfo(attacker.GetCharacter());
-                _quickInfoUiTarget.ShowQuickInfo(target.GetCharacter());
-                _spawnedAttacker.transform.SetParent(_forceUnitSpawn, false);
-                _spawnedTarget.transform.SetParent(_enemyUnitSpawn, false);
-            } else {
-                _quickInfo.ShowQuickInfo(target.GetCharacter());
-                _quickInfoUiTarget.ShowQuickInfo(attacker.GetCharacter());
-                _spawnedTarget.transform.SetParent(_forceUnitSpawn, false);
-                _spawnedAttacker.transform.SetParent(_enemyUnitSpawn, false);
-            }
 
-            SetWeapon(_spawnedAttacker, attacker.GetCharacter());
-            SetWeapon(_spawnedTarget, target.GetCharacter());
-            SetTexture2D(_attackImage, attacker.GetCharacter(), out _attackerTexture2D);
-            SetTexture2D(_targetImage, target.GetCharacter(), out _targetTexture2D);
-
-            _attackerAnimator = _spawnedAttacker.GetComponent<Animator>();
-            _targetAnimator = _spawnedTarget.GetComponent<Animator>();
+            InitializeAnimationObjects(out _spawnedAttacker, out _attackImage, attacker, !_isAttackerForceUnit, true);
+            InitializeAnimationObjects(out _spawnedTarget, out _targetImage, target, _isAttackerForceUnit, false);
+            
             _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
             _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
 
@@ -111,34 +96,64 @@ namespace Assets.Scripts.Menus.Battle {
                 Flip(isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn);
             }
 
+            if (attacker == target) {
+                _targetImage.color = Constants.Invisible;
+                var image = _spawnedTarget.transform.Find("weapon").GetComponent<Image>();
+                image.color = Constants.Invisible;
+            }
+
             StartCoroutine(DelayedUpdate(0.1f));
         }
 
-        public void DoAttackAnimation(bool isDodge, bool isKill, RuntimeAnimatorController spellAnimatorController) {
-            if (spellAnimatorController != null) {
-                _spellAnimator.runtimeAnimatorController = spellAnimatorController;
-                _spellAnimator.SetInteger("spellAnimation", 0);
+        public void DoAttackAnimation(bool isDodge, bool isKill, string spellPath, EnumMagicType? magicAttackType) {
+            if (!_spellIsTriggered) {
+                _spellIsTriggered = true;
+                if (!string.IsNullOrEmpty(spellPath)) {
+                    var spellPrefab = Resources.Load<GameObject>(spellPath);
+                    if (spellPrefab != null) {
+                        var spellInstance = Instantiate(spellPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        spellInstance.transform.SetParent(_spellSpawn, false);
+                        _spellAnimator = spellInstance.GetComponent<Animator>();
+                        if (!_isAttackerForceUnit) {
+                            Flip(_spellSpawn);
+                            if (_unitsAreOpponents) {
+                                spellInstance.transform.Translate(0,-50,0);
+                            }
+                        }
+                    } else {
+                        Debug.LogError($"{spellPath} was not a valid prefab path!");
+                    }
+                }
             }
             _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Attack);
             if (isDodge) {
                 _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Dodge);
-            } else {
-                //TODO Damage wiggle
+            }
+
+            var isAttack = magicAttackType == null || magicAttackType == EnumMagicType.Damage;
+            if (!isDodge && isAttack) {
+                var clip = _attackerAnimator.runtimeAnimatorController.animationClips.SingleOrDefault(x => x.name.Contains("Attack"));
+                var length = clip != null ? clip.length : 0.5f;
+                StartCoroutine(DelayHitAnimations(isKill, _spawnedTarget, length - 0.15f));
             }
             StartCoroutine(DelayedUpdate(0.5f));
         }
 
         public void DoCounterAnimation(bool isDodge, bool isKill) {
             _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Attack);
+            _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
             if (isDodge) {
                 _attackerAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Dodge);
-            } else {
-                //TODO Damage wiggle
+            }
+            if (!isDodge) {
+                var clip = _targetAnimator.runtimeAnimatorController.animationClips.SingleOrDefault(x => x.name.Contains("Attack"));
+                var length = clip != null ? clip.length : 0.5f;
+                StartCoroutine(DelayHitAnimations(isKill, _spawnedTarget, length - 0.15f));
             }
             StartCoroutine(DelayedUpdate(0.5f));
         }
 
-        public void Transition(Unit nextTarget) {
+        public void Transition(Unit nextTarget, bool isAttacker) {
             //TODO transition
             if (_isAttackerForceUnit) {
                 foreach (Transform transform in _enemyUnitSpawn) {
@@ -151,37 +166,69 @@ namespace Assets.Scripts.Menus.Battle {
                 }
                 _quickInfo.ShowQuickInfo(nextTarget.GetCharacter());
             }
-            var targetPrefab = Resources.Load<GameObject>(nextTarget.GetCharacter().GetBattleAnimationPath());
-            _spawnedTarget = Instantiate(targetPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            _targetImage = _spawnedTarget.transform.Find("Character").GetComponent<Image>();
-            if (_isAttackerForceUnit) {
-                _spawnedTarget.transform.SetParent(_enemyUnitSpawn, false);
-            } else {
-                _spawnedTarget.transform.SetParent(_forceUnitSpawn, false);
-            }
-
-            SetWeapon(_spawnedTarget, nextTarget.GetCharacter());
-            SetTexture2D(_targetImage, nextTarget.GetCharacter(), out _targetTexture2D);
-
-            _targetAnimator = _spawnedTarget.GetComponent<Animator>();
+            InitializeAnimationObjects(out _spawnedTarget, out _targetImage, nextTarget, _isAttackerForceUnit, false);
+            
             _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
 
             if (!_unitsAreOpponents) {
                 Flip(_isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn);
             }
+
+            if (isAttacker) {
+                _targetImage.color = Constants.Invisible;
+                var image = _spawnedTarget.transform.Find("weapon").GetComponent<Image>();
+                image.color = Constants.Invisible;
+            }
+
             StartCoroutine(DelayedUpdate(0.1f));
         }
 
+        public void StopAttackAnimation() {
+            _spellAnimator?.SetBool("EndAnimation", true);
+            _targetAnimator?.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
+            _attackerAnimator?.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
+        }
+
         public void EndAttackAnimation() {
-            foreach (Transform transform in _forceUnitSpawn) {
-                Destroy(transform.gameObject);
+            foreach (Transform transformObject in _forceUnitSpawn) {
+                Destroy(transformObject.gameObject);
             }
-            foreach (Transform transform in _enemyUnitSpawn) {
-                Destroy(transform.gameObject);
+            foreach (Transform transformObject in _enemyUnitSpawn) {
+                Destroy(transformObject.gameObject);
+            }
+            foreach (Transform transformObject in _spellSpawn) {
+                Destroy(transformObject.gameObject);
             }
             _quickInfo.CloseQuickInfo();
             _quickInfoUiTarget.CloseQuickInfo();
             gameObject.SetActive(false);
+        }
+
+        private void InitializeAnimationObjects(out GameObject spawn, out Image image, Unit unit, bool isLeft, bool isAttacker) {
+            var prefab = Resources.Load<GameObject>(unit.GetCharacter().GetBattleAnimationPath());
+            spawn = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            image = spawn.transform.Find("Character").GetComponent<Image>();
+            if (isLeft) {
+                _quickInfoUiTarget.ShowQuickInfo(unit.GetCharacter());
+                spawn.transform.SetParent(_enemyUnitSpawn, false);
+            } else {
+                _quickInfo.ShowQuickInfo(unit.GetCharacter());
+                spawn.transform.SetParent(_forceUnitSpawn, false);
+            }
+
+            if (unit.GetCharacter().IsForce) {
+                spawn.transform.Translate(0, -50, 0);
+            }
+
+            SetWeapon(spawn, unit.GetCharacter());
+
+            if (isAttacker) {
+                SetTexture2D(image, unit.GetCharacter(), out _attackerTexture2D);
+                _attackerAnimator = spawn.GetComponent<Animator>();
+            } else {
+                SetTexture2D(image, unit.GetCharacter(), out _targetTexture2D);
+                _targetAnimator = spawn.GetComponent<Animator>();
+            }
         }
 
         private void SetWeapon(GameObject battleAnimation, Character character) {
@@ -240,6 +287,57 @@ namespace Assets.Scripts.Menus.Battle {
             yield return new WaitForSeconds(seconds);
             _quickInfo.UpdateInfo();
             _quickInfoUiTarget.UpdateInfo();
+        }
+
+        IEnumerator FlashAndWiggle(bool isKill, GameObject target) {
+            var targetTransform = target.transform.Find("Character");
+            var targetImage = target.transform.Find("Character").GetComponent<Image>();
+            var weaponImage = target.transform.Find("weapon").GetComponent<Image>();
+            var originalPos = targetTransform.transform.localPosition;
+            var elapsed = 0.0f;
+            var guiTextMaterial = new Material(Shader.Find("GUI/Text Shader"));
+            var normalMaterial = targetImage.material;
+ 
+            targetImage.material = guiTextMaterial;
+            targetImage.color = Color.white;
+
+            while (elapsed < 0.15f) {
+                targetImage.material = weaponImage.material = guiTextMaterial;
+                targetImage.color = weaponImage.color = Color.white;
+                var x = Random.Range(-1f, 1f) * 5f;
+                var y = Random.Range(-1f, 1f) * 5f;
+                targetTransform.transform.localPosition = new Vector3(x, y, 0);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            targetImage.material = weaponImage.material = normalMaterial;
+            targetImage.color = weaponImage.color = Color.white;
+            if (isKill) {
+                StartCoroutine(DissolveImage(targetImage, weaponImage));
+            }
+            targetTransform.transform.localPosition = originalPos;
+        }
+
+        IEnumerator DissolveImage(Image targetImage, Image weaponImage) {
+            var _swapShader = Shader.Find("Hidden/Dissolve");
+            var _newMat = new Material(_swapShader);
+            targetImage.material = weaponImage.material = _newMat;
+            targetImage.material.SetTexture("_DissolveTex", _dissolveTexture2D);
+            weaponImage.material.SetTexture("_DissolveTex", _dissolveTexture2D);
+            var dissolve = 0f;
+            while (dissolve < 1) {
+                dissolve += 0.005f;
+                targetImage.material.SetFloat("_Threshold", dissolve);
+                weaponImage.material.SetFloat("_Threshold", dissolve);
+                yield return null;
+            }
+
+        }
+
+        IEnumerator DelayHitAnimations(bool isKill, GameObject target, float seconds) {
+            yield return new WaitForSeconds(seconds);
+            StartCoroutine(FlashAndWiggle(isKill, target));
+            
         }
     }
 }

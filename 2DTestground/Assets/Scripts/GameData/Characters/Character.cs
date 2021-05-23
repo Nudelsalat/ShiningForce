@@ -8,7 +8,6 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[CreateAssetMenu(fileName = "Monster", menuName = "Character/new Monster")]
 public class Character : ScriptableObject {
     public int Id;
     public string Name;

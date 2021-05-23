@@ -30,6 +30,7 @@ public class QuickInfoUi : MonoBehaviour
     private readonly int _uiMaxSize = 530;
     private readonly int _uiSizeHealthBarDifference = 210;
     private readonly float _uiSizePerPoint = 5.3f;
+    private readonly float _uiSizePerLetter = 14f;
 
 
     public static QuickInfoUi Instance;
@@ -73,7 +74,8 @@ public class QuickInfoUi : MonoBehaviour
             ? stats.MaxHp()
             : stats.MaxMp();
         maxValue *= _uiSizePerPoint;
-
+        var maxValueDueToName = (character.Name.Length * (_uiSizePerLetter+1));
+        maxValue = Math.Max(maxValue, maxValueDueToName);
         if (maxValue >= _uiMaxSize) {
             maxValue = _uiMaxSize;
         } else if (maxValue <= _uiMinSize) {
