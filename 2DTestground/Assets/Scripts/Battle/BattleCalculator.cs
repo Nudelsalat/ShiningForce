@@ -70,6 +70,117 @@ namespace Assets.Scripts.Battle {
             return counterRoll <= counterChance;
         }
 
+        public int GetModifiedDamageBasedOnElement(ref int damage, EnumElementType magicElement, Character character) {
+            switch (magicElement) {
+                case EnumElementType.Fire:
+                    switch (character.ElementalResistance) {
+                        case EnumElementalResistanceWeakness.Fire25:
+                            damage =  (int)(damage * 0.75f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Fire50:
+                            damage = (int)(damage * 0.5f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Fire75:
+                            damage = (int)(damage * 0.25f);
+                            return 1;
+                        default:
+                            switch (character.ElementalWeakness) {
+                                case EnumElementalResistanceWeakness.Fire25:
+                                    damage = (int)(damage * 1.25f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Fire50:
+                                    damage = (int)(damage * 1.5f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Fire75:
+                                    damage = (int)(damage * 1.75f);
+                                    return 2;
+                                default:
+                                    return 0;
+                            }
+                    }
+                case EnumElementType.Ice:
+                    switch (character.ElementalResistance) {
+                        case EnumElementalResistanceWeakness.Cold25:
+                            damage = (int)(damage * 0.75f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Cold50:
+                            damage = (int)(damage * 0.5f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Cold75:
+                            damage = (int)(damage * 0.25f);
+                            return 1;
+                        default:
+                            switch (character.ElementalWeakness) {
+                                case EnumElementalResistanceWeakness.Cold25:
+                                    damage = (int)(damage * 1.25f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Cold50:
+                                    damage = (int)(damage * 1.5f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Cold75:
+                                    damage = (int)(damage * 1.75f);
+                                    return 2;
+                                default:
+                                    return 0;
+                            }
+                    }
+                case EnumElementType.Wind:
+                    switch (character.ElementalResistance) {
+                        case EnumElementalResistanceWeakness.Wind25:
+                            damage = (int)(damage * 0.75f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Wind50:
+                            damage = (int)(damage * 0.5f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Wind75:
+                            damage = (int)(damage * 0.25f);
+                            return 1;
+                        default:
+                            switch (character.ElementalWeakness) {
+                                case EnumElementalResistanceWeakness.Wind25:
+                                    damage = (int)(damage * 1.25f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Wind50:
+                                    damage = (int)(damage * 1.5f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Wind75:
+                                    damage = (int)(damage * 1.75f);
+                                    return 2;
+                                default:
+                                    return 0;
+                            }
+                    }
+                case EnumElementType.Lightning:
+                    switch (character.ElementalResistance) {
+                        case EnumElementalResistanceWeakness.Bolt25:
+                            damage = (int)(damage * 0.75f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Bolt50:
+                            damage = (int)(damage * 0.5f);
+                            return 1;
+                        case EnumElementalResistanceWeakness.Bolt75:
+                            damage = (int)(damage * 0.25f);
+                            return 1;
+                        default:
+                            switch (character.ElementalWeakness) {
+                                case EnumElementalResistanceWeakness.Bolt25:
+                                    damage = (int)(damage * 1.25f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Bolt50:
+                                    damage = (int)(damage * 1.5f);
+                                    return 2;
+                                case EnumElementalResistanceWeakness.Bolt75:
+                                    damage = (int)(damage * 1.75f);
+                                    return 2;
+                                default:
+                                    return 0;
+                            }
+                    }
+                default:
+                    return 0;
+            }
+        }
+
         private float ConvertEnumChanceIntoFloat(EnumChance enumChance) {
             float chance;
             switch (enumChance) {

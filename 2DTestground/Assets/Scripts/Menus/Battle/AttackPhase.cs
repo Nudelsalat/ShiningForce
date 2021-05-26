@@ -299,7 +299,8 @@ namespace Assets.Scripts.Menus.Battle {
         private int ExecuteMagicAttack() {
             var caster = _attacker.GetCharacter();
             var magicLevel = _attackOption.GetMagicLevel();
-            var damage = _attackOption.GetMagic().Damage[magicLevel - 1];
+            var magic = _attackOption.GetMagic();
+            var damage = magic.Damage[magicLevel - 1];
             var levelBoost = caster.CharStats.Level / 100f;
             damage = caster.IsPromoted ? (int) (damage * (1.25f + levelBoost)) : (int) (damage * (1.0f + levelBoost));
             var expScore = 0;
@@ -310,26 +311,22 @@ namespace Assets.Scripts.Menus.Battle {
             var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
 
             var critString = "";
-            /*
-            var isCrit = _battleCalculator.RollForCrit(caster);
-            //TODO is elemental resistance vulnerability?
-            if (isCrit) {
-                damage = _battleCalculator.GetCritDamage(caster, damage);
-                critString = "Critical hit!\n";
-            }*/
+
+            var wasResistantWeak = _battleCalculator.GetModifiedDamageBasedOnElement(ref damage, magic.ElementType, _nextTarget.GetCharacter());
 
             switch (_attackOption.GetMagic().MagicType) {
                 case EnumMagicType.Damage:
-                    _sentences.Add(
-                        $"{critString}{target.Name.AddColor(Constants.Orange)} suffered {damage} " +
-                        $"points of damage.");
+                    var resistantWeakSentence = wasResistantWeak == 1 ? $"\nIt was not very effective..." :
+                        wasResistantWeak == 2 ? $"\nIt was very effective!!!" : "";
+                    var damageSentence = $"{critString}{target.Name.AddColor(Constants.Orange)} suffered {damage} " +
+                                         $"points of damage.{resistantWeakSentence}";
+                    _sentences.Add(damageSentence);
                     if (target.CharStats.CurrentHp <= damage) {
                         _sentences.Add($"{target.Name.AddColor(Constants.Orange)}" +
                                      $" was defeated!");
                         target.CharStats.CurrentHp = 0;
                         _unitsKilled.Add(_nextTarget);
-                        expScore += (int) ((expBase * (float) damage / target.CharStats.MaxHp()) +
-                                           expBase);
+                        expScore += (int) ((expBase * (float) damage / target.CharStats.MaxHp()) + expBase);
                     }
                     else {
                         target.CharStats.CurrentHp -= damage;
@@ -376,10 +373,10 @@ namespace Assets.Scripts.Menus.Battle {
                     diff = target.CharStats.MaxMp() -
                            target.CharStats.CurrentMp;
                     pointsToHeal = diff < damage ? diff : damage;
-                    target.CharStats.CurrentMp += damage;
+                    target.CharStats.CurrentMp += pointsToHeal;
                     _sentences.Add(
-                        $"{critString}{target.Name.AddColor(Constants.Orange)} healed {pointsToHeal} " +
-                        $"points.");
+                        $"{critString}{target.Name.AddColor(Constants.Orange)} restored {pointsToHeal} " +
+                        $"points of Mana.");
 
                     expPoints = 13 * (float) pointsToHeal / target.CharStats.MaxMp();
                     expScore += (int) expPoints;

@@ -35,7 +35,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blaze1_loop
+  m_Name: Loop
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -49,7 +49,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 123b963f05d83fb4bacc59a63770a8d6, type: 2}
+  m_Motion: {fileID: 7400000, guid: 52fe89ae90e88654bbd8ac624938eb73, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -137,7 +137,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blaze1_start
+  m_Name: Start
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1243d533dfebc334bbd397f52d8cde5f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9e13045e65b32f048a9d8b27cf54c6bc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -164,7 +164,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blaze1_end
+  m_Name: End
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -177,7 +177,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7cb83ed54ec54474cb663553409259a2, type: 2}
+  m_Motion: {fileID: 7400000, guid: 2169dbb46e3200d4482135a9bfac7322, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -34,9 +34,9 @@ TagManager:
   - Force
   - Enemies
   - BattleMovement
-  - StairCollider
+  - StairColliderLeftUp
+  - StairColliderRightUP
   - Terrain
-  - 
   - 
   - 
   - 

@@ -65,7 +65,7 @@ MonoBehaviour:
   StatusEffects: 0
   StatusImmunities: 0
   ElementalWeakness: 0
-  ElementalResistance: 0
+  ElementalResistance: 1
   CritDamageMultiplier: 1.25
   CritChance: 2
   CounterChance: 1

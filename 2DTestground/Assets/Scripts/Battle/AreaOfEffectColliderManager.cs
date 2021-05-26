@@ -9,10 +9,6 @@ using UnityEngine;
 namespace Assets.Scripts.Battle {
     public class AreaOfEffectColliderManager : MonoBehaviour {
         private List<Collider2D> _triggerList = new List<Collider2D>();
-        private LayerMask _layerMask;
-
-        void Start() {
-        }
 
         public List<Collider2D> GetAllCurrentCollider(LayerMask layerMask) {
             var result = _triggerList.Where(x => layerMask == (layerMask | 1<<x.gameObject.layer));

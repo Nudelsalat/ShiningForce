@@ -30,11 +30,11 @@ MonoBehaviour:
     Level: 1
     Exp: 0
     CurrentHp: 12
-    CurrentMp: 8
+    CurrentMp: 25
     Hp:
       _baseValue: 12
     Mp:
-      _baseValue: 8
+      _baseValue: 25
     Attack:
       _baseValue: 6
     Defense:
@@ -84,9 +84,9 @@ MonoBehaviour:
   - item1: {fileID: 11400000, guid: a77685e2d14c87c47b7b8c07d59e0b32, type: 2}
     item2: 1
   - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
-    item2: 3
-  - item1: {fileID: 0}
-    item2: 0
+    item2: 4
+  - item1: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
+    item2: 4
   - item1: {fileID: 0}
     item2: 0
   partyLeader: 1

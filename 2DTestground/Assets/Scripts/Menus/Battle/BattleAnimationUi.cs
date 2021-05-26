@@ -3,10 +3,8 @@ using System.Collections;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.Battle;
-using Assets.Scripts.CameraScripts;
 using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -14,7 +12,7 @@ using Random = UnityEngine.Random;
 namespace Assets.Scripts.Menus.Battle {
     public class BattleAnimationUi : MonoBehaviour {
 
-        public Texture2D _dissolveTexture2D;
+        public Texture2D DissolveTexture2D;
 
         private Image _backgroundImage;
         private Image _blackVoid;
@@ -322,8 +320,8 @@ namespace Assets.Scripts.Menus.Battle {
             var _swapShader = Shader.Find("Hidden/Dissolve");
             var _newMat = new Material(_swapShader);
             targetImage.material = weaponImage.material = _newMat;
-            targetImage.material.SetTexture("_DissolveTex", _dissolveTexture2D);
-            weaponImage.material.SetTexture("_DissolveTex", _dissolveTexture2D);
+            targetImage.material.SetTexture("_DissolveTex", DissolveTexture2D);
+            weaponImage.material.SetTexture("_DissolveTex", DissolveTexture2D);
             var dissolve = 0f;
             while (dissolve < 1) {
                 dissolve += 0.005f;

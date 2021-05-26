@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using Assets.Enums;
 using Assets.Scripts.Battle.AI;
+using Assets.Scripts.Battle.WinLoseCondition;
 using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
@@ -22,6 +24,7 @@ namespace Assets.Scripts.Battle {
         private Vector3 _originalPosition;
         private LinkedList<Vector3> _linkedListTargetUnits;
         private LinkedListNode<Vector3> _llNodeCurrentTarget;
+        private List<WinLoseConditionBase> _winLoseConditions;
 
         private RuntimeAnimatorController _animatorAttackButton;
         private RuntimeAnimatorController _animatorMagicButton;
@@ -53,7 +56,7 @@ namespace Assets.Scripts.Battle {
         private MovementGrid _movementGrid;
         private Cursor _cursor;
         private Player _player;
-        private OverviewCameraMovement _overviewCameraMovment;
+        private OverviewCameraMovement _overviewCameraMovement;
         private FourWayButtonMenu _fourWayButtonMenu;
         private FourWayMagicMenu _fourWayMagicMenu;
         private QuickStats _quickStats;
@@ -108,7 +111,7 @@ namespace Assets.Scripts.Battle {
             _fourWayMagicMenu = FourWayMagicMenu.Instance;
             _dialogManager = DialogManager.Instance;
             _player = Player.Instance;
-            _overviewCameraMovment = OverviewCameraMovement.Instance;
+            _overviewCameraMovement = OverviewCameraMovement.Instance;
             _characterDetailUI = CharacterDetailUI.Instance;
             _menu = Menu.Instance;
             _inventory = Inventory.Instance;
@@ -121,6 +124,7 @@ namespace Assets.Scripts.Battle {
         }
 
         public void BeginBattle() {
+            LoadBattleData();
             _battleHasEnded = false;
             _menu.ObjectMenu.SetActive(false);
             _player?.gameObject.SetActive(false);
@@ -133,7 +137,7 @@ namespace Assets.Scripts.Battle {
             _cursor.BeginBattle(_terrainTileMap);
             IsActive = true;
 
-            _overviewCameraMovment.SetPlayerObject(_cursor.gameObject);
+            _overviewCameraMovement.SetPlayerObject(_cursor.gameObject);
             _currentBattleState = EnumBattleState.freeCursor;
             transform.gameObject.SetActive(true);
             var force = GameObject.Find("Force").transform;
@@ -179,7 +183,7 @@ namespace Assets.Scripts.Battle {
             _cursor.EndBattle();
             _player.gameObject.SetActive(true);
             _cursor.gameObject.SetActive(false);
-            _overviewCameraMovment.SetPlayerObject(_player.gameObject);
+            _overviewCameraMovement.SetPlayerObject(_player.gameObject);
 
             gameObject.SetActive(false);
         }
@@ -193,6 +197,9 @@ namespace Assets.Scripts.Battle {
         }
 
         private void NextUnit() {
+            if (CheckEndCondition()) {
+                _battleHasEnded = true;
+            }
             _nextUnit = false;
             _currentUnit?.SetAnimatorDirection(DirectionType.down);
             _enumCurrentMenuType = EnumCurrentBattleMenu.none;
@@ -870,6 +877,35 @@ namespace Assets.Scripts.Battle {
                 healthBar.transform.SetParent(_healthBars);
                 healthBar.SetTarget(forceUnit);
             }
+        }
+
+        private void LoadBattleData() {
+            var battleData = GameObject.Find("BattleData");
+            if (battleData) {
+                var winLoseCondition = battleData.transform.Find("WinLoseCondition");
+                if (winLoseCondition) {
+                    _winLoseConditions = winLoseCondition.GetComponents<WinLoseConditionBase>().ToList();
+                    if (_winLoseConditions.Count > 0) {
+                        return;
+                    }
+                }
+            }
+            LoadFallbackBattleData();
+        }
+
+        private void LoadFallbackBattleData() {
+            _winLoseConditions = new List<WinLoseConditionBase>() {
+                new WinLoseConditionBase()
+            };
+        }
+
+        private bool CheckEndCondition() {
+            var endBattle = false;
+            foreach (var winLose in _winLoseConditions) {
+                endBattle |= winLose.CheckLoseCondition();
+                endBattle |= winLose.CheckWinCondition();
+            }
+            return endBattle;
         }
 
         private void GetInputDirection() {

@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
     public Transform MovePoint;
     public float MoveSpeed = 5f;
     public LayerMask Collider;
-    public LayerMask StairCollider;
+    public LayerMask StairColliderLeftUp;
+    public LayerMask StairColliderRightUp;
     public static bool IsInDialogue = false;
     public static bool InputDisabledInDialogue = false;
     public static bool InputDisabledInEvent = false;
@@ -92,10 +93,28 @@ public class Player : MonoBehaviour
             if (Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, 0f, 0f), .2f,
                 Collider)) {
                 return;
-            } else if (Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, 0f, 0f), .2f,
-                StairCollider)) {
-                MovePoint.position += new Vector3(_movement.x*2, 2f, 0f);
-                return;
+            } else if (Physics2D.OverlapCircle(MovePoint.position + new Vector3(0f, 0f, 0f), .2f,
+                StairColliderLeftUp)) {
+                if (_movement.x > 0 && Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, -1f, 0f),
+                        .2f, StairColliderLeftUp)) {
+                    MovePoint.position += new Vector3(_movement.x, -1f, 0f);
+                    return;
+                } else if (_movement.x < 0 && Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, 1f, 0f),
+                               .2f, StairColliderLeftUp)) {
+                    MovePoint.position += new Vector3(_movement.x, 1f, 0f);
+                    return;
+                }
+            } else if (Physics2D.OverlapCircle(MovePoint.position + new Vector3(0f, 0f, 0f), .2f,
+                StairColliderRightUp)) {
+                if (_movement.x > 0 && Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, 1f, 0f), 
+                        .2f, StairColliderRightUp)) {
+                    MovePoint.position += new Vector3(_movement.x, 1f, 0f);
+                    return;
+                } else if (_movement.x < 0 && Physics2D.OverlapCircle(MovePoint.position + new Vector3(_movement.x, -1f, 0f), 
+                               .2f, StairColliderRightUp)) {
+                    MovePoint.position += new Vector3(_movement.x, -1f, 0f);
+                    return;
+                }
             }
 
             MovePoint.position += new Vector3(_movement.x, 0f, 0f);

@@ -18,7 +18,7 @@ namespace Assets.Scripts.Battle.AI {
         private readonly Magic _magic;
         private readonly int _magicAttackLevel;
 
-        private readonly BattleCalculator _battleController = new BattleCalculator();
+        private readonly BattleCalculator _battleCalculator = new BattleCalculator();
 
         public AttackOption(List<Unit> listTargets, Vector3? attackPosition, Vector3? targetPosition, int attack, 
             Magic magicAttack = null, int magicAttackLevel = 0, EnumAreaOfEffect aoe = EnumAreaOfEffect.Single, 
@@ -156,7 +156,7 @@ namespace Assets.Scripts.Battle.AI {
             var score = 0f;
             foreach (var target in _listTargets) {
                 var landEffect = Cursor.Instance.GetLandEffect(target.transform.position);
-                var damage = _battleController.GetMaxDamage(_attack,
+                var damage = _battleCalculator.GetMaxDamage(_attack,
                     target.GetCharacter().CharStats.Defense.GetModifiedValue(), landEffect);
                 if (damage >= target.GetCharacter().CharStats.CurrentHp) {
                     score += 100;
@@ -168,12 +168,13 @@ namespace Assets.Scripts.Battle.AI {
 
         private float GetMagicDamageScore() {
             var score = 0f;
-            //TODO Elemental calc, promotion calc and level calc?
             foreach (var target in _listTargets) {
-                if (_attack >= target.GetCharacter().CharStats.CurrentHp) {
+                var damage = _attack;
+                _battleCalculator.GetModifiedDamageBasedOnElement(ref damage, _magic.ElementType, target.GetCharacter());
+                if (damage >= target.GetCharacter().CharStats.CurrentHp) {
                     score += 100;
                 }
-                score += (float)_attack / target.GetCharacter().CharStats.MaxHp();
+                score += (float)damage / target.GetCharacter().CharStats.MaxHp();
             }
             return score;
         }

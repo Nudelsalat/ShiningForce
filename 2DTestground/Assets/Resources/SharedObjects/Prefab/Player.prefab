@@ -240,9 +240,12 @@ MonoBehaviour:
   Collider:
     serializedVersion: 2
     m_Bits: 16384
-  StairCollider:
+  StairColliderLeftUp:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1048576
+  StairColliderRightUp:
+    serializedVersion: 2
+    m_Bits: 2097152
   _interactionSelector: {fileID: 2512733952207789208}
 --- !u!61 &2512733951962860677
 BoxCollider2D:
