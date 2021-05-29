@@ -111,10 +111,11 @@ namespace Assets.Scripts.Battle {
         }
 
         public void SetUnitFlicker() {
-            StartCoroutine(FlickerAnimator());
+            StartCoroutine("FlickerAnimator");
         }
+
         public void ClearUnitFlicker() {
-            StopAllCoroutines();
+            StopCoroutine("FlickerAnimator");
             _spriteRenderer.color = Constants.Visible;
         }
 
@@ -154,11 +155,11 @@ namespace Assets.Scripts.Battle {
                 yield return new WaitForSeconds(0.1f);
                 j++;
             }
-            _audioManager.PlaySFX(Constants.SfxExplosion);
+            _audioManager.Play(Constants.SfxExplosion, false, _audioManager.GetSFXVolume());
             var explosion = Instantiate(Resources.Load<GameObject>(Constants.PrefabExplosion), transform);
             _spriteRenderer.color = Constants.Invisible;
             yield return new WaitForSeconds(explosion.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length);
-            
+
             Destroy(explosion);
             Destroy(gameObject);
         }

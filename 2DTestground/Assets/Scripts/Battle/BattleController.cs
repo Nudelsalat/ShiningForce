@@ -8,6 +8,7 @@ using Assets.Scripts.Battle.WinLoseCondition;
 using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
+using Assets.Scripts.HelperScripts;
 using Assets.Scripts.Menus;
 using Assets.Scripts.Menus.Battle;
 using UnityEngine;
@@ -167,6 +168,7 @@ namespace Assets.Scripts.Battle {
 
         private void EndBattle() {
             HealWholeForce();
+            DestroyAllSprites();
             _nextUnit = false;
             Player.InputDisabledAiBattle = false;
 
@@ -178,6 +180,7 @@ namespace Assets.Scripts.Battle {
             _currentUnit = null;
             _menu.ObjectMenu.SetActive(false);
             IsActive = false;
+            _battleHasEnded = false;
             _fourWayButtonMenu.CloseButtons();
             _fourWayMagicMenu.CloseButtons();
             _cursor.EndBattle();
@@ -536,6 +539,7 @@ namespace Assets.Scripts.Battle {
                     _enumCurrentMenuType = EnumCurrentBattleMenu.attack;
                     _previousMenuTypeState = EnumCurrentBattleMenu.magic;
                 }
+                _fourWayMagicMenu.UnSetItemNameOrange();
             }
 
             if (Input.GetButtonUp("Back")) {
@@ -694,7 +698,13 @@ namespace Assets.Scripts.Battle {
 
         public void ExecuteAttack(AttackOption attackOption, EnumCurrentBattleMenu attackType) {
             _previousMenuTypeState = attackType;
-            var itemName = attackType == EnumCurrentBattleMenu.item ? _selectedItem.ItemName : "";
+            var itemName = "";
+            if (attackType == EnumCurrentBattleMenu.item) {
+                itemName = _selectedItem.ItemName;
+                if (_selectedItem is Consumable) {
+                    _currentUnit.GetCharacter().RemoveItem(_selectedItem);
+                }
+            }
             _attackPhase.ExecuteAttackPhase(attackType, attackOption, _currentUnit, itemName, false);
 
             _enumCurrentMenuType = EnumCurrentBattleMenu.none;
@@ -704,8 +714,22 @@ namespace Assets.Scripts.Battle {
         }
 
         private void HealWholeForce() {
+            var leaders = _inventory.GetParty().Where(x => x.partyLeader);
+            foreach (var leader in leaders) {
+                leader.StatusEffects = leader.StatusEffects.Remove(EnumStatusEffect.dead);
+                leader.FullyHeal();
+            }
             foreach (var unit in _force) {
                 unit.GetCharacter().FullyHeal();
+            }
+        }
+
+        private void DestroyAllSprites() {
+            foreach (var unit in _force) {
+                Destroy(unit.gameObject);
+            }
+            foreach (var unit in _enemies) {
+                Destroy(unit.gameObject);
             }
         }
 

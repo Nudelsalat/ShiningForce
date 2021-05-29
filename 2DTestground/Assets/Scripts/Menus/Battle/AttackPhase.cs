@@ -142,27 +142,28 @@ namespace Assets.Scripts.Menus.Battle {
                     if (isDodge) {
                         // isDodge, isKill, spellAnimation
                         _battleAnimationUi.DoCounterAnimation(isDodge, false);
-                        _sentences.Add($"{_nextTarget.GetCharacter().Name.AddColor(Constants.Orange)} dodged the attack!");
+                        _sentences.Add($"{_attacker.GetCharacter().Name.AddColor(Constants.Orange)} dodged the attack!");
                         _followUpState = _doubleAttack ? EnumAttackPhase.GetNextTarget : EnumAttackPhase.CheckDoubleAttack;
                         StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
                         break;
                     }
                     var counterExp = ExecuteRegularAttack(_nextTarget, _attacker);
-                    if (_isAttackerForceUnit) {
-                        if (_exp >= 50) {
+                    if (!_isAttackerForceUnit) {
+                        if (counterExp >= 50) {
                             counterExp = 49;
                         } else if (counterExp <= 0) {
                             counterExp = 1;
                         }
                         _sentences.AddRange(_nextTarget.GetCharacter().AddExp(counterExp));
                     }
-                    isKilled = _unitsKilled.Contains(_nextTarget);
+                    isKilled = _unitsKilled.Contains(_attacker);
                     _battleAnimationUi.DoCounterAnimation(false, isKilled);
                     if (isKilled) {
                         _followUpState = EnumAttackPhase.EndAttackPhase;
-                        _battleAnimationUi.StopAttackAnimation();
+                        StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
+                        return;
                     }
-                    _followUpState = EnumAttackPhase.CheckCounter;
+                    _followUpState = _doubleAttack ? EnumAttackPhase.GetNextTarget : EnumAttackPhase.CheckDoubleAttack;
                     StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
                     break;
 

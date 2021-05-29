@@ -16,7 +16,6 @@ namespace Assets.Scripts.Menus.Battle {
 
         private Image _backgroundImage;
         private Image _blackVoid;
-        private Image _platformImage;
         private Transform _forceUnitSpawn;
         private Transform _enemyUnitSpawn;
         private Transform _spellSpawn;
@@ -50,7 +49,6 @@ namespace Assets.Scripts.Menus.Battle {
             }
             _blackVoid = transform.Find("Blackvoid").GetComponent<Image>();
             _backgroundImage = transform.Find("Background").GetComponent<Image>();
-            _platformImage = transform.Find("Force/Platform").GetComponent<Image>();
             _forceUnitSpawn = transform.Find("Force/Character").GetComponent<Transform>();
             _enemyUnitSpawn = transform.Find("Enemy/Character").GetComponent<Transform>();
             _spellSpawn = transform.Find("SpellAnimator").GetComponent<Transform>();
@@ -146,7 +144,7 @@ namespace Assets.Scripts.Menus.Battle {
             if (!isDodge) {
                 var clip = _targetAnimator.runtimeAnimatorController.animationClips.SingleOrDefault(x => x.name.Contains("Attack"));
                 var length = clip != null ? clip.length : 0.5f;
-                StartCoroutine(DelayHitAnimations(isKill, _spawnedTarget, length - 0.15f));
+                StartCoroutine(DelayHitAnimations(isKill, _spawnedAttacker, length - 0.15f));
             }
             StartCoroutine(DelayedUpdate(0.5f));
         }

@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour  {
     private readonly List<SoundFile> _sfxFiles = new List<SoundFile>();
 
     private readonly List<SoundFile> _pausedSoundFiles = new List<SoundFile>();
-    private float _volume = 0.2f;
+    private float _volume = 0.6f;
     private float _SFXvolume = 0.6f;
     private AudioSource _audioSource;
 
@@ -66,8 +66,6 @@ public class AudioManager : MonoBehaviour  {
             Loop = false,
             Pitch = 1,
         });
-
-        
     }
 
     private void Start() {
@@ -108,7 +106,7 @@ public class AudioManager : MonoBehaviour  {
     /// <summary>
     ///     Play the given audio file.
     /// </summary>
-    public float Play(string soundFileName, bool loop = true) {
+    public float Play(string soundFileName, bool loop = true, float playWithVolume = 0f) {
         var soundFile = Array.Find(SoundFiles, sound => sound.Name.Equals(soundFileName, StringComparison.OrdinalIgnoreCase));
 
         if (soundFile == null) {
@@ -116,10 +114,8 @@ public class AudioManager : MonoBehaviour  {
             return 0f;
         }
 
-
         soundFile.AudioSource.loop = loop;
-        //TODO need to change the volume of the Themes... way to loud
-        //soundFile.AudioSource.volume = _volume;
+        soundFile.AudioSource.volume = playWithVolume > 0 ? soundFile.Volume *= playWithVolume : soundFile.Volume *= _volume;
         soundFile.AudioSource.Play();
         return soundFile.AudioClip.length;
     }
@@ -214,5 +210,13 @@ public class AudioManager : MonoBehaviour  {
             file.AudioSource.UnPause();
         }
         _pausedSoundFiles.Clear();
+    }
+
+    public float GetSFXVolume() {
+        return _SFXvolume;
+    }
+
+    public float GetMasterVolume() {
+        return _volume;
     }
 }
