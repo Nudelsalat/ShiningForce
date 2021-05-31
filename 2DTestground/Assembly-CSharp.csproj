@@ -193,6 +193,7 @@
     <Compile Include="Assets\Scripts\Battle\AI\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\HelperScripts\EnumerationExtensions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Scripts\Battle\LandEffectBackgroundMap.cs" />
     <Compile Include="Assets\Scripts\TownAI\Merchant.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\GameData\Characters\PartyMember.cs" />

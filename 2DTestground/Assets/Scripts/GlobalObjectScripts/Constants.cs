@@ -100,6 +100,8 @@ public class Constants {
     public static string SfxError = "error";
     public static string SoundExplosion = "ShiningForce/sounds/smallexplosion";
     public static string SfxExplosion = "explosion";
+    public static string SoundHit = "ShiningForce/sounds/hit";
+    public static string SfxHit = "hit";
 
 
     public static string AudioMovement = "movement";

@@ -329,18 +329,29 @@ namespace Assets.Scripts.Battle.AI {
                 if (anotherEnemyUnit != null && anotherEnemyUnit != _currentUnit) {
                     continue;
                 }
-                var moveOption = _movementGrid.GetMovementPointsAreaOfEffect(
+                var attackPoints = _movementGrid.GetMovementPointsAreaOfEffect(
                     movementSquare, attackRange).ToList();
-                var moveOption2 = moveOption.Select(x => {
+                var attackPointsWithOffset = attackPoints.Select(x => {
                     var vector3 = new Vector3 {
                         x = x.x + 0.5f,
                         y = x.y + 0.5f
                     };
                     return vector3;
                 }).ToList();
-                foreach (var vector3 in moveOption2) {
-                    // AttackOption already checked.
+                foreach (var vector3 in attackPointsWithOffset) {
+                    // AttackOption already checked. But better positioning?
                     if (attackOptionsDict.ContainsKey(vector3)) {
+                        attackOptionsDict.TryGetValue(vector3, out var currentAttackOption);
+                        var currentAttackPosition = currentAttackOption?.GetAttackPosition();
+                        if (currentAttackPosition != null) {
+                            var currentLandEffect =
+                                _cursor.GetLandEffect((Vector3)currentAttackPosition);
+                            var newLandEffect = _cursor.GetLandEffect(movementSquare);
+                            if (newLandEffect > currentLandEffect) {
+                                currentAttackOption.SetAttackPosition(movementSquare);
+                                attackOptionsDict[vector3] = currentAttackOption;
+                            }
+                        }
                         continue;
                     } 
                     if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, target)) {

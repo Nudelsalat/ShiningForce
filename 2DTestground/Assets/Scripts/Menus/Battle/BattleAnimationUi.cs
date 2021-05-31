@@ -26,7 +26,11 @@ namespace Assets.Scripts.Menus.Battle {
 
         private QuickInfoUi _quickInfo;
         private QuickInfoUiTarget _quickInfoUiTarget;
+        private AudioManager _audioManager;
+        private LandEffectBackgroundMap _backgroundMap;
+        private Cursor _cursor;
 
+        private Unit _attacker;
         private GameObject _spawnedAttacker;
         private GameObject _spawnedTarget;
         private Image _attackImage;
@@ -59,6 +63,8 @@ namespace Assets.Scripts.Menus.Battle {
         {
             _quickInfo = QuickInfoUi.Instance;
             _quickInfoUiTarget = QuickInfoUiTarget.Instance;
+            _audioManager = AudioManager.Instance;
+            _cursor = Cursor.Instance;
             gameObject.SetActive(false);
         }
 
@@ -72,7 +78,9 @@ namespace Assets.Scripts.Menus.Battle {
         }
 
         public void Load(bool isAttackerForceUnit, bool unitsAreOpponents, Unit attacker, Unit target) {
+            _backgroundMap = FindObjectOfType<LandEffectBackgroundMap>();
             gameObject.SetActive(true);
+            _attacker = attacker;
             _spellAnimator = null;
             _spellIsTriggered = false;
             FlipToNormal(_enemyUnitSpawn);
@@ -94,10 +102,17 @@ namespace Assets.Scripts.Menus.Battle {
 
             if (attacker == target) {
                 _targetImage.color = Constants.Invisible;
-                var image = _spawnedTarget.transform.Find("weapon").GetComponent<Image>();
-                image.color = Constants.Invisible;
+                var weaponImage = _spawnedTarget.transform.Find("weapon")?.GetComponent<Image>();
+                var platformImage = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
+                if (weaponImage) {
+                    weaponImage.color = Constants.Invisible;
+                }
+                if (platformImage) {
+                    platformImage.color = Constants.Invisible;
+                }
             }
 
+            LoadBackgroundsAndPlatforms(attacker, target);
             StartCoroutine(DelayedUpdate(0.1f));
         }
 
@@ -172,10 +187,17 @@ namespace Assets.Scripts.Menus.Battle {
 
             if (isAttacker) {
                 _targetImage.color = Constants.Invisible;
-                var image = _spawnedTarget.transform.Find("weapon").GetComponent<Image>();
-                image.color = Constants.Invisible;
+                var weaponImage = _spawnedTarget.transform.Find("weapon")?.GetComponent<Image>();
+                var platformImage = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
+                if (weaponImage) {
+                    weaponImage.color = Constants.Invisible;
+                }
+                if (platformImage) {
+                    platformImage.color = Constants.Invisible;
+                }
             }
-
+            
+            LoadBackgroundsAndPlatforms(_attacker, nextTarget);
             StartCoroutine(DelayedUpdate(0.1f));
         }
 
@@ -267,7 +289,52 @@ namespace Assets.Scripts.Menus.Battle {
             }
             target = PaletteSwapNoShader.CopyTexture2D(battleImage.sprite.texture, colorPalette, skinId);
         }
-        
+
+        private void LoadBackgroundsAndPlatforms(Unit attacker, Unit target) {
+            if (_isAttackerForceUnit && _unitsAreOpponents) {
+                var tileName = _cursor.GetTerrainName(target.transform.position);
+                var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                _backgroundImage.sprite = _backgroundMap.GetBackgroundForTerrain(terrainEnum);
+                
+                var platformImage = _spawnedAttacker.transform.Find("Platform")?.GetComponent<Image>();
+                if (platformImage != null) {
+                    tileName = _cursor.GetTerrainName(attacker.transform.position);
+                    terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                    platformImage.sprite = _backgroundMap.GetPlatformForTerrain(terrainEnum);
+                }
+            } else if (_isAttackerForceUnit && !_unitsAreOpponents) {
+                var tileName = _cursor.GetTerrainName(target.transform.position);
+                var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                _backgroundImage.sprite = _backgroundMap.GetBackgroundForTerrain(terrainEnum);
+
+                var platformImageTarget = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
+                if (platformImageTarget != null) {
+                    platformImageTarget.sprite = _backgroundMap.GetPlatformForTerrain(terrainEnum);
+                }
+                var platformImageAttacker = _spawnedAttacker.transform.Find("Platform")?.GetComponent<Image>();
+                if (platformImageAttacker != null) {
+                    tileName = _cursor.GetTerrainName(attacker.transform.position);
+                    terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                    platformImageAttacker.sprite = _backgroundMap.GetPlatformForTerrain(terrainEnum);
+                }
+            } else if (!_isAttackerForceUnit && _unitsAreOpponents) {
+                var tileName = _cursor.GetTerrainName(attacker.transform.position);
+                var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                _backgroundImage.sprite = _backgroundMap.GetBackgroundForTerrain(terrainEnum);
+
+                var platformImage = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
+                if (platformImage != null) {
+                    tileName = _cursor.GetTerrainName(target.transform.position);
+                    terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                    platformImage.sprite = _backgroundMap.GetPlatformForTerrain(terrainEnum);
+                }
+            } else if (!_isAttackerForceUnit && !_unitsAreOpponents) {
+                var tileName = _cursor.GetTerrainName(attacker.transform.position);
+                var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                _backgroundImage.sprite = _backgroundMap.GetBackgroundForTerrain(terrainEnum);
+            }
+        }
+
         private void FlipToNormal(Transform transform) {
             var scale = transform.localScale;
             scale.x = Math.Abs(scale.x);
@@ -286,6 +353,7 @@ namespace Assets.Scripts.Menus.Battle {
         }
 
         IEnumerator FlashAndWiggle(bool isKill, GameObject target) {
+            _audioManager.PlaySFX(Constants.SfxHit);
             var targetTransform = target.transform.Find("Character");
             var targetImage = target.transform.Find("Character").GetComponent<Image>();
             var weaponImage = target.transform.Find("weapon").GetComponent<Image>();

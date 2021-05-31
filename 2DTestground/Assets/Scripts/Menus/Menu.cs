@@ -125,6 +125,9 @@ public class Menu : MonoBehaviour
     #region OverAllInput
     // Update is called once per frame
     void Update() {
+        if (Input.GetKeyUp(KeyCode.Backspace) && Player.PlayerIsInMenu != EnumMenuType.pause) {
+            Time.timeScale = Time.timeScale > 1f ? 1f : 1.75f;
+        } 
         if (Input.GetButtonUp("Select")) {
             if (Player.PlayerIsInMenu != EnumMenuType.pause) {
                 Pause();

@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour  {
     private readonly List<SoundFile> _sfxFiles = new List<SoundFile>();
 
     private readonly List<SoundFile> _pausedSoundFiles = new List<SoundFile>();
-    private float _volume = 0.6f;
+    private float _volume = 0.4f;
     private float _SFXvolume = 0.6f;
     private AudioSource _audioSource;
 
@@ -66,6 +66,13 @@ public class AudioManager : MonoBehaviour  {
             Loop = false,
             Pitch = 1,
         });
+        _sfxFiles.Add(new SoundFile() {
+            AudioClip = Resources.Load<AudioClip>(Constants.SoundHit),
+            Name = Constants.SfxHit,
+            Volume = 1,
+            Loop = false,
+            Pitch = 1,
+        });
     }
 
     private void Start() {
@@ -77,7 +84,7 @@ public class AudioManager : MonoBehaviour  {
         foreach (var soundFile in SoundFiles) {
             soundFile.AudioSource = gameObject.AddComponent<AudioSource>();
             soundFile.AudioSource.clip = soundFile.AudioClip;
-            soundFile.AudioSource.volume = soundFile.Volume *= _volume;
+            soundFile.AudioSource.volume = _volume;
             soundFile.AudioSource.pitch = soundFile.Pitch;
             soundFile.AudioSource.loop = soundFile.Loop;
             soundFile.AudioSource.outputAudioMixerGroup = FindObjectOfType<AudioMixerGroup>();
@@ -115,7 +122,7 @@ public class AudioManager : MonoBehaviour  {
         }
 
         soundFile.AudioSource.loop = loop;
-        soundFile.AudioSource.volume = playWithVolume > 0 ? soundFile.Volume *= playWithVolume : soundFile.Volume *= _volume;
+        soundFile.AudioSource.volume = playWithVolume > 0 ? playWithVolume : _volume;
         soundFile.AudioSource.Play();
         return soundFile.AudioClip.length;
     }

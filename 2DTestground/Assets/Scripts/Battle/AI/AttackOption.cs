@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Assets.Scripts.Battle.AI {
     public class AttackOption {
         private readonly List<Unit> _listTargets;
-        private readonly Vector3? _positionFromWhichToAttack;
+        private Vector3? _positionFromWhichToAttack;
         private readonly Vector3? _targetPosition;
         private readonly int _attack;
         private readonly EnumAreaOfEffect _areaOfEffect;
@@ -91,6 +91,10 @@ namespace Assets.Scripts.Battle.AI {
 
         public Vector3? GetAttackPosition() {
             return _positionFromWhichToAttack;
+        }
+
+        public void SetAttackPosition(Vector3 attackPosition) {
+            _positionFromWhichToAttack = attackPosition;
         }
 
         public Vector3? GetMainTargetPosition() {

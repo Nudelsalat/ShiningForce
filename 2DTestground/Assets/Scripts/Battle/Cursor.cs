@@ -382,10 +382,14 @@ public class Cursor : MonoBehaviour {
         }
     }
 
+    public string GetTerrainName(Vector3 point) {
+        var vector3Int = _terrainTileMap.WorldToCell(point);
+        var sprite = _terrainTileMap.GetSprite(vector3Int);
+        return sprite.name;
+    }
+
     public int GetLandEffect(Vector3 point) {
-        var test = _terrainTileMap.WorldToCell(point);
-        var sprite = _terrainTileMap.GetSprite(test);
-        return TerrainEffects.GetLandEffect(sprite.name);
+        return TerrainEffects.GetLandEffect(GetTerrainName(point));
     }
 
     private void CheckTile() {

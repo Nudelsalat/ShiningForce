@@ -147,7 +147,7 @@ namespace Assets.Scripts.Menus.Battle {
                         StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
                         break;
                     }
-                    var counterExp = ExecuteRegularAttack(_nextTarget, _attacker);
+                    var counterExp = ExecuteRegularAttack(_nextTarget, _attacker, true);
                     if (!_isAttackerForceUnit) {
                         if (counterExp >= 50) {
                             counterExp = 49;
@@ -424,7 +424,7 @@ namespace Assets.Scripts.Menus.Battle {
             return expScore;
         }
 
-        private int ExecuteRegularAttack(Unit attacker, Unit targetUnit) {
+        private int ExecuteRegularAttack(Unit attacker, Unit targetUnit, bool isCounterAttack = false) {
             var expScore = 0;
             var currentChar = attacker.GetCharacter();
                 var target = targetUnit.GetCharacter();
@@ -441,6 +441,10 @@ namespace Assets.Scripts.Menus.Battle {
                 if (isCrit) {
                     damage = _battleCalculator.GetCritDamage(currentChar, damage);
                     critString = "Critical hit!\n";
+                }
+
+                if (isCounterAttack) {
+                    damage /= 2;
                 }
 
                 _sentences.Add(
