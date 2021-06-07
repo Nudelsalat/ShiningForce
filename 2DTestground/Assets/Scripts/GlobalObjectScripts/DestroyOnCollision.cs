@@ -6,7 +6,7 @@ public class DestroyOnCollision : MonoBehaviour {
     public AudioClip audioClip;
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        if (!collider.tag.Equals("Player")) {
+        if (!collider.CompareTag("Player") && !collider.CompareTag("Force") && !collider.CompareTag("Enemies")) {
             return;
         }
         if (audioClip != null) {

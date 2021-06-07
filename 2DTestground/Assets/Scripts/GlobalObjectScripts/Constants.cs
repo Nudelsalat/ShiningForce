@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public class Constants {
+    public static string FirstLevelName = "01GoblinsAttack";
 
     public static string PrefabSpellPrefix = "SharedObjects/Prefab/Battle/Animations/Spells/";
     public static string PrefabBuyItem = "SharedObjects/Prefab/UI/BuyItem";
     public static string PrefabHealthBar = "SharedObjects/Prefab/UI/HealthBar";
     public static string PrefabQuickHealthBar = "SharedObjects/Prefab/UI/QuickHealthBar";
+    public static string PrefabMiniMapDot = "SharedObjects/Prefab/UI/MiniMapDot";
     public static string PrefabListCharacterEquipment = "SharedObjects/Prefab/UI/CharacterListObjectEquipment";
     public static string PrefabHeaderEquipment = "SharedObjects/Prefab/UI/HeaderEquipment";
     public static string PrefabHeader = "SharedObjects/Prefab/UI/Header";
     public static string PrefabListCharacterObject = "SharedObjects/Prefab/UI/CharacterListObject";
     public static string PrefabPrefixAreaOfEffect = "SharedObjects/Prefab/Battle/AreaOfEffect/";
     public static string PrefabExplosion = "SharedObjects/Prefab/Battle/Explosion";
+    public static string PrefabTextElement = "SharedObjects/Prefab/UI/LoadButton";
 
     public static string DefaultBattleAnimation = "SharedObjects/Prefab/Battle/Dwarf";
 
@@ -53,13 +56,21 @@ public class Constants {
     #region ButtonsAnimation
     public static string AnimationsButtonMember = "ShiningForce/images/Animations/Icons/Member";
     public static string AnimationsButtonMagic = "ShiningForce/images/Animations/Icons/Magic";
-    public static string AnimationsButtonSearch = "ShiningForce/images/Animations/Icons/Search";
+    public static string AnimationsButtonTalk = "ShiningForce/images/Animations/Icons/Talk";
     public static string AnimationsButtonItem = "ShiningForce/images/Animations/Icons/Item";
 
     public static string AnimationsButtonUse = "ShiningForce/images/Animations/Icons/Use";
     public static string AnimationsButtonGive = "ShiningForce/images/Animations/Icons/Give";
     public static string AnimationsButtonDrop = "ShiningForce/images/Animations/Icons/Drop";
     public static string AnimationsButtonEquip = "ShiningForce/images/Animations/Icons/Equip";
+
+    public static string AnimationsButtonJoin = "ShiningForce/images/Animations/Icons/Join";
+    public static string AnimationsButtonBackBag = "ShiningForce/images/Animations/Icons/BackBag";
+    public static string AnimationsButtonPurge = "ShiningForce/images/Animations/Icons/Purge";
+
+    public static string AnimationsButtonLook = "ShiningForce/images/Animations/Icons/Look";
+    public static string AnimationsButtonDeposit = "ShiningForce/images/Animations/Icons/Deposit";
+    public static string AnimationsButtonDerive = "ShiningForce/images/Animations/Icons/Derive";
 
     public static string AnimationsButtonBuy = "ShiningForce/images/Animations/Icons/Buy";
     public static string AnimationsButtonSell = "ShiningForce/images/Animations/Icons/Sell";
@@ -82,13 +93,13 @@ public class Constants {
     public static string CharacterJaha = "SharedObjects/Characters/Heroes/Jaha";
     public static string CharacterKazin = "SharedObjects/Characters/Heroes/Kazin";
 
-    public static string CharacterDwarf = "SharedObjects/Characters/Monsters/Dwarf";
+    public static string MonsterDwarf = "SharedObjects/Characters/Monsters/Dwarf";
 
     public static string SoundDoorSlam = "ShiningForce/sounds/open-door2";
     public static string SoundNewPartyMember = "victory";
     public static string SoundForceAttack = "heroattack";
     public static string SoundEnemyAttack = "enemyattack";
-    public static string SoundBossAttack = "enemyattack";
+    public static string SoundBossAttack = "bossattack";
 
     public static string SoundMovement = "ShiningForce/sounds/dwoowoo";
     public static string SfxMovement = "movement";

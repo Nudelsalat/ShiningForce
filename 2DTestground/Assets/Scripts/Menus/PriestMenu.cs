@@ -88,9 +88,9 @@ namespace Assets.Scripts.Menus {
                 return;
             }
             GetInputDirection();
-            if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
+            if (Player.IsInDialogue || Player.InWarp || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
                 if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
-                    && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
+                    && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent && !Player.InWarp) {
                     _dialogManager.DisplayNextSentence();
                 }
                 return;
@@ -219,7 +219,7 @@ namespace Assets.Scripts.Menus {
                 EnumStatusEffect.cursed,
                 EnumStatusEffect.paralyzed,
                 EnumStatusEffect.confused,
-                EnumStatusEffect.sleep,
+                EnumStatusEffect.asleep,
                 EnumStatusEffect.silent,
                 EnumStatusEffect.slowed
             };
@@ -244,7 +244,7 @@ namespace Assets.Scripts.Menus {
 
                 _currentStatusEffect = _statusEffectsToCureQueue.Dequeue();
                 var statusEffectName = Enum.GetName(typeof(EnumStatusEffect), _currentStatusEffect);
-                var effectedMember = _party.Where(x => x.StatusEffects.HasFlag(_currentStatusEffect));
+                var effectedMember = _party.Where(x => x.StatusEffects.HasFlag(_currentStatusEffect) && !x.StatusEffects.HasFlag(EnumStatusEffect.dead));
                 if (effectedMember.ToList().Count <= 0) {
                     _sentences.Add($"Nobody is {statusEffectName.AddColor(Color.gray)}");
                 }
@@ -257,7 +257,7 @@ namespace Assets.Scripts.Menus {
             }
             else {
                 _currentPartyMember = _affectedMembersQueue.Dequeue();
-                _currentPrice = 100;
+                _currentPrice = 30;
                 var statusEffectName = Enum.GetName(typeof(EnumStatusEffect), _currentStatusEffect);
                 _sentences.Add($"Gosh! {_currentPartyMember.Name.AddColor(Constants.Orange)} is " +
                                $"{statusEffectName.AddColor(Color.grey)}!\n" +
@@ -327,7 +327,7 @@ namespace Assets.Scripts.Menus {
         private void SaveOrNot(bool answer) {
             _sentences.Clear();
             if (answer) {
-                SaveLoadGame.Save();
+                SaveLoadGame.Save(_inventory.GetSaveFileName());
                 StartCoroutine(SaveGame());
             }
             else {
@@ -389,11 +389,11 @@ namespace Assets.Scripts.Menus {
         }
 
         IEnumerator SaveGame() {
-            Player.InputDisabledInEvent = true;
+            Player.Instance.SetInputDisabledInEvent();
             _audioManager.PauseAll();
             var duration = _audioManager.Play("save", false);
             yield return new WaitForSecondsRealtime(duration);
-            Player.InputDisabledInEvent = false;
+            Player.Instance.UnsetInputDisabledInEvent();
             _audioManager.UnPauseAll();
             _sentences.Clear();
             _sentences.Add("The light allows you to resume your adventure.");

@@ -1,20 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using Assets.Scripts.Dialog;
 using Assets.Scripts.GameData.Chests;
-using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ItemHolder : MonoBehaviour {
+public class ItemHolder : AbstractDialogHolder {
     //private int _dialogueCounter = 0;
     public Dialogue Dialogue;
     public AudioClip audioClip;
     public GameItem gameItem;
-    public int ID;
-    public bool DespawnAfterUser = false;
+    public string PreviousSceneName;
 
-    private bool _isInSpace = false;
+    private string _sceneToSave;
     private Inventory _inventory;
     private DialogManager _dialogManager;
     private PickedUpItemStorage _pickedUpItemStorage;
@@ -31,55 +28,38 @@ public class ItemHolder : MonoBehaviour {
         _inventory = Inventory.Instance;
         _dialogManager = DialogManager.Instance;
         _pickedUpItemStorage = PickedUpItemStorage.Instance;
-
-        if (_pickedUpItemStorage.AlreadyPickedUp(SceneManager.GetActiveScene().name, ID)) {
+        _sceneToSave = string.IsNullOrEmpty(PreviousSceneName)
+            ? SceneManager.GetActiveScene().name
+            : PreviousSceneName;
+        if (_pickedUpItemStorage.AlreadyPickedUp(_sceneToSave, gameObject.name.GetHashCode())) {
             RemoveItem();
         }
     }
 
-    void Update() {
-        if (_isInSpace && Input.GetButtonUp("Interact") && !Player.InputDisabledInDialogue 
-            && Player.PlayerIsInMenu == EnumMenuType.none) {
-            if (gameItem != null) {
-                var addedToWhom = _inventory.AddGameItem(Instantiate(gameItem));
-                Dialogue.Sentences.Add(addedToWhom);
-                TriggerDialogue();
-                Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
-                RemoveItem();
-                if (audioClip != null) {
-                    AudioManager.Instance.PlaySFX(audioClip);
-                } else {
-                    AudioManager.Instance.PlaySFX(Constants.SfxMenuDing);
-                }
+    public override void TriggerDialogue() {
+        if (gameItem != null) {
+            var addedToWhom = _inventory.AddGameItem(Instantiate(gameItem));
+            Dialogue.Sentences.Add(addedToWhom);
+            _dialogManager.StartDialogue(Dialogue);
+            Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
+            RemoveItem();
+            if (audioClip != null) {
+                AudioManager.Instance.PlaySFX(audioClip);
             } else {
-                TriggerDialogue();
+                AudioManager.Instance.PlaySFX(Constants.SfxMenuDing);
             }
+        } else {
+            _dialogManager.StartDialogue(Dialogue);
         }
-    }
-
-    public void TriggerDialogue() {
-        _dialogManager.StartDialogue(Dialogue);
     }
 
     public void RemoveItem() {
-        _pickedUpItemStorage.AddToPickedUpList(SceneManager.GetActiveScene().name, ID);
+        _pickedUpItemStorage.AddToPickedUpList(_sceneToSave, gameObject.name.GetHashCode());
         gameItem = null;
         Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
         Dialogue.Sentences.Add("Nothing here...");
-        if (DespawnAfterUser) {
+        if (DespawnAfterUse) {
             Destroy(gameObject);
-        }
-    }
-
-
-    void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag.Equals("InteractionPointer")) {
-            _isInSpace = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D collider) {
-        if (collider.gameObject.tag.Equals("InteractionPointer")) {
-            _isInSpace = false;
         }
     }
 }

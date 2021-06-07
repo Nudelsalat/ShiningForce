@@ -48,7 +48,7 @@ MonoBehaviour:
   - Name: Town
     AudioClip: {fileID: 8300000, guid: d8b22ca29cc87344b8872d7a30a4f879, type: 3}
     Loop: 1
-    Volume: 0.5
+    Volume: 0.05
     Pitch: 1
     AudioSource: {fileID: 0}
   - Name: fairy
@@ -131,6 +131,102 @@ MonoBehaviour:
     AudioSource: {fileID: 0}
   - Name: enemyattack
     AudioClip: {fileID: 8300000, guid: 7bf14ccbc16065f498f4b03d3afde377, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: battle1
+    AudioClip: {fileID: 8300000, guid: c453b76c877a9ad4285805b3f82061b4, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: battle2
+    AudioClip: {fileID: 8300000, guid: 7124aefeb1eaa9f499688ba9600ba7b2, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: battle3
+    AudioClip: {fileID: 8300000, guid: c848b08acd5ccea43a25707f15bcd6cf, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: finalBattle
+    AudioClip: {fileID: 8300000, guid: 4e77d58720dfcde498983c6f76ee2282, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: bossattack
+    AudioClip: {fileID: 8300000, guid: 4539749960d17224bbb5b67d169cf030, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: sad1
+    AudioClip: {fileID: 8300000, guid: 924bcc23b82bed54fa0e73352e07ef24, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: sad2
+    AudioClip: {fileID: 8300000, guid: 714a7283afc801a4ba8eec09e1809935, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: sad3
+    AudioClip: {fileID: 8300000, guid: d16f7dabfc28a824e9cae6c292a7a84c, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: witch
+    AudioClip: {fileID: 8300000, guid: d3c17129d8644ea42aaa21b448df5650, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: mitula
+    AudioClip: {fileID: 8300000, guid: ad7c0b60e0850af4fb035a308fd37b59, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: shrine
+    AudioClip: {fileID: 8300000, guid: aa75015a5c924aa4183653200dd022ae, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: castle
+    AudioClip: {fileID: 8300000, guid: 21db24e16f424f94ea72cc7754f9b4e0, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: hq
+    AudioClip: {fileID: 8300000, guid: 33b44a0d44fd12443810b4c09d68ae1d, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: dwarfs
+    AudioClip: {fileID: 8300000, guid: 5405ce0c7dce14641a277e9635b7931f, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: elvenTown
+    AudioClip: {fileID: 8300000, guid: dbcab6db29ac3404ca289dd6ca20cc7e, type: 3}
+    Loop: 0
+    Volume: 0.75
+    Pitch: 1
+    AudioSource: {fileID: 0}
+  - Name: overworld
+    AudioClip: {fileID: 8300000, guid: abaa19188f06af941aec56aab7551361, type: 3}
     Loop: 0
     Volume: 0.75
     Pitch: 1

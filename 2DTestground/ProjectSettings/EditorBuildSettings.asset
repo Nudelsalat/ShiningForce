@@ -6,12 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleBattle.unity
-    guid: 1a8916ab493acdf41b65c7bd2a5471df
+    path: Assets/Scenes/Chapter1/000TitleScreen.unity
+    guid: 6b561e7abe16c624a85974d71b8bbb3e
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Chapter1/WorldMap01.unity
+    guid: b4737d35900b53349a491d873aa87f09
   - enabled: 1
-    path: Assets/Scenes/Indoor.unity
-    guid: d09b2889b9c5db44fac3f15376a80d93
+    path: Assets/Scenes/Chapter1/01GoblinsAttack.unity
+    guid: 5b5afa8b23bd1f344911bed00d48fbb4
+  - enabled: 1
+    path: Assets/Scenes/Chapter1/02GoblinBattle.unity
+    guid: 251553bc928ba794fbf6e96c90c617dc
+  - enabled: 1
+    path: Assets/Scenes/Chapter1/03Visan.unity
+    guid: b0024687792d8514e890cdfd842fbbd0
+  - enabled: 1
+    path: Assets/Scenes/Chapter1/04BatBattle.unity
+    guid: a7832933feff17940940280263db0b02
+  - enabled: 1
+    path: Assets/Scenes/Chapter1/06SoKahruHut.unity
+    guid: 0f6fd742e0c40ef4a825015a3665e3d9
   m_configObjects: {}

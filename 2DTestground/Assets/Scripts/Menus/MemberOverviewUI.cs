@@ -21,10 +21,14 @@ public class MemberOverviewUI : MonoBehaviour {
 
     public GameObject MemberInfo;
 
+    public GameObject Gold;
+
     private Sprite _blankSprite;
     private GameObject[] _itemList;
     private GameObject[] _magicList;
     private Animator _animatorOverViewUi;
+    private Animator _animatorGold;
+    private Inventory _inventory;
     private bool _showUi;
     
     public static MemberOverviewUI Instance;
@@ -43,7 +47,8 @@ public class MemberOverviewUI : MonoBehaviour {
             TopMagic, LeftMagic, BottomMagic, RightMagic
         };
         _blankSprite = Resources.Load<Sprite>(Constants.SpriteEmptyItem);
-
+        _inventory = Inventory.Instance;
+        _animatorGold = Gold.transform.GetComponent<Animator>();
         _animatorOverViewUi = transform.GetComponent<Animator>();
     }
 
@@ -52,6 +57,7 @@ public class MemberOverviewUI : MonoBehaviour {
     }
 
     public void LoadMemberInventory(Character character) {
+        Gold.SetActive(true);
         OpenMemberOverViewUi();
 
         MemberInfo.transform.Find("Name").GetComponent<Text>().text = character.Name;
@@ -126,20 +132,32 @@ public class MemberOverviewUI : MonoBehaviour {
         transform.gameObject.SetActive(true);
         _showUi = true;
         _animatorOverViewUi.SetBool("inventoryIsOpen", true);
+        OpenGold();
     }
 
     public void CloseMemberOverviewUi() {
         _showUi = false;
         _animatorOverViewUi.SetBool("inventoryIsOpen", false);
+        CloseGold();
         if (this.isActiveAndEnabled) {
             StartCoroutine(WaitForTenthASecond());
         }
 
     }
+
+    private void OpenGold() {
+        _animatorGold.SetBool("isOpen", true);
+        Gold.transform.Find("GoldText").GetComponent<Text>().text = _inventory.GetGold().ToString();
+    }
+
+    private void CloseGold() {
+        _animatorGold.SetBool("isOpen", false);
+    }
     IEnumerator WaitForTenthASecond() {
         yield return new WaitForSeconds(0.1f);
         if (!_showUi) {
             transform.gameObject.SetActive(false);
+            Gold.SetActive(false);
         }
     }
 }

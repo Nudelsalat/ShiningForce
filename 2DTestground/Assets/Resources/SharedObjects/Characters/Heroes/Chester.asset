@@ -23,6 +23,7 @@ MonoBehaviour:
   ColorPaletteFieldAnimation: {fileID: 0}
   ColorPaletteBattleAnimation: {fileID: 0}
   SkinId: 0
+  Voice: 3
   ClassType: 2
   CharacterType: 1
   MovementType: 6
@@ -71,12 +72,15 @@ MonoBehaviour:
   CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
+  InflictStatusEffectChance: 7
+  InflictStatusEffect: 0
+  SpellLevelUps: []
   CharacterInventory:
-  - item1: {fileID: 11400000, guid: c37e18a1fe55abd42b61cfa7729b914e, type: 2}
+  - item1: {fileID: 11400000, guid: 2d40546688b3628428e5599e0fbc9026, type: 2}
+    item2: 1
+  - item1: {fileID: 11400000, guid: 7a2af82a4f284dd46b25fd524bad1133, type: 2}
     item2: 0
-  - item1: {fileID: 11400000, guid: 0bf6ae881a6ebef48a54e07f90576bbd, type: 2}
-    item2: 0
-  - item1: {fileID: 11400000, guid: 9757f1d3fb913e245863dc1cbf6df595, type: 2}
+  - item1: {fileID: 0}
     item2: 1
   - item1: {fileID: 0}
     item2: 0

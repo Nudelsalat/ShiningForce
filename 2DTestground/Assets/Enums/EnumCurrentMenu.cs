@@ -6,5 +6,15 @@
     use,
     give,
     drop,
-    equip
+    equip,
+    caravan,
+    join,
+    purge,
+    talk,
+    backBag,
+    look,
+    deposit,
+    derive,
+    deriveSelectMember,
+    dropBackBag,
 }

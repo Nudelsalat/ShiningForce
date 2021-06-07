@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Assets.Enums;
 using Assets.Scripts.Battle;
 using Assets.Scripts.Battle.AI;
+using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
 using UnityEngine;
 
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Menus.Battle {
 
         private BattleCalculator _battleCalculator;
         private BattleController _battleController;
+        private Inventory _inventory;
         private AudioManager _audioManager;
         private Cursor _cursor;
         private QuickInfoUi _quickInfo;
@@ -59,13 +61,14 @@ namespace Assets.Scripts.Menus.Battle {
             _quickInfoUiTarget = QuickInfoUiTarget.Instance;
             _battleAnimationUi = BattleAnimationUi.Instance;
             _dialogManager = DialogManager.Instance;
+            _inventory = Inventory.Instance;
             _battleCalculator = new BattleCalculator();
 
             gameObject.SetActive(false);
         }
 
         void Update() {
-            if (Player.InputDisabledInDialogue || Player.IsInDialogue) {
+            if (Player.InputDisabledInDialogue || Player.InWarp || Player.IsInDialogue) {
                 return;
             }
             switch (_state) {
@@ -228,6 +231,7 @@ namespace Assets.Scripts.Menus.Battle {
 
                     if (_gold > 0) {
                         _sentences.Add($"Found {_gold} gold coins!");
+                        _inventory.AddGold(_gold);
                     }
                     _dialogManager.EvokeSentenceDialogue(_sentences);
                     _sentences.Clear();
@@ -280,7 +284,6 @@ namespace Assets.Scripts.Menus.Battle {
             foreach (var unit in _unitsKilled) {
                 _battleController.RemoveUnitFromBattle(unit);
             }
-
             StartCoroutine(WaitExplosion(0.5f));
         }
 
@@ -390,16 +393,16 @@ namespace Assets.Scripts.Menus.Battle {
                             break;
                         case 2:
                             statusEffectsToCure.Add(EnumStatusEffect.poisoned);
-                            statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                            statusEffectsToCure.Add(EnumStatusEffect.asleep);
                             break;
                         case 3:
                             statusEffectsToCure.Add(EnumStatusEffect.poisoned);
-                            statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                            statusEffectsToCure.Add(EnumStatusEffect.asleep);
                             statusEffectsToCure.Add(EnumStatusEffect.confused);
                             break;
                         case 4:
                             statusEffectsToCure.Add(EnumStatusEffect.poisoned);
-                            statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                            statusEffectsToCure.Add(EnumStatusEffect.asleep);
                             statusEffectsToCure.Add(EnumStatusEffect.confused);
                             statusEffectsToCure.Add(EnumStatusEffect.paralyzed);
                             break;
@@ -417,7 +420,13 @@ namespace Assets.Scripts.Menus.Battle {
                     expScore += 5;
                     break;
                 case EnumMagicType.Special:
-                    return 0;
+                    return magic.ExecuteMagicAtLevel(_attacker, _attackOption.GetTargetList(), magicLevel);
+                case EnumMagicType.Buff:
+                    //TODO
+                    break;
+                case EnumMagicType.Debuff:
+                    //TODO
+                    break;
                 default:
                     return 0;
             }
@@ -427,45 +436,71 @@ namespace Assets.Scripts.Menus.Battle {
         private int ExecuteRegularAttack(Unit attacker, Unit targetUnit, bool isCounterAttack = false) {
             var expScore = 0;
             var currentChar = attacker.GetCharacter();
-                var target = targetUnit.GetCharacter();
-                var levelDifference = currentChar.CharStats.Level -
-                                      target.CharStats.Level;
-                var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
-                var damage = _battleCalculator.GetBaseDamageWeaponAttack(
-                    currentChar, target, _cursor.GetLandEffect(targetUnit.transform.position));
+            var target = targetUnit.GetCharacter();
+            var currentWeapon = currentChar.GetCurrentEquipment(EnumEquipmentType.weapon);
+            var levelDifference = currentChar.CharStats.Level -
+                                  target.CharStats.Level;
+            var expBase = levelDifference <= 0 ? 50 : levelDifference >= 5 ? 0 : 50 - 10 * levelDifference;
+            var damage = _battleCalculator.GetBaseDamageWeaponAttack(
+                currentChar, target, _cursor.GetLandEffect(targetUnit.transform.position));
 
 
-                var isCrit = _battleCalculator.RollForCrit(currentChar);
-                var critString = "";
-                //TODO is elemental resistance vulnerability?
-                if (isCrit) {
-                    damage = _battleCalculator.GetCritDamage(currentChar, damage);
-                    critString = "Critical hit!\n";
+            var isCrit = _battleCalculator.RollForCrit(currentChar);
+            var isStatusEffectTriggeredChar = _battleCalculator.RollForStatusEffect(currentChar.InflictStatusEffectChance);
+            // If weapon not null see if it rolls a statusEffect
+            var isStatusEffectTriggeredWeapon = currentWeapon != null && _battleCalculator.RollForStatusEffect(currentWeapon.InflictStatusEffectChance);
+            var critString = "";
+            //TODO is elemental resistance vulnerability?
+            if (isCrit) {
+                damage = _battleCalculator.GetCritDamage(currentChar, damage);
+                critString = "Critical hit!\n";
+            }
+
+            if (isCounterAttack) {
+                damage /= 2;
+                damage = damage == 0 ? 1 : damage;
+            }
+
+            _sentences.Add(
+                $"{critString}{target.Name.AddColor(Constants.Orange)} suffered {damage} " +
+                $"points of damage.");
+            if (target.CharStats.CurrentHp <= damage) {
+                _sentences.Add($"{target.Name.AddColor(Constants.Orange)}" +
+                             $" got defeated!");
+                target.CharStats.CurrentHp = 0;
+                currentChar.CharStats.Kills += 1;
+                target.CharStats.Defeats += 1;
+                _unitsKilled.Add(targetUnit);
+                if (targetUnit.GetCharacter() is Monster monster) {
+                    _gold += monster.Gold;
                 }
+                expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
+                                  expBase);
+            } else {
+                target.CharStats.CurrentHp -= damage;
+                expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp());
+            }
 
-                if (isCounterAttack) {
-                    damage /= 2;
-                }
-
-                _sentences.Add(
-                    $"{critString}{target.Name.AddColor(Constants.Orange)} suffered {damage} " +
-                    $"points of damage.");
-                if (target.CharStats.CurrentHp <= damage) {
-                    _sentences.Add($"{target.Name.AddColor(Constants.Orange)}" +
-                                 $" got defeated!");
-                    target.CharStats.CurrentHp = 0;
-                    currentChar.CharStats.Kills += 1;
-                    target.CharStats.Defeats += 1;
-                    _unitsKilled.Add(targetUnit);
-                    if (targetUnit.GetCharacter() is Monster monster) {
-                        _gold += monster.Gold;
+            if (isStatusEffectTriggeredChar) {
+                foreach (EnumStatusEffect statusEffect in Enum.GetValues(typeof(EnumStatusEffect))) {
+                    if (statusEffect != EnumStatusEffect.none &&
+                        currentChar.InflictStatusEffect.HasFlag(statusEffect)) {
+                        _sentences.Add(
+                            $"{target.Name.AddColor(Constants.Orange)} is now {Enum.GetName(typeof(EnumStatusEffect), statusEffect).AddColor(Color.gray)}.");
+                        target.StatusEffects = target.StatusEffects.Add(statusEffect);
                     }
-                    expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
-                                      expBase);
-                } else {
-                    target.CharStats.CurrentHp -= damage;
-                    expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp());
                 }
+            }
+            if (isStatusEffectTriggeredWeapon) {
+                foreach (EnumStatusEffect statusEffect in Enum.GetValues(typeof(EnumStatusEffect))) {
+                    if (statusEffect != EnumStatusEffect.none &&
+                        currentWeapon.InflictStatusEffect.HasFlag(statusEffect)) {
+                        _sentences.Add(
+                            $"{target.Name.AddColor(Constants.Orange)} is now {Enum.GetName(typeof(EnumStatusEffect), statusEffect).AddColor(Color.gray)}.");
+                        target.StatusEffects = target.StatusEffects.Add(statusEffect);
+                    }
+                }
+            }
 
             return expScore;
         }

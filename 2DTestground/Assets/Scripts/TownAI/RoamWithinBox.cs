@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GlobalObjectScripts;
+﻿using Assets.Scripts.Dialog;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
 public class RoamWithinBox : AbstractDialogHolder {
@@ -35,7 +36,8 @@ public class RoamWithinBox : AbstractDialogHolder {
     public override void Update() {
         base.Update();
 
-        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.PlayerIsInMenu != EnumMenuType.none) {
+        if (Player.IsInDialogue || Player.InWarp || Player.InputDisabledInDialogue
+            || Player.InputDisabledInEvent || Player.PlayerIsInMenu != EnumMenuType.none) {
             return;
         }
         if (!(Vector3.Distance(transform.position, _nextPoint.transform.position) <= 0.005f)) {
@@ -58,7 +60,8 @@ public class RoamWithinBox : AbstractDialogHolder {
     }
 
     void FixedUpdate() {
-        if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.PlayerIsInMenu != EnumMenuType.none) {
+        if (Player.IsInDialogue || Player.InWarp || Player.InputDisabledInDialogue
+            || Player.InputDisabledInEvent || Player.PlayerIsInMenu != EnumMenuType.none) {
             if (_playerDirection != DirectionType.none) {
                 _animator.SetInteger("moveDirection", (int)_playerDirection);
             }
@@ -120,7 +123,9 @@ public class RoamWithinBox : AbstractDialogHolder {
 
     public override void TriggerDialogue() {
         FindPlayerDirection();
-        FollowUpEvent.Invoke("EventTrigger", 0);
+        if (FollowUpEvent != null) {
+            FollowUpEvent.Invoke("EventTrigger", 0);
+        }
     }
 
     private void FindPlayerDirection() {

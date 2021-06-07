@@ -42,9 +42,9 @@ InputManager:
     descriptiveName: Open Menu
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: y
+    positiveButton: d
     altNegativeButton: 
-    altPositiveButton: b
+    altPositiveButton: 
     gravity: 3
     dead: 0.001
     sensitivity: 3
@@ -90,9 +90,9 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: space
+    positiveButton: s
     altNegativeButton: 
-    altPositiveButton: s
+    altPositiveButton: space
     gravity: 3
     dead: 0.001
     sensitivity: 3
@@ -186,8 +186,8 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick button 0
-    altNegativeButton: d
+    positiveButton: c
+    altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
     dead: 0.001

@@ -25,7 +25,7 @@ namespace Assets.Scripts.Battle.AI {
         public void SetCharacter(Character character) {
             DamageMagic = character.GetMagic().FirstOrDefault(x => x.MagicType == EnumMagicType.Damage);
             HealingMagic = character.GetMagic().FirstOrDefault(x => x.MagicType == EnumMagicType.Heal);
-            StatusEffectMagic = character.GetMagic().FirstOrDefault(x => x.MagicType == EnumMagicType.Special);
+            StatusEffectMagic = character.GetMagic().FirstOrDefault(x => x.MagicType == EnumMagicType.Debuff);
         }
     }
 }

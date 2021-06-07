@@ -23,6 +23,7 @@ MonoBehaviour:
   ColorPaletteFieldAnimation: {fileID: 0}
   ColorPaletteBattleAnimation: {fileID: 0}
   SkinId: 0
+  Voice: 3
   ClassType: 0
   CharacterType: 0
   MovementType: 4
@@ -30,11 +31,11 @@ MonoBehaviour:
     Level: 1
     Exp: 0
     CurrentHp: 12
-    CurrentMp: 25
+    CurrentMp: 8
     Hp:
       _baseValue: 12
     Mp:
-      _baseValue: 25
+      _baseValue: 8
     Attack:
       _baseValue: 6
     Defense:
@@ -71,22 +72,31 @@ MonoBehaviour:
   CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
+  InflictStatusEffectChance: 7
+  InflictStatusEffect: 0
+  SpellLevelUps:
+  - Level: 5
+    Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    MagicLevel: 1
+  - Level: 8
+    Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    MagicLevel: 3
   CharacterInventory:
-  - item1: {fileID: 11400000, guid: 53ef62d4a4b2e47489b893cd2838caaa, type: 2}
-    item2: 0
-  - item1: {fileID: 11400000, guid: e54790970a0e95143a7dbf3625186494, type: 2}
+  - item1: {fileID: 11400000, guid: 950d18b6d3328734f9908d95e85bc824, type: 2}
     item2: 1
-  - item1: {fileID: 11400000, guid: 0bf6ae881a6ebef48a54e07f90576bbd, type: 2}
+  - item1: {fileID: 11400000, guid: 7a2af82a4f284dd46b25fd524bad1133, type: 2}
+    item2: 0
+  - item1: {fileID: 0}
     item2: 0
   - item1: {fileID: 0}
     item2: 0
   Magic:
   - item1: {fileID: 11400000, guid: a77685e2d14c87c47b7b8c07d59e0b32, type: 2}
     item2: 1
-  - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
-    item2: 4
-  - item1: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
-    item2: 4
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
   - item1: {fileID: 0}
     item2: 0
   partyLeader: 1

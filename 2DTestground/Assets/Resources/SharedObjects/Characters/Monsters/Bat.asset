@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27837ca4f7179e745a6d7184f77a4c72, type: 3}
+  m_Name: Bat
+  m_EditorClassIdentifier: 
+  Id: 5
+  Name: Huge Bat
+  IsForce: 0
+  IsPromoted: 0
+  PortraitSprite: {fileID: 0}
+  AnimatorSprite: {fileID: 9100000, guid: c91a7264891568743b31d538d5668a04, type: 2}
+  _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Bat
+  ColorPaletteFieldAnimation: {fileID: 0}
+  ColorPaletteBattleAnimation: {fileID: 0}
+  SkinId: 0
+  Voice: 6
+  ClassType: 30
+  CharacterType: 17
+  MovementType: 3
+  CharStats:
+    Level: 2
+    Exp: 0
+    CurrentHp: 14
+    CurrentMp: 2
+    Hp:
+      _baseValue: 14
+    Mp:
+      _baseValue: 2
+    Attack:
+      _baseValue: 15
+    Defense:
+      _baseValue: 8
+    Agility:
+      _baseValue: 7
+    Movement:
+      _baseValue: 6
+    MinLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    MaxLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    HpGrowth: 0
+    MpGrowth: 0
+    AttackGrowth: 0
+    DefenseGrowth: 0
+    AgilityGrowth: 0
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  StatusImmunities: 0
+  ElementalWeakness: 128
+  ElementalResistance: 1
+  CritDamageMultiplier: 1.25
+  CritChance: 2
+  CounterChance: 1
+  DoubleAttackChance: 1
+  DodgeBaseChance: 1
+  InflictStatusEffectChance: 7
+  InflictStatusEffect: 0
+  SpellLevelUps: []
+  CharacterInventory:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    item2: 1
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Gold: 20

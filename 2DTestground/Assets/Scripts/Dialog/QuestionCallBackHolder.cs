@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Dialog;
+using UnityEngine;
 
 public class QuestionCallBackHolder : AbstractDialogHolder {
 

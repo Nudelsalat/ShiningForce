@@ -80,6 +80,10 @@ public class Cursor : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InWarp) {
+            _movement.x = _movement.y = 0;
+            return;
+        }
         HandleMovement();
     }
 
@@ -245,7 +249,7 @@ public class Cursor : MonoBehaviour {
     }
 
     private void HandleInput() {
-        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
+        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle || Player.InWarp 
             || Player.InputDisabledInAttackPhase || Player.PlayerIsInMenu == EnumMenuType.pause || Player.PlayerIsInMenu == EnumMenuType.battleMenu) {
             _movement.x = _movement.y = 0;
             return;

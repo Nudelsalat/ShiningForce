@@ -38,10 +38,10 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 1702140063018456075, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: -2923113070828835436, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: -2433408004846617376, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: -4934867931516007710, guid: 5c243616771debe43b42a4d46384c412, type: 3}
+  - {fileID: 1702140063018456075, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 487058810857674891, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 5961046714670147108, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: -1336852225406624222, guid: 5c243616771debe43b42a4d46384c412, type: 3}
@@ -51,10 +51,10 @@ SpriteAtlas:
   - {fileID: 5734650274987545819, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 6429009691610456554, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   m_PackedSpriteNamesToIndex:
-  - sleep
   - confused
   - none
   - dead
+  - asleep
   - cursed
   - paralysed
   - boosted

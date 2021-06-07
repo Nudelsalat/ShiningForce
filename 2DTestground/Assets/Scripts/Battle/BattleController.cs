@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using Assets.Enums;
 using Assets.Scripts.Battle.AI;
 using Assets.Scripts.Battle.WinLoseCondition;
+using Assets.Scripts.CameraScripts;
 using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
@@ -54,6 +56,9 @@ namespace Assets.Scripts.Battle {
         private LayerMask _layerMaskForce;
 
         private Transform _healthBars;
+        private Transform _miniMapDots;
+        private Transform _miniMapOverlay;
+        private Transform _miniMapCamera;
         private MovementGrid _movementGrid;
         private Cursor _cursor;
         private Player _player;
@@ -71,11 +76,15 @@ namespace Assets.Scripts.Battle {
         private Magic _magicToAttack;
         private GameItem _selectedItem;
         private GameItem _itemToSwap;
+        private GameObject _battleObjects;
+        private FadeInOut _fadeInOut;
         private int _magicLevelToAttack;
+        private string _previousTrackName;
 
         private bool _magicSelected = false;
         private bool _battleHasEnded = false;
         private bool _nextUnit = false;
+        private bool _doWarp = false;
 
         public static BattleController Instance;
 
@@ -101,6 +110,9 @@ namespace Assets.Scripts.Battle {
             _animatorEquipButton = Resources.Load<RuntimeAnimatorController>(Constants.AnimationsButtonEquip);
 
             _healthBars = transform.Find("HealthBars").GetComponent<Transform>();
+            _miniMapDots = transform.Find("MiniMapDots").GetComponent<Transform>();
+            _miniMapOverlay = transform.Find("MiniMap").GetComponent<Transform>();
+            _miniMapCamera = GameObject.Find("MiniMapCamera").GetComponent<Transform>();
 
             _layerMaskForce = Constants.LayerMaskForce;
         }
@@ -119,12 +131,25 @@ namespace Assets.Scripts.Battle {
             _aiController = AiController.Instance;
             _quickStats = QuickStats.Instance;
             _attackPhase = AttackPhase.Instance;
+            _fadeInOut = FadeInOut.Instance;
 
             transform.gameObject.SetActive(false);
             _healthBars.gameObject.SetActive(false);
+            _miniMapOverlay.gameObject.SetActive(false);
+            _miniMapCamera.gameObject.SetActive(false);
         }
 
         public void BeginBattle() {
+            _fadeInOut.FadeIn(1);
+            _battleObjects = GameObject.Find("BattleObjects");
+            if (_battleObjects != null) {
+                foreach (Transform t in _battleObjects.GetComponentsInChildren<Transform>(true)) {
+                    if (t.name == "BattleObjectsEnable") {
+                        t.gameObject.SetActive(true);
+                    }
+                }
+            }
+
             LoadBattleData();
             _battleHasEnded = false;
             _menu.ObjectMenu.SetActive(false);
@@ -134,7 +159,6 @@ namespace Assets.Scripts.Battle {
             _terrainTileMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
             _movementGrid = new MovementGrid(_terrainTileMap);
             _aiController.SetMovementGrid(_movementGrid);
-            _terrainTileMap.color = Constants.Invisible;
             _cursor.BeginBattle(_terrainTileMap);
             IsActive = true;
 
@@ -156,8 +180,8 @@ namespace Assets.Scripts.Battle {
                 }
             }
 
-            CreateAndAssignQuickHealthBars();
             LoadPartyMembersAsForce();
+            CreateAndAssignQuickHealthBars();
             SetNewTurnOrder();
             NextUnit();
         }
@@ -166,29 +190,12 @@ namespace Assets.Scripts.Battle {
             _battleHasEnded = true;
         }
 
+        public void SetDoWarp() {
+            _doWarp = true;
+        }
+
         private void EndBattle() {
-            HealWholeForce();
-            DestroyAllSprites();
-            _nextUnit = false;
-            Player.InputDisabledAiBattle = false;
-
-            BattleAnimationUi.Instance.EndAttackAnimation();
-            _turnOrder.Clear();
-            _force.Clear();
-            _enemies.Clear();
-
-            _currentUnit = null;
-            _menu.ObjectMenu.SetActive(false);
-            IsActive = false;
-            _battleHasEnded = false;
-            _fourWayButtonMenu.CloseButtons();
-            _fourWayMagicMenu.CloseButtons();
-            _cursor.EndBattle();
-            _player.gameObject.SetActive(true);
-            _cursor.gameObject.SetActive(false);
-            _overviewCameraMovement.SetPlayerObject(_player.gameObject);
-
-            gameObject.SetActive(false);
+            StartCoroutine(EndBattleCoroutine());
         }
 
         public Unit GetCurrentUnit() {
@@ -199,24 +206,36 @@ namespace Assets.Scripts.Battle {
             _nextUnit = true;
         }
 
+        private void DoWarp() {
+            var warpGameObject = new GameObject();
+            warpGameObject.AddComponent<WarpToScene>();
+            var warp = warpGameObject.GetComponent<WarpToScene>();
+            //TODO Add sade jingle
+            warp.sceneToWarpTo = _inventory.GetWarpSceneName();
+            warp.DoWarp();
+        }
+
         private void NextUnit() {
             if (CheckEndCondition()) {
                 _battleHasEnded = true;
             }
             _nextUnit = false;
-            _currentUnit?.SetAnimatorDirection(DirectionType.down);
+            if (_currentUnit != null) {
+                _currentUnit.SetAnimatorDirection(DirectionType.down);
+                _currentUnit.ClearUnitFlicker();
+            }
             _enumCurrentMenuType = EnumCurrentBattleMenu.none;
             _previousMenuTypeState = EnumCurrentBattleMenu.none;
             _currentItemMenu = EnumCurrentMenu.none;
             DestroyMovementSquareSprites();
-            _currentUnit?.ClearUnitFlicker();
-            //TODO CHECK win condition. (here?)
             //TODO also check for events, like respawn, other events
-
             if (_battleHasEnded) {
                 EndBattle();
                 return;
             }
+            // Don't do this IF the Battle should already have ended.
+            // so after EndBattle check.
+            DoPoisonCheckAndDamage();
 
             if (_turnOrder.Count <= 0) {
                 SetNewTurnOrder();
@@ -246,8 +265,10 @@ namespace Assets.Scripts.Battle {
 
         void Update() {
             if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InputDisabledAiBattle
-                || Player.InputDisabledInAttackPhase || !_cursor.UnitReached || Player.PlayerIsInMenu == EnumMenuType.pause) {
+                || Player.InputDisabledInAttackPhase || !_cursor.UnitReached || Player.InWarp || Player.PlayerIsInMenu == EnumMenuType.pause) {
                 _healthBars.gameObject.SetActive(false);
+                _miniMapOverlay.gameObject.SetActive(false);
+                _miniMapCamera.gameObject.SetActive(false);
                 return;
             }
 
@@ -255,11 +276,23 @@ namespace Assets.Scripts.Battle {
                 NextUnit();
             }
 
+            if (_battleHasEnded) {
+                return;
+            }
+
             if (Input.GetButtonDown("Special")) {
                 _healthBars.gameObject.SetActive(true);
             }
             if (Input.GetButtonUp("Special")) {
                 _healthBars.gameObject.SetActive(false);
+            }
+            if (Input.GetButtonDown("Select")) {
+                _miniMapOverlay.gameObject.SetActive(true);
+                _miniMapCamera.gameObject.SetActive(true);
+            }
+            if (Input.GetButtonUp("Select")) {
+                _miniMapOverlay.gameObject.SetActive(false);
+                _miniMapCamera.gameObject.SetActive(false);
             }
 
             if (_currentBattleState == EnumBattleState.unitMenu) {
@@ -705,7 +738,12 @@ namespace Assets.Scripts.Battle {
                     _currentUnit.GetCharacter().RemoveItem(_selectedItem);
                 }
             }
-            _attackPhase.ExecuteAttackPhase(attackType, attackOption, _currentUnit, itemName, false);
+
+            var bossAttack = false;
+            if (_currentUnit is EnemyUnit enemyUnit) {
+                bossAttack = enemyUnit.IsBoss;
+            }
+            _attackPhase.ExecuteAttackPhase(attackType, attackOption, _currentUnit, itemName, bossAttack);
 
             _enumCurrentMenuType = EnumCurrentBattleMenu.none;
             _cursor.ClearAttackArea();
@@ -713,7 +751,7 @@ namespace Assets.Scripts.Battle {
             _cursor.EndTurn();
         }
 
-        private void HealWholeForce() {
+        public void HealWholeForce() {
             var leaders = _inventory.GetParty().Where(x => x.partyLeader);
             foreach (var leader in leaders) {
                 leader.StatusEffects = leader.StatusEffects.Remove(EnumStatusEffect.dead);
@@ -726,10 +764,14 @@ namespace Assets.Scripts.Battle {
 
         private void DestroyAllSprites() {
             foreach (var unit in _force) {
-                Destroy(unit.gameObject);
+                if (unit != null && unit.gameObject != null) {
+                    Destroy(unit.gameObject);
+                }
             }
             foreach (var unit in _enemies) {
-                Destroy(unit.gameObject);
+                if (unit != null && unit.gameObject != null) {
+                    Destroy(unit.gameObject);
+                }
             }
         }
 
@@ -820,6 +862,11 @@ namespace Assets.Scripts.Battle {
                 //TODO Bosses double turn?
                 var agility = GetRandomAgilityValue(enemy);
                 unitList.Add(new Tuple<Unit, float>(enemy,agility));
+                if (enemy is EnemyUnit enemyUnit) {
+                    if (enemyUnit.IsBoss) {
+                        unitList.Add(new Tuple<Unit, float>(enemy, agility / 2));
+                    }
+                }
             }
             foreach (var force in _force) {
                 //TODO Bosses double turn?
@@ -893,34 +940,62 @@ namespace Assets.Scripts.Battle {
         private void CreateAndAssignQuickHealthBars() {
             foreach (var enemy in _enemies) {
                 var healthBar = Instantiate(Resources.Load<HealthbarTracker>(Constants.PrefabQuickHealthBar));
+                var miniMapDot = Instantiate(Resources.Load<MiniMapDot>(Constants.PrefabMiniMapDot));
                 healthBar.transform.SetParent(_healthBars);
+                miniMapDot.transform.SetParent(_miniMapDots);
                 healthBar.SetTarget(enemy);
+                miniMapDot.SetTargetAndColor(enemy, Color.red);
             }
             foreach (var forceUnit in _force) {
                 var healthBar = Instantiate(Resources.Load<HealthbarTracker>(Constants.PrefabQuickHealthBar));
+                var miniMapDot = Instantiate(Resources.Load<MiniMapDot>(Constants.PrefabMiniMapDot));
                 healthBar.transform.SetParent(_healthBars);
+                miniMapDot.transform.SetParent(_miniMapDots);
                 healthBar.SetTarget(forceUnit);
+                miniMapDot.SetTargetAndColor(forceUnit, Color.cyan);
             }
         }
 
         private void LoadBattleData() {
             var battleData = GameObject.Find("BattleData");
+            _previousTrackName = _audioManager.GetCurrentTrackName();
             if (battleData) {
                 var winLoseCondition = battleData.transform.Find("WinLoseCondition");
+                var soundFile = battleData.transform.Find("BattleAudioFile");
                 if (winLoseCondition) {
                     _winLoseConditions = winLoseCondition.GetComponents<WinLoseConditionBase>().ToList();
-                    if (_winLoseConditions.Count > 0) {
-                        return;
+                    if (_winLoseConditions.Count == 0) {
+                        LoadFallbackWinLoseCondition();
                     }
+                } else {
+                    LoadFallbackWinLoseCondition();
                 }
+
+                if (soundFile) {
+                    var soundFileName = string.IsNullOrEmpty(soundFile.GetChild(0)?.name) ? "battle1" : soundFile.GetChild(0).name;
+                    _audioManager.StopAll();
+                    var returnValue = _audioManager.Play(soundFileName);
+                    if (Math.Abs(returnValue) < 0.0001f) {
+                        _audioManager.Play("battle1");
+                    }
+                } else {
+                    LoadFallbackAudioFile();
+                }
+                return;
             }
-            LoadFallbackBattleData();
+            LoadFallbackWinLoseCondition();
+            LoadFallbackAudioFile();
         }
 
-        private void LoadFallbackBattleData() {
+        private void LoadFallbackWinLoseCondition() {
             _winLoseConditions = new List<WinLoseConditionBase>() {
                 new WinLoseConditionBase()
             };
+        }
+
+        private void LoadFallbackAudioFile() {
+            _audioManager.StopAll();
+            _audioManager.Play("battle1");
         }
 
         private bool CheckEndCondition() {
@@ -958,9 +1033,74 @@ namespace Assets.Scripts.Battle {
             if (Input.GetButtonUp("Back") || Input.GetButtonUp("Interact")) {
                 _audioManager.PlaySFX(Constants.SfxMenuSwish);
             }
-
         }
 
+        private void DoPoisonCheckAndDamage() {
+            if (_currentUnit != null) {
+                var character = _currentUnit.GetCharacter();
+                if (character.StatusEffects.HasFlag(EnumStatusEffect.poisoned)) {
+                    var poisonDamage = character.CharStats.MaxHp() / 10;
+                    poisonDamage = poisonDamage <= 2 ? 2 : poisonDamage;
+                    var isDead = character.CharStats.CurrentHp <= poisonDamage;
+                    var sentences = new List<string>();
+                    sentences.Add(
+                        $"{character.Name.AddColor(Constants.Orange)} suffered {poisonDamage} poison damage.");
+                    if (isDead) {
+                        sentences.Add($"{character.Name.AddColor(Constants.Orange)} died!");
+                        RemoveUnitFromBattle(_currentUnit);
+                    }
+                    else {
+                        character.CharStats.CurrentHp -= poisonDamage;
+                    }
+
+                    _dialogManager.EvokeSentenceDialogue(sentences);
+                }
+            }
+        }
+
+
+        IEnumerator EndBattleCoroutine() {
+            if (_doWarp) {
+                _doWarp = false;
+                DoWarp();
+            } else { 
+                _fadeInOut.FadeOutAndThenBackIn(2.75f);
+            }
+
+            yield return new WaitForSeconds(0.5f);
+            HealWholeForce();
+            DestroyAllSprites();
+            _nextUnit = false;
+            Player.InputDisabledAiBattle = false;
+
+            BattleAnimationUi.Instance.EndAttackAnimation();
+            _turnOrder.Clear();
+            _force.Clear();
+            _enemies.Clear();
+
+            _currentUnit = null;
+            _menu.ObjectMenu.SetActive(false);
+            IsActive = false;
+            _battleHasEnded = false;
+            _fourWayButtonMenu.CloseButtons();
+            _fourWayMagicMenu.CloseButtons();
+            _cursor.EndBattle();
+            _player.gameObject.SetActive(true);
+            _cursor.gameObject.SetActive(false);
+            _overviewCameraMovement.SetPlayerObject(_player.gameObject);
+            _audioManager.StopAll();
+            var audioFileToPlay = string.IsNullOrEmpty(_previousTrackName) ? "Town" : _previousTrackName;
+            _audioManager.Play(audioFileToPlay);
+
+            if (_battleObjects != null) {
+                foreach (Transform t in _battleObjects.GetComponentsInChildren<Transform>(true)) {
+                    if (t.name == "BattleObjectsEnable") {
+                        t.gameObject.SetActive(false);
+                    }
+                }
+            }
+            gameObject.SetActive(false);
+        }
     }
 
     public enum EnumBattleState {

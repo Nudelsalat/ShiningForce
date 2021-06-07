@@ -21,6 +21,7 @@ public class Character : ScriptableObject {
     public Texture2D ColorPaletteBattleAnimation;
     public int SkinId;
 
+    public EnumVoicePitch Voice = EnumVoicePitch.middle;
     public EnumClassType ClassType = EnumClassType.SDMN;
     public EnumCharacterType CharacterType;
     public EnumMovementType MovementType;
@@ -34,6 +35,9 @@ public class Character : ScriptableObject {
     public EnumChance CounterChance = EnumChance.OneIn32;
     public EnumChance DoubleAttackChance = EnumChance.OneIn32;
     public EnumChance DodgeBaseChance = EnumChance.OneIn32;
+    public EnumChance InflictStatusEffectChance = EnumChance.Never;
+    public EnumStatusEffect InflictStatusEffect = EnumStatusEffect.none;
+    public MagicLevelUpAtLevel[] SpellLevelUps;
 
     [SerializeField]
     private Tuple<GameItem, bool>[] CharacterInventory = new Tuple<GameItem, bool>[4];
@@ -71,8 +75,8 @@ public class Character : ScriptableObject {
         }
     }
 
-    public void RemoveItem(GameItem item) {
-        if (item.IsUnique) {
+    public void RemoveItem(GameItem item, bool addToDealsIfUnique = true) {
+        if (item.IsUnique && addToDealsIfUnique) {
             Inventory.Instance.AddToDeals(item);
         }
         var itemToDrop = _characterInventory[(int) item.PositionInInventory];
@@ -133,12 +137,49 @@ public class Character : ScriptableObject {
         sentencesToReturn.Add($"{Name.AddColor(Constants.Orange)} reached level {CharStats.Level}");
         sentencesToReturn.Add(sentences);
 
-        //TODO LEVEL UP MAGIC
+        sentencesToReturn.AddRange(LevelUpMagic());
 
         return sentencesToReturn;
     }
 
+    private List<string> LevelUpMagic() {
+        var sentences = new List<string>();
+        var currentLevel = IsPromoted ? CharStats.Level + 20 : CharStats.Level;
+        var relevantNewMagic = SpellLevelUps.Where(x => x.Level == currentLevel);
+
+        foreach (var newMagic in relevantNewMagic) {
+            var magicType = newMagic.Magic;
+            if (_magic.Any(x => x.SpellName.Equals(magicType.SpellName))) {
+                var currentMagic = _magic.SingleOrDefault(x => x.SpellName.Equals(magicType.SpellName));
+                if (currentMagic != null && currentMagic.CurrentLevel < newMagic.MagicLevel) {
+                    currentMagic.CurrentLevel = newMagic.MagicLevel;
+                    sentences.Add($"{Name.AddColor(Constants.Orange)} learned {newMagic.Magic.SpellName.AddColor(Constants.Violet)} " +
+                                  $"level {newMagic.MagicLevel}");
+                }
+            } else {
+                for (var i = 0; i < 4; i++) {
+                    if (_magic[i].IsEmpty()) {
+                        _magic[i] = newMagic.Magic;
+                        _magic[i].CurrentLevel = newMagic.MagicLevel;
+                        sentences.Add($"{Name.AddColor(Constants.Orange)} learned {newMagic.Magic.SpellName.AddColor(Constants.Violet)} " +
+                                      $"level {newMagic.MagicLevel}");
+                        break;
+                    }
+                }
+            }
+        }
+        return sentences;
+    }
+
 }
+
+[Serializable]
+public struct MagicLevelUpAtLevel {
+    public int Level;
+    public Magic Magic;
+    public int MagicLevel;
+}
+
 [Serializable]
 public class Tuple<T1, T2> : IEquatable<Tuple<T1,T2>> {
     [SerializeField]

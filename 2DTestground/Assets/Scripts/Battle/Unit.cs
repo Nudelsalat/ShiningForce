@@ -128,7 +128,7 @@ namespace Assets.Scripts.Battle {
 
         void OnTriggerEnter2D(Collider2D collider) {
             if (_battleController.GetCurrentState() == EnumBattleState.freeCursor) {
-                if (collider.gameObject.tag.Equals("Player")) {
+                if (collider.CompareTag("Player")) {
                     Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                     _quickInfoCurrentUnit.ShowQuickInfo(_character);
                 }
@@ -136,7 +136,7 @@ namespace Assets.Scripts.Battle {
         }
         void OnTriggerExit2D(Collider2D collider) {
             if (_battleController.GetCurrentState() == EnumBattleState.freeCursor) {
-                if (collider.gameObject.tag.Equals("Player")) {
+                if (collider.CompareTag("Player")) {
                     Debug.Log($"Current HP: " + _character.CharStats.CurrentHp);
                     _quickInfoCurrentUnit.CloseQuickInfo();
                 }

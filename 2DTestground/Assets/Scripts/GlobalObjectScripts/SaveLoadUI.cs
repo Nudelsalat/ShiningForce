@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.GameData;
+using Assets.Scripts.GameData.Characters;
 using Assets.Scripts.GameData.Chests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,14 +12,14 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-class SaveLoadUI :MonoBehaviour {
+class SaveLoadUI : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Q)) {
             SavePlayerPosition();
         }
         if (Input.GetKeyDown(KeyCode.W)) {
-            LoadPlayerPosition();
+            LoadPlayerPosition("newGame");
         }
     }
 
@@ -27,12 +28,14 @@ class SaveLoadUI :MonoBehaviour {
         Debug.Log("Quicksave button disabled!");
     }
 
-    public void LoadPlayerPosition() {
-        GameData data = SaveLoadGame.Load();
+    public void LoadPlayerPosition(string loadFileName) {
+        GameData data = SaveLoadGame.Load(loadFileName);
 
         SceneManager.LoadScene(data.SceneName, LoadSceneMode.Single);
 
+        TriggerStorage.Instance.LoadData(data.TriggerStorage);
         PickedUpItemStorage.Instance.LoadData(data.PickedUpItemStorage);
+        MemberDialogueStorage.Instance.LoadData(data.MemberDialogueStorage);
 
         Vector3 position = new Vector3(data.Position[0], data.Position[1], data.Position[2]);
         var player = GameObject.Find("Player");
@@ -63,7 +66,7 @@ class SaveLoadUI :MonoBehaviour {
             dealsList.Add(serializableGameItem.GetGameItem());
         }
 
-        Inventory.Instance.Initialize(partyList, backPackList, dealsList, data.Gold);
+        Inventory.Instance.Initialize(partyList, backPackList, dealsList, data.Gold, data.SaveFileName);
     }
 }
 

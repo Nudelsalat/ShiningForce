@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
@@ -9,6 +11,7 @@ public class GameItem : ScriptableObject {
     public int Price;
     public bool IsUnique = false;
     public Sprite ItemSprite;
+    public string Description = "";
     public DirectionType PositionInInventory = DirectionType.none;
     public EnumItemType EnumItemType = EnumItemType.none;
 
@@ -22,5 +25,14 @@ public class GameItem : ScriptableObject {
 
     public virtual string GetResourcePath() {
         return Constants.ItemEmptyItem;
+    }
+
+    public virtual List<string> GetDescription() {
+        var sentence = new List<string>();
+        sentence.Add(string.IsNullOrEmpty(Description)
+            ? "Unknown what this item does..."
+            : Description);
+        sentence.Add($"Item can be sold for { Price / 2} Gold.");
+        return sentence;
     }
 }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b28155a072e9540bcd7d6ff7705a07, type: 3}
+  m_Name: WoodAxe
+  m_EditorClassIdentifier: 
+  ItemName: Wood Axe
+  Price: 120
+  IsUnique: 0
+  ItemSprite: {fileID: -2705408255640008809, guid: 0e3d7f9811d80574693048be27c1a0b9,
+    type: 3}
+  Description: An axe for timber cutting
+  PositionInInventory: -1
+  EnumItemType: 1
+  HpModifier: 0
+  MpModifier: 0
+  AttackModifier: 5
+  DefenseModifier: 0
+  AgilityModifier: 0
+  MovementModifier: 0
+  EquipmentForClass: 00000000030000000d00000012000000
+  EquipmentType: 0
+  AttackRange: 1
+  AreaOfEffect: 0
+  BattleSprite: {fileID: 8212414098397792206, guid: 6ddb72b5b2a39db419a388d9f9adfd96,
+    type: 3}
+  IsEquipped: 0

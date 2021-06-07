@@ -17,8 +17,7 @@ MonoBehaviour:
   IsUnique: 0
   ItemSprite: {fileID: 1025100286011669249, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  BattleSprite: {fileID: 8405443454145897809, guid: 095e0ce7daa00a94abbb5c7a2e263a88,
-    type: 3}
+  Description: Wooden Arrows like this one can be found everywhere.
   PositionInInventory: -1
   EnumItemType: 1
   HpModifier: 0
@@ -31,4 +30,6 @@ MonoBehaviour:
   EquipmentType: 0
   AttackRange: 3
   AreaOfEffect: 0
+  BattleSprite: {fileID: 8405443454145897809, guid: 095e0ce7daa00a94abbb5c7a2e263a88,
+    type: 3}
   IsEquipped: 0

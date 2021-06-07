@@ -12,6 +12,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Battle {
     public class EnemyUnit : Unit {
+        // Gold Drop
+        public int GoldDropForKill = -1;
         // Trigger in Battle map, which changes the AI
         public TriggerBase Trigger;
         // Primary Target for Ai Script. e.g:
@@ -30,6 +32,9 @@ namespace Assets.Scripts.Battle {
         public EnumAiType TriggeredAiTypePrimary;
         // This Ai Type is a fallback behaviour
         public EnumAiType TriggeredAiTypeSecondary;
+        // If unit is a boss, it will get double turns and it's own music
+        public bool IsBoss = false;
+        
 
         private bool _isTriggered = false;
         private readonly AiData _aiData = new AiData();
@@ -45,8 +50,16 @@ namespace Assets.Scripts.Battle {
             _aiData.SecondaryAiType = InitialAiTypeSecondary;
 
             _aiData.TargetUnit = TargetUnit;
-            _aiData.TargetPoint = TargetPoint?.transform.position;
+            if (TargetPoint != null) {
+                _aiData.TargetPoint = TargetPoint?.transform.position;
+            }
+
             _aiData.PercentChance = PercentChance;
+            if (GoldDropForKill >= 0) {
+                if (_character is Monster monster) {
+                    monster.Gold = GoldDropForKill;
+                }
+            }
         }
 
         public void CheckTrigger() {

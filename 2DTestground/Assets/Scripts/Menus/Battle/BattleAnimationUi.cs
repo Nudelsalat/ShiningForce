@@ -5,6 +5,7 @@ using Assets.Enums;
 using Assets.Scripts.Battle;
 using Assets.Scripts.EditorScripts;
 using Assets.Scripts.GameData;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Menus.Battle {
         public Texture2D DissolveTexture2D;
 
         private Image _backgroundImage;
+        private Image _transitionImage;
         private Image _blackVoid;
         private Transform _forceUnitSpawn;
         private Transform _enemyUnitSpawn;
@@ -29,6 +31,7 @@ namespace Assets.Scripts.Menus.Battle {
         private AudioManager _audioManager;
         private LandEffectBackgroundMap _backgroundMap;
         private Cursor _cursor;
+        private FadeInOut _fadeInOut;
 
         private Unit _attacker;
         private GameObject _spawnedAttacker;
@@ -42,6 +45,10 @@ namespace Assets.Scripts.Menus.Battle {
         private bool _unitsAreOpponents;
         private bool _spellIsTriggered;
 
+        private readonly float _fadeInAnimationDistance = 80f;
+        private readonly float _fadeInMovementPerFrame = 2f;
+        private readonly float _fadeFromBlackSpeed = 1.5f;
+
         public static BattleAnimationUi Instance;
 
         void Awake() {
@@ -52,7 +59,8 @@ namespace Assets.Scripts.Menus.Battle {
                 Instance = this;
             }
             _blackVoid = transform.Find("Blackvoid").GetComponent<Image>();
-            _backgroundImage = transform.Find("Background").GetComponent<Image>();
+            _backgroundImage = transform.Find("Background/Background1").GetComponent<Image>();
+            _transitionImage = transform.Find("Background/Transition").GetComponent<Image>();
             _forceUnitSpawn = transform.Find("Force/Character").GetComponent<Transform>();
             _enemyUnitSpawn = transform.Find("Enemy/Character").GetComponent<Transform>();
             _spellSpawn = transform.Find("SpellAnimator").GetComponent<Transform>();
@@ -65,6 +73,7 @@ namespace Assets.Scripts.Menus.Battle {
             _quickInfoUiTarget = QuickInfoUiTarget.Instance;
             _audioManager = AudioManager.Instance;
             _cursor = Cursor.Instance;
+            _fadeInOut = FadeInOut.Instance;
             gameObject.SetActive(false);
         }
 
@@ -114,6 +123,8 @@ namespace Assets.Scripts.Menus.Battle {
 
             LoadBackgroundsAndPlatforms(attacker, target);
             StartCoroutine(DelayedUpdate(0.1f));
+            StartCoroutine(DoFadeInAnimation(_fadeFromBlackSpeed/8));
+            _fadeInOut.FadeIn(_fadeFromBlackSpeed);
         }
 
         public void DoAttackAnimation(bool isDodge, bool isKill, string spellPath, EnumMagicType? magicAttackType) {
@@ -132,7 +143,7 @@ namespace Assets.Scripts.Menus.Battle {
                             }
                         }
                     } else {
-                        Debug.LogError($"{spellPath} was not a valid prefab path!");
+                        Debug.LogWarning($"{spellPath} was not a valid prefab path!");
                     }
                 }
             }
@@ -165,39 +176,7 @@ namespace Assets.Scripts.Menus.Battle {
         }
 
         public void Transition(Unit nextTarget, bool isAttacker) {
-            //TODO transition
-            if (_isAttackerForceUnit) {
-                foreach (Transform transform in _enemyUnitSpawn) {
-                    Destroy(transform.gameObject);
-                }
-                _quickInfoUiTarget.ShowQuickInfo(nextTarget.GetCharacter());
-            } else {
-                foreach (Transform transform in _forceUnitSpawn) {
-                    Destroy(transform.gameObject);
-                }
-                _quickInfo.ShowQuickInfo(nextTarget.GetCharacter());
-            }
-            InitializeAnimationObjects(out _spawnedTarget, out _targetImage, nextTarget, _isAttackerForceUnit, false);
-            
-            _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
-
-            if (!_unitsAreOpponents) {
-                Flip(_isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn);
-            }
-
-            if (isAttacker) {
-                _targetImage.color = Constants.Invisible;
-                var weaponImage = _spawnedTarget.transform.Find("weapon")?.GetComponent<Image>();
-                var platformImage = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
-                if (weaponImage) {
-                    weaponImage.color = Constants.Invisible;
-                }
-                if (platformImage) {
-                    platformImage.color = Constants.Invisible;
-                }
-            }
-            
-            LoadBackgroundsAndPlatforms(_attacker, nextTarget);
+            StartCoroutine(TransitionRoutine(nextTarget, isAttacker));
             StartCoroutine(DelayedUpdate(0.1f));
         }
 
@@ -217,11 +196,12 @@ namespace Assets.Scripts.Menus.Battle {
             foreach (Transform transformObject in _spellSpawn) {
                 Destroy(transformObject.gameObject);
             }
+            _fadeInOut.FadeIn(_fadeFromBlackSpeed);
             _quickInfo.CloseQuickInfo();
             _quickInfoUiTarget.CloseQuickInfo();
             gameObject.SetActive(false);
         }
-
+        
         private void InitializeAnimationObjects(out GameObject spawn, out Image image, Unit unit, bool isLeft, bool isAttacker) {
             var prefab = Resources.Load<GameObject>(unit.GetCharacter().GetBattleAnimationPath());
             spawn = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -292,14 +272,12 @@ namespace Assets.Scripts.Menus.Battle {
 
         private void LoadBackgroundsAndPlatforms(Unit attacker, Unit target) {
             if (_isAttackerForceUnit && _unitsAreOpponents) {
-                var tileName = _cursor.GetTerrainName(target.transform.position);
-                var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
-                _backgroundImage.sprite = _backgroundMap.GetBackgroundForTerrain(terrainEnum);
-                
+                _backgroundImage.sprite = GetBackground(target);
+
                 var platformImage = _spawnedAttacker.transform.Find("Platform")?.GetComponent<Image>();
                 if (platformImage != null) {
-                    tileName = _cursor.GetTerrainName(attacker.transform.position);
-                    terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+                    var tileName = _cursor.GetTerrainName(attacker.transform.position);
+                    var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
                     platformImage.sprite = _backgroundMap.GetPlatformForTerrain(terrainEnum);
                 }
             } else if (_isAttackerForceUnit && !_unitsAreOpponents) {
@@ -324,15 +302,17 @@ namespace Assets.Scripts.Menus.Battle {
 
                 var platformImage = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
                 if (platformImage != null) {
-                    tileName = _cursor.GetTerrainName(target.transform.position);
-                    terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
-                    platformImage.sprite = _backgroundMap.GetPlatformForTerrain(terrainEnum);
+                    _backgroundImage.sprite = GetBackground(target);
                 }
             } else if (!_isAttackerForceUnit && !_unitsAreOpponents) {
-                var tileName = _cursor.GetTerrainName(attacker.transform.position);
-                var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
-                _backgroundImage.sprite = _backgroundMap.GetBackgroundForTerrain(terrainEnum);
+                _backgroundImage.sprite = GetBackground(attacker);
             }
+        }
+
+        private Sprite GetBackground(Unit target) {
+            var tileName = _cursor.GetTerrainName(target.transform.position);
+            var terrainEnum = TerrainEffects.GetTerrainTypeByName(tileName);
+            return _backgroundMap.GetBackgroundForTerrain(terrainEnum);
         }
 
         private void FlipToNormal(Transform transform) {
@@ -346,12 +326,108 @@ namespace Assets.Scripts.Menus.Battle {
             transform.localScale = scale;
         }
 
+        IEnumerator TransitionRoutine(Unit nextTarget, bool isAttacker) {
+            var unitSpawn = _isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn;
+            float elapsedTime = 0;
+            float time = 0.15f; //TransitionSpeed
+
+            var transitionPos = _transitionImage.transform.position;
+            var backgroundPos = _backgroundImage.transform.position;
+            var targetPos = unitSpawn.transform.position;
+            
+            var diff = Math.Abs(transitionPos.x - backgroundPos.x);
+            while (elapsedTime < time) {
+                if (_isAttackerForceUnit) {
+                    _transitionImage.transform.position =
+                        Vector3.Lerp(transitionPos, backgroundPos, (elapsedTime / time));
+                    _backgroundImage.transform.position = Vector3.Lerp(backgroundPos,
+                        backgroundPos + new Vector3(diff, 0), (elapsedTime / time));
+                }
+                unitSpawn.transform.position = Vector3.Lerp(targetPos, targetPos + new Vector3(diff,0), (elapsedTime / time));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            if (_isAttackerForceUnit) {
+                _backgroundImage.sprite = GetBackground(nextTarget);
+                _backgroundImage.transform.position = transitionPos;
+                foreach (Transform transform in _enemyUnitSpawn) {
+                    Destroy(transform.gameObject);
+                }
+                unitSpawn = _enemyUnitSpawn;
+                _quickInfoUiTarget.ShowQuickInfo(nextTarget.GetCharacter());
+            } else {
+                foreach (Transform transform in _forceUnitSpawn) {
+                    Destroy(transform.gameObject);
+                }
+                unitSpawn = _forceUnitSpawn;
+                _quickInfo.ShowQuickInfo(nextTarget.GetCharacter());
+            }
+
+            InitializeAnimationObjects(out _spawnedTarget, out _targetImage, nextTarget, _isAttackerForceUnit, false);
+            _targetAnimator.SetInteger("Animation", (int)EnumAttackAnimations.Idle);
+            if (!_unitsAreOpponents) {
+                Flip(_isAttackerForceUnit ? _enemyUnitSpawn : _forceUnitSpawn);
+            }
+            if (isAttacker) {
+                _targetImage.color = Constants.Invisible;
+                var weaponImage = _spawnedTarget.transform.Find("weapon")?.GetComponent<Image>();
+                var platformImage = _spawnedTarget.transform.Find("Platform")?.GetComponent<Image>();
+                if (weaponImage) {
+                    weaponImage.color = Constants.Invisible;
+                }
+                if (platformImage) {
+                    platformImage.color = Constants.Invisible;
+                }
+            }
+            LoadBackgroundsAndPlatforms(_attacker, nextTarget);
+            unitSpawn.transform.position = targetPos - new Vector3(diff, 0);
+            elapsedTime = 0;
+            while (elapsedTime < time) {
+                if (_isAttackerForceUnit) {
+                    _transitionImage.transform.position = Vector3.Lerp(backgroundPos,
+                        backgroundPos + new Vector3(diff, 0), (elapsedTime / time));
+                    _backgroundImage.transform.position =
+                        Vector3.Lerp(transitionPos, backgroundPos, (elapsedTime / time));
+                }
+                unitSpawn.transform.position = Vector3.Lerp(targetPos - new Vector3(diff, 0), targetPos, (elapsedTime / time));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            _backgroundImage.transform.position = backgroundPos;
+            _transitionImage.transform.position = transitionPos;
+            unitSpawn.transform.position = targetPos;
+        }
+
+        IEnumerator DoFadeInAnimation(float delay) {
+            var enemyPoint = _enemyUnitSpawn.transform.position;
+            var forcePoint = _forceUnitSpawn.transform.position;
+            var background = _backgroundImage.transform.position;
+            _enemyUnitSpawn.transform.position += new Vector3(-_fadeInAnimationDistance, 0);
+            _forceUnitSpawn.transform.position += new Vector3(_fadeInAnimationDistance, 0);
+            _backgroundImage.transform.position += new Vector3(-_fadeInAnimationDistance/2, 0);
+
+            yield return new WaitForSeconds(delay);
+            while (Math.Abs(_enemyUnitSpawn.transform.position.x - enemyPoint.x) > 0.0001f)  {
+                _enemyUnitSpawn.transform.position = Vector3.MoveTowards(_enemyUnitSpawn.transform.position, enemyPoint, _fadeInMovementPerFrame);
+                _forceUnitSpawn.transform.position = Vector3.MoveTowards(_forceUnitSpawn.transform.position, forcePoint, _fadeInMovementPerFrame);
+                _backgroundImage.transform.position = Vector3.MoveTowards(_backgroundImage.transform.position, background, _fadeInMovementPerFrame/2);
+                yield return null;
+            }
+
+            _enemyUnitSpawn.transform.position = enemyPoint;
+            _forceUnitSpawn.transform.position = forcePoint;
+            _backgroundImage.transform.position = background;
+        }
+
+
         IEnumerator DelayedUpdate(float seconds) {
             yield return new WaitForSeconds(seconds);
             _quickInfo.UpdateInfo();
             _quickInfoUiTarget.UpdateInfo();
         }
-
+        
         IEnumerator FlashAndWiggle(bool isKill, GameObject target) {
             _audioManager.PlaySFX(Constants.SfxHit);
             var targetTransform = target.transform.Find("Character");
@@ -385,14 +461,14 @@ namespace Assets.Scripts.Menus.Battle {
         IEnumerator DissolveImage(Image targetImage, Image weaponImage) {
             var _swapShader = Shader.Find("Hidden/Dissolve");
             var _newMat = new Material(_swapShader);
-            targetImage.material = weaponImage.material = _newMat;
-            targetImage.material.SetTexture("_DissolveTex", DissolveTexture2D);
+            weaponImage.material = targetImage.material = _newMat;
             weaponImage.material.SetTexture("_DissolveTex", DissolveTexture2D);
+            targetImage.material.SetTexture("_DissolveTex", DissolveTexture2D);
             var dissolve = 0f;
             while (dissolve < 1) {
                 dissolve += 0.005f;
-                targetImage.material.SetFloat("_Threshold", dissolve);
                 weaponImage.material.SetFloat("_Threshold", dissolve);
+                targetImage.material.SetFloat("_Threshold", dissolve);
                 yield return null;
             }
 

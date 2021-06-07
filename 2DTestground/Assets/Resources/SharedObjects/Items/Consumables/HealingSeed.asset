@@ -17,10 +17,8 @@ MonoBehaviour:
   IsUnique: 0
   ItemSprite: {fileID: 2375365029745076546, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
+  Description: Heals up to 20 HP.
   PositionInInventory: -1
   EnumItemType: 0
-  RestoreType: 0
-  StatusEffectsToCure: 
-  AmountToRestore: 20
   Magic: {fileID: 11400000, guid: 1e7025bba55f142449048a53d8c43fbb, type: 2}
   MagicLevel: 2

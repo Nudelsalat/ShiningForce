@@ -40,6 +40,7 @@ public class DialogManager : MonoBehaviour {
 
     private bool _isInQuestion = false;
     private bool _selectedAnswer = true;
+    private bool _showUi = true;
 
     private string _voicePitch;
 
@@ -104,8 +105,9 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
-    public void EvokeSingleSentenceDialogue(string sentence) {
-        if (Player.IsInDialogue) {
+    public void EvokeSingleSentenceDialogue(string sentence, bool evokeNewDialogue = false) {
+        _showUi = true;
+        if (Player.IsInDialogue && !evokeNewDialogue) {
             var replacedSentence = ReplaceNameVariables(sentence);
             _sentences.Enqueue(replacedSentence);
             return;
@@ -135,6 +137,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void StartDialogue(Dialogue dialogue) {
+        _showUi = true;
         if (Player.IsInDialogue) {
             return;
         }
@@ -175,7 +178,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
-        _dialogueTriangle.SetActive(false);
+        _dialogueTriangle?.SetActive(false);
         if (_sentences.Count == 0) {
             Debug.Log("EndDialogue");
             EndDialogue();
@@ -197,11 +200,17 @@ public class DialogManager : MonoBehaviour {
     
     private string ReplaceNameVariables(string sentence) {
         var partyLeaderName = _inventory.GetPartyLeaderName();
-        sentence = sentence.Replace("#LEADERNAME#", partyLeaderName.AddColor(Constants.Orange));
+        sentence = sentence.Replace("#LEADER#", partyLeaderName);
         sentence = sentence.Replace("#CHESTER#", 
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester).AddColor(Constants.Orange));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester));
         sentence = sentence.Replace("#SARAH#",
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah).AddColor(Constants.Orange));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah));
+        sentence = sentence.Replace("#JAHA#",
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.jaha));
+        sentence = sentence.Replace("#KAZIN#",
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.kazin));
+        sentence = sentence.Replace("#SLADE#",
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.slade));
         return sentence;
     }
 
@@ -218,13 +227,15 @@ public class DialogManager : MonoBehaviour {
         if (_hasPortrait) {
             _portrait.HidePortrait();
         }
+        _showUi = false;
         StartCoroutine(WaitForQuaterSec(result));
     }
     private void EndDialogue() {
-        _currentDialogueAnimator.SetBool("dialogueBoxIsOpen", false);
+        _currentDialogueAnimator?.SetBool("dialogueBoxIsOpen", false);
         if (_hasPortrait) {
             _portrait.HidePortrait();
         }
+        _showUi = false;
         StartCoroutine(WaitForQuaterSec());
     }
 
@@ -280,43 +291,59 @@ public class DialogManager : MonoBehaviour {
 
 
     IEnumerator WaitForQuaterSec(bool result) {
+        Player.InputDisabledInDialogue = true;
         //MLE waiting 0.2f before callback feels and looks wrong.
         if (_dialogue is QuestionCallback callback) {
             callback.OnAnswerAction(result);
         }
+
         yield return new WaitForSeconds(0.1f);
 
-        _dialogBox.SetActive(false);
-        if (_hasPortrait) {
-            _portrait.HidePortrait();
-            _hasPortrait = false;
+        if (!_showUi) {
+            _dialogBox.SetActive(false);
+            if (_hasPortrait) {
+                _portrait.HidePortrait();
+                _hasPortrait = false;
+            }
+
+            Player.IsInDialogue = false;
+            DialogActive = false;
         }
-        Player.IsInDialogue = false;
-        DialogActive = false;
+
         if (_dialogue is QuestionFollowUpEvent followUpQuestion) {
             if (result) {
                 followUpQuestion.FollowUpEventForYes.Invoke("EventTrigger", 0);
-            } else {
+            }
+            else {
                 followUpQuestion.FollowUpEventForNo.Invoke("EventTrigger", 0);
             }
-        } else if (_dialogue.FollowUpEvent != null) {
-            _dialogue.FollowUpEvent.Invoke("EventTrigger",0);
         }
+        else if (_dialogue.FollowUpEvent != null) {
+            _dialogue.FollowUpEvent.Invoke("EventTrigger", 0);
+        }
+        yield return new WaitForEndOfFrame();
+        Player.InputDisabledInDialogue = false;
     }
-    IEnumerator WaitForQuaterSec() {
 
+    IEnumerator WaitForQuaterSec() {
+        Player.InputDisabledInDialogue = true;
         yield return new WaitForSeconds(0.1f);
 
-        _dialogBox.SetActive(false);
-        if (_hasPortrait) {
-            _portrait.HidePortrait();
-            _hasPortrait = false;
+        if (!_showUi) {
+            _dialogBox?.SetActive(false);
+            if (_hasPortrait) {
+                _portrait.HidePortrait();
+                _hasPortrait = false;
+            }
+
+            Player.IsInDialogue = false;
+            DialogActive = false;
         }
-        Player.IsInDialogue = false;
-        DialogActive = false;
 
         if (_dialogue?.FollowUpEvent != null) {
             _dialogue.FollowUpEvent.Invoke("EventTrigger", 0);
         }
+        yield return new WaitForEndOfFrame();
+        Player.InputDisabledInDialogue = false;
     }
 }

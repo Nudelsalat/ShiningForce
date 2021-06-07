@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.GameData.Characters;
 using UnityEngine;
+using Random = System.Random;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Battle.AI {
@@ -21,12 +22,14 @@ namespace Assets.Scripts.Battle.AI {
 
         private readonly MovementGrid _movementGrid;
         private readonly EnumMovementType _movementType;
+        //only to randomize the movement of flying units a bit... otherwise you could "kite" those units that only move 2 steps
+        private int _increment = UnityEngine.Random.Range(0, 4);
 
         private readonly Vector3[] _vector3Directions = new Vector3[4]
         {
             new Vector3(0, 1),
-            new Vector3(0, -1),
             new Vector3(1, 0),
+            new Vector3(0, -1),
             new Vector3(-1, 0)
         };
 
@@ -141,8 +144,9 @@ namespace Assets.Scripts.Battle.AI {
 
         private List<Tile> GetWalkableTiles(Tile currentTile, Vector3 targetPos) {
             var result = new List<Tile>();
+            _increment++;
             for (int i = 0; i < 4; i++) {
-                var newVector = currentTile.Point + _vector3Directions[i];
+                var newVector = currentTile.Point + _vector3Directions[(i+_increment) %4];
                 if (_walkablePoints.Contains(newVector)) {
                     var cost = 1f;
                     if (_calculateMovementCost) {

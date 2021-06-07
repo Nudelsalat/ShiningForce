@@ -9,11 +9,14 @@ namespace Assets.Scripts.GameData {
     public class GameData {
         public float[] Position;
         public string SceneName;
+        public string SaveFileName;
         public List<SerializableGameItem> Backpack;
         public List<SerializableCharacter> Party;
         public int Gold;
         public List<SerializableGameItem> DealsList;
         public PickedUpItemStorage PickedUpItemStorage;
+        public TriggerStorage TriggerStorage;
+        public MemberDialogueStorage MemberDialogueStorage;
 
 
         public GameData(Player player, string sceneName) {
@@ -30,6 +33,7 @@ namespace Assets.Scripts.GameData {
             }
             Backpack = serializableBackpack.ToList();
 
+            SaveFileName = inventory.GetSaveFileName();
             var deals = inventory.GetDeals();
             var serializableDeals = new List<SerializableGameItem>();
             foreach (var gameItem in deals) {
@@ -47,6 +51,8 @@ namespace Assets.Scripts.GameData {
             Gold = inventory.GetGold();
 
             PickedUpItemStorage = PickedUpItemStorage.Instance;
+            TriggerStorage = TriggerStorage.Instance;
+            MemberDialogueStorage = MemberDialogueStorage.Instance;
         }
     }
 }

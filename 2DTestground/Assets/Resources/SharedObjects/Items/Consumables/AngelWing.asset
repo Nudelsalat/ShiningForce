@@ -15,8 +15,9 @@ MonoBehaviour:
   ItemName: Angel Wing
   Price: 40
   IsUnique: 0
-  ItemSprite: {fileID: -4218608340749442826, guid: 0e3d7f9811d80574693048be27c1a0b9,
+  ItemSprite: {fileID: 2904123497777669774, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
+  Description: Lets you flee a battle.
   PositionInInventory: -1
   EnumItemType: 0
   Magic: {fileID: 11400000, guid: a77685e2d14c87c47b7b8c07d59e0b32, type: 2}

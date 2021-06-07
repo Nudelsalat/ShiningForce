@@ -1,42 +1,45 @@
 ﻿using System.Collections;
-using Assets.Scripts.SceneManager;
+using Assets.Scripts.GameData.Trigger;
+using Assets.Scripts.GlobalObjectScripts;
+using Assets.Scripts.LevelManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WarpToScene : MonoBehaviour {
+public class WarpToScene : MonoBehaviour, IEventTrigger {
 
     public string sceneToWarpTo;
+    public int id;
     public AudioClip audioClip;
-    private GameObject _fadeOutScreen;
 
     void Start() {
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag.Equals("Player")) {
+        if (collider.CompareTag("Player")) {
             DoWarp();
         }
+    }
+
+    public void EventTrigger() {
+        DoWarp();
     }
 
     public void DoWarp() {
         if (audioClip != null) {
             AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }
-        Player.InputDisabledInDialogue = true;
+        Inventory.Instance.SetWarpId(id);
+        Player.InWarp = true;
         LevelManager.setLastLevelInt(SceneManager.GetActiveScene().buildIndex);
         LevelManager.setLastLevelString(SceneManager.GetActiveScene().name);
-        _fadeOutScreen = GameObject.Find("FadeOutScreen");
-        StartCoroutine(DoFade());
+        FadeInOut.Instance.FadeOutAndThenBackIn(2.75f);
+        StartCoroutine(WaitForSecToWarp(0.4f));
     }
 
-    IEnumerator DoFade() {
-        CanvasGroup canvas = _fadeOutScreen.GetComponent<CanvasGroup>();
-        canvas.alpha = 0;
-        while (canvas.alpha < 1) {
-            canvas.alpha += Time.deltaTime * 2;
-            yield return null;
-        }
-        Player.InputDisabledInDialogue = false;
+    IEnumerator WaitForSecToWarp(float waitTime) {
+        yield return new WaitForSeconds(waitTime);
+        Player.InWarp = false;
+        Debug.Log($"Loading scene: {sceneToWarpTo}");
         SceneManager.LoadScene(sceneToWarpTo, LoadSceneMode.Single);
     }
 }

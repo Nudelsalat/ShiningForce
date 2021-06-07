@@ -17,10 +17,14 @@ MonoBehaviour:
     type: 3}
   CurrentLevel: 1
   PositionInInventory: -1
-  MaxLevel: 4
   AttackRange: 01000000010000000100000000000000
   AreaOfEffect: 00000000000000000000000003000000
   MagicType: 5
   ElementType: 0
   Damage: 0a00000014000000fa000000fa000000
   ManaCost: 00000000000000000000000000000000
+  SpellAnimatorController:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -97,9 +97,9 @@ namespace Assets.Scripts.Menus {
             }
             GetInputDirection();
 
-            if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
+            if (Player.IsInDialogue || Player.InWarp || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
                 if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
-                    && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent) {
+                    && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent && !Player.InWarp) {
                     _dialogManager.DisplayNextSentence();
                 }
                 return;
@@ -253,8 +253,8 @@ namespace Assets.Scripts.Menus {
                     }
                     _enumCurrentMenuType = _previousState;
                     CloseCharacterSelection();
-                    OpenBuyMenu(_itemsInCurrentMenu);
                     _dialogManager.EvokeSingleSentenceDialogue(sentence);
+                    OpenBuyMenu(_itemsInCurrentMenu);
                     return;
                 }
                 _dialogManager.EvokeSingleSentenceDialogue(
@@ -428,7 +428,7 @@ namespace Assets.Scripts.Menus {
             }
 
             if (_currentBuyItemPage == (int)_pageSizeBuy - 1) {
-                var lastItemOnPage = (itemCount % 8) - 1;
+                var lastItemOnPage = ((itemCount - 1) % 8);
                 if (_currentBuyItemSelected > lastItemOnPage) {
                     _currentBuyItemSelected = lastItemOnPage;
                 }
@@ -549,6 +549,7 @@ namespace Assets.Scripts.Menus {
         }
 
         private void OpenGold() {
+            Gold.SetActive(true);
             _animatorGold.SetBool("isOpen", true);
             Gold.transform.Find("GoldText").GetComponent<Text>().text = _inventory.GetGold().ToString();
         }

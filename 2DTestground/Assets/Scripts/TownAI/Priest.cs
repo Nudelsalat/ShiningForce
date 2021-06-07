@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.GameData.Trigger;
 using Assets.Scripts.Menus;
 using UnityEngine;
 
 namespace Assets.Scripts.TownAI {
-    public class Priest : MonoBehaviour {
+    public class Priest : MonoBehaviour, IEventTrigger {
         public Sprite PriestSprite;
         private PriestMenu _priestMenu;
 
@@ -15,7 +16,7 @@ namespace Assets.Scripts.TownAI {
             _priestMenu = PriestMenu.Instance;
         }
 
-        void EventTrigger() {
+        public void EventTrigger() {
             _priestMenu.OpenPriestWindow(PriestSprite);
         }
     }

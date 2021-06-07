@@ -5,19 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Battle;
+using Assets.Scripts.GameData.Trigger;
 using UnityEngine;
 
 namespace Assets.Scripts.Menus.Battle {
-    class BattleTrigger : MonoBehaviour {
+    class BattleTrigger : MonoBehaviour, IEventTrigger {
+        //Negative number will wait until triggerd via event.
+        public float TriggerInSeconds = 0;
+        public MonoBehaviour FollowUpEvent;
 
         private BattleController _battleController;
         void Start() {
-            _battleController = BattleController.Instance;
-            //TODO: remove
-            StartCoroutine(StartTriggerAfterSeconds(1));
+            if (TriggerInSeconds >= 0) {
+                StartCoroutine(StartTriggerAfterSeconds(TriggerInSeconds));
+            }
         }
         public void EventTrigger() {
+            _battleController = BattleController.Instance;
             _battleController.BeginBattle();
+            if (FollowUpEvent != null) {
+                FollowUpEvent.Invoke("EventTrigger", 0);
+            }
+
         }
 
         IEnumerator StartTriggerAfterSeconds(float seconds) {

@@ -16,8 +16,11 @@ public class MemberInventoryUI : MonoBehaviour{
     public GameObject BottomItem;
     public GameObject StatusEffects;
     public GameObject CurrentSelectedItem;
+    public GameObject Gold;
 
     private Animator _inventoryAnimator;
+    private Animator _animatorGold;
+    private Inventory _inventory;
     private Text _titleText;
     private Sprite _blankSprite;
     private GameObject[] _itemList;
@@ -45,9 +48,11 @@ public class MemberInventoryUI : MonoBehaviour{
             TopItem, LeftItem, BottomItem, RightItem
         };
 
+        _inventory = Inventory.Instance;
         _blankSprite = Resources.Load<Sprite>("ShiningForce/images/icon/sfitems");
         _titleText = transform.Find("MemberInventoryUI/Title").GetComponent<Text>();
         _inventoryAnimator = transform.GetComponent<Animator>();
+        _animatorGold = Gold.transform.GetComponent<Animator>();
     }
 
     void Start() {
@@ -57,6 +62,7 @@ public class MemberInventoryUI : MonoBehaviour{
     }
 
     public void LoadMemberInventory(Character character) {
+        Gold.SetActive(true);
         OpenInventory();
         _quickStats.CloseQuickInfo();
 
@@ -85,6 +91,7 @@ public class MemberInventoryUI : MonoBehaviour{
             }
         }
     }
+
     public void LoadMemberEquipmentInventory(Character member) {
         OpenInventory();
         _quickStats.CloseQuickInfo();
@@ -186,6 +193,7 @@ public class MemberInventoryUI : MonoBehaviour{
         _quickStats.CloseQuickInfo();
         _inventoryAnimator.SetBool("inventoryIsOpen", false);
         _showInventory = false;
+        CloseGold();
         if (this.isActiveAndEnabled) {
             StartCoroutine(WaitForTenthASecond());
         }
@@ -195,6 +203,7 @@ public class MemberInventoryUI : MonoBehaviour{
         transform.gameObject.SetActive(true);
         _showInventory = true;
         _inventoryAnimator.SetBool("inventoryIsOpen", true);
+        OpenGold();
     }
 
     private void SetCurrentSelectedItem(GameObject selectedGameObject, GameItem selectedItem) {
@@ -245,10 +254,20 @@ public class MemberInventoryUI : MonoBehaviour{
         }
     }
 
+    private void OpenGold() {
+        _animatorGold.SetBool("isOpen", true);
+        Gold.transform.Find("GoldText").GetComponent<Text>().text = _inventory.GetGold().ToString();
+    }
+
+    private void CloseGold() {
+        _animatorGold.SetBool("isOpen", false);
+    }
+
     IEnumerator WaitForTenthASecond() {
         yield return new WaitForSeconds(0.1f);
         if (!_showInventory) {
             transform.gameObject.SetActive(false);
+            Gold.SetActive(false);
         }
     }
 }

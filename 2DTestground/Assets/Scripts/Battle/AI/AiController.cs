@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Assets.Enums;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Magic;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Battle.AI {
         private Cursor _cursor;
         private MovementGrid _movementGrid;
         private AttackOption _selectedAttackOption;
+        private Player _player;
 
         private Magic _magicToAttack;
         private int _magicLevelToAttack;
@@ -29,6 +31,7 @@ namespace Assets.Scripts.Battle.AI {
 
         private LayerMask _forceLayerMask;
         private LayerMask _enemyLayerMask;
+        private LayerMask _layerMaskOfCurrentUnit;
 
         void Awake() {
             if (Instance != null && Instance != this) {
@@ -45,6 +48,7 @@ namespace Assets.Scripts.Battle.AI {
         void Start() {
             _battleController = BattleController.Instance;
             _cursor = Cursor.Instance;
+            _player = Player.Instance;
         }
 
         void Update() {
@@ -99,6 +103,7 @@ namespace Assets.Scripts.Battle.AI {
             unit.CheckTrigger();
             _currentAiData = unit.GetAiData();
             _currentMovementSquares = movementSquares;
+            _layerMaskOfCurrentUnit = _enemyLayerMask;
             if (_currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.confused)) {
                 SetConfusedRandomizedBehaviour();
             }
@@ -113,7 +118,7 @@ namespace Assets.Scripts.Battle.AI {
             _currentMovementSquares = movementSquares;
             _currentAiData = new AiData();
             _currentAiData.SetCharacter(_currentCharacter);
-
+            _layerMaskOfCurrentUnit = _forceLayerMask;
             if (_currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.confused)) {
                 SetConfusedRandomizedBehaviour();
             }
@@ -139,6 +144,8 @@ namespace Assets.Scripts.Battle.AI {
                 case EnumAiType.InRangeMage:
                 case EnumAiType.AggressiveMage:
                 case EnumAiType.InRangeDebuff:
+                case EnumAiType.InRangeAttackOrMoveTwo:
+                case EnumAiType.InRangeMageOrMoveTwo:
                     return true;
                 case EnumAiType.Patrole:
                     //TODO....
@@ -193,12 +200,17 @@ namespace Assets.Scripts.Battle.AI {
                     } 
                     break;
                 case EnumAiType.Aggressive:
+                case EnumAiType.InRangeAttackOrMoveTwo:
                     _magicToAttack = null;
                     if (TryExecuteAttack(out allAttackOptions)) {
                         ExecuteBestAttackOption(allAttackOptions);
                         return;
                     } else {
-                        MoveTowardsClosestTarget();
+                        if (aiType == EnumAiType.InRangeAttackOrMoveTwo) {
+                            MoveTowardsClosestTarget(2);
+                        } else {
+                            MoveTowardsClosestTarget();
+                        }
                         return;
                     }
                 case EnumAiType.InRangeMage:
@@ -213,6 +225,7 @@ namespace Assets.Scripts.Battle.AI {
                     } 
                     break;
                 case EnumAiType.AggressiveMage:
+                case EnumAiType.InRangeMageOrMoveTwo:
                     SetUpMagicSpell(_currentAiData.DamageMagic);
                     atLeastOneOption = TryExecuteAttack(out allMagicAttackOptions);
                     _magicToAttack = null;
@@ -222,7 +235,11 @@ namespace Assets.Scripts.Battle.AI {
                         ExecuteBestAttackOption(allPhysicalAttackOptions);
                         return;
                     } else {
-                        MoveTowardsClosestTarget();
+                        if (aiType == EnumAiType.InRangeMageOrMoveTwo) {
+                            MoveTowardsClosestTarget(2);
+                        } else {
+                            MoveTowardsClosestTarget();
+                        }
                         return;
                     }
                 case EnumAiType.InRangeDebuff:
@@ -253,6 +270,11 @@ namespace Assets.Scripts.Battle.AI {
                 case EnumAiType.MoveTowardPoint:
                     //Use moveToward Point as Secondary action...
                     if (_currentAiData.TargetPoint != null) {
+                        if (_currentAiData.TargetPoint == _currentUnit.transform.position 
+                            && _currentAiData.SecondaryAiType != aiType) {
+                            ExecuteAi(_currentAiData.SecondaryAiType);
+                            return;
+                        }
                         ExecuteMoveTowardPoint((Vector3) _currentAiData.TargetPoint);
                         return;
                     }
@@ -300,7 +322,8 @@ namespace Assets.Scripts.Battle.AI {
             int attack;
             var aoe = EnumAreaOfEffect.Single;
             var attackRange = EnumAttackRange.Melee;
-            var target = _forceLayerMask;
+            //who is the opponent?
+            var target = _layerMaskOfCurrentUnit == _enemyLayerMask ? _forceLayerMask : _enemyLayerMask;
             EnumMagicType? magicType = null;
             if (_magicToAttack != null) {
                 attack = _magicToAttack.Damage[_magicLevelToAttack - 1];
@@ -320,7 +343,7 @@ namespace Assets.Scripts.Battle.AI {
                 && _enemyLayerMask == (_enemyLayerMask | (1 << _currentUnit.gameObject.layer))) {
                 target = target == _enemyLayerMask ? _forceLayerMask : _enemyLayerMask;
             }
-
+            var canTargetItself = target == _layerMaskOfCurrentUnit;
             var attackOptionsDict = new Dictionary<Vector3, AttackOption>();
             foreach (var movementSquare in _currentMovementSquares) {
                 // This square is occupied by another unit.
@@ -342,6 +365,24 @@ namespace Assets.Scripts.Battle.AI {
                     // AttackOption already checked. But better positioning?
                     if (attackOptionsDict.ContainsKey(vector3)) {
                         attackOptionsDict.TryGetValue(vector3, out var currentAttackOption);
+                        //if the attack can target itself his position may change the score of an already calculated square, because of AOE.
+                        if (canTargetItself) {
+                            var newAttackOption = CalculateAttackOption(vector3, aoe, target, canTargetItself, 
+                                movementSquare, attack, attackRange);
+                            if (newAttackOption == null) {
+                                continue;
+                            }
+                            var oldScore = currentAttackOption?.GetScore() ?? 0;
+                            var newScore = newAttackOption.GetScore();
+                            // if the old score is better, don't change anything.
+                            if (oldScore > newScore) {
+                                continue; 
+                            // if the newScore is better, change it! ELSE: check the landeffect value.
+                            } else if (newScore > oldScore) {
+                                attackOptionsDict[vector3] = newAttackOption;
+                                continue;
+                            }
+                        }
                         var currentAttackPosition = currentAttackOption?.GetAttackPosition();
                         if (currentAttackPosition != null) {
                             var currentLandEffect =
@@ -353,16 +394,11 @@ namespace Assets.Scripts.Battle.AI {
                             }
                         }
                         continue;
-                    } 
-                    if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, target)) {
-                        var targetList = GetAllTargetsInAreaOfEffect(vector3, aoe, target);
-                        var attackOption = new AttackOption(targetList, movementSquare, 
-                            vector3, attack, _magicToAttack, _magicLevelToAttack, 
-                            aoe, attackRange);
-                        attackOptionsDict.Add(vector3, attackOption);
-                    } else {
-                        attackOptionsDict.Add(vector3, null);
                     }
+
+                    var attackOption = CalculateAttackOption(vector3, aoe, target, canTargetItself,
+                        movementSquare, attack, attackRange);
+                    attackOptionsDict.Add(vector3, attackOption);
                 }
             }
 
@@ -370,13 +406,32 @@ namespace Assets.Scripts.Battle.AI {
             return attackOptions.Any();
         }
 
-        private void MoveTowardsClosestTarget() {
+        private AttackOption CalculateAttackOption(Vector3 pointToAttack, EnumAreaOfEffect aoe, LayerMask targetLayerMask, bool canTargetItself,
+            Vector3 positionOfAttacker, int attack, EnumAttackRange attackRange) {
+
+            //First part: don't target attacks original position if attacker can target himself,
+            //second part: however let him target himself, if he will move to this point (even if original position)
+            if ((_currentUnit.transform.position + new Vector3(0, -0.25f) != pointToAttack 
+                    && _movementGrid.IsOccupiedByOpponent(pointToAttack.x, pointToAttack.y, targetLayerMask)) ||
+                (canTargetItself && positionOfAttacker + new Vector3(0, -0.25f) == pointToAttack)) {
+                var targetList = GetAllTargetsInAreaOfEffect(pointToAttack, aoe, targetLayerMask, canTargetItself,
+                    positionOfAttacker + new Vector3(0, -0.25f));
+                var attackOption = new AttackOption(targetList, positionOfAttacker,
+                    pointToAttack, attack, _magicToAttack, _magicLevelToAttack,
+                    aoe, attackRange);
+                return attackOption;
+            } else {
+                return null;
+            }
+        }
+
+        private void MoveTowardsClosestTarget(int maxSquare = 999) {
             var movementTyp = _currentCharacter.MovementType;
             var tilesNotToUse = TerrainEffects.GetImpassableTerrainNameOfMovementType(movementTyp);
             var listOfUsableSquares = _movementGrid.GetWholeTerrainTileMapWithoutCertainSprites(tilesNotToUse, 0);
             var pathfinder = new Pathfinder(listOfUsableSquares, _currentUnit.transform.position, _forceLayerMask,
                 _movementGrid, movementTyp);
-            ExecuteShortestPathAi(pathfinder, EnumAiType.Idle);
+            ExecuteShortestPathAi(pathfinder, EnumAiType.Idle, maxSquare);
         }
 
         // Try to get to point with the most direct way, calculating landEffects
@@ -395,7 +450,7 @@ namespace Assets.Scripts.Battle.AI {
             var tilesNotToUse = TerrainEffects.GetImpassableTerrainNameOfMovementType(movementTyp);
             var listOfUsableSquares = _movementGrid.GetWholeTerrainTileMapWithoutCertainSprites(tilesNotToUse, _forceLayerMask);
             if (!listOfUsableSquares.Contains(point)) {
-                //If you want to get to a specific target, add that point to have a change to find a path.
+                //If you want to get to a specific target, add that point to have a chance to find a path.
                 listOfUsableSquares.Add(point);
             }
             var pathfinder = new Pathfinder(listOfUsableSquares, _currentUnit.transform.position, point,
@@ -403,12 +458,14 @@ namespace Assets.Scripts.Battle.AI {
             ExecuteShortestPathAi(pathfinder, EnumAiType.Aggressive);
         }
 
-        private void ExecuteShortestPathAi(Pathfinder pathfinder, EnumAiType followUpAi) {
+        private void ExecuteShortestPathAi(Pathfinder pathfinder, EnumAiType followUpAi, int maxSquares = 999) {
             var shortestPath = pathfinder.GetShortestPath();
-            if (shortestPath == null) {
+            if (shortestPath == null || !shortestPath.Any()) {
                 ExecuteAi(followUpAi);
                 return;
             }
+            maxSquares = maxSquares < shortestPath.Count() ? maxSquares : shortestPath.Count - 1;
+            shortestPath = shortestPath.GetRange(0, maxSquares);
             shortestPath.Reverse();
             foreach (var pointInPath in shortestPath) {
                 if (_currentMovementSquares.Contains(pointInPath) &&
@@ -434,12 +491,21 @@ namespace Assets.Scripts.Battle.AI {
 
         private AttackOption PickBestAttackOption(List<AttackOption> attackOptions) {
             AttackOption bestOption = null;
+            var bestLandEffect = -1;
             var bestScore = -1f;
             foreach (var attackOption in attackOptions) {
                 var score = attackOption.GetScore();
                 if (bestScore < score) {
                     bestScore = score;
+                    bestLandEffect = _cursor.GetLandEffect((Vector3)attackOption.GetAttackPosition());
                     bestOption = attackOption;
+                } else if (Math.Abs(bestScore - score) < 0.0001f) {
+                    var landEffect = _cursor.GetLandEffect((Vector3) attackOption.GetAttackPosition());
+                    if (landEffect > bestLandEffect) {
+                        bestScore = score;
+                        bestLandEffect = landEffect;
+                        bestOption = attackOption;
+                    }
                 }
             }
             return bestOption;
@@ -489,11 +555,16 @@ namespace Assets.Scripts.Battle.AI {
             }
         }
 
-        private List<Unit> GetAllTargetsInAreaOfEffect(Vector3 point, EnumAreaOfEffect aoe, LayerMask targetLayer) {
+        private List<Unit> GetAllTargetsInAreaOfEffect(Vector3 point, EnumAreaOfEffect aoe, LayerMask targetLayer, 
+            bool canTargetItSelf, Vector3 positionOfAttacker) {
             var aoeSquares = new List<Vector3>();
             var aoeTargets = new List<Unit>();
             switch (aoe) {
                 case EnumAreaOfEffect.Single:
+                    if (canTargetItSelf && point == positionOfAttacker) {
+                        aoeTargets.Add(_currentUnit);
+                        return aoeTargets;
+                    }
                     aoeTargets.Add(_movementGrid.GetOccupyingOpponent(point.x, point.y, targetLayer));
                     return aoeTargets;
                 case EnumAreaOfEffect.Area1:
@@ -517,17 +588,18 @@ namespace Assets.Scripts.Battle.AI {
                         }).ToList();
                     break;
                 case EnumAreaOfEffect.AllAllies:
-                    if (targetLayer == Constants.LayerMaskForce) {
-                        return _battleController.GetForce();
-                    } else {
-                        return _battleController.GetEnemies();
-                    }
+                    return targetLayer == Constants.LayerMaskForce ? _battleController.GetForce() : _battleController.GetEnemies();
             }
 
             foreach (var square in aoeSquares) {
                 var target = _movementGrid.GetOccupyingOpponent(square.x, square.y, targetLayer);
-                if (target != null) {
+                //Don't add attacking unit itself, because it will move before attacking and therefor won't be at this point anymore.
+                if (target != null && target != _currentUnit) {
                     aoeTargets.Add(target);
+                }
+                //If attacker can target itself, and is in the Areaofeffect after moving for the attack, add Attacker.
+                if (canTargetItSelf && square == positionOfAttacker) {
+                    aoeTargets.Add(_currentUnit);
                 }
             }
             return aoeTargets;

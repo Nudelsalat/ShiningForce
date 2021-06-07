@@ -5,6 +5,7 @@ using Assets.Scripts.GameData.Magic;
 using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
@@ -14,7 +15,10 @@ public sealed class Inventory {
     private List<GameItem> Backpack = new List<GameItem>();
     private List<PartyMember> Party = new List<PartyMember>();
 
+    private int _warpId = 0;
     private int _gold;
+    private string _warpScene;
+    private string _saveFileName;
     private List<GameItem> _dealsList = new List<GameItem>();
 
     private static readonly Lazy<Inventory> lazy = new Lazy<Inventory>(() => new Inventory());
@@ -24,31 +28,35 @@ public sealed class Inventory {
         }
     }
     private Inventory() {
-        AddGold(7500);
-        _dealsList.Add(Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentWunderWaffe)));
+        AddGold(100);
+        //_dealsList.Add(Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentWunderWaffe)));
 
         var bowie = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterBowie));
         var sarah = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterSarah));
-        var jaha = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterJaha));
-        var kazin = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterKazin));
-        sarah.StatusEffects = sarah.StatusEffects.Add(EnumStatusEffect.dead);
-        sarah.StatusEffects = sarah.StatusEffects.Add(EnumStatusEffect.poisoned);
+        var chester = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterChester));
 
         AddPartyMember(bowie);
         AddPartyMember(sarah);
-        AddPartyMember(kazin);
-        AddPartyMember(jaha);
+        AddPartyMember(chester);
     }
 
-    public void Initialize(List<PartyMember> party, List<GameItem> backPack, List<GameItem> dealsList, int gold) {
+    public void Initialize(List<PartyMember> party, List<GameItem> backPack, List<GameItem> dealsList, int gold, string saveFileName) {
         Party = party;
         Backpack = backPack;
         _dealsList = dealsList;
         _gold = gold;
+        _saveFileName = saveFileName;
     }
 
     public void TestSetDealslist(List<GameItem> gameItems) {
         _dealsList = gameItems;
+    }
+
+    public void SetSaveFileName(string saveFileName) {
+        _saveFileName = saveFileName;
+    }
+    public string GetSaveFileName() {
+        return _saveFileName;
     }
 
     public void AddGold(int addGold) {
@@ -134,6 +142,15 @@ public sealed class Inventory {
         }
     }
 
+    public PartyMember GetPartyMemberByEnum(EnumCharacterType enumCharacterType) {
+        var partyMember = Party.FirstOrDefault(x => x.CharacterType == enumCharacterType);
+        if (partyMember == null) {
+            return null;
+        } else {
+            return partyMember;
+        }
+    }
+
     public void SwapItems(PartyMember firstMember, PartyMember secondMember, GameItem firstItem, GameItem secondItem) {
         if (firstItem is Equipment firstEquipment) {
             firstMember.CharStats.UnEquip(firstEquipment);
@@ -152,6 +169,37 @@ public sealed class Inventory {
 
     public List<GameItem> GetBackPack() {
         return Backpack;
+    }
+
+    public void RemoveFromBackBag(GameItem item) {
+        if (item.IsUnique) {
+            AddToDeals(item);
+        }
+        Backpack.Remove(item);
+    }
+
+    public void AddToBackBag(GameItem item) {
+        Backpack.Add(item);
+    }
+
+    public void SetWarpId(int id) {
+        _warpId = id;
+    }
+
+    public int GetWarpId() {
+        return _warpId;
+    }
+
+    public void SetWarpSceneName(string scene) {
+        _warpScene = scene;
+    }
+
+    public string GetWarpSceneName() {
+        return _warpScene;
+    }
+
+    public void ResetWarpId() {
+        _warpId = 0;
     }
 
     private void InitializeInventoryAndMagic(PartyMember member) {

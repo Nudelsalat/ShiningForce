@@ -28,6 +28,22 @@ public class AudioManager : MonoBehaviour  {
         _audioSource = GetComponent<AudioSource>();
 
         LoadSfxFiles();
+
+        if (SoundFiles.Length == 0) {
+            Debug.Log("There are no sound files.");
+            return;
+        }
+
+        foreach (var soundFile in SoundFiles) {
+            soundFile.AudioSource = gameObject.AddComponent<AudioSource>();
+            soundFile.AudioSource.clip = soundFile.AudioClip;
+            soundFile.AudioSource.volume = _volume;
+            soundFile.AudioSource.pitch = soundFile.Pitch;
+            soundFile.AudioSource.loop = soundFile.Loop;
+            soundFile.AudioSource.outputAudioMixerGroup = FindObjectOfType<AudioMixerGroup>();
+        }
+
+        Instance.SoundFiles = SoundFiles;
     }
 
     private void LoadSfxFiles() {
@@ -75,26 +91,11 @@ public class AudioManager : MonoBehaviour  {
         });
     }
 
-    private void Start() {
-        if (SoundFiles.Length == 0) {
-            Debug.Log("There are no sound files.");
-            return;
-        }
 
-        foreach (var soundFile in SoundFiles) {
-            soundFile.AudioSource = gameObject.AddComponent<AudioSource>();
-            soundFile.AudioSource.clip = soundFile.AudioClip;
-            soundFile.AudioSource.volume = _volume;
-            soundFile.AudioSource.pitch = soundFile.Pitch;
-            soundFile.AudioSource.loop = soundFile.Loop;
-            soundFile.AudioSource.outputAudioMixerGroup = FindObjectOfType<AudioMixerGroup>();
-        }
-
-        Instance.SoundFiles = SoundFiles;
-
-        Play("Town");
+    public string GetCurrentTrackName() {
+        var audioFile = SoundFiles.FirstOrDefault(x => x.AudioSource.isPlaying);
+        return audioFile?.Name;
     }
-
 
     public void PlaySFX(string name) {
         var soundFile = _sfxFiles.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -155,6 +156,23 @@ public class AudioManager : MonoBehaviour  {
         }
 
         soundFile.AudioSource.Stop();
+    }
+
+
+    public void StopAll() {
+        Debug.Log("Stopping all audiofiles");
+        if (SoundFiles == null) {
+            return;
+        }
+        foreach (var file in SoundFiles) {
+            if (file != null) {
+                if (!file.AudioSource.isPlaying) {
+                    continue;
+                }
+            }
+            file.AudioSource.Stop();
+        }
+        Debug.Log("Done Stopping all audiofiles");
     }
 
     /// <summary>

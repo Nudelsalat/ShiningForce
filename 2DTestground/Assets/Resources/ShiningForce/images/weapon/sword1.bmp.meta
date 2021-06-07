@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: fa01224e3f1a9fb4ea8816c001df92f4
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 6914154902746628804
+    second: sword1_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -32,9 +35,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -89,7 +92,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sword1_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 4
+        width: 12
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c20d34504304ff50800000000000000
+      internalID: 6914154902746628804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

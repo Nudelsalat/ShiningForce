@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 93284174535085417}
   - component: {fileID: 93284174535085429}
   - component: {fileID: 7791753675794628793}
+  - component: {fileID: 127876369625907180}
   m_Layer: 14
   m_Name: Priest
   m_TagString: Untagged
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DespawnAfterUser: 0
+  DespawnAfterUse: 0
   Dialogue:
     Name: Priest
     Portrait: {fileID: -6915668844638259881, guid: 70fc8153363e7c146b61ea2cba3abcf9,
@@ -210,5 +211,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fb9b27d4d07dc4197672be22653351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PriestSprite: {fileID: 2986920386224683930, guid: 70fc8153363e7c146b61ea2cba3abcf9,
+  PriestSprite: {fileID: -827016883341640748, guid: a6784355d5934c3489ba3cb953e04c96,
     type: 3}
+--- !u!114 &127876369625907180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93284174535085424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9ad1eb14764d644bcc875061d8ebcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

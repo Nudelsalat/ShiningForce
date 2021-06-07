@@ -23,6 +23,7 @@ MonoBehaviour:
   ColorPaletteFieldAnimation: {fileID: 0}
   ColorPaletteBattleAnimation: {fileID: 0}
   SkinId: 0
+  Voice: 3
   ClassType: 4
   CharacterType: 4
   MovementType: 4
@@ -68,9 +69,10 @@ MonoBehaviour:
   ElementalResistance: 1
   CritDamageMultiplier: 1.25
   CritChance: 2
-  CounterChance: 1
+  CounterChance: 6
   DoubleAttackChance: 1
   DodgeBaseChance: 1
+  SpellLevelUps: []
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 7a2af82a4f284dd46b25fd524bad1133, type: 2}
     item2: 0
@@ -82,7 +84,7 @@ MonoBehaviour:
     item2: 0
   Magic:
   - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
-    item2: 2
+    item2: 3
   - item1: {fileID: 0}
     item2: 0
   - item1: {fileID: 0}

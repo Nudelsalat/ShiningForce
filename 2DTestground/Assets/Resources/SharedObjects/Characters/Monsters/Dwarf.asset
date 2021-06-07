@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0
   Name: Dwarf
+  IsForce: 0
   IsPromoted: 0
   PortraitSprite: {fileID: 0}
   AnimatorSprite: {fileID: 9100000, guid: fa29aa2a090b0bb468e5710e54035d09, type: 2}
   _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Dwarf
-  ColorPalette: {fileID: 0}
+  ColorPaletteFieldAnimation: {fileID: 0}
+  ColorPaletteBattleAnimation: {fileID: 0}
   SkinId: 0
+  Voice: 3
   ClassType: 30
   CharacterType: 17
   MovementType: 4
@@ -60,6 +63,15 @@ MonoBehaviour:
     Kills: 0
     Defeats: 0
   StatusEffects: 0
+  StatusImmunities: 0
+  ElementalWeakness: 0
+  ElementalResistance: 0
+  CritDamageMultiplier: 1.25
+  CritChance: 2
+  CounterChance: 1
+  DoubleAttackChance: 1
+  DodgeBaseChance: 1
+  SpellLevelUps: []
   CharacterInventory:
   - item1: {fileID: 0}
     item2: 0

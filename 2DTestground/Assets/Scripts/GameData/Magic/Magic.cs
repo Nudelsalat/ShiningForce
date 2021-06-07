@@ -123,16 +123,16 @@ namespace Assets.Scripts.GameData.Magic {
                                 break;
                             case 2:
                                 statusEffectsToCure.Add(EnumStatusEffect.poisoned);
-                                statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                                statusEffectsToCure.Add(EnumStatusEffect.asleep);
                                 break;
                             case 3:
                                 statusEffectsToCure.Add(EnumStatusEffect.poisoned);
-                                statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                                statusEffectsToCure.Add(EnumStatusEffect.asleep);
                                 statusEffectsToCure.Add(EnumStatusEffect.confused);
                                 break;
                             case 4:
                                 statusEffectsToCure.Add(EnumStatusEffect.poisoned);
-                                statusEffectsToCure.Add(EnumStatusEffect.sleep);
+                                statusEffectsToCure.Add(EnumStatusEffect.asleep);
                                 statusEffectsToCure.Add(EnumStatusEffect.confused);
                                 statusEffectsToCure.Add(EnumStatusEffect.paralyzed);
                                 break;

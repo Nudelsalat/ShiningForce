@@ -53,6 +53,13 @@ namespace Assets.Scripts.Battle {
             return critRole <= critChance;
         }
 
+        public bool RollForStatusEffect(EnumChance chance) {
+            var statusEffectChance = ConvertEnumChanceIntoFloat(chance);
+            var statusEffectRole = Random.Range(0f, 1f);
+            Debug.Log($"statusEffectChance: {statusEffectChance}, statusEffectRole: {statusEffectRole}");
+            return statusEffectRole <= statusEffectChance;
+        }
+
         public int GetCritDamage(Character attacker, int baseDamage) {
             var critMuliplier = attacker.CritDamageMultiplier;
             var result = baseDamage * critMuliplier;

@@ -163,6 +163,10 @@ namespace Assets.Scripts.Battle {
             var collision = Physics2D.OverlapCircle(new Vector2(x, y), 0.2f, opponentLayerMask);
             if (collision != null) {
                 Debug.Log($"GameObjectName: {collision.name}");
+                if (!collision.CompareTag("Enemies") && !collision.CompareTag("Force")) {
+                    Debug.Log($"GameObjectName: {collision.name}, has neither tag 'Enemies' nor tag 'Force'");
+                    return false;
+                }
                 return true;
             }
 
@@ -192,7 +196,9 @@ namespace Assets.Scripts.Battle {
         private float GetMovementCost(float x, float y) {
             var worldPosition = _terrainTileMap.WorldToCell(new Vector3(x, y, _z));
             var sprite = _terrainTileMap.GetSprite(worldPosition);
-
+            if (sprite == null) {
+                Debug.LogWarning("what the fuck?");
+            }
             float terrainCost = TerrainEffects.GetMovementCost(_currentUnitMovementType,
                 TerrainEffects.GetTerrainTypeByName(sprite.name));
 

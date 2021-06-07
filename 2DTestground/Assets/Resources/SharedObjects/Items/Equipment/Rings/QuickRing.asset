@@ -14,14 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Quick Ring
   Price: 3000
+  IsUnique: 0
   ItemSprite: {fileID: -4061852576441739039, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
+  Description: A winged ring with a red gem.
   PositionInInventory: -1
   EnumItemType: 1
+  HpModifier: 0
+  MpModifier: 0
   AttackModifier: 0
   DefenseModifier: 0
   AgilityModifier: 5
   MovementModifier: 0
   EquipmentForClass: 00000000010000000200000003000000
   EquipmentType: 1
+  AttackRange: 0
+  AreaOfEffect: 0
+  BattleSprite: {fileID: 0}
   IsEquipped: 0

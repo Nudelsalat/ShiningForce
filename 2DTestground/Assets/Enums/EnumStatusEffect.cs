@@ -6,7 +6,7 @@
     confused = 1 << 1,
     slowed = 1 << 2,
     silent = 1 << 3,
-    sleep = 1 << 4,
+    asleep = 1 << 4,
     boosted = 1 << 5,
     cursed = 1 << 6,
     hasted = 1 << 7,

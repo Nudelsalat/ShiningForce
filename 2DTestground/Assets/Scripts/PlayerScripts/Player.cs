@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 
@@ -11,9 +12,12 @@ public class Player : MonoBehaviour
     public LayerMask StairColliderRightUp;
     public static bool IsInDialogue = false;
     public static bool InputDisabledInDialogue = false;
-    public static bool InputDisabledInEvent = false;
     public static bool InputDisabledAiBattle = false;
     public static bool InputDisabledInAttackPhase = false;
+    public static bool InputDisabledInEvent { get; private set; }
+
+    public static bool InWarp = false;
+    public static bool _doUnsetInputDisabledInEvent = false;
     public static EnumMenuType PlayerIsInMenu = EnumMenuType.none;
     public GameObject _interactionSelector;
     
@@ -51,8 +55,20 @@ public class Player : MonoBehaviour
         MovePoint.position = position;
     }
 
+    public void SetInputDisabledInEvent() {
+        InputDisabledInEvent = true;
+        _doUnsetInputDisabledInEvent = false;
+    }
+
+    public void UnsetInputDisabledInEvent() {
+        var isSetActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+        _doUnsetInputDisabledInEvent = true;
+        StartCoroutine(WaitTillEndOfFrame(isSetActive));
+    }
+
     private void HandleInput() {
-        if (InputDisabledInDialogue || InputDisabledInEvent || InputDisabledInAttackPhase || PlayerIsInMenu != EnumMenuType.none) {
+        if (InputDisabledInDialogue || Player.InWarp || InputDisabledInEvent || InputDisabledInAttackPhase || PlayerIsInMenu != EnumMenuType.none) {
             _movement.x = _movement.y = 0;
             return;
         } else if (IsInDialogue) {
@@ -138,6 +154,14 @@ public class Player : MonoBehaviour
             }
             MovePoint.position += new Vector3(0f, _movement.y, 0f);
             _animator.speed = 2;
+        }
+    }
+
+    IEnumerator WaitTillEndOfFrame(bool wasActive) {
+        yield return new WaitForEndOfFrame();
+        if (_doUnsetInputDisabledInEvent) {
+            InputDisabledInEvent = false;
+            gameObject.SetActive(wasActive);
         }
     }
 }
