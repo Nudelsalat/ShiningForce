@@ -10,6 +10,7 @@
 /2DTestground/[Ll]ogs/
 /2DTestground/[Uu]ser[Ss]ettings/
 /2DTestground/Library/ArtifactDB
+/[Bb]uild/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
