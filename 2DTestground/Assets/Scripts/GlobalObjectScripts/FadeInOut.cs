@@ -32,7 +32,7 @@ namespace Assets.Scripts.GlobalObjectScripts {
             } else if(!_toBlack && _canvasGroup.alpha > 0) {
                 _canvasGroup.alpha -= Time.deltaTime * _speed;
             } else if (_toBlack) {
-                _toBlack = false;
+                StartCoroutine(StayBlackForSeconds(0.2f));
             } else if (_doExecute) {
                 _doExecute = false;
                 Player.InWarp = false;
@@ -52,6 +52,11 @@ namespace Assets.Scripts.GlobalObjectScripts {
             _canvasGroup.alpha = 0;
             _toBlack = true;
             _speed = speed;
+        }
+
+        IEnumerator StayBlackForSeconds(float time) {
+            yield return new WaitForSeconds(time);
+            _toBlack = false;
         }
     }
 }

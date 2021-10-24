@@ -84,7 +84,7 @@ namespace Assets.Scripts.Menus {
         
         // Update is called once per frame
         void Update() {
-            if (Player.PlayerIsInMenu != EnumMenuType.priestMenu) {
+            if (Player.PlayerIsInMenu != EnumMenuType.priestMenu || Player.InputDisabledInEvent) {
                 return;
             }
             GetInputDirection();

@@ -12,6 +12,10 @@ namespace Assets.Scripts.GlobalObjectScripts.Audio {
         void Start() {
             var audioManager = AudioManager.Instance;
             Debug.Log($"Audiomanager: {audioManager}.");
+            var currentlyPlaying = audioManager.GetCurrentTrackName();
+            if (AudioFileName.Equals(currentlyPlaying, StringComparison.OrdinalIgnoreCase)) {
+                return;
+            }
             audioManager.StopAll();
             var length = audioManager.Play(AudioFileName);
             if (length <= 0.1f) {

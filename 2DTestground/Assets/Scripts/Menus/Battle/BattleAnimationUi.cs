@@ -410,9 +410,10 @@ namespace Assets.Scripts.Menus.Battle {
 
             yield return new WaitForSeconds(delay);
             while (Math.Abs(_enemyUnitSpawn.transform.position.x - enemyPoint.x) > 0.0001f)  {
-                _enemyUnitSpawn.transform.position = Vector3.MoveTowards(_enemyUnitSpawn.transform.position, enemyPoint, _fadeInMovementPerFrame);
-                _forceUnitSpawn.transform.position = Vector3.MoveTowards(_forceUnitSpawn.transform.position, forcePoint, _fadeInMovementPerFrame);
-                _backgroundImage.transform.position = Vector3.MoveTowards(_backgroundImage.transform.position, background, _fadeInMovementPerFrame/2);
+                _enemyUnitSpawn.transform.position = Vector3.MoveTowards(_enemyUnitSpawn.transform.position, enemyPoint, _fadeInMovementPerFrame*Time.timeScale);
+                _forceUnitSpawn.transform.position = Vector3.MoveTowards(_forceUnitSpawn.transform.position, forcePoint, _fadeInMovementPerFrame * Time.timeScale);
+                _backgroundImage.transform.position = Vector3.MoveTowards(_backgroundImage.transform.position, background, _fadeInMovementPerFrame * Time.timeScale / 2);
+
                 yield return null;
             }
 
@@ -466,7 +467,7 @@ namespace Assets.Scripts.Menus.Battle {
             targetImage.material.SetTexture("_DissolveTex", DissolveTexture2D);
             var dissolve = 0f;
             while (dissolve < 1) {
-                dissolve += 0.005f;
+                dissolve += 0.005f * Time.timeScale;
                 weaponImage.material.SetFloat("_Threshold", dissolve);
                 targetImage.material.SetFloat("_Threshold", dissolve);
                 yield return null;

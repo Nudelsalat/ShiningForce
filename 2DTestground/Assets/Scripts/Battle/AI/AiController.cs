@@ -57,6 +57,17 @@ namespace Assets.Scripts.Battle.AI {
                     break;
                 case EnumAiState.MoveCursorToUnit:
                     if (_cursor.UnitReached && !Player.IsInDialogue) {
+                        _state = EnumAiState.None;
+                        var currentCharacter = _battleController.GetCurrentUnit().GetCharacter();
+                        if (currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.asleep)) {
+                            if (currentCharacter.CheckWakeup()) {
+                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name} woke up!");
+                            } else {
+                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name} is fast asleep.");
+                                EndAiTurn();
+                                return;
+                            }
+                        }
                         if (_selectedAttackOption?.GetAttackPosition() == null) {
                             StartCoroutine(WaitSeconds(0.75f, EnumAiState.ExecuteAction));
                             return;
@@ -66,7 +77,7 @@ namespace Assets.Scripts.Battle.AI {
                     }
                     break;
                 case EnumAiState.MoveUnit:
-                    if (_cursor.UnitReached) {
+                    if (_cursor.UnitReached && !Player.IsInDialogue) {
                         if (_selectedAttackOption.GetMainTargetPosition() == null) {
                             EndAiTurn();
                             return;

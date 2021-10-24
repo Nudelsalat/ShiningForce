@@ -7126,7 +7126,7 @@ PrefabInstance:
     - target: {fileID: 8336191188669502803, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000008890268
+      value: 0.00001135179
       objectReference: {fileID: 0}
     - target: {fileID: 8413941970227603679, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
@@ -8120,6 +8120,7 @@ GameObject:
   - component: {fileID: 515718433}
   - component: {fileID: 515718435}
   - component: {fileID: 515718430}
+  - component: {fileID: 515718436}
   m_Layer: 0
   m_Name: EnterVisanEvent
   m_TagString: Untagged
@@ -8150,7 +8151,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515718428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -8162,7 +8163,7 @@ MonoBehaviour:
       type: 3}
     Sentences:
     - The door to the church is locked, maybe you could bust it open?
-    FollowUpEvent: {fileID: 0}
+    FollowUpEvent: {fileID: 515718436}
     VoicePitch: 3
 --- !u!114 &515718431
 MonoBehaviour:
@@ -8171,7 +8172,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515718428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -8194,7 +8195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515718428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eef1c7a94d677b4aa10f25875dc0513, type: 3}
   m_Name: 
@@ -8211,7 +8212,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515718428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -8233,7 +8234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515718428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39e6b6d1111fca846aff96757cda0d13, type: 3}
   m_Name: 
@@ -8249,7 +8250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515718428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eef1c7a94d677b4aa10f25875dc0513, type: 3}
   m_Name: 
@@ -8259,6 +8260,22 @@ MonoBehaviour:
   FollowUpEvent: {fileID: 515718430}
   MoveSpeed: 12
   OrientationAfterMove: 2
+--- !u!114 &515718436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515718428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7752db9646efb1d45956735f05e6e7a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreviousSceneName: 02GoblinBattle
+  PreviousTriggerName: RemoveKazin
+  RemoveObjectAfterTrigger: 0
+  FollowUpEvent: {fileID: 0}
 --- !u!1 &521826298
 GameObject:
   m_ObjectHideFlags: 0
@@ -11121,7 +11138,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -11162,7 +11179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eef1c7a94d677b4aa10f25875dc0513, type: 3}
   m_Name: 
@@ -11179,7 +11196,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -11213,7 +11230,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -11234,7 +11251,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -11255,7 +11272,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a3b5c0a73be16849b0d757bf5153c78, type: 3}
   m_Name: 
@@ -11281,7 +11298,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -11303,7 +11320,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eef1c7a94d677b4aa10f25875dc0513, type: 3}
   m_Name: 
@@ -11320,7 +11337,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -11341,7 +11358,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811591552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3856e7311067d14eaaed38d741bf3c0, type: 3}
   m_Name: 
@@ -40951,7 +40968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824969820}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 4.5, z: 0}
+  m_LocalPosition: {x: 4.5, y: 4.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1068013325}

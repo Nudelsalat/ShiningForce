@@ -29,10 +29,10 @@ MonoBehaviour:
   CharStats:
     Level: 3
     Exp: 0
-    CurrentHp: 32
+    CurrentHp: 38
     CurrentMp: 0
     Hp:
-      _baseValue: 32
+      _baseValue: 38
     Mp:
       _baseValue: 0
     Attack:

@@ -71,6 +71,8 @@ MonoBehaviour:
   CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
+  InflictStatusEffectChance: 7
+  InflictStatusEffect: 0
   SpellLevelUps: []
   CharacterInventory:
   - item1: {fileID: 0}

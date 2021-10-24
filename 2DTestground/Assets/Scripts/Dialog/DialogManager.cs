@@ -255,6 +255,7 @@ public class DialogManager : MonoBehaviour {
         var stringBuilder = new StringBuilder();
         var styleTagEncountered = false;
         var closingBraketCount = 0;
+        var letterSpeedUp = 0;
         foreach (var letter in sentence) {
             if (letter == '<') {
                 styleTagEncountered = true;
@@ -274,7 +275,12 @@ public class DialogManager : MonoBehaviour {
                 }
             } else {
                 _dialogText.text += letter;
-                yield return null;
+                if (Time.timeScale > 1f && letterSpeedUp < 2) {
+                    letterSpeedUp++;
+                } else {
+                    letterSpeedUp = 0;
+                    yield return null;
+                }
             }
         }
 

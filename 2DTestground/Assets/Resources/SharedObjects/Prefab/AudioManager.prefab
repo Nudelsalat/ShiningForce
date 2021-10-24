@@ -108,7 +108,7 @@ MonoBehaviour:
   - Name: save
     AudioClip: {fileID: 8300000, guid: 7ee45a6f51d10554baed65c4933e7c97, type: 3}
     Loop: 0
-    Volume: 0.75
+    Volume: 1
     Pitch: 1
     AudioSource: {fileID: 0}
   - Name: movement

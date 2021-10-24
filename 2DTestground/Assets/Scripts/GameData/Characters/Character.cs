@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.GameData.Magic;
+using Assets.Scripts.HelperScripts;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class Character : ScriptableObject {
     public int Id;
@@ -46,6 +48,8 @@ public class Character : ScriptableObject {
 
     private GameItem[] _characterInventory = new GameItem[4];
     private Magic[] _magic = new Magic[4];
+
+    private float _sleepWakeUpChance = 0f;
 
     void OnEnable() {
         CharStats.ClearModifiers();
@@ -140,6 +144,19 @@ public class Character : ScriptableObject {
         sentencesToReturn.AddRange(LevelUpMagic());
 
         return sentencesToReturn;
+    }
+
+    public bool CheckWakeup() {
+        var sleepRoll = Random.Range(0f, 1f);
+        var result = sleepRoll < _sleepWakeUpChance;
+        Debug.Log($"WakupChance: {_sleepWakeUpChance}, wakupRoll: {sleepRoll}");
+        if (result) {
+            _sleepWakeUpChance = 0f;
+            StatusEffects = StatusEffects.Remove(EnumStatusEffect.asleep);
+        } else {
+            _sleepWakeUpChance += 0.3334f;
+        }
+        return result;
     }
 
     private List<string> LevelUpMagic() {

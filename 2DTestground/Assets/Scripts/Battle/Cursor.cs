@@ -42,6 +42,7 @@ public class Cursor : MonoBehaviour {
 
     private AudioManager _audioManager;
     private BattleController _battleController;
+    private DialogManager _dialogManager;
 
     public static Cursor Instance;
 
@@ -68,6 +69,7 @@ public class Cursor : MonoBehaviour {
         _landEffect = LandeffectUi.Instance;
         _quickInfoCharacter = QuickInfoUi.Instance;
         _quickInfoTarget = QuickInfoUiTarget.Instance;
+        _dialogManager = DialogManager.Instance;
         _isMoveInBattleSquares = false;
         _initialSpeed = MoveSpeed;
         MovePoint.parent = null;
@@ -292,7 +294,22 @@ public class Cursor : MonoBehaviour {
         if (Player.IsInDialogue) {
             return;
         }
-        
+
+        if (_currentUnit != null && !Player.InputDisabledAiBattle) {
+            var currentCharacter = _currentUnit.GetCharacter();
+            if (currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.asleep)) {
+                if (currentCharacter.CheckWakeup()) {
+                    _dialogManager.EvokeSingleSentenceDialogue($"{currentCharacter.Name} woke up!");
+                }
+                else {
+                    _dialogManager.EvokeSingleSentenceDialogue($"{currentCharacter.Name} is fast asleep.");
+                    _endTurn = true;
+                    DoClearControlUnit();
+                    return;
+                }
+            }
+        }
+
         if (Math.Abs(Mathf.Abs(_movement.x) - 1f) < 0.01f) {
             if (CheckForCollider(MovePoint.position + new Vector3(_movement.x, 0f, 0f))) {
                 StopMovementAnimationAndNoise();

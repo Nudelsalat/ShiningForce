@@ -40,7 +40,7 @@ MonoBehaviour:
     Attack:
       _baseValue: 16
     Defense:
-      _baseValue: 11
+      _baseValue: 10
     Agility:
       _baseValue: 8
     Movement:
