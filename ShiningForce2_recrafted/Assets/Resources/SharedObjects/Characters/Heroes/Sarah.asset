@@ -81,12 +81,24 @@ MonoBehaviour:
   - Level: 5
     Magic: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
     MagicLevel: 2
-  - Level: 19
+  - Level: 18
     Magic: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
     MagicLevel: 3
   - Level: 30
     Magic: {fileID: 11400000, guid: bb3800fa1d8729c41be71193be9336c3, type: 2}
     MagicLevel: 4
+  - Level: 11
+    Magic: {fileID: 11400000, guid: 096083bcddc4bdf478b8c5047ce8c26e, type: 2}
+    MagicLevel: 2
+  - Level: 16
+    Magic: {fileID: 11400000, guid: 096083bcddc4bdf478b8c5047ce8c26e, type: 2}
+    MagicLevel: 3
+  - Level: 28
+    Magic: {fileID: 11400000, guid: 096083bcddc4bdf478b8c5047ce8c26e, type: 2}
+    MagicLevel: 4
+  - Level: 8
+    Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    MagicLevel: 1
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 950d18b6d3328734f9908d95e85bc824, type: 2}
     item2: 1

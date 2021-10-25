@@ -203,6 +203,9 @@ namespace Assets.Scripts.Battle {
                 case EnumChance.OneIn4:
                     chance = 0.25f;
                     break;
+                case EnumChance.OneIn3:
+                    chance = 0.334f;
+                    break;
                 case EnumChance.OneIn2:
                     chance = 0.5f;
                     break;

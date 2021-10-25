@@ -72,7 +72,7 @@ MonoBehaviour:
   CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
-  InflictStatusEffectChance: 7
+  InflictStatusEffectChance: 8
   InflictStatusEffect: 0
   SpellLevelUps: []
   CharacterInventory:

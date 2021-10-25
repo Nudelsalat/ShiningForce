@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Enums;
 using Assets.Scripts.GameData.Magic;
+using Assets.Scripts.GlobalObjectScripts;
 using Assets.Scripts.HelperScripts;
 using UnityEditor;
 using UnityEngine;
@@ -92,6 +93,18 @@ public class Character : ScriptableObject {
 
         _characterInventory[(int)item.PositionInInventory] = Object.Instantiate(Resources.Load<GameItem>(Constants.ItemEmptyItem));
     }
+
+    public bool TryAddItem(GameItem item) {
+        for (int i = 0; i < 4; i++) {
+            if (_characterInventory[i].IsEmpty()) {
+                item.PositionInInventory = (DirectionType)i;
+                _characterInventory[i] = item;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Equipment GetCurrentEquipment(EnumEquipmentType equipmentType) {
         return (Equipment) _characterInventory.FirstOrDefault(x => x.EnumItemType == EnumItemType.equipment
                                                         && ((Equipment)x).EquipmentType == equipmentType

@@ -117,7 +117,8 @@ namespace Assets.Scripts.Menus.Battle {
                     _exp += ExecuteAttack(isCrit);
                     var isKilled = _unitsKilled.Contains(_nextTarget);
                     _battleAnimationUi.DoAttackAnimation(false, isKilled, isCrit, _spellAnimationPath,  _attackOption.GetMagic()?.MagicType);
-                    _followUpState = isKilled ? EnumAttackPhase.GetNextTarget : EnumAttackPhase.CheckCounter;
+                    _followUpState = isKilled || _nextTarget.GetCharacter().StatusEffects.HasFlag(EnumStatusEffect.asleep)
+                        || _nextTarget.GetCharacter().StatusEffects.HasFlag(EnumStatusEffect.paralyzed) ? EnumAttackPhase.GetNextTarget : EnumAttackPhase.CheckCounter;
                     StartCoroutine(WaitSeconds(1, EnumAttackPhase.DisplayTextUpdateQuickInfo));
                     break;
 
@@ -331,6 +332,17 @@ namespace Assets.Scripts.Menus.Battle {
                                      $" was defeated!");
                         target.CharStats.CurrentHp = 0;
                         _unitsKilled.Add(_nextTarget);
+                        if (_nextTarget is EnemyUnit enemyUnit) {
+                            _gold += enemyUnit.GetGoldDrop();
+                            var itemDrop = enemyUnit.GetDropItem();
+                            if (itemDrop != null) {
+                                _sentences.Add($"{caster.Name.AddColor(Constants.Orange)} found {itemDrop.ItemName.AddColor(Color.green)}");
+                                if (!caster.TryAddItem(itemDrop)) {
+                                    _inventory.AddToBackBag(itemDrop);
+                                    _sentences.Add($"{itemDrop.ItemName.AddColor(Color.green)} was added to the back bag");
+                                }
+                            }
+                        }
                         expScore += (int) ((expBase * (float) damage / target.CharStats.MaxHp()) + expBase);
                     }
                     else {
@@ -415,10 +427,10 @@ namespace Assets.Scripts.Menus.Battle {
                             _sentences.Add(
                                 $"{target.Name.AddColor(Constants.Orange)} is no longer " +
                                 $"{Enum.GetName(typeof(EnumStatusEffect), statusEffect).AddColor(Color.gray)}");
+                            expScore += 10;
                         }
                     }
 
-                    expScore += 5;
                     break;
                 case EnumMagicType.Special:
                     return magic.ExecuteMagicAtLevel(_attacker, _attackOption.GetTargetList(), magicLevel);
@@ -470,14 +482,31 @@ namespace Assets.Scripts.Menus.Battle {
                 currentChar.CharStats.Kills += 1;
                 target.CharStats.Defeats += 1;
                 _unitsKilled.Add(targetUnit);
-                if (targetUnit.GetCharacter() is Monster monster) {
-                    _gold += monster.Gold;
+                if (_nextTarget is EnemyUnit enemyUnit) {
+                    _gold += enemyUnit.GetGoldDrop();
+                    var itemDrop = enemyUnit.GetDropItem();
+                    if (itemDrop != null) {
+                        _sentences.Add($"{currentChar.Name.AddColor(Constants.Orange)} found {itemDrop.ItemName.AddColor(Color.green)}");
+                        if (!currentChar.TryAddItem(itemDrop)) {
+                            _inventory.AddToBackBag(itemDrop);
+                            _sentences.Add($"{itemDrop.ItemName.AddColor(Color.green)} was added to the back bag");
+                        }
+                    }
                 }
                 expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
                                   expBase);
             } else {
                 target.CharStats.CurrentHp -= damage;
                 expScore += (int)(expBase * (float)damage / target.CharStats.MaxHp());
+                var targetCharacter = targetUnit.GetCharacter();
+                if (targetCharacter.StatusEffects.HasFlag(EnumStatusEffect.asleep)) {
+                    // Do not reset wakeup chance, to prevent a frustrating stun-lock situation
+                    // where the only reachable character will be put to sleep over and over again by the same enemy,
+                    // resetting the wakeup-chance to 0
+                    _sentences.Add($"{target.Name.AddColor(Constants.Orange)}" +
+                                   $" woke up!");
+                    targetCharacter.StatusEffects = targetCharacter.StatusEffects.Remove(EnumStatusEffect.asleep);
+                }
             }
 
             if (isStatusEffectTriggeredChar) {

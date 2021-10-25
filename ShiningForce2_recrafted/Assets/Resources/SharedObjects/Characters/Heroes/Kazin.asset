@@ -28,20 +28,20 @@ MonoBehaviour:
   CharacterType: 4
   MovementType: 4
   CharStats:
-    Level: 4
+    Level: 5
     Exp: 0
-    CurrentHp: 13
-    CurrentMp: 13
+    CurrentHp: 11
+    CurrentMp: 9
     Hp:
-      _baseValue: 13
+      _baseValue: 11
     Mp:
-      _baseValue: 13
+      _baseValue: 9
     Attack:
-      _baseValue: 6
+      _baseValue: 5
     Defense:
-      _baseValue: 7
+      _baseValue: 5
     Agility:
-      _baseValue: 10
+      _baseValue: 7
     Movement:
       _baseValue: 5
     MinLevelStats:
@@ -69,14 +69,28 @@ MonoBehaviour:
   ElementalResistance: 1
   CritDamageMultiplier: 1.25
   CritChance: 2
-  CounterChance: 6
+  CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
-  SpellLevelUps: []
+  InflictStatusEffectChance: 7
+  InflictStatusEffect: 0
+  SpellLevelUps:
+  - Level: 12
+    Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    MagicLevel: 3
+  - Level: 25
+    Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
+    MagicLevel: 4
+  - Level: 8
+    Magic: {fileID: 11400000, guid: 096083bcddc4bdf478b8c5047ce8c26e, type: 2}
+    MagicLevel: 1
+  - Level: 19
+    Magic: {fileID: 11400000, guid: 096083bcddc4bdf478b8c5047ce8c26e, type: 2}
+    MagicLevel: 2
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 7a2af82a4f284dd46b25fd524bad1133, type: 2}
     item2: 0
-  - item1: {fileID: 11400000, guid: 53ef62d4a4b2e47489b893cd2838caaa, type: 2}
+  - item1: {fileID: 11400000, guid: 950d18b6d3328734f9908d95e85bc824, type: 2}
     item2: 1
   - item1: {fileID: 0}
     item2: 0
@@ -84,7 +98,7 @@ MonoBehaviour:
     item2: 0
   Magic:
   - item1: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
-    item2: 3
+    item2: 2
   - item1: {fileID: 0}
     item2: 0
   - item1: {fileID: 0}

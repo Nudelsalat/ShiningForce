@@ -10,7 +10,7 @@ TextureImporter:
     second: confused
   - first:
       213: 5961046714670147108
-    second: paralysed
+    second: paralyzed
   - first:
       213: -2606277680237257118
     second: poisoned
@@ -169,7 +169,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: paralysed
+      name: paralyzed
       rect:
         serializedVersion: 2
         x: 112

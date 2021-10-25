@@ -34,7 +34,9 @@ namespace Assets.Scripts.Battle {
         public EnumAiType TriggeredAiTypeSecondary;
         // If unit is a boss, it will get double turns and it's own music
         public bool IsBoss = false;
-        
+        // Can drop item. Will be show in ItemSlot, if a space is free
+        [SerializeField]
+        private GameItem ItemToDrop;
 
         private bool _isTriggered = false;
         private readonly AiData _aiData = new AiData();
@@ -55,10 +57,8 @@ namespace Assets.Scripts.Battle {
             }
 
             _aiData.PercentChance = PercentChance;
-            if (GoldDropForKill >= 0) {
-                if (_character is Monster monster) {
-                    monster.Gold = GoldDropForKill;
-                }
+            if (ItemToDrop != null) {
+                _character.TryAddItem(UnityEngine.Object.Instantiate(ItemToDrop));
             }
         }
 
@@ -74,6 +74,23 @@ namespace Assets.Scripts.Battle {
 
         public AiData GetAiData() {
             return _aiData;
+        }
+
+        public GameItem GetDropItem() {
+            if (ItemToDrop != null) {
+                return UnityEngine.Object.Instantiate(ItemToDrop);
+            }
+            return null;
+        }
+
+        public int GetGoldDrop() {
+            if (GoldDropForKill >= 0) {
+                return GoldDropForKill;
+            } 
+            if (_character is Monster monster) {
+                        return monster.Gold;
+            }
+            return 0;
         }
 
         private void DoTrigger() {

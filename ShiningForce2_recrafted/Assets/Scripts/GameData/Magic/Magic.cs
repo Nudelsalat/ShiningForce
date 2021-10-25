@@ -60,6 +60,18 @@ namespace Assets.Scripts.GameData.Magic {
                                          $" was defeated!");
                             target.CharStats.CurrentHp = 0;
                             BattleController.Instance.RemoveUnitFromBattle(targetUnit);
+                            if (targetUnit is EnemyUnit enemyUnit) {
+                                var inventory = Inventory.Instance;
+                                inventory.AddGold(enemyUnit.GetGoldDrop());
+                                var itemDrop = enemyUnit.GetDropItem();
+                                if (itemDrop != null) {
+                                    sentence.Add($"{caster.Name.AddColor(Constants.Orange)} found {itemDrop.ItemName.AddColor(Color.green)}");
+                                    if (!caster.TryAddItem(itemDrop)) {
+                                        inventory.AddToBackBag(itemDrop);
+                                        sentence.Add($"{itemDrop.ItemName.AddColor(Color.green)} was added to the back bag");
+                                    }
+                                }
+                            }
                             expScore += (int)((expBase * (float)damage / target.CharStats.MaxHp()) +
                                               expBase);
                         } else {
@@ -144,10 +156,11 @@ namespace Assets.Scripts.GameData.Magic {
                                 sentence.Add(
                                     $"{target.Name.AddColor(Constants.Orange)} is no longer " +
                                     $"{Enum.GetName(typeof(EnumStatusEffect), statusEffect).AddColor(Color.gray)}");
+
+                                expScore += 10;
                             }
                         }
 
-                        expScore += 5;
                         break;
                     case EnumMagicType.Special:
                         return 0;

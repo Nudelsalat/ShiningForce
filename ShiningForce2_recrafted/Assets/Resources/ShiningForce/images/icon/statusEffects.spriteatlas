@@ -43,11 +43,11 @@ SpriteAtlas:
   - {fileID: -4934867931516007710, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 1702140063018456075, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 487058810857674891, guid: 5c243616771debe43b42a4d46384c412, type: 3}
-  - {fileID: 5961046714670147108, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: -1336852225406624222, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: -2606277680237257118, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 4353032354580204717, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 4875024473264111021, guid: 5c243616771debe43b42a4d46384c412, type: 3}
+  - {fileID: 5961046714670147108, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 5734650274987545819, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   - {fileID: 6429009691610456554, guid: 5c243616771debe43b42a4d46384c412, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -56,11 +56,11 @@ SpriteAtlas:
   - dead
   - asleep
   - cursed
-  - paralysed
   - boosted
   - poisoned
   - notUsed
   - slowed
+  - paralyzed
   - silent
   - hasted
   m_RenderDataMap: {}

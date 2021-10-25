@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Assets.Enums;
 using Assets.Scripts.GameData;
 using Assets.Scripts.GameData.Magic;
+using Assets.Scripts.HelperScripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -61,9 +62,26 @@ namespace Assets.Scripts.Battle.AI {
                         var currentCharacter = _battleController.GetCurrentUnit().GetCharacter();
                         if (currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.asleep)) {
                             if (currentCharacter.CheckWakeup()) {
-                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name} woke up!");
+                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                                                   $"woke up!");
                             } else {
-                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name} is fast asleep.");
+                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                                                   $"is fast {"asleep".AddColor(Color.grey)}.");
+                                EndAiTurn();
+                                return;
+                            }
+                        }
+                        if (currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.paralyzed)) {
+                            var battleCalc = new BattleCalculator();
+                            if (battleCalc.RollForStatusEffect(EnumChance.OneIn3)) {
+                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                                                   $"is no longer {"paralyzed".AddColor(Color.grey)}!\n" +
+                                                                                   $"But wasted its turn in the process.");
+                                EndAiTurn();
+                                return;
+                            } else {
+                                DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                                                   $"is still {"paralyzed".AddColor(Color.grey)}.");
                                 EndAiTurn();
                                 return;
                             }

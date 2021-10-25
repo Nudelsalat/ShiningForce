@@ -72,15 +72,12 @@ MonoBehaviour:
   CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
-  InflictStatusEffectChance: 7
+  InflictStatusEffectChance: 8
   InflictStatusEffect: 0
   SpellLevelUps:
   - Level: 5
     Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
     MagicLevel: 1
-  - Level: 8
-    Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
-    MagicLevel: 3
   CharacterInventory:
   - item1: {fileID: 11400000, guid: 2d40546688b3628428e5599e0fbc9026, type: 2}
     item2: 1

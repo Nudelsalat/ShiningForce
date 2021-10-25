@@ -36,7 +36,7 @@ MonoBehaviour:
     Mp:
       _baseValue: 0
     Attack:
-      _baseValue: 14
+      _baseValue: 16
     Defense:
       _baseValue: 10
     Agility:
@@ -71,7 +71,7 @@ MonoBehaviour:
   CounterChance: 1
   DoubleAttackChance: 1
   DodgeBaseChance: 1
-  InflictStatusEffectChance: 4
+  InflictStatusEffectChance: 5
   InflictStatusEffect: 16
   SpellLevelUps: []
   CharacterInventory:

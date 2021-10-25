@@ -299,10 +299,29 @@ public class Cursor : MonoBehaviour {
             var currentCharacter = _currentUnit.GetCharacter();
             if (currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.asleep)) {
                 if (currentCharacter.CheckWakeup()) {
-                    _dialogManager.EvokeSingleSentenceDialogue($"{currentCharacter.Name} woke up!");
+                    _dialogManager.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                               $"woke up!");
                 }
                 else {
-                    _dialogManager.EvokeSingleSentenceDialogue($"{currentCharacter.Name} is fast asleep.");
+                    _dialogManager.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                               $"is fast asleep.");
+                    _endTurn = true;
+                    DoClearControlUnit();
+                    return;
+                }
+            }
+            if (currentCharacter.StatusEffects.HasFlag(EnumStatusEffect.paralyzed)) {
+                var battleCalc = new BattleCalculator();
+                if (battleCalc.RollForStatusEffect(EnumChance.OneIn3)) {
+                    DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                                       $"is no longer {"paralyzed".AddColor(Color.grey)}!\n" +
+                                                                       $"But wasted its turn in the process.");
+                    _endTurn = true;
+                    DoClearControlUnit();
+                    return;
+                } else {
+                    DialogManager.Instance.EvokeSingleSentenceDialogue($"{currentCharacter.Name.AddColor(Constants.Orange)} " +
+                                                                       $"is still {"paralyzed".AddColor(Color.grey)}.");
                     _endTurn = true;
                     DoClearControlUnit();
                     return;

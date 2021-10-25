@@ -88,6 +88,7 @@ namespace Assets.Scripts.Battle.AI {
                 result += GetDamageScore();
             }
 
+            Debug.Log($"Ai TotalScore: {result}");
             return result;
         }
 
@@ -168,6 +169,9 @@ namespace Assets.Scripts.Battle.AI {
                     score += 100;
                 }
                 score += damage / target.GetCharacter().CharStats.MaxHp();
+                if (target.GetCharacter().StatusEffects.HasFlag(EnumStatusEffect.asleep)) {
+                    score /= 2;
+                }
             }
             return score;
         }

@@ -28,7 +28,7 @@ public sealed class Inventory {
         }
     }
     private Inventory() {
-        AddGold(100);
+        AddGold(150);
         //_dealsList.Add(Object.Instantiate(Resources.Load<GameItem>(Constants.EquipmentWunderWaffe)));
 
         var bowie = Object.Instantiate(Resources.Load<PartyMember>(Constants.CharacterBowie));
@@ -86,7 +86,7 @@ public sealed class Inventory {
             return "But nothing is inside.";
         }
         foreach (var partyMember in Party) {
-            if (TryAddGameItemToPartyMember(partyMember, gameItem)) {
+            if (partyMember.TryAddItem(gameItem)) {
                 return $"{gameItem.ItemName.AddColor(Color.green)} added to {partyMember.Name.AddColor(Constants.Orange)}!";
             }
         }
