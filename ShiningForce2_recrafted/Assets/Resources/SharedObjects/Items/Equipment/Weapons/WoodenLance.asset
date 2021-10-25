@@ -26,7 +26,7 @@ MonoBehaviour:
   DefenseModifier: 0
   AgilityModifier: 0
   MovementModifier: 0
-  EquipmentForClass: 020000001100000010000000
+  EquipmentForClass: 020000001100000010000000000000000d000000
   EquipmentType: 0
   AttackRange: 1
   AreaOfEffect: 0

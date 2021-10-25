@@ -33,6 +33,6 @@ MonoBehaviour:
   AreaOfEffect: 0
   InflictStatusEffectChance: 3
   InflictStatusEffect: 16
-  BattleSprite: {fileID: -940605257793770967, guid: b27ca876660b96a4499fb3d049cec845,
+  BattleSprite: {fileID: -8015108363999751706, guid: 1c0246de9c4af2b4dbce97fd2ed2db9b,
     type: 3}
   IsEquipped: 0

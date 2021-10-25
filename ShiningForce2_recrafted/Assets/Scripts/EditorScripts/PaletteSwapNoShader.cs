@@ -6,12 +6,12 @@ namespace Assets.Scripts.EditorScripts {
     public class PaletteSwapNoShader  {
 
         //CopiedTexture is the original Texture  which you want to copy.
-        public static Texture2D CopyTexture2D(Texture2D copiedTexture, Texture2D colorPalette, int paletteValue) {
+        public static Texture2D CopyTexture2D(Texture2D copiedTexture, Texture2D colorPalette, int paletteValue, FilterMode filterMode) {
             var originalColors = colorPalette.GetPixels(0, colorPalette.height-1, colorPalette.width,1);
             var newColors = colorPalette.GetPixels(0, paletteValue, colorPalette.width, 1);
             //Create a new Texture2D, which will be the copy.
             Texture2D texture = new Texture2D(copiedTexture.width, copiedTexture.height) {
-                filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp
+                filterMode = filterMode, wrapMode = TextureWrapMode.Clamp
             };
 
 

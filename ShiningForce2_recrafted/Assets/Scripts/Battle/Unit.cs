@@ -85,7 +85,7 @@ namespace Assets.Scripts.Battle {
             if (colorPalette == null || colorPalette.height - 1 <= skinId) {
                 return null;
             }
-            return PaletteSwapNoShader.CopyTexture2D(_spriteRenderer.sprite.texture, colorPalette, skinId);
+            return PaletteSwapNoShader.CopyTexture2D(_spriteRenderer.sprite.texture, colorPalette, skinId, FilterMode.Point);
         }
 
         public Character GetCharacter() {

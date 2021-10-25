@@ -79,7 +79,7 @@ MonoBehaviour:
     Magic: {fileID: 11400000, guid: 1bdf1e88dc3f6e94e99b36877235d730, type: 2}
     MagicLevel: 1
   CharacterInventory:
-  - item1: {fileID: 11400000, guid: 2d40546688b3628428e5599e0fbc9026, type: 2}
+  - item1: {fileID: 11400000, guid: 53ef62d4a4b2e47489b893cd2838caaa, type: 2}
     item2: 1
   - item1: {fileID: 11400000, guid: 7a2af82a4f284dd46b25fd524bad1133, type: 2}
     item2: 0

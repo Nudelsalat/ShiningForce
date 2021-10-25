@@ -36,7 +36,7 @@ MonoBehaviour:
     Mp:
       _baseValue: 0
     Attack:
-      _baseValue: 12
+      _baseValue: 11
     Defense:
       _baseValue: 9
     Agility:

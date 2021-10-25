@@ -26,12 +26,12 @@ MonoBehaviour:
   DefenseModifier: 0
   AgilityModifier: 0
   MovementModifier: 0
-  EquipmentForClass: 0000000004000000010000000300000002000000
+  EquipmentForClass: 000000000400000001000000
   EquipmentType: 0
   AttackRange: 1
   AreaOfEffect: 0
   InflictStatusEffectChance: 7
   InflictStatusEffect: 0
-  BattleSprite: {fileID: 1220984959423326226, guid: 30c8576646a3e2c47a55243fa5bafda0,
+  BattleSprite: {fileID: -7440546752563858597, guid: 1c0246de9c4af2b4dbce97fd2ed2db9b,
     type: 3}
   IsEquipped: 0
