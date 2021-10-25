@@ -1,5 +1,0 @@
-sceneSetups:
-- path: Assets/Scenes/Chapter1/03Visan.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0

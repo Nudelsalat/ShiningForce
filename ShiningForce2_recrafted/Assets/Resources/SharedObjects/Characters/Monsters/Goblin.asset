@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27837ca4f7179e745a6d7184f77a4c72, type: 3}
+  m_Name: Goblin
+  m_EditorClassIdentifier: 
+  Id: 1
+  Name: Goblin
+  IsForce: 0
+  IsPromoted: 0
+  PortraitSprite: {fileID: 0}
+  AnimatorSprite: {fileID: 9100000, guid: 0b01ff4c17cf2084592a75bec9836963, type: 2}
+  _pathToBattleAnimationPrefab: SharedObjects/Prefab/Battle/Animations/Enemies/Goblin
+  ColorPaletteFieldAnimation: {fileID: 0}
+  ColorPaletteBattleAnimation: {fileID: 0}
+  SkinId: 0
+  Voice: 5
+  ClassType: 30
+  CharacterType: 17
+  MovementType: 4
+  CharStats:
+    Level: 0
+    Exp: 0
+    CurrentHp: 6
+    CurrentMp: 0
+    Hp:
+      _baseValue: 6
+    Mp:
+      _baseValue: 0
+    Attack:
+      _baseValue: 8
+    Defense:
+      _baseValue: 5
+    Agility:
+      _baseValue: 6
+    Movement:
+      _baseValue: 5
+    MinLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    MaxLevelStats:
+      Hp: 0
+      Mp: 0
+      Attack: 0
+      Defense: 0
+      Agility: 0
+    HpGrowth: 0
+    MpGrowth: 0
+    AttackGrowth: 0
+    DefenseGrowth: 0
+    AgilityGrowth: 0
+    Kills: 0
+    Defeats: 0
+  StatusEffects: 0
+  StatusImmunities: 0
+  ElementalWeakness: 0
+  ElementalResistance: 0
+  CritDamageMultiplier: 1.25
+  CritChance: 2
+  CounterChance: 1
+  DoubleAttackChance: 1
+  DodgeBaseChance: 1
+  InflictStatusEffectChance: 7
+  InflictStatusEffect: 0
+  SpellLevelUps: []
+  CharacterInventory:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Magic:
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  - item1: {fileID: 0}
+    item2: 0
+  Gold: 15
