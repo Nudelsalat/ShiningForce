@@ -8,10 +8,10 @@ namespace Assets.Scripts.GameData.Trigger {
         public string PreviousTriggerName;
         public bool RemoveObjectAfterTrigger;
 
-        private TriggerStorage _triggerStorage;
+        protected TriggerStorage _triggerStorage;
         protected bool IsAlreadyTriggered = false;
-        private string _sceneToSave;
-        private int _triggerHash;
+        protected string _sceneToSave;
+        protected int _triggerHash;
 
         protected void Start() {
             _triggerStorage = TriggerStorage.Instance;

@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Chapter1/04BatBattle.unity
     guid: a7832933feff17940940280263db0b02
   - enabled: 1
+    path: Assets/Scenes/Chapter1/05SecretHut.unity
+    guid: a5995a36dfbeaf840bec1276713e12ae
+  - enabled: 1
     path: Assets/Scenes/Chapter1/06SoKahruHut.unity
     guid: 0f6fd742e0c40ef4a825015a3665e3d9
   m_configObjects: {}

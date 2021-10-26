@@ -26,6 +26,9 @@ public class Stat {
     public int GetBaseValue() {
         return _baseValue;
     }
+    public void AddToBaseValue(int valueToAdd) {
+        _baseValue += valueToAdd;
+    }
 
     public int GetModifiedValue() {
         var modifiedValue = _baseValue;

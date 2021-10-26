@@ -973,11 +973,13 @@ namespace Assets.Scripts.Battle {
 
                 if (soundFile) {
                     var soundFileName = string.IsNullOrEmpty(soundFile.GetChild(0)?.name) ? "battle1" : soundFile.GetChild(0).name;
-                    _audioManager.StopAll();
-                    var returnValue = _audioManager.Play(soundFileName);
-                    if (Math.Abs(returnValue) < 0.0001f) {
-                        _audioManager.Play("battle1");
-                    }
+                    if (!soundFileName.Equals(_previousTrackName, StringComparison.OrdinalIgnoreCase)) {
+                        _audioManager.StopAll();
+                        var returnValue = _audioManager.Play(soundFileName);
+                        if (Math.Abs(returnValue) < 0.0001f) {
+                            _audioManager.Play("battle1");
+                        }
+                    }                    
                 } else {
                     LoadFallbackAudioFile();
                 }
@@ -1088,9 +1090,15 @@ namespace Assets.Scripts.Battle {
             _player.gameObject.SetActive(true);
             _cursor.gameObject.SetActive(false);
             _overviewCameraMovement.SetPlayerObject(_player.gameObject);
-            _audioManager.StopAll();
             var audioFileToPlay = string.IsNullOrEmpty(_previousTrackName) ? "Town" : _previousTrackName;
-            _audioManager.Play(audioFileToPlay);
+            var currentlyPlaying = _audioManager.GetCurrentTrackName();
+            if (!audioFileToPlay.Equals(currentlyPlaying, StringComparison.OrdinalIgnoreCase)) {
+                _audioManager.StopAll();
+                var returnValue = _audioManager.Play(audioFileToPlay);
+                if (Math.Abs(returnValue) < 0.0001f) {
+                    _audioManager.Play("Town");
+                }
+            }
 
             if (_battleObjects != null) {
                 foreach (Transform t in _battleObjects.GetComponentsInChildren<Transform>(true)) {

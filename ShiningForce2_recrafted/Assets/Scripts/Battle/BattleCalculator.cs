@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Battle {
-    class BattleCalculator {
+    public class BattleCalculator {
 
         public float GetMaxDamage(int attack, int defense, int landEffect) {
             var result = (attack - defense) * (1f - ((float)landEffect / 100));

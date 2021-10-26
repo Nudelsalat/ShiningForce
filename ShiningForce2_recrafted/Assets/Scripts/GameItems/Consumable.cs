@@ -20,7 +20,7 @@ class Consumable : GameItem {
     }
 
     public bool TryUseItem(Unit user, List<Unit> usedOnCharacter, bool usedInBattle = true) {
-        if (!CheckIfUsefull(usedOnCharacter, usedInBattle)) {
+        if (!CheckIfUseable(usedOnCharacter, usedInBattle)) {
             return false;
         }
 
@@ -32,7 +32,7 @@ class Consumable : GameItem {
         return true;
     }
 
-    private bool CheckIfUsefull(List<Unit> targets, bool useInBattle = true) {
+    private bool CheckIfUseable(List<Unit> targets, bool useInBattle = true) {
         var dialogManager = DialogManager.Instance;
         var canBeUsed = false;
         var sentences = new List<string>();

@@ -22,8 +22,8 @@ namespace Assets.Scripts.GameData.Magic {
         public int[] ManaCost = new int[4];
         public RuntimeAnimatorController[] SpellAnimatorController = new RuntimeAnimatorController[4];
 
-        private DialogManager _dialogManager;
-        private BattleCalculator _battleCalculator;
+        protected DialogManager _dialogManager;
+        protected BattleCalculator _battleCalculator;
 
         public bool IsEmpty() {
             return SpellName.Equals("");
