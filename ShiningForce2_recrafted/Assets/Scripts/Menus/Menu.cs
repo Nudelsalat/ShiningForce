@@ -358,7 +358,7 @@ public class Menu : MonoBehaviour
                 case EnumCurrentMenu.deriveSelectMember:
                     var selectedPartyMember = _party[_currentListItemSelected];
                     if (_inventory.TryAddGameItemToPartyMember(selectedPartyMember, _currentBackBagItem)) {
-                        _inventory.RemoveFromBackBag(_currentBackBagItem);
+                        _inventory.RemoveFromBackBag(_currentBackBagItem, false);
                         _dialogManager.EvokeSingleSentenceDialogue($"{_currentBackBagItem.ItemName.AddColor(Color.green)} added " +
                                                                    $"to {selectedPartyMember.Name.AddColor(Constants.Orange)}");
 
@@ -369,7 +369,7 @@ public class Menu : MonoBehaviour
                         OpenBackBagMenu();
                         return;
                     } else {
-                        _dialogManager.EvokeSingleSentenceDialogue($"{selectedPartyMember.Name.AddColor(Constants.Orange)} has" +
+                        _dialogManager.EvokeSingleSentenceDialogue($"{selectedPartyMember.Name.AddColor(Constants.Orange)} has " +
                                                                    $"no space in the inventory.");
                     }
                     break;
@@ -559,6 +559,10 @@ public class Menu : MonoBehaviour
                     "This item can be used for forging\n" +
                     "You need a forge to combine this item with another item.");
                 break;
+            case EnumItemType.keyitem:
+                _dialogManager.EvokeSingleSentenceDialogue(
+                    "This item has a particular purpose...\n");
+                break;
             case EnumItemType.promotion:
                 _dialogManager.EvokeSingleSentenceDialogue(
                     "This is a promotion Item.\n" +
@@ -662,7 +666,7 @@ public class Menu : MonoBehaviour
 
     private void DropBackBagItemAnswer(bool answer) {
         if (answer) {
-            _inventory.RemoveFromBackBag(_currentBackBagItem);
+            _inventory.RemoveFromBackBag(_currentBackBagItem, true);
             OpenBackBagMenu();
         }
         _currentBackBagItem = null;

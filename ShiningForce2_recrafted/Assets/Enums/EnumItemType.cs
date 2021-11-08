@@ -9,6 +9,7 @@ public enum EnumItemType {
     equipment,
     forgeable,
     promotion,
+    keyitem,
     none
 }
 

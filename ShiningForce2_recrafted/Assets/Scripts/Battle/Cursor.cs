@@ -17,7 +17,6 @@ public class Cursor : MonoBehaviour {
     public float MoveSpeed = 8f;
     public LayerMask Collider;
     public LayerMask BattleCollider;
-    public EnumMenuType PlayerIsInMenu = EnumMenuType.none;
 
     public bool UnitReached = true;
     
@@ -27,7 +26,7 @@ public class Cursor : MonoBehaviour {
     private Tilemap _terrainTileMap;
     private Queue<Vector3> _setPath;
     private LandeffectUi _landEffect;
-    private AudioClip _audioClipMovementNoise;
+    private AudioClip _audioClipSelectionNoise;
     private Transform _areaOfEffectSpawnPoint;
     private GameObject _areaOfEffect;
     private QuickInfoUi _quickInfoCharacter;
@@ -36,6 +35,7 @@ public class Cursor : MonoBehaviour {
     private bool _endTurn = false;
     private bool _clearControlUnitAfterMovement = false;
     private bool _movementNoise = false;
+    private bool _cursorHover = false;
     private float _movementNoiseInterval = 0.2f;
     private Unit _currentUnit = null;
     private float _initialSpeed;
@@ -58,7 +58,7 @@ public class Cursor : MonoBehaviour {
         }
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _audioClipMovementNoise = Resources.Load<AudioClip>(Constants.SoundMovement);
+        _audioClipSelectionNoise = Resources.Load<AudioClip>(Constants.SoundMovement);
         _areaOfEffectSpawnPoint = transform.Find("SpawnAreaOfEffect").GetComponent<Transform>();
     }
 
@@ -82,7 +82,7 @@ public class Cursor : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InWarp) {
+        if (Player.InputDisabledInDialogue || Player.IsInDialogue || Player.InputDisabledInEvent || Player.InWarp || _cursorHover) {
             _movement.x = _movement.y = 0;
             return;
         }
@@ -371,14 +371,13 @@ public class Cursor : MonoBehaviour {
             UnitReached = false;
             return true;
         }
-        //Need to wait until uint ACTUALLY reached the destination,
+        //Need to wait until unit ACTUALLY reached the destination,
         //therefor we don't check for _setPath.Size == 1...
         if (!UnitReached) {
-            _movementNoiseInterval = 0.2f;
-            SetControlUnit(_battleController.GetCurrentUnit());
-            _quickInfoCharacter.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
-            MoveSpeed = _initialSpeed;
-            UnitReached = true;
+            // TEST
+            _cursorHover = true;
+            StartCoroutine("DoShortCursorHover");
+            return true;
         }
 
         return false;
@@ -441,6 +440,20 @@ public class Cursor : MonoBehaviour {
         while (true) {
             _audioManager.PlaySFX(Constants.SfxMovement);
             yield return new WaitForSeconds(_movementNoiseInterval);
+        }
+    }
+
+    IEnumerator DoShortCursorHover() {
+        yield return new WaitForSeconds(0.35f);
+        _movementNoiseInterval = 0.2f;
+        SetControlUnit(_battleController.GetCurrentUnit());
+        _quickInfoCharacter.ShowQuickInfo(_battleController.GetCurrentUnit().GetCharacter());
+        MoveSpeed = _initialSpeed;
+        _audioManager.PlaySFX(_audioClipSelectionNoise);
+        _cursorHover = false;
+        UnitReached = true;
+        if (_clearControlUnitAfterMovement) {
+            DoClearControlUnit();
         }
     }
 }

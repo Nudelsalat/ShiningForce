@@ -171,8 +171,8 @@ public sealed class Inventory {
         return Backpack;
     }
 
-    public void RemoveFromBackBag(GameItem item) {
-        if (item.IsUnique) {
+    public void RemoveFromBackBag(GameItem item, bool addToDeals) {
+        if (addToDeals && item.IsUnique) {
             AddToDeals(item);
         }
         Backpack.Remove(item);

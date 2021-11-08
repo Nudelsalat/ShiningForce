@@ -156,7 +156,7 @@ namespace Assets.Scripts.Menus {
                         InitializeSave();
                         break;
                     case "Promote":
-                        //TODO HandlePromote();
+                        HandlePromote();
                         break;
                 }
             }
@@ -334,6 +334,13 @@ namespace Assets.Scripts.Menus {
                 _sentences.Add("O...okay\n");
             }
             _inMenu = false;
+        }
+
+        private void HandlePromote() {
+            // TODO TODO TODO
+            _currentPriestMenu = EnumCurrentPriestMenu.promote;
+            _dialogManager.EvokeSingleSentenceDialogue("SORRY THIS IS NOT YET IMPLEMENTED...");
+            _fourWayButtonMenu.OpenButtons();
         }
 
         private void CloseMenuForGood() {

@@ -7,6 +7,10 @@ namespace Assets.Scripts.GameData.Trigger {
     public class NewGameStorageTrigger : BaseStorageTrigger, IEventTrigger {
         public MonoBehaviour FollowUpEvent;
 
+        public new void Start() {
+            base.Start();
+        }
+
         public void EventTrigger() {
             if (!base.IsAlreadyTriggered) {
                 var inventory = Inventory.Instance;

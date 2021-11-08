@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 namespace Assets.Scripts.GameData.Trigger {
     public class CollisionStorageTrigger : BaseStorageTrigger, IEventTrigger {
         public MonoBehaviour FollowUpEvent;
-        
+
         void OnTriggerEnter2D(Collider2D collider) {
             if (collider.CompareTag("Player")) {
                 if (FollowUpEvent != null) {

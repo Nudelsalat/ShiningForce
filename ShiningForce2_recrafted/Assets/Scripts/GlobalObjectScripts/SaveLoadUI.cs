@@ -19,7 +19,8 @@ class SaveLoadUI : MonoBehaviour {
             SavePlayerPosition();
         }
         if (Input.GetKeyDown(KeyCode.W)) {
-            LoadPlayerPosition("newGame");
+            Debug.Log("QuickLoad button disabled!");
+            //LoadPlayerPosition(Inventory.Instance.GetSaveFileName());
         }
     }
 

@@ -212,13 +212,13 @@ namespace Assets.Scripts.Menus {
 
                 _previousState = _enumCurrentMenuType;
                 _enumCurrentMenuType = EnumCurrentMerchantMenu.buyToWhom;
-                CloseBuyMenu();
+                CloseBuyMenu(false);
                 return;
             }
 
             if (Input.GetButtonUp("Back")) {
                 _enumCurrentMenuType = EnumCurrentMerchantMenu.none;
-                CloseBuyMenu();
+                CloseBuyMenu(true);
                 _fourWayButtonMenu.OpenButtons();
             }
         }
@@ -368,7 +368,7 @@ namespace Assets.Scripts.Menus {
         private void OpenBuyMenu(List<GameItem> itemsToSellList) {
             if (itemsToSellList.Count <= 0) {
                 _enumCurrentMenuType = EnumCurrentMerchantMenu.none;
-                CloseBuyMenu();
+                CloseBuyMenu(true);
                 _fourWayButtonMenu.OpenButtons();
                 _dialogManager.EvokeSingleSentenceDialogue("Sorry, I'm out of stock...");
                 return;
@@ -381,9 +381,11 @@ namespace Assets.Scripts.Menus {
             LoadItemsToBuy();
         }
 
-        private void CloseBuyMenu() {
+        private void CloseBuyMenu(bool closeGold) {
             _animatorObjectsForSale.SetBool("isOpen", false);
-            CloseGold();
+            if (closeGold) {
+                CloseGold();
+            }
         }
 
         private void OpenSellMenu() {

@@ -211,6 +211,8 @@ public class DialogManager : MonoBehaviour {
             _inventory.GetPartyMemberNameByEnum(EnumCharacterType.kazin));
         sentence = sentence.Replace("#SLADE#",
             _inventory.GetPartyMemberNameByEnum(EnumCharacterType.slade));
+        //sentence = sentence.Replace("#GERHALT#",
+        //    _inventory.GetPartyMemberNameByEnum(EnumCharacterType.gerhalt));
         return sentence;
     }
 

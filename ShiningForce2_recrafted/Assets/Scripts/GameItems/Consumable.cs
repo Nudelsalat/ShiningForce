@@ -38,11 +38,14 @@ class Consumable : GameItem {
         var sentences = new List<string>();
         foreach (var target in targets) {
             var usedOnCharacter = target.GetCharacter();
+            var charIsDead = usedOnCharacter.StatusEffects.HasFlag(EnumStatusEffect.dead);
             var toRestore = 0;
             switch (Magic.MagicType) {
                 case EnumMagicType.Heal:
                     toRestore = usedOnCharacter.CharStats.MaxHp() - usedOnCharacter.CharStats.CurrentHp;
-                    if (toRestore == 0) {
+                    if (charIsDead) {
+                        sentences.Add($"It's a bit to late for that now...\nLet's find a priest for that.");
+                    } else if (toRestore == 0) {
                         sentences.Add($"{usedOnCharacter.Name.AddColor(Constants.Orange)} does not need any healing!");
                     } else {
                         canBeUsed = true;
@@ -59,7 +62,9 @@ class Consumable : GameItem {
 
                     break;
                 case EnumMagicType.RestoreBoth:
-                    if (usedOnCharacter.CharStats.MaxHp() == usedOnCharacter.CharStats.CurrentHp &&
+                    if (charIsDead) {
+                        sentences.Add($"It's a bit to late for that now...\nLet's find a priest for that.");
+                    } else if (usedOnCharacter.CharStats.MaxHp() == usedOnCharacter.CharStats.CurrentHp &&
                         usedOnCharacter.CharStats.MaxMp() == usedOnCharacter.CharStats.CurrentMp) {
                         sentences.Add($"{usedOnCharacter.Name.AddColor(Constants.Orange)} does not need any healing!");
                         return false;

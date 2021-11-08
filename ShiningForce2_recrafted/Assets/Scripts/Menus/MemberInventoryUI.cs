@@ -267,7 +267,9 @@ public class MemberInventoryUI : MonoBehaviour{
         yield return new WaitForSeconds(0.1f);
         if (!_showInventory) {
             transform.gameObject.SetActive(false);
-            Gold.SetActive(false);
+            if (!_animatorGold.GetBool("isOpen")) {
+                Gold.SetActive(false);
+            }
         }
     }
 }

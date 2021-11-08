@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c5cbe6f3a8d394fb90b701d4d02ec2, type: 3}
-  m_Name: ItemEmpty
+  m_Script: {fileID: 11500000, guid: 26f1eb1c28e286349ac4e01a0b130296, type: 3}
+  m_Name: LunarDrink
   m_EditorClassIdentifier: 
-  ItemName: 
-  Price: 0
+  ItemName: Lunar Drink
+  Price: 5000
   IsUnique: 0
-  ItemSprite: {fileID: 8807543358907615835, guid: 0e3d7f9811d80574693048be27c1a0b9,
+  ItemSprite: {fileID: -7879916406034808178, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  Description: 
+  Description: May cure a special curse.
   PositionInInventory: -1
-  EnumItemType: 5
+  EnumItemType: 4
+  Magic: {fileID: 0}
+  MagicLevel: 0

@@ -11,6 +11,7 @@ namespace Assets.Scripts.GameData.Characters {
     [Serializable]
     public class SerializableCharacter {
         public string ResourcePath;
+        public string Name;
         public bool IsLeader;
         public bool IsActivePartyMember;
         public bool IsPromoted;
@@ -30,6 +31,7 @@ namespace Assets.Scripts.GameData.Characters {
                     character.name.Replace("(Clone)", ""));
             }
 
+            Name = character.Name;
             IsPromoted = character.IsPromoted;
             ClassType = character.ClassType;
             CharStats = character.CharStats;
@@ -54,6 +56,7 @@ namespace Assets.Scripts.GameData.Characters {
                 partyMember.activeParty = this.IsActivePartyMember;
             }
 
+            character.Name = string.IsNullOrEmpty(Name) ? character.Name : Name;
             character.IsPromoted = this.IsPromoted;
             character.CharStats = this.CharStats;
             character.ClassType = this.ClassType;
