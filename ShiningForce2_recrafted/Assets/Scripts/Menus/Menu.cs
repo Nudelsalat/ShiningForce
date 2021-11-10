@@ -1100,7 +1100,6 @@ public class Menu : MonoBehaviour
                     break;
                 case EnumCurrentMenu.dropBackBag:
                     HandelBackBagDropMenu();
-                    //TODO
                     break;
                 default:
                     Debug.LogError($"{Enum.GetName(typeof(EnumCurrentMenu), _enumCurrentMenuType)} is not valid during HandleBackBagItems.");

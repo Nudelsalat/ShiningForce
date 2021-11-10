@@ -488,6 +488,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 9
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &341609648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3138,6 +3139,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 9
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &827555719
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3463,6 +3465,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 9
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &875385841
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14847,6 +14850,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 9
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &956560795
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21948,6 +21952,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &1639291148
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22159,6 +22164,7 @@ Transform:
   - {fileID: 689389796}
   - {fileID: 610182901}
   - {fileID: 1081172731}
+  - {fileID: 1897132635}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22302,6 +22308,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 9
   TriggeredAiTypeSecondary: 4
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &1746954687
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25320,7 +25327,7 @@ PrefabInstance:
     - target: {fileID: 8336191188669502803, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000005747471
+      value: 0.000020174743
       objectReference: {fileID: 0}
     - target: {fileID: 8413941970227603679, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
@@ -28143,6 +28150,54 @@ MonoBehaviour:
   sceneToWarpTo: 02GoblinBattle
   id: 0
   audioClip: {fileID: 8300000, guid: b7898fd9f85c6db438227321f2d6ab25, type: 3}
+--- !u!1 &1897132634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1897132635}
+  - component: {fileID: 1897132636}
+  m_Layer: 0
+  m_Name: RemoveBlocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1897132635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897132634}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1725314925}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1897132636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897132634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1bdd7d924b8a944a997cab1e2aa7a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreviousSceneName: 
+  PreviousTriggerName: 
+  RemoveObjectAfterTrigger: 0
+  FollowUpEvent: {fileID: 0}
+  GameObjectToRemove: {fileID: 1908312966}
 --- !u!1 &1908312966
 GameObject:
   m_ObjectHideFlags: 0

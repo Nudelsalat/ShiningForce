@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: eec4fc743327d404987ad8d0a80300fa
+guid: a35ab736578b87748b750ed26086ed81
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3888219867043516937
-    second: peter_0
+      213: -5155151715028084137
+    second: Reaver_battle_0
   - first:
-      213: -2965883510676716320
-    second: peter_1
+      213: -5387172789906507264
+    second: Reaver_battle_1
   - first:
-      213: -840273336815929704
-    second: peter_2
+      213: 5420261969591718729
+    second: Reaver_battle_2
   - first:
-      213: 8758502168174804563
-    second: peter_3
+      213: 437560681108673975
+    second: Reaver_battle_3
   - first:
-      213: -7576594570246794542
-    second: peter_4
+      213: -1104678903975886960
+    second: Reaver_battle_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: peter_0
+      name: Reaver_battle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,14 +120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 902debf4e5bb5f530800000000000000
-      internalID: 3888219867043516937
+      spriteID: 75a518e04d83578b0800000000000000
+      internalID: -5155151715028084137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_1
+      name: Reaver_battle_1
       rect:
         serializedVersion: 2
         x: 128
@@ -141,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e40de439a017d6d0800000000000000
-      internalID: -2965883510676716320
+      spriteID: 00af8f9d3eaec35b0800000000000000
+      internalID: -5387172789906507264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_2
+      name: Reaver_battle_2
       rect:
         serializedVersion: 2
         x: 256
@@ -162,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 896bad42adfb654f0800000000000000
-      internalID: -840273336815929704
+      spriteID: 943d2172b83a83b40800000000000000
+      internalID: 5420261969591718729
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_3
+      name: Reaver_battle_3
       rect:
         serializedVersion: 2
         x: 384
@@ -183,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35e3c8241537c8970800000000000000
-      internalID: 8758502168174804563
+      spriteID: 7b519250f17821600800000000000000
+      internalID: 437560681108673975
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_4
+      name: Reaver_battle_4
       rect:
         serializedVersion: 2
         x: 512
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d2594181678ad690800000000000000
-      internalID: -7576594570246794542
+      spriteID: 09f36a1c3646ba0f0800000000000000
+      internalID: -1104678903975886960
       vertices: []
       indices: 
       edges: []

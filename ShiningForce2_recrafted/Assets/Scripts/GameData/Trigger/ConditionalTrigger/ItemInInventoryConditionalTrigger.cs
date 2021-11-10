@@ -1,10 +1,7 @@
-﻿using Assets.Scripts.GameData.Chests;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.GameData.Trigger.ConditionalTrigger {
-    public class ItemInInventoryConditionalTrigger : BaseConditionalTrigger {
+    public class ItemInInventoryConditionalTrigger : BaseConditionalTrigger, IEventTrigger {
         public GameItem ItemToFind;
         public bool RemoveItemWhenFound;
 

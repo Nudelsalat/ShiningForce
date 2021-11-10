@@ -19,7 +19,7 @@ namespace Assets.Scripts.Menus.MainMenu {
 
             var inventor = Inventory.Instance;
             inventor.SetSaveFileName(fileName);
-            inventor.GetPartyMemberByEnum(EnumCharacterType.bowie).Name = fileName;
+            inventor.GetPartyMemberByEnum(EnumCharacterType.Bowie).Name = fileName;
             var warpGameObject = new GameObject();
             warpGameObject.AddComponent<WarpToScene>();
             var warp = warpGameObject.GetComponent<WarpToScene>();

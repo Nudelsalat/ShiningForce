@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: eec4fc743327d404987ad8d0a80300fa
+guid: 1d5098ab23128e54cb8ae1e0de5593d0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3888219867043516937
-    second: peter_0
+      213: -4498462748066335392
+    second: Raziel1_battle_0
   - first:
-      213: -2965883510676716320
-    second: peter_1
+      213: 5125646232250716845
+    second: Raziel1_battle_1
   - first:
-      213: -840273336815929704
-    second: peter_2
+      213: -3424322899274700853
+    second: Raziel1_battle_2
   - first:
-      213: 8758502168174804563
-    second: peter_3
+      213: 8031499076852848700
+    second: Raziel1_battle_3
   - first:
-      213: -7576594570246794542
-    second: peter_4
+      213: -854162403127889046
+    second: Raziel1_battle_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: peter_0
+      name: Raziel1_battle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,14 +120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 902debf4e5bb5f530800000000000000
-      internalID: 3888219867043516937
+      spriteID: 065bd2ae6ff3291c0800000000000000
+      internalID: -4498462748066335392
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_1
+      name: Raziel1_battle_1
       rect:
         serializedVersion: 2
         x: 128
@@ -141,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e40de439a017d6d0800000000000000
-      internalID: -2965883510676716320
+      spriteID: da29f956714f12740800000000000000
+      internalID: 5125646232250716845
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_2
+      name: Raziel1_battle_2
       rect:
         serializedVersion: 2
         x: 256
@@ -162,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 896bad42adfb654f0800000000000000
-      internalID: -840273336815929704
+      spriteID: bc7ee78477c5a70d0800000000000000
+      internalID: -3424322899274700853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_3
+      name: Raziel1_battle_3
       rect:
         serializedVersion: 2
         x: 384
@@ -183,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35e3c8241537c8970800000000000000
-      internalID: 8758502168174804563
+      spriteID: c3811b19bdd957f60800000000000000
+      internalID: 8031499076852848700
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: peter_4
+      name: Raziel1_battle_4
       rect:
         serializedVersion: 2
         x: 512
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d2594181678ad690800000000000000
-      internalID: -7576594570246794542
+      spriteID: a637115e1d76524f0800000000000000
+      internalID: -854162403127889046
       vertices: []
       indices: 
       edges: []

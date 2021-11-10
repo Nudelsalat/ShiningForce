@@ -1,14 +1,11 @@
 ﻿using Assets.Scripts.GameData.Chests;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameData.Trigger.ConditionalTrigger {
-    public abstract class OtherTriggerConditionalTrigger : BaseConditionalTrigger {
+    public class OtherTriggerConditionalTrigger : BaseConditionalTrigger, IEventTrigger {
         public string TriggeredSceneName;
         public string TriggeredTriggerName;
 
-        protected TriggerStorage _triggerStorage;
-        protected bool IsAlreadyTriggered;
+        private TriggerStorage _triggerStorage;
 
 
         public void EventTrigger() {

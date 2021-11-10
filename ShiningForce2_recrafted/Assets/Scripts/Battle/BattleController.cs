@@ -859,7 +859,6 @@ namespace Assets.Scripts.Battle {
         private void SetNewTurnOrder() {
             var unitList = new List<Tuple<Unit, float>>();
             foreach (var enemy in _enemies) {
-                //TODO Bosses double turn?
                 var agility = GetRandomAgilityValue(enemy);
                 unitList.Add(new Tuple<Unit, float>(enemy,agility));
                 if (enemy is EnemyUnit enemyUnit) {
@@ -869,7 +868,6 @@ namespace Assets.Scripts.Battle {
                 }
             }
             foreach (var force in _force) {
-                //TODO Bosses double turn?
                 var agility = GetRandomAgilityValue(force);
                 unitList.Add(new Tuple<Unit, float>(force, agility));
             }

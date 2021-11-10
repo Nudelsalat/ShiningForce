@@ -135,7 +135,8 @@ public sealed class Inventory {
     public string GetPartyMemberNameByEnum(EnumCharacterType enumCharacterType) {
         var partyMember = Party.FirstOrDefault(x => x.CharacterType == enumCharacterType);
         if (partyMember == null) {
-            return "PartyMemberDoesNotExist";
+            var enumName = Enum.GetName(typeof(EnumCharacterType), enumCharacterType);
+            return enumName.AddColor(Constants.Orange);
         }
         else {
             return partyMember.Name.AddColor(Constants.Orange);

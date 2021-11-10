@@ -28,5 +28,8 @@ EditorBuildSettings:
     guid: a5995a36dfbeaf840bec1276713e12ae
   - enabled: 1
     path: Assets/Scenes/Chapter1/06SoKahruHut.unity
+    guid: e057b4f0d362ca9428f63769e24f87f0
+  - enabled: 1
+    path: Assets/Scenes/Chapter1/XXPleaseGiveFeedBack.unity
     guid: 0f6fd742e0c40ef4a825015a3665e3d9
   m_configObjects: {}

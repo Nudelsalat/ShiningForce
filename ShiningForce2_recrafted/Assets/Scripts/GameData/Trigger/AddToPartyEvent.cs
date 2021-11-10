@@ -27,6 +27,9 @@ namespace Assets.Scripts.GameData.Trigger {
             yield return new WaitForSecondsRealtime(duration - 3);
             Player.Instance.UnsetInputDisabledInEvent();
             AudioManager.Instance.UnPauseAll();
+            while (Player.IsInDialogue) {
+                yield return null;
+            }
             if (FollowUpEvent != null) {
                 FollowUpEvent.Invoke("EventTrigger", 0);
             }

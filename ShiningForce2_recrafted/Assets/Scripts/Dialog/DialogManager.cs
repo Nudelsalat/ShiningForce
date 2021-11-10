@@ -202,17 +202,17 @@ public class DialogManager : MonoBehaviour {
         var partyLeaderName = _inventory.GetPartyLeaderName();
         sentence = sentence.Replace("#LEADER#", partyLeaderName);
         sentence = sentence.Replace("#CHESTER#", 
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.chester));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.Chester));
         sentence = sentence.Replace("#SARAH#",
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.sarah));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.Sarah));
         sentence = sentence.Replace("#JAHA#",
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.jaha));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.Jaha));
         sentence = sentence.Replace("#KAZIN#",
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.kazin));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.Kazin));
         sentence = sentence.Replace("#SLADE#",
-            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.slade));
-        //sentence = sentence.Replace("#GERHALT#",
-        //    _inventory.GetPartyMemberNameByEnum(EnumCharacterType.gerhalt));
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.Slade));
+        sentence = sentence.Replace("#GERHALT#",
+            _inventory.GetPartyMemberNameByEnum(EnumCharacterType.Gerhalt));
         return sentence;
     }
 

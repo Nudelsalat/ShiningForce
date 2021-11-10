@@ -231,7 +231,7 @@ namespace Assets.Scripts.Menus.Battle {
 
         private void SetWeapon(GameObject battleAnimation, Character character) {
             var image = battleAnimation.transform.Find("weapon").GetComponent<Image>();
-            if (character.CharacterType == EnumCharacterType.monster) {
+            if (character.CharacterType == EnumCharacterType.Monster) {
                 image.enabled = false;
                 return;
             }
