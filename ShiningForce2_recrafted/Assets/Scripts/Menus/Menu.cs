@@ -292,6 +292,7 @@ public class Menu : MonoBehaviour
                             RemoveCurrentItem(false);
                             _characterSelector.LoadCharacterList(_party, null, _currentListItemSelected);
                             ClearAllSelection();
+                            return;
                         }
                     }
 
@@ -354,6 +355,7 @@ public class Menu : MonoBehaviour
                         };
                     }
                     _dialogManager.StartDialogue(dialogue);
+                    return;
                     break;
                 case EnumCurrentMenu.deriveSelectMember:
                     var selectedPartyMember = _party[_currentListItemSelected];

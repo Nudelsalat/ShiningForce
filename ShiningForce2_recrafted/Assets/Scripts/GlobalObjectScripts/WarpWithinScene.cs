@@ -27,7 +27,7 @@ public class WarpWithinScene : MonoBehaviour, IEventTrigger {
         if (audioClip != null) {
             AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }
-        FadeInOut.Instance.FadeOutAndThenBackIn(2.6f);
+        FadeInOut.Instance.FadeOutAndThenBackIn(2.5f);
         StartCoroutine(WaitForSecToWarp(0.4f));
     }
 

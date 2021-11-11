@@ -24,10 +24,12 @@ namespace Assets.Scripts.GameData.Magic.SpecialMagic {
             switch (magicLevel) {
                 case 1:
                     singleTarget.CharStats.Hp.AddToBaseValue(4);
+                    singleTarget.CharStats.CurrentHp += 4;
                     _dialogManager.EvokeSingleSentenceDialogue($"Max HP of {singleTarget.Name.AddColor(Constants.Orange)} increased by 4!");
                     break;
                 case 2:
                     singleTarget.CharStats.Mp.AddToBaseValue(4);
+                    singleTarget.CharStats.CurrentMp += 4;
                     _dialogManager.EvokeSingleSentenceDialogue($"Max MP of {singleTarget.Name.AddColor(Constants.Orange)} increased by 4!");
                     break;
                 case 3:

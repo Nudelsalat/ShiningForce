@@ -32,7 +32,7 @@ public class WarpToScene : MonoBehaviour, IEventTrigger {
         Player.InWarp = true;
         LevelManager.setLastLevelInt(SceneManager.GetActiveScene().buildIndex);
         LevelManager.setLastLevelString(SceneManager.GetActiveScene().name);
-        FadeInOut.Instance.FadeOutAndThenBackIn(2.6f);
+        FadeInOut.Instance.FadeOutAndThenBackIn(2.5f);
         StartCoroutine(WaitForSecToWarp(0.4f));
     }
 

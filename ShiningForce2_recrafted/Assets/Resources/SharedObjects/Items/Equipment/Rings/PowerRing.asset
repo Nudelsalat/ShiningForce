@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Power Ring
   Price: 3000
-  IsUnique: 0
+  IsUnique: 1
   ItemSprite: {fileID: 8340769940893503842, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
   Description: A golden ring with a ruby.
@@ -30,5 +30,7 @@ MonoBehaviour:
   EquipmentType: 1
   AttackRange: 0
   AreaOfEffect: 0
+  InflictStatusEffectChance: 8
+  InflictStatusEffect: 0
   BattleSprite: {fileID: 0}
   IsEquipped: 0

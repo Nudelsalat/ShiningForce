@@ -1064,7 +1064,7 @@ namespace Assets.Scripts.Battle {
                 _doWarp = false;
                 DoWarp();
             } else { 
-                _fadeInOut.FadeOutAndThenBackIn(2.6f);
+                _fadeInOut.FadeOutAndThenBackIn(2.5f);
             }
 
             yield return new WaitForSeconds(0.5f);

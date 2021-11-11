@@ -29,7 +29,7 @@ MonoBehaviour:
   MovementType: 4
   CharStats:
     Level: 1
-    Exp: 0
+    Exp: 50
     CurrentHp: 11
     CurrentMp: 10
     Hp:
