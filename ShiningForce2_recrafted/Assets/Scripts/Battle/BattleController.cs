@@ -25,6 +25,7 @@ namespace Assets.Scripts.Battle {
         private Character _targetToSwapWith;
         private Queue<Unit> _turnOrder;
         private Vector3 _originalPosition;
+        private List<Vector3> _listTargetUnits;
         private LinkedList<Vector3> _linkedListTargetUnits;
         private LinkedListNode<Vector3> _llNodeCurrentTarget;
         private List<WinLoseConditionBase> _winLoseConditions;
@@ -806,11 +807,22 @@ namespace Assets.Scripts.Battle {
                 _dialogManager.EvokeSingleSentenceDialogue("There are no Targets in Range.");
                 return false;
             }
+            var direction = _currentUnit.GetAnimatorDirection();
             _cursor.ClearControlUnit(true);
+            OrderedTargetListBasedOnDirection(direction, _currentUnit.transform.position + new Vector3(0,-0.25f));
             _llNodeCurrentTarget = _linkedListTargetUnits.First;
             _cursor.SetAttackArea(_llNodeCurrentTarget.Value, areaOfEffect);
             UpdateUnitDirectionToTarget();
             return true;
+        }
+
+        private void OrderedTargetListBasedOnDirection(DirectionType direction, Vector3 position) {
+            _linkedListTargetUnits = new LinkedList<Vector3>();
+            var clockwiseComparer = new ClockwiseComparer(position, direction);
+            _listTargetUnits.Sort(clockwiseComparer);
+            foreach (var target in _listTargetUnits) {
+                _linkedListTargetUnits.AddLast(new LinkedListNode<Vector3>(target));
+            }
         }
 
         private void UpdateUnitDirectionToTarget() {
@@ -836,14 +848,14 @@ namespace Assets.Scripts.Battle {
                 return vector3;
             }).ToList();
             var opponentLayerMask = _movementGrid.GetOpponentLayerMask(_currentUnit, reverseTargets);
-            _linkedListTargetUnits = new LinkedList<Vector3>();
+            _listTargetUnits = new List<Vector3>();
             foreach (var vector3 in reachableSquares2) {
                 if (_movementGrid.IsOccupiedByOpponent(vector3.x, vector3.y, opponentLayerMask)) {
-                    _linkedListTargetUnits.AddLast(new LinkedListNode<Vector3>(vector3));
+                    _listTargetUnits.Add(vector3);
                 }
             }
 
-            if (_linkedListTargetUnits.Any()) {
+            if (_listTargetUnits.Any()) {
                 return true;
             }
             return false;

@@ -52,7 +52,7 @@ public class Equipment : GameItem {
                 increase.Append($"\nAgility by {AgilityModifier}");
             }
             if (MovementModifier > 0) {
-                increase.Append($"\nAgility by {MovementModifier}");
+                increase.Append($"\nMovement by {MovementModifier}");
             }
             sentence.Add(increase.ToString());
         }
@@ -76,7 +76,7 @@ public class Equipment : GameItem {
                 decrease.Append($"\nAgility by {AgilityModifier}");
             }
             if (MovementModifier < 0) {
-                decrease.Append($"\nAgility by {MovementModifier}");
+                decrease.Append($"\nMovement by {MovementModifier}");
             }
             sentence.Add(decrease.ToString());
         }

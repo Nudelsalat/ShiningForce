@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Assets.Scripts.GlobalObjectScripts;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +13,11 @@ namespace Assets.Scripts.Menus {
 
         public GameObject ObjectsForSale;
         public GameObject Gold;
+        public GameObject ItemDescription;
 
         private Animator _animatorObjectsForSale;
         private Animator _animatorGold;
+        private Animator _animatorItemDescription;
 
         private RuntimeAnimatorController _animatorBuyButton;
         private RuntimeAnimatorController _animatorSellButton;
@@ -27,6 +31,7 @@ namespace Assets.Scripts.Menus {
             },
         };
 
+        private Text _descriptionText;
         private GameObject _buyItem;
         private Portrait _portrait;
         private DialogManager _dialogManager;
@@ -72,6 +77,8 @@ namespace Assets.Scripts.Menus {
 
             _animatorObjectsForSale = ObjectsForSale.transform.GetComponent<Animator>();
             _animatorGold = Gold.transform.GetComponent<Animator>();
+            _animatorItemDescription = ItemDescription.GetComponent<Animator>();
+            _descriptionText = ItemDescription.transform.Find("Dialog").GetComponent<Text>();
         }
 
         void Start() {
@@ -304,7 +311,7 @@ namespace Assets.Scripts.Menus {
                 Name = "DropText",
                 Sentences = new List<string>() {
                     $"For that {selectedItem.ItemName.AddColor(Color.green)} " +
-                    $"I can give you {halfValue.ToString()}.\nDo we have a deal?"
+                    $"I can give you {halfValue.ToString().AddColor(Color.yellow)}.\nDo we have a deal?"
                 },
                 DefaultSelectionForQuestion = YesNo.No,
                 OnAnswerAction = DecisionSellItem,
@@ -373,8 +380,7 @@ namespace Assets.Scripts.Menus {
                 _dialogManager.EvokeSingleSentenceDialogue("Sorry, I'm out of stock...");
                 return;
             }
-            _dialogManager.EvokeSingleSentenceDialogue("What do you want to buy?");
-
+            _animatorItemDescription.SetBool("dialogueBoxIsOpen", true);
             _animatorObjectsForSale.SetBool("isOpen", true);
             _itemsInCurrentMenu = itemsToSellList;
             OpenGold();
@@ -383,13 +389,13 @@ namespace Assets.Scripts.Menus {
 
         private void CloseBuyMenu(bool closeGold) {
             _animatorObjectsForSale.SetBool("isOpen", false);
+            _animatorItemDescription.SetBool("dialogueBoxIsOpen", false);
             if (closeGold) {
                 CloseGold();
             }
         }
 
         private void OpenSellMenu() {
-            _dialogManager.EvokeSingleSentenceDialogue("Let me see your goods...");
             OpenGold();
             OpenCharacterSelectMenu(null);
         }
@@ -452,6 +458,11 @@ namespace Assets.Scripts.Menus {
             foreach (Transform child in spawnPoint.transform) {
                 Destroy(child.gameObject);
             }
+
+            var itemToBuy = _itemsInCurrentMenu.ToArray()[_currentBuyItemSelected + _currentBuyItemPage * 8];
+            var sb = new StringBuilder($"{itemToBuy.ItemName.AddColor(Color.green)}");
+            itemToBuy.GetDescription().ForEach(s => sb.Append($"\n{s}"));
+            _descriptionText.text = sb.ToString();
 
             for (int i = 0; i < 8; i++) {
                 var nextItemIndex = i + _currentBuyItemPage * 8;

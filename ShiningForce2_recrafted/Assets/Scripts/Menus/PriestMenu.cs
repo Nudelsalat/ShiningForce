@@ -89,7 +89,7 @@ namespace Assets.Scripts.Menus {
             }
             GetInputDirection();
             if (Player.IsInDialogue || Player.InWarp || Player.InputDisabledInDialogue || Player.InputDisabledInEvent) {
-                if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
+                if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back"))
                     && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent && !Player.InWarp) {
                     _dialogManager.DisplayNextSentence();
                 }

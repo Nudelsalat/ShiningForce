@@ -213,6 +213,7 @@ MonoBehaviour:
   PreviousTriggerName: 
   RemoveObjectAfterTrigger: 1
   FollowUpEvent: {fileID: 0}
+  Unit: {fileID: 0}
   Duration: 0.5
 --- !u!114 &81914456
 MonoBehaviour:
@@ -533,6 +534,7 @@ MonoBehaviour:
     - Kazin told me you would go to master <color=#ff9999>So-Kahru</color>, so there
       might be a chance you run into this guy.
     - I'd like to avange the towns folk. I'll come with you.
+  FollowUpEvent: {fileID: 0}
 --- !u!1 &124003250
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +720,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &190528556
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1845,6 +1848,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &276580691
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3254,6 +3258,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &302760684
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3640,6 +3645,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &313535310
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7126,7 +7132,7 @@ PrefabInstance:
     - target: {fileID: 8336191188669502803, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00001135179
+      value: -0.0000043558766
       objectReference: {fileID: 0}
     - target: {fileID: 8413941970227603679, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
@@ -33030,6 +33036,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &1166374701
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33463,6 +33470,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &1217761413
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39157,6 +39165,11 @@ PrefabInstance:
       propertyPath: ItemsToSell.Array.data[8]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7206403407493651660, guid: e4bf291090e28f84b89509a79d81aef7,
+        type: 3}
+      propertyPath: ItemsToSell.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7206403407493651661, guid: e4bf291090e28f84b89509a79d81aef7,
         type: 3}
       propertyPath: Dialogue.Portrait
@@ -39543,6 +39556,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &1525453871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -40276,6 +40290,7 @@ MonoBehaviour:
   TriggeredAiTypePrimary: 3
   TriggeredAiTypeSecondary: 0
   IsBoss: 0
+  ItemToDrop: {fileID: 0}
 --- !u!61 &1753817428
 BoxCollider2D:
   m_ObjectHideFlags: 0

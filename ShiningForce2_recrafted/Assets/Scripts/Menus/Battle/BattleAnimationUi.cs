@@ -267,7 +267,7 @@ namespace Assets.Scripts.Menus.Battle {
                 target = null;
                 return;
             }
-            target = PaletteSwapNoShader.CopyTexture2D(battleImage.sprite.texture, colorPalette, skinId, FilterMode.Bilinear);
+            target = PaletteSwapNoShader.CopyTexture2D(battleImage.sprite.texture, colorPalette, skinId, FilterMode.Point);
         }
 
         private void LoadBackgroundsAndPlatforms(Unit attacker, Unit target) {

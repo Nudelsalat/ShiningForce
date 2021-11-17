@@ -32,7 +32,6 @@ public class GameItem : ScriptableObject {
         sentence.Add(string.IsNullOrEmpty(Description)
             ? "Unknown what this item does..."
             : Description);
-        sentence.Add($"Item can be sold for { Price / 2} Gold.");
         return sentence;
     }
 }

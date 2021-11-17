@@ -3,18 +3,17 @@ guid: 4a19229c703a5c44892012c351732d5a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
+  fontSize: 18
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Shining Force II (Small)
   fontNames:
   - Shining Force II (Small)
   fallbackFontReferences: []
-  customCharacters: 
-  fontRenderingMode: 0
-  ascentCalculationMode: 1
+  customCharacters: abcdefghijklmnopqrstuvwxyz
+  fontRenderingMode: 2
+  ascentCalculationMode: 2
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
   userData: 

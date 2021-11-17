@@ -17,7 +17,7 @@ MonoBehaviour:
   IsUnique: 0
   ItemSprite: {fileID: -5978459508730149726, guid: 0e3d7f9811d80574693048be27c1a0b9,
     type: 3}
-  Description: An axe for timber cutting
+  Description: This sword is rather short.
   PositionInInventory: -1
   EnumItemType: 1
   HpModifier: 0

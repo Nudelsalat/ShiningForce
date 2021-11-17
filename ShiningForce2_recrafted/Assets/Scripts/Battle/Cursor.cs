@@ -332,6 +332,7 @@ public class Cursor : MonoBehaviour {
         if (Math.Abs(Mathf.Abs(_movement.x) - 1f) < 0.01f) {
             if (CheckForCollider(MovePoint.position + new Vector3(_movement.x, 0f, 0f))) {
                 StopMovementAnimationAndNoise();
+                HandleAnimation();
                 return;
             }
             MovePoint.position += new Vector3(_movement.x, 0f, 0f);
@@ -341,6 +342,7 @@ public class Cursor : MonoBehaviour {
         } else if (Math.Abs(Mathf.Abs(_movement.y) - 1f) < 0.01f) {
             if (CheckForCollider(MovePoint.position + new Vector3(0f, _movement.y, 0f))) {
                 StopMovementAnimationAndNoise();
+                HandleAnimation();
                 return;
             }
             MovePoint.position += new Vector3(0f, _movement.y, 0f);

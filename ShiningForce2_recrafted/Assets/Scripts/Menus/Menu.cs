@@ -188,8 +188,9 @@ public class Menu : MonoBehaviour
 
         if (Player.IsInDialogue || Player.InputDisabledInDialogue || Player.InputDisabledInEvent
             || Player.InWarp || Player.InputDisabledAiBattle) {
-            if ((Input.GetButtonUp("Interact") || Input.GetButtonUp("Back")) 
-                && !Player.InputDisabledInDialogue && !Player.InputDisabledInEvent && !Player.InWarp) {
+            if (!Player.InputDisabledInDialogue && !Player.InputDisabledInEvent && !Player.InWarp && Player.IsInDialogue && 
+                (Player.InputDisabledInAttackPhase && (Input.GetButton("Interact") || Input.GetButton("Back")) ||
+                    Input.GetButtonUp("Interact") || Input.GetButtonUp("Back"))) {
                 _dialogManager.DisplayNextSentence();
             }
             return;
@@ -356,7 +357,6 @@ public class Menu : MonoBehaviour
                     }
                     _dialogManager.StartDialogue(dialogue);
                     return;
-                    break;
                 case EnumCurrentMenu.deriveSelectMember:
                     var selectedPartyMember = _party[_currentListItemSelected];
                     if (_inventory.TryAddGameItemToPartyMember(selectedPartyMember, _currentBackBagItem)) {

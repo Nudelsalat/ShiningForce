@@ -104,8 +104,14 @@ namespace Assets.Scripts.Battle {
         }
 
         public void SetAnimatorDirection(DirectionType direction) {
-            _animator.SetInteger("moveDirection", (int) direction);
+            if (direction != DirectionType.none) {
+                _animator.SetInteger("moveDirection", (int) direction);
+            }
         }
+        public DirectionType GetAnimatorDirection() {
+            return (DirectionType) _animator.GetInteger("moveDirection");
+        }
+
         public void SetAnimatorSpeed(int speed) {
             _animator.speed = speed;
         }

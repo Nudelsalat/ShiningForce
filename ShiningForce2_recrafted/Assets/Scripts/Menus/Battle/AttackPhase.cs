@@ -234,7 +234,7 @@ namespace Assets.Scripts.Menus.Battle {
                     }
 
                     if (_gold > 0) {
-                        _sentences.Add($"Found {_gold} gold coins!");
+                        _sentences.Add($"Found {_gold.ToString().AddColor(Color.yellow)} gold coins!");
                         _inventory.AddGold(_gold);
                     }
                     _dialogManager.EvokeSentenceDialogue(_sentences);

@@ -2696,11 +2696,6 @@ PrefabInstance:
 
         8'
       objectReference: {fileID: 0}
-    - target: {fileID: 7080477950896680962, guid: 33256033194f97f44a4fcdff4816eaf2,
-        type: 3}
-      propertyPath: m_FontData.m_LineSpacing
-      value: 1.3
-      objectReference: {fileID: 0}
     - target: {fileID: 7080477951029888298, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2939,7 +2934,7 @@ PrefabInstance:
     - target: {fileID: 7262158038676917576, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000007894723
+      value: -240.00002
       objectReference: {fileID: 0}
     - target: {fileID: 7316752315570571672, guid: 33256033194f97f44a4fcdff4816eaf2,
         type: 3}
