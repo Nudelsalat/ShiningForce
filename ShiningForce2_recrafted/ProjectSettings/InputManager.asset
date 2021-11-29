@@ -265,7 +265,7 @@ InputManager:
     m_Name: Submit
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: s
     positiveButton: enter
     altNegativeButton: 
     altPositiveButton: space

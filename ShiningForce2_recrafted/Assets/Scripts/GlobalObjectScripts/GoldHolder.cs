@@ -40,7 +40,6 @@ public class GoldHolder : AbstractDialogHolder {
         if (Gold != 0) {
             _inventory.AddGold(Gold);
             _dialogManager.StartDialogue(Dialogue);
-            Dialogue.Sentences.RemoveAt(Dialogue.Sentences.Count() - 1);
             RemoveItem();
             if (audioClip != null) {
                 AudioManager.Instance.PlaySFX(audioClip);

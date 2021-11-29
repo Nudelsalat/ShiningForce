@@ -51,6 +51,16 @@ public class LoadGameSelector : MonoBehaviour
         }
     }
 
+    private void OnEnable() {
+        StartCoroutine(WaitForButton());
+    }
+
+    void Start() {
+        var child = SpawnPoint.transform.GetChild(0);
+        if (child) {
+            child.GetComponent<Button>().Select();
+        }
+    }
 
     // Use this for initialization
     public void LoadCharacterList(int currentlySelectedListItem) {
@@ -84,5 +94,9 @@ public class LoadGameSelector : MonoBehaviour
     }
     public void SetScrollbar() {
         scrollbar.value =  1.0f - ((float)_currentSelected / (_quantity - 1.0f));
+    }
+    IEnumerator WaitForButton() {
+        yield return null;
+        Start();
     }
 }

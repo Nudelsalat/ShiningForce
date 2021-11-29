@@ -640,16 +640,6 @@ Tilemap:
   m_GameObject: {fileID: 240157868}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: -19, y: -9, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 4
-      m_TileSpriteIndex: 4
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: -13, y: 4, z: 0}
     second:
       serializedVersion: 2
@@ -680,8 +670,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 8af10ad29328be34fb8955ece0541fb6, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 22c401b98f8c1d14ca02503006d9793c, type: 2}
   - m_RefCount: 1
@@ -695,9 +685,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 1240831577125579499, guid: e40c23953d4d16c44b2db2ed9710d208,
-      type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 8838702807293501825, guid: 979f2bf3f11de3445952135d0e1115ad,
       type: 3}
@@ -705,7 +694,7 @@ Tilemap:
     m_Data: {fileID: -859034678297742148, guid: 979f2bf3f11de3445952135d0e1115ad,
       type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data:
       e00: 1
       e01: 0
@@ -724,7 +713,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1911,7 +1900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7752db9646efb1d45956735f05e6e7a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PreviousSceneName: 01GoblinsAttack
+  PreviousSceneName: 02GoblinBattle
   PreviousTriggerName: RemoveBlocker
   RemoveObjectAfterTrigger: 0
   FollowUpEvent: {fileID: 333443680}
@@ -1947,7 +1936,7 @@ MonoBehaviour:
   PreviousSceneName: 
   PreviousTriggerName: 
   RemoveObjectAfterTrigger: 0
-  FollowUpEvent: {fileID: 0}
+  FollowUpEvent: {fileID: 333443679}
   GameObjectToRemove: {fileID: 1833738981}
 --- !u!1 &340474517
 GameObject:
@@ -2635,7 +2624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2a138d4c22ee94ea8a28aee7ea4f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DespawnAfterUse: 1
+  DespawnAfterUse: 0
   Dialogue:
     Name: Chest
     Portrait: {fileID: 0}
@@ -5647,7 +5636,7 @@ PrefabInstance:
     - target: {fileID: 8336191188669502803, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00013557482
+      value: 0.0000017273827
       objectReference: {fileID: 0}
     - target: {fileID: 8413941970227603679, guid: 9f93edd0b8b82d944b5ee07d1e3f65a0,
         type: 3}
@@ -26320,6 +26309,7 @@ GameObject:
   - component: {fileID: 1562358565}
   - component: {fileID: 1562358566}
   - component: {fileID: 1562358564}
+  - component: {fileID: 1562358567}
   m_Layer: 20
   m_Name: WarpToWMLeft
   m_TagString: Untagged
@@ -26348,7 +26338,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562358562}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 385e1d18ff2345545b1493dd6d85885d, type: 3}
   m_Name: 
@@ -26408,6 +26398,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 0.15}
   m_EdgeRadius: 0
+--- !u!114 &1562358567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562358562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385e1d18ff2345545b1493dd6d85885d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToWarpTo: WorldMap01
+  id: 0
+  audioClip: {fileID: 0}
 --- !u!1 &1793421235
 GameObject:
   m_ObjectHideFlags: 0

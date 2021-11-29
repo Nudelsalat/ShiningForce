@@ -13,7 +13,6 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     #region public
-    public GameObject PauseUI;
     public GameObject ObjectMenu;
 
     public GameObject ObjectsForSale;
@@ -55,6 +54,7 @@ public class Menu : MonoBehaviour
     private AudioManager _audioManager;
     private FourWayButtonMenu _fourWayButtonMenu;
     private BattleController _battleController;
+    private PauseMenu _pauseMenu;
     
     private Dialogue _dialogueSearchButton;
     private Dialogue _tempDialogue = new Dialogue {
@@ -156,6 +156,7 @@ public class Menu : MonoBehaviour
         _audioManager = AudioManager.Instance;
         _fourWayButtonMenu = FourWayButtonMenu.Instance;
         _battleController = BattleController.Instance;
+        _pauseMenu = PauseMenu.Instance;
 
         ObjectMenu.SetActive(false);
     }
@@ -165,10 +166,13 @@ public class Menu : MonoBehaviour
     void Update() {
         if (Input.GetKeyUp(KeyCode.Backspace) && Player.PlayerIsInMenu != EnumMenuType.pause) {
             Time.timeScale = Time.timeScale > 1f ? 1f : _speedup;
-        } 
+        }
         if (Input.GetButtonUp("Cancel")) {
             if (Player.PlayerIsInMenu != EnumMenuType.pause) {
                 Pause();
+            }
+            else {
+                Resume();
             }
         }
         if (Player.PlayerIsInMenu == EnumMenuType.pause) {
@@ -960,13 +964,13 @@ public class Menu : MonoBehaviour
 
     #region Pause
     private void Resume() {
-        PauseUI.SetActive(false);
+        _pauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
         Player.PlayerIsInMenu = _previousMenuType;
     }
 
     private void Pause() {
-        PauseUI.SetActive(true);
+        _pauseMenu.gameObject.SetActive(true);
         Time.timeScale = 0f;
         _previousMenuType = Player.PlayerIsInMenu;
         Player.PlayerIsInMenu = EnumMenuType.pause;

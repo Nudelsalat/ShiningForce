@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.GameData.Characters;
 using Assets.Scripts.GameData.Chests;
+using Assets.Scripts.GlobalObjectScripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Menus.MainMenu {
-    class LoadButton : MonoBehaviour {
+    public class LoadButton : MonoBehaviour {
 
         public void LoadGame() {
             var fileName = transform.Find("Text").GetComponent<Text>().text;
@@ -61,6 +62,12 @@ namespace Assets.Scripts.Menus.MainMenu {
             }
 
             Inventory.Instance.Initialize(partyList, backPackList, dealsList, data.Gold, data.SaveFileName);
+            var pauseMenu = PauseMenu.Instance;
+            if (pauseMenu) {
+                pauseMenu.gameObject.SetActive(false);
+            }
+            Time.timeScale = 1f;
+            Player.PlayerIsInMenu = EnumMenuType.none;
         }
     }
 }

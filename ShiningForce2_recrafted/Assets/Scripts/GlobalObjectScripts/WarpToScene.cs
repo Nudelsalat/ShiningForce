@@ -32,14 +32,6 @@ public class WarpToScene : MonoBehaviour, IEventTrigger {
         Player.InWarp = true;
         LevelManager.setLastLevelInt(SceneManager.GetActiveScene().buildIndex);
         LevelManager.setLastLevelString(SceneManager.GetActiveScene().name);
-        FadeInOut.Instance.FadeOutAndThenBackIn(2.5f);
-        StartCoroutine(WaitForSecToWarp(0.4f));
-    }
-
-    IEnumerator WaitForSecToWarp(float waitTime) {
-        yield return new WaitForSeconds(waitTime);
-        Player.InWarp = false;
-        Debug.Log($"Loading scene: {sceneToWarpTo}");
-        SceneManager.LoadScene(sceneToWarpTo, LoadSceneMode.Single);
+        FadeInOut.Instance.FadeOutAndThenBackIn(2.5f, sceneToWarpTo);
     }
 }
